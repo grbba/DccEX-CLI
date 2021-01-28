@@ -1,0 +1,38 @@
+{
+  "$schema": "./DccEXLayout.json",
+  "layout": { 
+    "name":"Simple",
+    "description": "TestLayout with one turnout",
+    "version": "1.0.0",
+    "author": "grbba"
+  },
+  "modules":[ 
+    {
+      "name": "Simple",
+      "trackplan": "supersmall",
+      "description": "File contains some simple track plans for testing purposes"
+    }
+  ],
+  "trackplans": [
+    {
+      "name": "supersmall",
+      "description": "two rail sections and bumpers at the end",
+      "tracksections": [
+        {
+          "name": "rail1",
+          "trackelements": [
+            { "bumper": {"path": 1} },
+            { "rail": {"path": [1,2], "length": 3} }
+          ]
+        },
+        {
+          "name": "rail2",
+          "trackelements": [
+            {"rail": {"path": [2,3], "length": 3}},
+            {"bumper": {"path": 3}}
+          ]
+        }
+      ]
+    }
+  ]
+}

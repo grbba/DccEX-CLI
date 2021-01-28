@@ -1,0 +1,87 @@
+{
+  "$schema": "./DccEXLayout.json",
+  "layout": { 
+    "name":"TimeSaver",
+    "description": "My first shunting layout. Has one module with several track sections",
+    "version": "1.0.0",
+    "author": "grbba"
+  },
+  "modules":[ 
+    {
+      "name": "Small shunt",
+      "trackplan": "timesaver",
+      "description": "Build as a single module 40cm x 160cm in HO"
+    }
+  ],
+  "trackplans": [
+    {
+      "name" : "timesaver",
+      "description": "TimeSaver by John Allen. More info here: http://www.wymann.info/ShuntingPuzzles/index.html",
+      "tracksections": [
+        {
+          "name": "main",
+          "trackelements": [
+            { "bumper": {"description": "foo","path": 1} },
+            { "rail": {"path": [1,2], "length": 3 }},
+            { "turnout": {"narrow": 2, "wide":[3,4],  "length": 0} }, 
+            { "turnout": {"description": "Turnout to industry", "narrow": 5, "wide":[4,8],  "length": 0} },
+            { "rail": {"path": [5,6], "length": 3} },
+            { "bumper": {"path": 6 } },
+            { "bumper": {"path": 3 } }
+            ]
+        },
+        {
+          "name":"industry",
+          "trackelements": [
+            { "turnout": {"narrow": 10, "wide":[8,9],  "length": 0} }, 
+            { "bumper": {"description": "End of refueling siding", "path": 12} },
+            { "rail": {"path": [12, 11], "length": 2 } },
+            { "turnout": {"narrow": 11, "wide":[10,19],  "length": 0} },
+            { "turnout": {"narrow": 17, "wide":[19,18],  "length": 0} },
+            { "rail": {"path": [17, 16], "length": 2 } },
+            { "turnout": {"narrow": 14, "wide":[13,16],  "length": 0} },
+            { "rail": {"path": [14, 15], "length": 2 } },
+            { "bumper": {"path": 15} },
+            { "rail": {"description": "Scrap industry siding", "path": [9, 13], "length": 2 } },
+            { "rail": {"description": "Wood industry siding", "path": [20, 18], "length": 2 } },
+            { "bumper": {"path": 20 } }
+            ]
+          }
+      ]
+    },
+    {
+      "name" : "error",
+      "description": "error : missing bumper at the turnout before the turnout to industry",
+      "tracksections": [
+        {
+          "name": "main",
+          "trackelements": [
+            { "bumper": {"description": "foo","path": 1} },
+            { "rail": {"path": [1,2], "length": 3 }},
+            { "turnout": {"narrow": 2, "wide":[3,4],  "length": 0} }, 
+            { "turnout": {"description": "Turnout to industry", "narrow": 5, "wide":[4,8],  "length": 0} },
+            { "rail": {"path": [5,6], "length": 3} },
+            { "bumper": {"path": 6 } }
+            ]
+        },
+        {
+          "name":"industry",
+          "trackelements": [
+            { "turnout": {"narrow": 10, "wide":[8,9],  "length": 0} }, 
+            { "bumper": {"description": "End of refueling siding", "path": 12} },
+            { "rail": {"path": [12, 11], "length": 2 } },
+            { "turnout": {"narrow": 11, "wide":[10,19],  "length": 0} },
+            { "turnout": {"narrow": 17, "wide":[19,18],  "length": 0} },
+            { "rail": {"path": [17, 16], "length": 2 } },
+            { "turnout": {"narrow": 14, "wide":[13,16],  "length": 0} },
+            { "rail": {"path": [14, 15], "length": 2 } },
+            { "bumper": {"path": 15} },
+            { "rail": {"description": "Scrap industry siding", "path": [9, 13], "length": 2 } },
+            { "rail": {"description": "Wood industry siding", "path": [20, 18], "length": 2 } },
+            { "bumper": {"path": 20 } }
+            ]
+          }
+      ]
+    }
+  ]
+}

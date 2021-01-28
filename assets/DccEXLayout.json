@@ -1,0 +1,442 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://dccex.com/DccEXLayout.json",
+  "type": "object",
+  "title": "DccLayoutRoot",
+  "description": "The root DccLayout Schema comprises the entire JSON document i.e. provides an entry point to acces to all layout elements",
+  "default": {},
+  "required": ["$schema", "layout", "modules", "trackplans"],
+  "properties": {
+    "layout": {
+      "$id": "#/properties/layout",
+      "type": "object",
+      "description": "Description of the Layout incl. name of the layout a short text describing the layout and the version. There can be only one layout per definition file",
+      "default": {},
+      "required": ["name", "version"],
+      "properties": {
+        "name": {
+          "$id": "#/properties/layout/properties/name",
+          "type": "string",
+          "description": "Name of this layout",
+          "default": ""
+        },
+        "author": {
+          "$id": "#/properties/layout/properties/author",
+          "type": "string",
+          "description": "Author of this layout (optional)",
+          "default": ""
+        },
+        "description": {
+          "$id": "#/properties/layout/properties/description",
+          "type": "string",
+          "description": "A short description of the layout (optional)",
+          "default": ""
+        },
+        "version": {
+          "$id": "#/properties/layout/properties/version",
+          "type": "string",
+          "description": "Version of this layout definition in the form of x.y.z | x,y,z being numbers",
+          "default": ""
+        }
+      },
+      "additionalProperties": false
+    },
+    "modules": {
+      "$id": "#/properties/modules",
+      "type": "array",
+      "description": "A Layout is composed by at least one or more physical modules. Modules are defined in an array and have to have a name an id (number) and the name of the trackplan to apply",
+      "default": [],
+      "additionalItems": true,
+      "minItems": 1,
+      "items": {
+        "$id": "#/properties/modules/items",
+        "anyOf": [
+          {
+            "$id": "#/properties/modules/items/anyOf/0",
+            "type": "object",
+            "description": "A Module with a name, an id and a trackplan",
+            "default": {},
+            "required": ["name", "trackplan"],
+            "properties": {
+              "name": {
+                "$id": "#/properties/modules/items/anyOf/0/properties/name",
+                "type": "string",
+                "description": "Name of the module",
+                "default": ""
+              },
+              "trackplan": {
+                "$id": "#/properties/modules/items/anyOf/0/properties/trackplan",
+                "type": "string",
+                "description": "Every module has a trackplan identified by its name.",
+                "default": ""
+              },
+              "description": {
+                "$id": "#/properties/modules/items/anyOf/0/properties/description",
+                "type": "string",
+                "description": "Short description of the module (optional)",
+                "default": ""
+              }
+            },
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "junctions": {
+      "$id": "#/properties/junctions",
+      "type": "array",
+      "description": "An array of junctions between modules",
+      "default": [],
+      "additionalItems": true,
+      "items": {
+        "$id": "#/properties/junctions/items",
+        "anyOf": [
+          {
+            "$id": "#/properties/junctions/items/anyOf/0",
+            "type": "object",
+            "description": "An entry in the junction list between to modules",
+            "default": {},
+            "required": ["from", "to"],
+            "properties": {
+              "from": {
+                "$id": "#/properties/junctions/items/anyOf/0/properties/from",
+                "type": "object",
+                "description": "From connection",
+                "default": {},
+                "required": ["module", "path"],
+                "properties": {
+                  "module": {
+                    "$id": "#/properties/junctions/items/anyOf/0/properties/from/properties/module",
+                    "type": "string",
+                    "description": "Module name of the path from which to connect",
+                    "default": ""
+                  },
+                  "path": {
+                    "$id": "#/properties/junctions/items/anyOf/0/properties/from/properties/path",
+                    "type": "integer",
+                    "description": "Path id from which to connect",
+                    "default": 0
+                  }
+                },
+                "additionalProperties": true
+              },
+              "to": {
+                "$id": "#/properties/junctions/items/anyOf/0/properties/to",
+                "type": "object",
+                "description": "To connection",
+                "default": {},
+                "required": ["module", "path"],
+                "properties": {
+                  "module": {
+                    "$id": "#/properties/junctions/items/anyOf/0/properties/to/properties/module",
+                    "type": "string",
+                    "description": "Module name of the path to which to connect",
+                    "default": ""
+                  },
+                  "path": {
+                    "$id": "#/properties/junctions/items/anyOf/0/properties/to/properties/path",
+                    "type": "integer",
+                    "description": "Path id to which to connect",
+                    "default": 0
+                  }
+                },
+                "additionalProperties": true
+              }
+            },
+            "additionalProperties": true
+          }
+        ]
+      }
+    },
+    "trackplans": {
+      "$id": "#/properties/trackplans",
+      "type": "array",
+      "description": "List of available trackplans",
+      "default": [],
+      "additionalItems": true,
+      "items": {
+        "$id": "#/properties/trackplans/items",
+        "anyOf": [
+          {
+            "$id": "#/properties/trackplans/items/anyOf/0",
+            "type": "object",
+            "description": "A track plan is described by its name which is used in a module description and it's track sections.",
+            "default": {},
+            "required": ["name", "tracksections"],
+            "properties": {
+              "name": {
+                "$id": "#/properties/trackplans/items/anyOf/0/properties/name",
+                "type": "string",
+                "description": "Name of the track plan to be used at the module level",
+                "default": ""
+              },
+              "description": {
+                "$id": "#/properties/trackplans/items/anyOf/0/properties/description",
+                "type": "string",
+                "description": "Short text describing the track plan (optional)",
+                "default": ""
+              },
+              "tracksections": {
+                "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections",
+                "type": "array",
+                "description": "List of track sections for this track plan. Track sections are user defined and represent some logical design of the layout. iin its simplest form the full track plan has only one track section",
+                "default": [],
+                "additionalItems": true,
+                "minItems": 1,
+                "items": {
+                  "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items",
+                  "anyOf": [
+                    {
+                      "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0",
+                      "type": "object",
+                      "description": "A track section is a collection of track elements ( bumper, turnout, rail) which are connected to each other",
+                      "default": {},
+                      "required": ["name", "trackelements"],
+                      "properties": {
+                        "name": {
+                          "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/name",
+                          "type": "string",
+                          "description": "Name of the track section e.g. main or industry etc...",
+                          "default": ""
+                        },
+                        "trackelements": {
+                          "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/trackelements",
+                          "type": "array",
+                          "description": "List of all the track elements of the track section (bumper, rail or turnout).",
+                          "default": [],
+                          "additionalItems": true,
+                          "items": {
+                            "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/trackelements/items",
+                            "anyOf": [
+                              {
+                                "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/trackelements/items/anyOf/0",
+                                "type": "object",
+                                "description": "Bumper",
+                                "default": {},
+                                "required": ["bumper"],
+                                "properties": {
+                                  "bumper": {
+                                    "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/trackelements/items/anyOf/0/properties/bumper",
+                                    "type": "object",
+                                    "description": "End of a track closed by a bumper",
+                                    "default": {},
+                                    "required": ["path"],
+                                    "properties": {
+                                      "description": {
+                                        "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/trackelements/items/anyOf/0/properties/bumper/properties/description",
+                                        "type": "string",
+                                        "description": "Short text about the bumper e.g. 'End of refueling siding'.",
+                                        "default": ""
+                                      },
+                                      "path": {
+                                        "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/trackelements/items/anyOf/0/properties/bumper/properties/path",
+                                        "type": "integer",
+                                        "description": "The id of the bumper. Not a path per se as there is only one node id. The Id is used to link to any other track element such as rail or Turnout",
+                                        "default": 0
+                                      }
+                                    },
+                                    "additionalProperties": true
+                                  }
+                                },
+                                "additionalProperties": false
+                              },
+                              {
+                                "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/trackelements/items/anyOf/1",
+                                "type": "object",
+                                "description": "Track segment",
+                                "default": {},
+                                "required": ["rail"],
+                                "properties": {
+                                  "rail": {
+                                    "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/trackelements/items/anyOf/1/properties/rail",
+                                    "type": "object",
+                                    "description": "A piece of single track having two end points and nothing in between them.",
+                                    "default": {},
+                                    "required": ["path", "length"],
+                                    "properties": {
+                                      "description": {
+                                        "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/trackelements/items/anyOf/0/properties/rail/properties/description",
+                                        "type": "string",
+                                        "description": "Short text about the track segment.",
+                                        "default": ""
+                                      },
+                                      "path": {
+                                        "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/trackelements/items/anyOf/1/properties/rail/properties/path",
+                                        "type": "array",
+                                        "description": "Array of two node id's representing a segment of track",
+                                        "default": [0, 1],
+                                        "minItems": 2,
+                                        "maxItems": 2,
+                                        "additionalItems": true,
+                                        "items": {
+                                          "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/trackelements/items/anyOf/1/properties/rail/properties/path/items",
+                                          "anyOf": [
+                                            {
+                                              "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/trackelements/items/anyOf/1/properties/rail/properties/path/items/anyOf/0",
+                                              "type": "integer",
+                                              "description": "Array of two node ids (numbers) representing the start and the end of the track segment",
+                                              "default": 0
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "length": {
+                                        "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/trackelements/items/anyOf/1/properties/rail/properties/length",
+                                        "type": "integer",
+                                        "description": "Length of the track segment",
+                                        "default": 0
+                                      }
+                                    },
+                                    "additionalProperties": true
+                                  }
+                                },
+                                "additionalProperties": false
+                              },
+                              {
+                                "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/trackelements/items/anyOf/2",
+                                "type": "object",
+                                "description": "A turnout with two or three connections",
+                                "default": {},
+                                "required": ["turnout"],
+                                "properties": {
+                                  "turnout": {
+                                    "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/trackelements/items/anyOf/2/properties/turnout",
+                                    "type": "object",
+                                    "description": "Defines a turnout by means of three nodes; 2 on the wide end and 1 on the narrow end. Length shall always be 0",
+                                    "default": {},
+                                    "required": ["narrow", "wide", "length"],
+                                    "properties": {
+                                      "description": {
+                                        "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/trackelements/items/anyOf/2/properties/turnout/properties/description",
+                                        "type": "string",
+                                        "description": "The narrow end of the turnout i.e. the part opposite to the two other end points ( wide end )",
+                                        "default": ""
+                                      },
+                                      "narrow": {
+                                        "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/trackelements/items/anyOf/2/properties/turnout/properties/narrow",
+                                        "type": "integer",
+                                        "description": "The narrow end of the turnout i.e. the part opposite to the two other end points ( wide end ) represented by a node id (number)",
+                                        "default": 0
+                                      },
+                                      "wide": {
+                                        "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/trackelements/items/anyOf/2/properties/turnout/properties/wide",
+                                        "type": "array",
+                                        "description": "The wide end of the turnout. i.e. the two end points opposite to the single other end points (narrow end)",
+                                        "default": [],
+                                        "additionalItems": true,
+                                        "minItems": 2,
+                                        "maxItems": 3,
+                                        "items": {
+                                          "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/trackelements/items/anyOf/2/properties/turnout/properties/wide/items",
+                                          "anyOf": [
+                                            {
+                                              "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/trackelements/items/anyOf/2/properties/turnout/properties/wide/items/anyOf/0",
+                                              "type": "integer",
+                                              "description": "Array of two node ids (numbers) representing the wide end of the turnout",
+                                              "default": 0
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "length": {
+                                        "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/trackelements/items/anyOf/2/properties/turnout/properties/length",
+                                        "type": "integer",
+                                        "description": "Length of the turnout. Should always be 0 as we can't reasonably store trains on the turnouts without blocking other routes/traffic",
+                                        "default": 0
+                                      }
+                                    },
+                                    "additionalProperties": true
+                                  }
+                                },
+                                "additionalProperties": false
+                              },
+                              {
+                                "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/trackelements/items/anyOf/3",
+                                "type": "object",
+                                "description": "A crossing with four connections",
+                                "default": {},
+                                "required": ["crossing"],
+                                "properties": {
+                                  "crossing": {
+                                    "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/trackelements/items/anyOf/3/properties/crossing",
+                                    "type": "object",
+                                    "description": "Defines a crossing by means of four nodes; Length shall always be 0",
+                                    "default": {},
+                                    "required": ["path", "slip", "length"],
+                                    "properties": {
+                                      "description": {
+                                        "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/trackelements/items/anyOf/3/properties/crossing/properties/description",
+                                        "type": "string",
+                                        "description": "Simple crossing, single or double slip",
+                                        "default": ""
+                                      },
+                                      "path": {
+                                        "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/trackelements/items/anyOf/3/properties/crossing/properties/path",
+                                        "type": "array",
+                                        "description": "Nodes of the crossing specified in clock wise order starting top left.",
+                                        "default": [],
+                                        "additionalItems": false,
+                                        "minItems": 4,
+                                        "maxItems": 4,
+                                        "items": {
+                                          "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/trackelements/items/anyOf/3/properties/crossing/properties/path/items",
+                                          "anyOf": [
+                                            {
+                                              "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/trackelements/items/anyOf/3/properties/crossing/properties/path/items/anyOf/0",
+                                              "type": "integer",
+                                              "description": "One node of the 4 nodes of the crossing",
+                                              "default": 0
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "slip": {
+                                        "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/trackelements/items/anyOf/3/properties/crossing/properties/slip",
+                                        "type": "array",
+                                        "description": "Possible slip start or end points. The second slip point will be calculated automatically from the crossing path nodes. If empty we have a simple crossing",
+                                        "default": [],
+                                        "additionalItems": false,
+                                        "minItems": 0,
+                                        "maxItems": 2,
+                                        "items": {
+                                          "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/trackelements/items/anyOf/3/properties/crossing/properties/slip/items",
+                                          "anyOf": [
+                                            {
+                                              "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/trackelements/items/anyOf/3/properties/crossing/properties/slip/items/anyOf/0",
+                                              "type": "integer",
+                                              "description": "Start or end of a slip",
+                                              "default": 0
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "length": {
+                                        "$id": "#/properties/trackplans/items/anyOf/0/properties/tracksections/items/anyOf/0/properties/trackelements/items/anyOf/3/properties/crossing/properties/length",
+                                        "type": "integer",
+                                        "description": "Length of the crossing. Should always be 0 as we can't reasonably store trains on the crossings without blocking other routes/traffic",
+                                        "default": 0
+                                      }
+                                    },
+                                    "additionalProperties": true
+                                  }
+                                },
+                                "additionalProperties": false
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        ]
+      }
+    }
+  },
+  "additionalProperties": true
+}

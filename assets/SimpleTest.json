@@ -1,0 +1,126 @@
+{
+  "$schema": "./DccEXLayout.json",
+  "layout": { 
+    "name":"Simple",
+    "description": "TestLayout with one turnout",
+    "version": "1.0.0",
+    "author": "grbba",
+    "length": {"multiplier": 1, "unit": "car"}
+  },
+  "modules":[ 
+    {
+      "name": "Simple",
+      "trackplan": "crossing",
+      "description": "File contains some simple track plans for testing purposes"
+    }
+  ],
+  "trackplans": [
+    {
+      "name" : "small",
+      "description": "small  layout one main line and one siding with one turnout",
+      "tracksections": [
+        {
+          "name": "main",
+          "trackelements": [
+            { "bumper": {"description": "Bumper 1","path": 1} },
+            { "rail": {"path": [1,2], "length": 3, "junction": {"module": "foo", "path": 1} }},
+            { "turnout": {"description": "Turnout to siding", "narrow": 2, "wide":[3,4],  "length": 0} }, 
+            { "rail": {"path": [4,5], "length": 3} },
+            { "bumper": {"path": 5 } }
+            ]
+        },
+        {
+          "name":"siding",
+          "trackelements": [
+            { "rail": {"path": [3, 6], "length": 3 } },
+              {"rail": {"path": [6,7], "length": 3} },
+            { "bumper": {"path": 7} }
+            ]
+          }
+      ]
+    },
+    {
+      "name": "supersmall",
+      "description": " two rail sections and bumpers at the end",
+      "tracksections": [
+        {
+          "name": "rail1",
+          "trackelements": [
+            { "bumper": {"path": 1} },
+            { "rail": {"path": [1,2], "length": 3} }
+          ]
+        },
+        {
+          "name": "rail2",
+          "trackelements": [
+            {"rail": {"path": [2,3], "length": 3}},
+            {"bumper": {"path": 3}}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "circle",
+      "description": " circle with one siding connected at both ends",
+      "tracksections": [
+        {
+          "name": "station & siding",
+          "trackelements": [
+            {"turnout": {"narrow": 2, "wide": [3,4], "length": 0 } },
+            {"turnout": {"narrow": 5, "wide": [6,7], "length": 0 } },
+            {"rail": {"description": "station", "path": [3,6], "length": 4} },
+            {"rail": {"description": "siding", "path": [4,7], "length": 4} }
+          ]
+        },
+        {
+          "name": "mainline",
+          "trackelements": [
+            {"rail": {"path": [5,8], "length": 5}},
+            {"rail": {"path": [8,1], "length": 5}},
+            {"rail": {"path": [1,2], "length": 5}}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "reverse",
+      "description": " reverse loop",
+      "tracksections": [
+        {
+          "name": "reverse",
+          "trackelements": [
+            {"turnout": {"narrow": 2, "wide": [3,4], "length": 0 }},
+            {"rail": {"description": "siding", "path": [1,2], "length": 4}},
+            {"rail": {"description": "loop", "path": [4,3], "length": 4}},
+            {"bumper": {"description": "eot", "path": 1}}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "crossing",
+      "description": "crossing and slips",
+      "tracksections": [
+        {
+          "name": "station",
+          "trackelements": [
+            {"bumper": {"description": "eot", "path": 1}},
+            {"bumper": {"description": "eot", "path": 4}},
+            {"bumper": {"description": "eot", "path": 5}},
+            {"bumper": {"description": "eot", "path": 13}},
+            {"bumper": {"description": "eot", "path": 9}},
+            {"bumper": {"description": "eot", "path": 12}},
+            {"rail": {"description": "siding1", "path": [1,2], "length": 4}},
+            {"rail": {"description": "siding2", "path": [5,7], "length": 4}},
+            {"rail": {"description": "siding3", "path": [9,10], "length": 4}},
+            {"rail": {"description": "siding4", "path": [8,13], "length": 4}},
+            {"rail": {"description": "siding5", "path": [11,12], "length": 4}},
+            {"rail": {"description": "siding6", "path": [3,4], "length": 4}},
+            {"crossing": {"description":" main crossing", "path": [2,3,6,7], "slip": [], "length": 0 }},
+            {"crossing": {"description": "siding double slip", "path": [6,8,11,10], "slip": [6,10],  "length": 0}}          
+          ]
+        }
+      ]
+    }
+  ]
+}
