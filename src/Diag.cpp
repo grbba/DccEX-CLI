@@ -1,6 +1,6 @@
 
 #include "Diag.hpp"
-
-int Diag::_nLogLevel = 5;
+// inital Logging Level
+int Diag::_nLogLevel = LOGV_DEBUG;
 bool Diag::fileInfo = true;
 bool Diag::printnl = true;
