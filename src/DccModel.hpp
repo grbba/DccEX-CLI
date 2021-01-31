@@ -22,10 +22,11 @@
 
 #pragma once
 
-#include "nlohmann/json.hpp"
-
 #include <stdexcept>
 #include <regex>
+
+#include "nlohmann/json.hpp"
+
 
 namespace nlohmann {
     template <typename T>

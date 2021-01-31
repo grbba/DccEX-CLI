@@ -18,8 +18,6 @@
  * <https://www.gnu.org/licenses/>
  */
 
-#include <algorithm>
-
 #include "DccGraph.hpp"
 #include "DccVertex.hpp"
 #include "Diag.hpp"
@@ -308,7 +306,13 @@ void DccGraph::build(dccexlayout::DccExLayout *l) {
     }
   }
 
-  INFO("Setting up [%d] Junctions ... ", layout->get_junctions() == nullptr ? 0 : layout->get_junctions().get()->size() );
+  int jn = 0;
+
+  if ( layout->get_junctions() != nullptr  ) {
+    jn = layout->get_junctions().get()->size();
+    INFO("Setting up [%d] Junctions ... ", jn);
+  }
+  
   // for each junction build a rail segement out of thin air ..
   // one vertex for m1 with from path
   // one vertex for m2 with to path
@@ -317,8 +321,7 @@ void DccGraph::build(dccexlayout::DccExLayout *l) {
   // if there are bumpers we will have to many siblngs so dump the bumper
   // if there are no siblings for the connecting node add this one to it
 
-
-  for (unsigned long i = 0; i < layout->get_junctions().get()->size(); i++) {
+  for (int i = 0; i < jn; i++) {
 
     TrackElement_t j = std::make_shared<dccexlayout::Junction>(
         layout->get_junctions().get()->at(i));

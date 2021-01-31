@@ -6,7 +6,7 @@ endif()
 
 set(CMAKE_VERBOSE_MAKEFILE OFF)
 
-project(LayoutGraph VERSION 0.1.0
+project(DCC++EXLayoutBuilder VERSION 0.1.0
                     DESCRIPTION "Generating a layout graph for operating a model railway using the DCC++ EX Commandstation"
                     LANGUAGES CXX) 
 

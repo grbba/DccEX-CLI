@@ -1,5 +1,5 @@
 /*
- * © 2020 Gregor Baues. All rights reserved.
+ * © 2021 Gregor Baues. All rights reserved.
  *
  * This is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the
@@ -18,32 +18,48 @@
  * <https://www.gnu.org/licenses/>
  */
 
-#ifndef DccLayout_h
-#define DccLayout_h
+/**
+ * @class Diag
+This class reads the commandline option and flags and configures the run accordingly. 
+ * If the -i flag is set a interactive shell will be spun up reading commands from the prompt.
+ * @note A note for doxy
+ * @author grbba
+ */
 
-#include "DccModel.hpp"
-
-#include <nlohmann/json.hpp>
-#include <nlohmann/json-schema.hpp>
+#ifndef DccConfig_h
+#define DccConfig_h
 
 
-using nlohmann::json;
-using nlohmann::json_schema::json_validator;
+#include <string>
 
-class DccLayout {
+#include "config.h"
+#include "Diag.hpp"
+
+class DccConfig
+{
 private:
 
-  dccexlayout::DccExLayout layout;
-  json_validator validator;
-  json schema;
 
 public:
 
-  auto readLayout(std::string *dccSchemaFile, std::string *dccLayoutFile) -> int;
-  auto build() -> int;
+    /**
+     * @brief reads the commandline parameters and initalizes the environment
+     * 
+     * @param argc  from main()
+     * @param argv   from main()
+     */
+    static auto setup(int argc, char **argv) -> int;
 
-  DccLayout() = default;
-  ~DccLayout() = default;
+    static std::string dccLayoutFile;
+    static std::string dccSchemaFile;
+    static bool isInteractive;
+    static DiagLevel level;
+    static bool fileInfo;
+
+    DccConfig()= default;
+    ~DccConfig() = default;
 };
+
+
 
 #endif

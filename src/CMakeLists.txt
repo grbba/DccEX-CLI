@@ -9,17 +9,18 @@ enable_testing()
 
 include_directories(../include ../../boost_1_75_0 /usr/local/Cellar/nlohmann-json/3.9.1_1/include /usr/local/Cellar/llvm/11.0.0_1/include )
 
-add_executable( main 
+add_executable( dcclayout 
                 main.cpp 
                 Diag.cpp 
                 DccVertex.cpp
                 DccGraph.cpp 
                 DccPathFinder.cpp
                 DccLayout.cpp
+                DccConfig.cpp
               )
 
-target_compile_features(main PRIVATE cxx_std_17)
-target_link_libraries(main nlohmann_json_schema_validator)
+target_compile_features(dcclayout PRIVATE cxx_std_17)
+target_link_libraries(dcclayout nlohmann_json_schema_validator)
 
 find_program(CLANG_TIDY_BIN clang-tidy)
 find_program(RUN_CLANG_TIDY_BIN /usr/local/bin/run-clang-tidy.py)

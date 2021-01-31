@@ -1,5 +1,5 @@
 /*
- * © 2020 Gregor Baues. All rights reserved.
+ * © 2021 Gregor Baues. All rights reserved.
  *
  * This is free software: you can redistribute it and/or modify it under
  * the terms of the GNU General Public License as published by the
@@ -18,32 +18,12 @@
  * <https://www.gnu.org/licenses/>
  */
 
-#ifndef DccLayout_h
-#define DccLayout_h
+/*
+ *   Various default settings which can be changed @compile time
+ */
 
-#include "DccModel.hpp"
-
-#include <nlohmann/json.hpp>
-#include <nlohmann/json-schema.hpp>
-
-
-using nlohmann::json;
-using nlohmann::json_schema::json_validator;
-
-class DccLayout {
-private:
-
-  dccexlayout::DccExLayout layout;
-  json_validator validator;
-  json schema;
-
-public:
-
-  auto readLayout(std::string *dccSchemaFile, std::string *dccLayoutFile) -> int;
-  auto build() -> int;
-
-  DccLayout() = default;
-  ~DccLayout() = default;
-};
-
-#endif
+#define CONFIG_DCCEX_SCHEMA "../../assets/DccEXLayout.json"
+#define CONFIG_INTERACTIVE false
+#define CONFIG_FILEINFO                                                        \
+  false // if true will start in iteractive mode even if -i is not specified on
+        // the commmand line

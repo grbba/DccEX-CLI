@@ -40,7 +40,7 @@
           "trackelements": [
             { "bumper": { "description": "foo", "path": 1 } },
             { "rail": { "path": [1, 2], "length": 3 } },
-            { "turnout": { "narrow": 2, "wide": [3, 4], "length": 0 } },
+            { "turnout": { "description": "Enter refueling siding", "narrow": 2, "wide": [3, 4], "length": 0 } },
             {
               "turnout": {
                 "description": "Turnout to industry",

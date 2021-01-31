@@ -17,6 +17,7 @@
  * See the GNU General Public License for more details
  * <https://www.gnu.org/licenses/>
  */
+
 #include "DccVertex.hpp"
 #include "Diag.hpp"
 

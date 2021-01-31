@@ -21,16 +21,10 @@
 #ifndef DccVertex_h
 #define DccVertex_h
 
-#include <algorithm>
 #include <memory>
-#include <string>
 #include <variant>
-#include <vector>
-
-#include "../include/formatter.h"
 
 #include "DccModel.hpp"
-#include "Diag.hpp"
 
 /**
  * @brief defines for finding out the type of track element Track elements

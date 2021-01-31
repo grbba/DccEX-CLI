@@ -1336,7 +1336,7 @@ constexpr const char *type_name() {
 template <typename T,
           enable_if_t<classify_object<T>::value == object_category::enumeration, detail::enabler> = detail::dummy>
 constexpr const char *type_name() {
-    return "ENUM";
+    return "enum";
 }
 
 /// Print name for enumeration types

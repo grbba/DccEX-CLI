@@ -31,13 +31,13 @@
 using nlohmann::json;
 using nlohmann::json_schema::json_validator;
 
-auto DccLayout::readLayout(std::string dccSchemaFile, std::string dccLayoutFile)
+auto DccLayout::readLayout(std::string *dccSchemaFile, std::string *dccLayoutFile)
     -> int {
 
   INFO("Reading & validating DccExLayout schema ...");
 
-  std::ifstream layoutFile(dccLayoutFile);
-  std::ifstream schemaFile(dccSchemaFile);
+  std::ifstream layoutFile(*dccLayoutFile);
+  std::ifstream schemaFile(*dccSchemaFile);
 
   if (!layoutFile.is_open()) {
     ERR("Layout file %s not found", dccLayoutFile);
