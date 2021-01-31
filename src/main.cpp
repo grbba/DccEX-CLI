@@ -47,14 +47,16 @@ auto main(int argc, char **argv) -> int {
 
   std::cout << "Welcome to the DCC++ EX Layout generator!\n";
 
+  // setup the configuration
   if (!DccConfig::setup(argc, argv)) {
+    // only continue if the configuration has been set properly
     return DCC_SUCCESS;
   };
 
   // read layout and schema
   DccLayout myLayout;
 
-  myLayout.readLayout(&DccConfig::dccSchemaFile, &DccConfig::dccLayoutFile);
+  myLayout.readLayout();
   myLayout.build();
 
   return DCC_SUCCESS;

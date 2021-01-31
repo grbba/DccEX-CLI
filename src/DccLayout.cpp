@@ -22,6 +22,7 @@
 #include <iostream>
 #include <string>
 
+#include "DccConfig.hpp"
 #include "DccGraph.hpp"
 #include "DccPathFinder.hpp"
 #include "Diag.hpp"
@@ -31,22 +32,22 @@
 using nlohmann::json;
 using nlohmann::json_schema::json_validator;
 
-auto DccLayout::readLayout(std::string *dccSchemaFile, std::string *dccLayoutFile)
+auto DccLayout::readLayout()
     -> int {
 
   INFO("Reading & validating DccExLayout schema ...");
 
-  std::ifstream layoutFile(*dccLayoutFile);
-  std::ifstream schemaFile(*dccSchemaFile);
+  std::ifstream layoutFile(DccConfig::dccLayoutFile);
+  std::ifstream schemaFile(DccConfig::dccSchemaFile);
 
   if (!layoutFile.is_open()) {
-    ERR("Layout file %s not found", dccLayoutFile);
+    ERR("Layout file %s not found", DccConfig::dccLayoutFile);
     return EXIT_FAILURE;
   }
   if (!schemaFile.is_open()) {
     WARN("Schema file %s not found. Trying to use the default DccEXLayout "
          "schema file",
-         dccSchemaFile);
+         DccConfig::dccSchemaFile);
   }
 
   try {
@@ -107,9 +108,6 @@ auto DccLayout::build() -> int {
   INFO("%s has %d module(s)", layout.get_layout().get_name(),
        layout.get_modules().size());
 
-  DccGraph g; // g will hold the full graph with all vertices ( with their
-              // connections i.e. is build in adjacency list form / double
-              // vertices etc ...
   DccPathFinder gpf(&g); // setup the Pathfinder for the graph g -> to be
                          // inialized after the graph has been build
 

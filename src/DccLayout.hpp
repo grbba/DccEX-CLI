@@ -22,6 +22,8 @@
 #define DccLayout_h
 
 #include "DccModel.hpp"
+#include "DccGraph.hpp"
+
 
 #include <nlohmann/json.hpp>
 #include <nlohmann/json-schema.hpp>
@@ -33,13 +35,16 @@ using nlohmann::json_schema::json_validator;
 class DccLayout {
 private:
 
-  dccexlayout::DccExLayout layout;
-  json_validator validator;
+  dccexlayout::DccExLayout layout;   // the model structure as parsed from the layout file; filled by readLayout
+  json_validator validator; 
   json schema;
+  DccGraph g; // g will hold the full graph with all vertices ( with their
+              // connections i.e. is build in adjacency list form / double
+              // vertices etc ...
 
 public:
 
-  auto readLayout(std::string *dccSchemaFile, std::string *dccLayoutFile) -> int;
+  auto readLayout() -> int;
   auto build() -> int;
 
   DccLayout() = default;
