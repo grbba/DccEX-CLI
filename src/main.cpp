@@ -58,6 +58,11 @@ auto main(int argc, char **argv) -> int {
 
   myLayout.readLayout();
   myLayout.build();
+  myLayout.info();
+
+  // get some info
+
+
 
   return DCC_SUCCESS;
 }

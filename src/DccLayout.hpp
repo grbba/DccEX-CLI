@@ -35,7 +35,7 @@ using nlohmann::json_schema::json_validator;
 class DccLayout {
 private:
 
-  dccexlayout::DccExLayout layout;   // the model structure as parsed from the layout file; filled by readLayout
+  DccModel::DccExLayout layout;   // the model structure as parsed from the layout file; filled by readLayout
   json_validator validator; 
   json schema;
   DccGraph g; // g will hold the full graph with all vertices ( with their
@@ -46,6 +46,10 @@ public:
 
   auto readLayout() -> int;
   auto build() -> int;
+  
+  void info() {
+     g.printInfo();
+  }
 
   DccLayout() = default;
   ~DccLayout() = default;

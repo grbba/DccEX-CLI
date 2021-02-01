@@ -22,7 +22,7 @@
 #include "DccVertex.hpp"
 #include "Diag.hpp"
 
-auto DccGraph::checkModule(dccexlayout::Module *module) -> int {
+auto DccGraph::checkModule(DccModel::Module *module) -> int {
   mn++; // each time called the number increases by one;
   module->set_dccid(mn);
 
@@ -108,7 +108,7 @@ std::shared_ptr<DccVertex> DccGraph::createVertex(int16_t module, int32_t dccid,
  * @param te Address of the Trackelement (from the model )
  */
 void DccGraph::buildBumperVertex(int mn, int ten,
-                                 dccexlayout::Trackelement *te) {
+                                 DccModel::Trackelement *te) {
   DBG("Bumper[%d] %s", te->get_dccid(),
       te->get_bumper().get()->get_description() == nullptr
           ? ""
@@ -119,8 +119,11 @@ void DccGraph::buildBumperVertex(int mn, int ten,
 }
 
 void DccGraph::buildTurnoutVertex(int mn, int ten,
-                                  dccexlayout::Trackelement *te) {
+                                  DccModel::Trackelement *te) {
   // creates three vertices
+  // Diag::push();
+  // Diag::setLogLevel(DiagLevel::LOGV_DEBUG);
+
   DBG("Turnout[%d] %s", te->get_dccid(),
       te->get_turnout().get()->get_description() == nullptr
           ? ""
@@ -137,10 +140,12 @@ void DccGraph::buildTurnoutVertex(int mn, int ten,
     DBG("Adding wide [%x] to narrow [%x] connection", wide, narrow);
     narrow.get()->addConnection(wide);
   };
+
+  // Diag::pop();
   INFO("Turnout <T %d%d %d>", mn, vid, ten);
 }
 
-void DccGraph::buildRailVertex(int mn, int ten, dccexlayout::Trackelement *te) {
+void DccGraph::buildRailVertex(int mn, int ten, DccModel::Trackelement *te) {
   // creates two vertices
   DBG("Segment[%d] %s", te->get_dccid(),
       te->get_rail().get()->get_description() == nullptr
@@ -162,7 +167,7 @@ void DccGraph::buildRailVertex(int mn, int ten, dccexlayout::Trackelement *te) {
 }
 
 void DccGraph::buildCrossingVertex(int mn, int ten,
-                                   dccexlayout::Trackelement *te) {
+                                   DccModel::Trackelement *te) {
 
   DccVertexPtr_t in;
   DccVertexPtr_t out;
@@ -244,7 +249,7 @@ void DccGraph::buildCrossingVertex(int mn, int ten,
  * @param moduleNumber
  */
 void DccGraph::buildGraph(int mn) {
-  dccexlayout::Trackplan tp = tps.at(
+  DccModel::Trackplan tp = tps.at(
       mn -
       1); // vector index starts at 0 but we number the modules starting at 1
 
@@ -292,7 +297,7 @@ void DccGraph::buildGraph(int mn) {
  *
  * @param l  reference to the layout as parsed from the layouts json file
  */
-void DccGraph::build(dccexlayout::DccExLayout *l) {
+void DccGraph::build(DccModel::DccExLayout *l) {
   // Read all modules and check if there is a trackplan for each module
   // as there may be more trackplans in there as are used by modules collect the
   // used ones in a vector
@@ -323,17 +328,17 @@ void DccGraph::build(dccexlayout::DccExLayout *l) {
 
   for (int i = 0; i < jn; i++) {
 
-    TrackElement_t j = std::make_shared<dccexlayout::Junction>(
+    TrackElement_t j = std::make_shared<DccModel::Junction>(
         layout->get_junctions().get()->at(i));
 
     // dccid and the trackelement doesn't exists
     // ten++; // to be set as dccid for the rail same for the second vertex
     // the track element is to be the junction object!
 
-    auto from = std::get_if<std::shared_ptr<dccexlayout::Junction>>(&j)
+    auto from = std::get_if<std::shared_ptr<DccModel::Junction>>(&j)
                     ->get()
                     ->get_from();
-    auto to = std::get_if<std::shared_ptr<dccexlayout::Junction>>(&j)
+    auto to = std::get_if<std::shared_ptr<DccModel::Junction>>(&j)
                   ->get()
                   ->get_to();
 

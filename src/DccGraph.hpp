@@ -40,9 +40,9 @@ private:
   int bn = 0;     // current bumper number ( module scoped )
   int cn = 0;     // current crossing number ( module scoped ) no disticntion
                   // between crossing, single and double slips
-  dccexlayout::DccExLayout
+  DccModel::DccExLayout
       *layout; // entry to the layout model from the json file
-  std::vector<dccexlayout::Trackplan>
+  std::vector<DccModel::Trackplan>
       tps; // vector of all 'used' trackplans by the layout
   std::map<int32_t, std::vector<DccVertexPtr_t>>
       tev;                // map of all vertices per trackelement
@@ -60,13 +60,13 @@ private:
                           // graph i.e. for all modules. BY dedofing it we find
                           // the module and the nodeid wihin the module
 
-  auto checkModule(dccexlayout::Module *module) -> int;
+  auto checkModule(DccModel::Module *module) -> int;
   void buildGraph(int mn);
 
-  void buildBumperVertex(int mn, int ten, dccexlayout::Trackelement *te);
-  void buildTurnoutVertex(int mn, int ten, dccexlayout::Trackelement *te);
-  void buildRailVertex(int mn, int ten, dccexlayout::Trackelement *te);
-  void buildCrossingVertex(int mn, int ten, dccexlayout::Trackelement *te);
+  void buildBumperVertex(int mn, int ten, DccModel::Trackelement *te);
+  void buildTurnoutVertex(int mn, int ten, DccModel::Trackelement *te);
+  void buildRailVertex(int mn, int ten, DccModel::Trackelement *te);
+  void buildCrossingVertex(int mn, int ten, DccModel::Trackelement *te);
   DccVertexPtr_t createVertex(int16_t module, int32_t dccid, int32_t nodeid,
                               TrackElement_t te);
 
@@ -83,7 +83,7 @@ public:
   /**
    * @brief takes a layout and builds all the required graph structures
    */
-  void build(dccexlayout::DccExLayout *layout);
+  void build(DccModel::DccExLayout *layout);
   bool isBuild() { return _isBuild; }
 
   /**

@@ -127,7 +127,7 @@ auto DccLayout::build() -> int {
   // g.printTrackElements();
   // get some info about the build layout/graph
 
-  g.printInfo();
+ 
   gpf.init();
   gpf.printAllPaths();
 

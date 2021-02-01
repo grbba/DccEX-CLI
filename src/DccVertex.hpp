@@ -31,24 +31,24 @@
  *
  */
 #define isTurnout(x)                                                           \
-  std::get_if<std::shared_ptr<dccexlayout::Turnout>>(&x) != nullptr
-#define getTurnout(x) std::get_if<std::shared_ptr<dccexlayout::Turnout>>(&x)
+  std::get_if<std::shared_ptr<DccModel::Turnout>>(&x) != nullptr
+#define getTurnout(x) std::get_if<std::shared_ptr<DccModel::Turnout>>(&x)
 
 #define isBumper(x)                                                            \
-  std::get_if<std::shared_ptr<dccexlayout::Bumper>>(&x) != nullptr
-#define getBumper(x) std::get_if<std::shared_ptr<dccexlayout::Bumper>>(&x)
+  std::get_if<std::shared_ptr<DccModel::Bumper>>(&x) != nullptr
+#define getBumper(x) std::get_if<std::shared_ptr<DccModel::Bumper>>(&x)
 
 #define isSegement(x)                                                          \
-  std::get_if<std::shared_ptr<dccexlayout::Rail>>(&x) != nullptr
-#define getSegment(x) std::get_if<std::shared_ptr<dccexlayout::Rail>>(&x)
+  std::get_if<std::shared_ptr<DccModel::Rail>>(&x) != nullptr
+#define getSegment(x) std::get_if<std::shared_ptr<DccModel::Rail>>(&x)
 
 #define isCrossing(x)                                                          \
-  std::get_if<std::shared_ptr<dccexlayout::Crossing>>(&x) != nullptr
-#define getCrossing(x) std::get_if<std::shared_ptr<dccexlayout::Crossing>>(&x)
+  std::get_if<std::shared_ptr<DccModel::Crossing>>(&x) != nullptr
+#define getCrossing(x) std::get_if<std::shared_ptr<DccModel::Crossing>>(&x)
 
 #define isJunction(x)                                                          \
-  std::get_if<std::shared_ptr<dccexlayout::Junction>>(&x) != nullptr
-#define getJunction(x) std::get_if<std::shared_ptr<dccexlayout::Junction>>(&x)
+  std::get_if<std::shared_ptr<DccModel::Junction>>(&x) != nullptr
+#define getJunction(x) std::get_if<std::shared_ptr<DccModel::Junction>>(&x)
 
 class DccDoubleVertex;
 class DccVertex;
@@ -64,11 +64,11 @@ enum Telement {
 enum GraphMarker { NOK, OK, UNKNOWN };
 
 // to be completed with crossing, singe/double slips
-typedef std::variant<std::shared_ptr<dccexlayout::Bumper>,
-                     std::shared_ptr<dccexlayout::Rail>,
-                     std::shared_ptr<dccexlayout::Turnout>,
-                     std::shared_ptr<dccexlayout::Crossing>,
-                     std::shared_ptr<dccexlayout::Junction>>
+typedef std::variant<std::shared_ptr<DccModel::Bumper>,
+                     std::shared_ptr<DccModel::Rail>,
+                     std::shared_ptr<DccModel::Turnout>,
+                     std::shared_ptr<DccModel::Crossing>,
+                     std::shared_ptr<DccModel::Junction>>
     TrackElement_t;
 
 typedef std::shared_ptr<DccVertex> DccVertexPtr_t;

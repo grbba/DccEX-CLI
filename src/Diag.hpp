@@ -31,11 +31,23 @@
 
 #include "../include/formatter.h"
 #include <iostream>
+#include <stack>
 
 #define DCC_SUCCESS 1
 #define DCC_FAILURE 0
 
 enum class DiagLevel { LOGV_SILENT, LOGV_INFO, LOGV_WARN, LOGV_ERROR, LOGV_TRACE, LOGV_DEBUG };
+
+struct DiagConfig {
+  DiagLevel _nLogLevel;
+  int _nInfoLevel;       // for future use
+  bool fileInfo;
+  bool println;
+
+  DiagConfig() = default;
+  ~DiagConfig() = default;
+
+};
 
 class Diag {
 private:
@@ -44,6 +56,7 @@ private:
   static bool fileInfo;
   static bool println;
   static const std::map<std::string, DiagLevel> diagMap; 
+  static std::stack<DiagConfig *> config;
 
 public:
   static auto getDiagMap() -> std::map<std::string, DiagLevel> {
@@ -64,6 +77,9 @@ public:
   static void setPrintln(bool value) { println = value; }
 
   static bool getPrintln() { return println; }
+
+  static void push();  // pushes a Diag Config onto the stack
+  static void pop();   // pops the last diagConfig from the stack and reinstatiates its values;
 
   Diag() = default;
   ~Diag() = default;
