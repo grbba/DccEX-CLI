@@ -18,6 +18,14 @@
  * <https://www.gnu.org/licenses/>
  */
 
+/**
+ * @class DccPath 
+ * Holds all the path information for a layout and allows to get information about the paths for the layout 
+ * controller ( loading , setting etc of paths in the command station)
+ * @note The layout controller is work in progress
+ * @author grbba
+ */
+
 #ifndef DccPath_h
 #define DccPath_h
 

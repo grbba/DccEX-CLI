@@ -18,6 +18,16 @@
  * <https://www.gnu.org/licenses/>
  */
 
+/**
+ * @class DccLayout 
+ * Main interface for creating the Layout mode. Once the command line parameters set and 
+ * stored in the configuration a call to build() will read the files, validate the layout description and
+ * generate the paths applicable for the layout.
+ * @note Capacty is not yet considered. This will become important for layout control i.e. sending a given 
+ * train only on routes where the endpoint has enough capacity to hold the train. 
+ * @author grbba
+ */
+
 #ifndef DccGraph_h
 #define DccGraph_h
 
