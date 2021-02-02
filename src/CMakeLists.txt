@@ -17,6 +17,7 @@ add_executable( dcclayout
                 DccPathFinder.cpp
                 DccLayout.cpp
                 DccConfig.cpp
+                DccPath.cpp
               )
 
 target_compile_features(dcclayout PRIVATE cxx_std_17)

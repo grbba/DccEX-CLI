@@ -4,10 +4,11 @@
 // inital Logging Level
 
 
-DiagLevel Diag::_nLogLevel = DiagLevel::LOGV_DEBUG;
+DiagLevel Diag::_nLogLevel = DiagLevel::LOGV_INFO;    // default loglevel
 int Diag::_nInfoLevel = 0;
 bool Diag::fileInfo = true;
 bool Diag::println = true;
+bool Diag::printLabel = true;
 std::stack<DiagConfig *> Diag::config;
 
 const std::map<std::string, DiagLevel> Diag::diagMap{
@@ -24,6 +25,7 @@ void Diag::push() {
     dc->_nLogLevel = _nLogLevel;
     dc->_nInfoLevel = _nInfoLevel;
     dc->fileInfo = fileInfo;
+    dc->printLabel = printLabel;
 
     config.push(dc);
 
@@ -37,6 +39,7 @@ void Diag::pop() {
     _nLogLevel = dc->_nLogLevel;
     _nInfoLevel = dc->_nInfoLevel;
     fileInfo = dc->fileInfo;
+    printLabel = dc->printLabel;
     config.pop();
     delete dc;
 

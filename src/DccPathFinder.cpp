@@ -20,9 +20,31 @@
 
 #include "DccPathFinder.hpp"
 
+#include "DccPath.hpp"
 #include "DccGraph.hpp"
 #include "DccVertex.hpp"
 #include "Diag.hpp"
+
+
+void DccPathFinder::calculate() {
+  //Diag::push();
+
+  //Diag::setFileInfo(true);
+  //Diag::setLogLevel(DiagLevel::LOGV_DEBUG);
+
+  if (_graph->isBuild()) {
+    findAllRail2RailPaths();
+    isCalculated = true;
+    _path->setCalculatedFlag(true);
+  } else {
+    isCalculated = false;
+    _path->setCalculatedFlag(false);
+    ERR("Layout Graph has not been build; Can't continue");
+  }
+
+  //Diag::pop();
+  return;
+}
 
 /**
  * @brief Fetches the vretices to start from for the provided nodeid
@@ -38,9 +60,6 @@ auto findStartVertex(int32_t nodeid, std::vector<DccVertexPtr_t> *start,
   bool foundStart = false;
   for (auto vertex : *g) {
     if (vertex.second.get()->getNodeid() == nodeid) {
-      // std::cout << nodeid << " " << vertex.second.get()->getNodeid() << " "
-      // << vertex.second.get()->getTeType() << std::endl;
-
       switch (vertex.second.get()->getTeType()) {
       case BUMPER: // start from its sibling
       {
@@ -49,8 +68,6 @@ auto findStartVertex(int32_t nodeid, std::vector<DccVertexPtr_t> *start,
         if (pb == nullptr) {
           break;
         }
-        // std::cout << "Added bumper sibling" << std::endl;
-        // pb.get()->printVertex();
         start->push_back(pb);
         foundStart = true;
         break;
@@ -60,8 +77,6 @@ auto findStartVertex(int32_t nodeid, std::vector<DccVertexPtr_t> *start,
       case TURNOUT:
       case RAIL: // add both except if the sibling is a BUMPER
       {
-        // std::cout << "Added 2 turnout/rail" << std::endl;
-        // vertex.second->printVertex();
         start->push_back(vertex.second);
         DccVertexPtr_t pb =
             vertex.second.get()->getDv().get()->findSibling(vertex.second);
@@ -69,8 +84,6 @@ auto findStartVertex(int32_t nodeid, std::vector<DccVertexPtr_t> *start,
           break;
         }
         if (pb.get()->getTeType() != BUMPER) {
-          // std::cout << "Added 2nd which is not a bumper" << std::endl;
-          // pb.get()->printVertex();
           start->push_back(pb);
         }
         foundStart = true;
@@ -93,16 +106,14 @@ auto findStartVertex(int32_t nodeid, std::vector<DccVertexPtr_t> *start,
 void DccPathFinder::findAllRail2RailPaths() {
   int n;
   int m;
-  // Diag::setLogLevel(LOGV_DEBUG);
-  for (auto var : g->getGraph()) {
+  
+  for (auto var : _graph->getGraph()) {
     if (var.second->getTeType() == RAIL) {
-      // var.second->printVertex();
       var.second->cantorDecode(var.second->getNodeid(), &m, &n);
       DBG("Find paths for %d - (%d/%d)", var.second->getNodeid(), m, n);
       findAllPaths(var.second->getNodeid());
     }
   }
-  // Diag::setLogLevel(LOGV_WARN);
 
   // find all nodeid from rail segments
   // for each nodeid run the path finder and insert all the pointers of found
@@ -110,33 +121,6 @@ void DccPathFinder::findAllRail2RailPaths() {
   // to the path allowing to go from x to y providing a second graph allwing to
   // determine ev reverse operatons to get from one segment to another where you
   // can not go directly e.g. in time saver 1 6 R 12 R 15 R 20
-}
-
-void DccPathFinder::printPathsByNode(Node_t nodeid) {
-  int n, m;
-
-  DccVertex::cantorDecode(nodeid, &m, &n);
-  auto p = getPathsByNode(nodeid);
-
-  // report all paths found
-  INFO("[%d] direct paths are available from module [%d] node [%d]", p->size(),
-       m, n);
-  for (auto pa : *p) {
-    int _pn, _pm;
-    std::cout << "start -> ";
-    for (auto n : pa) {
-      DccVertex::cantorDecode(n, &_pm, &_pn);
-      std::cout << _pm << "." << _pn << " -> ";
-    }
-    std::cout << "end" << std::endl;
-  }
-}
-
-void DccPathFinder::printAllPaths() {
-  INFO("Printing ALL paths available for this Layout");
-  for (auto ap : allPaths) {
-    printPathsByNode(ap.first);
-  }
 }
 
 /**
@@ -147,6 +131,9 @@ void DccPathFinder::printAllPaths() {
  */
 void DccPathFinder::findAllPaths(int32_t nodeid) {
   std::vector<DccVertexPtr_t> start;
+  auto paths = _path->getNodePaths();
+  auto allPaths = _path->getAllPaths();
+
   int _sn, _sm;
   DBG("-> findAllPaths");
   DccVertex::cantorDecode(nodeid, &_sm, &_sn);
@@ -154,10 +141,7 @@ void DccPathFinder::findAllPaths(int32_t nodeid) {
   _start = nodeid;
   _end = 0;
 
-  // setStart(nodeid);
-  // setEnd(0);
-
-  auto v = g->getGraph();
+  auto v = _graph->getGraph();
 
   // reset the mark left from a previous run
   for (auto vertex : v) {
@@ -165,10 +149,11 @@ void DccPathFinder::findAllPaths(int32_t nodeid) {
   }
 
   DBG("start: %d end: %d", _start, _end);
-  DBG("Paths %x  size %d", &paths, paths.size());
+  DBG("Paths %x  size %d", paths, paths->size());
+
   if (findStartVertex(nodeid, &start, &v)) {
     TRC("Calculating direct paths for module [%d] node [%d]", _sm, _sn);
-    DBG(" Number of start nodes %d", start.size());
+    DBG("Number of start nodes %d", start.size());
     for (auto v : start) {
       DccPath_t p;
       DBG("v:%x p:%x sizeof p: %d", v, &p, p.size());
@@ -178,8 +163,9 @@ void DccPathFinder::findAllPaths(int32_t nodeid) {
     ERR("DFS::No such nodeid [%d]", _sn);
     return;
   }
-  allPaths.insert({nodeid, paths});
-  paths.clear();
+
+  allPaths->insert({nodeid, *paths});
+  paths->clear();
 }
 
 /**
@@ -192,7 +178,8 @@ void DccPathFinder::findAllPaths(int32_t nodeid) {
 void DccPathFinder::findAllPaths(int32_t s, int32_t e) {
   int _sm, _em;
   int _sn, _en;
-
+  auto paths = _path->getNodePaths();
+ 
   DccVertex::cantorDecode(s, &_sm, &_sn);
   DccVertex::cantorDecode(e, &_em, &_en);
 
@@ -201,7 +188,7 @@ void DccPathFinder::findAllPaths(int32_t s, int32_t e) {
   _start = s;
   _end = e;
 
-  auto v = g->getGraph();
+  auto v = _graph->getGraph();
   // reset the marks left from a previous run
   for (auto vertex : v) {
     vertex.second->mark = NOK;
@@ -220,8 +207,8 @@ void DccPathFinder::findAllPaths(int32_t s, int32_t e) {
   }
   // report all paths found
   INFO("[%d] direct paths are available from node [%d] to node [%d]",
-       paths.size(), _sn, _en);
-  for (auto pa : paths) {
+       paths->size(), _sn, _en);
+  for (auto pa : *paths) {
     int _pn, _pm;
 
     for (auto n : pa) {
@@ -230,7 +217,7 @@ void DccPathFinder::findAllPaths(int32_t s, int32_t e) {
     }
     std::cout << std::endl;
   }
-  paths.clear();
+  paths->clear();
 }
 
 /**
@@ -243,9 +230,9 @@ void DccPathFinder::findAllPaths(int32_t s, int32_t e) {
  * checked before in findAllGraphs)
  */
 void DccPathFinder::DFS(DccPath_t path, DccVertexPtr_t start, int32_t end) {
-
+  auto paths = _path->getNodePaths();
+  // auto allPaths = *_path->getAllPaths();
   std::vector<DccVertexPtr_t> toVisit;
-  // std::cout << " " << start.get()->getNodeid() << " " << std::endl;
 
   // we are done if there are no more connections
   // or if we find the inital start node again ( circle )
@@ -256,7 +243,7 @@ void DccPathFinder::DFS(DccPath_t path, DccVertexPtr_t start, int32_t end) {
     // add the last node and save the path in paths
     if (start.get()->getNodeid() == end || start.get()->getNodeid() == _start) {
       path.push_back(start.get()->getNodeid());
-      paths.push_back(path);
+      paths->push_back(path);
     }
     return;
   }
@@ -290,6 +277,8 @@ void DccPathFinder::DFS(DccPath_t path, DccVertexPtr_t start, int32_t end) {
  * be defined by the public function DFS
  */
 void DccPathFinder::DFS(DccPath_t path, DccVertexPtr_t start) {
+  auto paths = _path->getNodePaths();
+  // auto allPaths = *_path->getAllPaths();
   std::vector<DccVertexPtr_t> toVisit;
 
   // we are done if there are no more connections
@@ -299,7 +288,8 @@ void DccPathFinder::DFS(DccPath_t path, DccVertexPtr_t start) {
       (start.get()->getNodeid() == _start && start.get()->mark == OK)) {
     // we are done and can push the graph into the paths vector
     path.push_back(start.get()->getNodeid());
-    paths.push_back(path);
+    // _path->printDccPath(path);
+    paths->push_back(path);
     return;
   }
 
@@ -320,8 +310,9 @@ void DccPathFinder::DFS(DccPath_t path, DccVertexPtr_t start) {
   // get all dccVertices adjacent to start
 }
 
-DccPathFinder::DccPathFinder(DccGraph *graph) {
-  g = graph;
+DccPathFinder::DccPathFinder(DccGraph *g, DccPath *p) {
+  _graph = g;
+  _path = p;
   _start = 0;
   _end = 0;
 };

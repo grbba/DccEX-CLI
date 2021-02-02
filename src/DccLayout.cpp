@@ -32,8 +32,7 @@
 using nlohmann::json;
 using nlohmann::json_schema::json_validator;
 
-auto DccLayout::readLayout()
-    -> int {
+auto DccLayout::readLayout() -> int {
 
   INFO("Reading & validating DccExLayout schema ...");
 
@@ -42,7 +41,7 @@ auto DccLayout::readLayout()
 
   if (!layoutFile.is_open()) {
     ERR("Layout file %s not found", DccConfig::dccLayoutFile);
-    return EXIT_FAILURE;
+    return DCC_FAILURE;
   }
   if (!schemaFile.is_open()) {
     WARN("Schema file %s not found. Trying to use the default DccEXLayout "
@@ -55,7 +54,7 @@ auto DccLayout::readLayout()
   } catch (const std::exception &e) {
     ERR("Validation of schema failed: %s", e.what());
     ERR("Validation failed at: [%s] while parsing schema", schemaFile.tellg());
-    return EXIT_FAILURE;
+    return DCC_FAILURE;
   }
 
   INFO("Initalizing DccExLayout schema for layout parsing ...");
@@ -63,7 +62,7 @@ auto DccLayout::readLayout()
     validator.set_root_schema(schema); // insert root-schema
   } catch (const std::exception &e) {
     ERR("Schema initalization failed: %s", e.what());
-    return EXIT_FAILURE;
+    return DCC_FAILURE;
   }
 
   INFO("Validating layout description ... ");
@@ -73,7 +72,7 @@ auto DccLayout::readLayout()
   } catch (const std::exception &e) {
 
     ERR("Validation failed at: [%s] while parsing layout", schemaFile.tellg());
-    return EXIT_FAILURE;
+    return DCC_FAILURE;
   }
 
   try {
@@ -81,7 +80,7 @@ auto DccLayout::readLayout()
     validator.validate(document);
   } catch (const std::exception &e) {
     ERR("Validation of parsed layout failed: %s", e.what());
-    return EXIT_FAILURE;
+    return DCC_FAILURE;
   }
 
   INFO("Loading layout description ... ");
@@ -89,34 +88,46 @@ auto DccLayout::readLayout()
   // reset to start position of the file as it was read before for the
   // Validation step
 
-  layoutFile.clear();
   layoutFile.seekg(0);
 
   try {
     layout = nlohmann::json::parse(layoutFile);
   } catch (json::parse_error &e) {
     ERR("Loading of the layout failed: %s", e.what());
-    return EXIT_FAILURE;
+    return DCC_FAILURE;
   }
 
-  return EXIT_SUCCESS;
+  layoutFile.close();
+  schemaFile.close();
+
+  return DCC_SUCCESS;
 }
 
 auto DccLayout::build() -> int {
 
-  INFO("Building Layout ... : %s\n", layout.get_layout().get_name());
+  if (!readLayout()) {
+    ERR("Layout Model build failed cf. previous errors");
+    return DCC_FAILURE;
+  };
+
+  INFO("Generating Layout graph... : %s\n", layout.get_layout().get_name());
   INFO("%s has %d module(s)", layout.get_layout().get_name(),
        layout.get_modules().size());
 
-  DccPathFinder gpf(&g); // setup the Pathfinder for the graph g -> to be
-                         // inialized after the graph has been build
+  DccPathFinder gpf(&graph, &path); // setup the Pathfinder for the graph g -> to be
+                                    // inialized after the graph has been build as well as the path object to hold the results
 
   auto start = std::chrono::high_resolution_clock::now();
 
   // feed the layout into the graph builder
-  g.build(&layout);
+  graph.build(&layout);
+  
 
-  for (auto var : *g.getDvGraph()) {
+  /**
+   * @todo this should be a function in the graph object to be called
+   * 
+   */
+  for (auto var : *graph.getDvGraph()) {
     var.second.get()->printDoubleVertex();
   }
 
@@ -124,18 +135,39 @@ auto DccLayout::build() -> int {
   auto duration =
       std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
 
-  // g.printTrackElements();
-  // get some info about the build layout/graph
+  INFO("Generating Paths ...");
 
- 
-  gpf.init();
-  gpf.printAllPaths();
+  Diag::setLogLevel(DiagLevel::LOGV_INFO);
+  Diag::setFileInfo(false);
 
+  gpf.calculate();
+
+  // graph.setNumberOfDirectPaths(gpf.getAllPaths()->size());
+  // path.printAllPaths();
   // gpf.findAllPaths(1, 20);
   // gpf.findAllPaths(DccVertex::cantorEncode(1,9));
 
   // INFO("Finished computation at %s", std::ctime(&end_time));
   INFO("Elapsed time: [%d]ms", duration.count());
 
-  return EXIT_SUCCESS;
+  return DCC_SUCCESS;
+}
+
+void DccLayout::listPaths() {
+  Diag::push();
+  Diag::setPrintLabel(false);
+
+  INFO("Printing ALL %d paths available for this Layout", path.getNumberOfPaths());
+
+  const auto start = path.getAllPaths()->begin();    
+  const auto end = path.getAllPaths()->end();
+  for (auto it = start; it != end; ++it) {
+    path.printPathsByNode(it->first);
+  }
+
+  Diag::pop();
+}
+
+void DccLayout::info() {
+    graph.printInfo();
 }

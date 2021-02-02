@@ -43,6 +43,7 @@ struct DiagConfig {
   int _nInfoLevel;       // for future use
   bool fileInfo;
   bool println;
+  bool printLabel;
 
   DiagConfig() = default;
   ~DiagConfig() = default;
@@ -55,6 +56,7 @@ private:
   static int _nInfoLevel;       // for future use
   static bool fileInfo;
   static bool println;
+  static bool printLabel;
   static const std::map<std::string, DiagLevel> diagMap; 
   static std::stack<DiagConfig *> config;
 
@@ -62,7 +64,10 @@ public:
   static auto getDiagMap() -> std::map<std::string, DiagLevel> {
       return diagMap;
   }
-  static void setLogLevel(DiagLevel value) { _nLogLevel = value; }
+  
+  static void setLogLevel(DiagLevel value) { 
+    _nLogLevel = value; 
+  }
 
   static DiagLevel getLogLevel() { return _nLogLevel; }
 
@@ -77,6 +82,10 @@ public:
   static void setPrintln(bool value) { println = value; }
 
   static bool getPrintln() { return println; }
+
+  static void setPrintLabel(bool value) { printLabel = value; }
+
+  static bool getPrintLabel() { return printLabel; }
 
   static void push();  // pushes a Diag Config onto the stack
   static void pop();   // pops the last diagConfig from the stack and reinstatiates its values;
@@ -107,9 +116,9 @@ public:
 #ifndef DEBUG
 #define DEBUG
 #ifndef LOGLEVEL
-#define LOGLEVEL                                                               \
-  5 // compile time level by default up to error can be overridden at
-    // compiletime with a -D flag
+#define LOGLEVEL   5 // = DiagLevel::LOGV_DEBUG                                  
+// compile time level by default up to error can be overridden at
+// compiletime with a -D flag
 #endif
 #endif
 
@@ -121,12 +130,13 @@ public:
 // #define LOGV_SILENT 0
 
 #define LOGV_INFO_MSG(message...)                                              \
-  DIAG("::[INF]:");                                                            \
+  if (Diag::getPrintLabel())                                                   \
+    DIAG("::[INF]:");                                                          \
   if (Diag::getFileInfo())                                                     \
     DIAG("%s:%d : ", __FILE__, __LINE__);                                      \
   DIAG(message);                                                               \
   if (Diag::getPrintln())                                                      \
-    DIAG("\n");
+    DIAG("\n");         
 #define LOGV_WARN_MSG(message...)                                              \
   DIAG("::[WRN]:");                                                            \
   if (Diag::getFileInfo())                                                     \

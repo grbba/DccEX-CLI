@@ -107,8 +107,7 @@ std::shared_ptr<DccVertex> DccGraph::createVertex(int16_t module, int32_t dccid,
  * @param ten Trackelement number
  * @param te Address of the Trackelement (from the model )
  */
-void DccGraph::buildBumperVertex(int mn, int ten,
-                                 DccModel::Trackelement *te) {
+void DccGraph::buildBumperVertex(int mn, int ten, DccModel::Trackelement *te) {
   DBG("Bumper[%d] %s", te->get_dccid(),
       te->get_bumper().get()->get_description() == nullptr
           ? ""
@@ -118,11 +117,8 @@ void DccGraph::buildBumperVertex(int mn, int ten,
   createVertex(mn, ten, vid, te->get_bumper());
 }
 
-void DccGraph::buildTurnoutVertex(int mn, int ten,
-                                  DccModel::Trackelement *te) {
+void DccGraph::buildTurnoutVertex(int mn, int ten, DccModel::Trackelement *te) {
   // creates three vertices
-  // Diag::push();
-  // Diag::setLogLevel(DiagLevel::LOGV_DEBUG);
 
   DBG("Turnout[%d] %s", te->get_dccid(),
       te->get_turnout().get()->get_description() == nullptr
@@ -141,7 +137,6 @@ void DccGraph::buildTurnoutVertex(int mn, int ten,
     narrow.get()->addConnection(wide);
   };
 
-  // Diag::pop();
   INFO("Turnout <T %d%d %d>", mn, vid, ten);
 }
 
@@ -249,9 +244,8 @@ void DccGraph::buildCrossingVertex(int mn, int ten,
  * @param moduleNumber
  */
 void DccGraph::buildGraph(int mn) {
-  DccModel::Trackplan tp = tps.at(
-      mn -
-      1); // vector index starts at 0 but we number the modules starting at 1
+  // vector index starts at 0 but we number the modules starting at 1
+  DccModel::Trackplan tp = tps.at(mn - 1);
 
   tp.set_dccid(tpn);
   tpn++;
@@ -289,7 +283,6 @@ void DccGraph::buildGraph(int mn) {
       ten++;
     }
   }
-  // Diag::setLogLevel(LOGV_INFO);
 }
 
 /**
@@ -313,11 +306,11 @@ void DccGraph::build(DccModel::DccExLayout *l) {
 
   int jn = 0;
 
-  if ( layout->get_junctions() != nullptr  ) {
+  if (layout->get_junctions() != nullptr) {
     jn = layout->get_junctions().get()->size();
     INFO("Setting up [%d] Junctions ... ", jn);
   }
-  
+
   // for each junction build a rail segement out of thin air ..
   // one vertex for m1 with from path
   // one vertex for m2 with to path
@@ -335,12 +328,10 @@ void DccGraph::build(DccModel::DccExLayout *l) {
     // ten++; // to be set as dccid for the rail same for the second vertex
     // the track element is to be the junction object!
 
-    auto from = std::get_if<std::shared_ptr<DccModel::Junction>>(&j)
-                    ->get()
-                    ->get_from();
-    auto to = std::get_if<std::shared_ptr<DccModel::Junction>>(&j)
-                  ->get()
-                  ->get_to();
+    auto from =
+        std::get_if<std::shared_ptr<DccModel::Junction>>(&j)->get()->get_from();
+    auto to =
+        std::get_if<std::shared_ptr<DccModel::Junction>>(&j)->get()->get_to();
 
     TRC("Creating Junction #%d from [%s : %d] to [%s : %d]", i,
         from.get_from_module(), from.get_path(), to.get_to_module(),
@@ -351,7 +342,7 @@ void DccGraph::build(DccModel::DccExLayout *l) {
 
     DccVertexPtr_t in;
     DccVertexPtr_t out;
-    
+
     bool isJunction1 = false;
     bool isJunction2 = false;
 
@@ -408,7 +399,6 @@ void DccGraph::build(DccModel::DccExLayout *l) {
     for (auto v : graph) {
       auto vptr = v.second;
       if (vptr.get()->getNodeid() == i) {
-        // vptr.get()->printVertex();
         // Tell the vertex which dv it is part of; allows to navigate from one
         // Dv to the next based on the connections of one of the siblings
         vptr.get()->setDv(dv);
@@ -510,23 +500,30 @@ void DccGraph::printTrackElements() {
 }
 
 void DccGraph::printInfo() {
+
+  Diag::push();
+  Diag::setPrintLabel(false);
+
   INFO("-----------------------------------------");
   INFO("Layout info");
   INFO("-----------------------------------------");
-  INFO("Name: %s", layout->get_layout().get_name());
-  INFO("# Modules: %d using", mn);
+  INFO("Name: %s has", layout->get_layout().get_name());
+  INFO("%d Modules using", mn);
 
   for (auto m : layout->get_modules()) {
 
-    INFO("Trackplan [%s] for Module [%s]", m.get_trackplan(), m.get_name());
+    INFO("  Trackplan [%s] for Module [%s]", m.get_trackplan(), m.get_name());
   }
 
-  INFO("# Turnouts: %d", tn);
-  INFO("# Segments: %d", sn);
-  INFO("# Bumpers: %d", bn);
-  INFO("# Crossings %d", cn);
-  INFO("# Total number of Trackelements: %d", ten);
-  INFO("# Total number of nodes: %d", nodes.size());
-  INFO("Total length: %d", length);
-  INFO("# ngid: %d", ngid);
+  INFO("%s has overall:", layout->get_layout().get_name());
+  INFO("%d Turnouts", tn);
+  INFO("%d Segments", sn);
+  INFO("%d Bumpers", bn);
+  INFO("%d Crossings", cn);
+  DBG("%d Trackelements", ten);
+  DBG("# Total number of nodes: %d", nodes.size());
+  INFO("Track length: %d", length);
+  DBG("# ngid: %d", ngid);
+
+  Diag::pop();
 }

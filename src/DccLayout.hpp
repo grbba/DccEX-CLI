@@ -23,6 +23,8 @@
 
 #include "DccModel.hpp"
 #include "DccGraph.hpp"
+#include "DccPath.hpp"
+#include "DccPathFinder.hpp"
 
 
 #include <nlohmann/json.hpp>
@@ -35,21 +37,35 @@ using nlohmann::json_schema::json_validator;
 class DccLayout {
 private:
 
-  DccModel::DccExLayout layout;   // the model structure as parsed from the layout file; filled by readLayout
-  json_validator validator; 
-  json schema;
-  DccGraph g; // g will hold the full graph with all vertices ( with their
-              // connections i.e. is build in adjacency list form / double
-              // vertices etc ...
+  DccModel::DccExLayout         layout;   // the model structure as parsed from the layout file; filled by readLayout
+  json_validator                validator; 
+  json                          schema;
+  DccGraph                      graph;    // g will hold the full graph with all vertices ( with their
+                                          // connections i.e. is build in adjacency list form / double
+                                          // vertices etc ...
+  DccPath                       path;     // contains all the direct and indirect paths found for the layout; 
+                                          // fed into the Pathfinder to be filled ... 
+  bool  _read = false;                    // will be true if the layout has been successfully read and validated
+  bool  _build = false;                   // true if the graph and paths have been successfully calculated
+
+
+  auto readLayout() -> int;               // read & validate the layout
 
 public:
 
-  auto readLayout() -> int;
-  auto build() -> int;
-  
-  void info() {
-     g.printInfo();
+  auto build() -> int;                   // build the graph and calculate all the paths
+
+  auto isBuild() -> bool{
+    return _build;
   }
+
+  auto isRead() -> bool{
+    return _read;
+  }
+
+  void listPaths();
+
+  void info();
 
   DccLayout() = default;
   ~DccLayout() = default;

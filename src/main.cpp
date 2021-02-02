@@ -47,6 +47,9 @@ auto main(int argc, char **argv) -> int {
 
   std::cout << "Welcome to the DCC++ EX Layout generator!\n";
 
+  Diag::setLogLevel(DiagLevel::LOGV_INFO);
+  Diag::setFileInfo(false);
+
   // setup the configuration
   if (!DccConfig::setup(argc, argv)) {
     // only continue if the configuration has been set properly
@@ -55,14 +58,16 @@ auto main(int argc, char **argv) -> int {
 
   // read layout and schema
   DccLayout myLayout;
-
-  myLayout.readLayout();
+  
+  // reads the layout validates and builds the model by means of the supplied schema; 
+  // creates the graph and calculates all paths through the layout (direct and indirect)
   myLayout.build();
-  myLayout.info();
 
   // get some info
+  myLayout.info();
 
-
+  // print out all paths
+  myLayout.listPaths();
 
   return DCC_SUCCESS;
 }

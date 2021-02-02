@@ -40,13 +40,17 @@ private:
   int bn = 0;     // current bumper number ( module scoped )
   int cn = 0;     // current crossing number ( module scoped ) no disticntion
                   // between crossing, single and double slips
-  DccModel::DccExLayout
-      *layout; // entry to the layout model from the json file
+
+  DccModel::DccExLayout *layout; // entry to the layout model from the json file
+  
   std::vector<DccModel::Trackplan>
       tps; // vector of all 'used' trackplans by the layout
+  
   std::map<int32_t, std::vector<DccVertexPtr_t>>
       tev;                // map of all vertices per trackelement
+  
   bool _isBuild = false;  // will be set to true once the graph has been build
+  
   DccVertexGraph_t graph; // map<nodeid,Vertex> of the complete simple vertex
                           // graph with connections for each track element
   DccDoubleVertexGraph_t
