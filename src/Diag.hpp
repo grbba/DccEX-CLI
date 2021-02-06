@@ -20,8 +20,8 @@
 
 /**
  * @class Diag
- * @brief This class manages the diagnostic outputs, logging etc. 
- * Some more text about this class 
+ * @brief This class manages the diagnostic outputs, logging etc.
+ * Some more text about this class
  * @note A note for doxy
  * @author grbba
  */
@@ -30,44 +30,49 @@
 #define Diag_h
 
 #include "../include/formatter.h"
+#include "../include/rang.hpp"
 #include <iostream>
 #include <stack>
 
 #define DCC_SUCCESS 1
 #define DCC_FAILURE 0
 
-enum class DiagLevel { LOGV_SILENT, LOGV_INFO, LOGV_WARN, LOGV_ERROR, LOGV_TRACE, LOGV_DEBUG };
+enum class DiagLevel {
+  LOGV_SILENT,
+  LOGV_INFO,
+  LOGV_WARN,
+  LOGV_ERROR,
+  LOGV_TRACE,
+  LOGV_DEBUG
+};
 
 struct DiagConfig {
   DiagLevel _nLogLevel;
-  int _nInfoLevel;       // for future use
+  int _nInfoLevel; // for future use
   bool fileInfo;
   bool println;
   bool printLabel;
 
   DiagConfig() = default;
   ~DiagConfig() = default;
-
 };
 
 class Diag {
 private:
   static DiagLevel _nLogLevel;
-  static int _nInfoLevel;       // for future use
+  static int _nInfoLevel; // for future use
   static bool fileInfo;
   static bool println;
   static bool printLabel;
-  static const std::map<std::string, DiagLevel> diagMap; 
+  static const std::map<std::string, DiagLevel> diagMap;
   static std::stack<DiagConfig *> config;
 
 public:
   static auto getDiagMap() -> std::map<std::string, DiagLevel> {
-      return diagMap;
+    return diagMap;
   }
-  
-  static void setLogLevel(DiagLevel value) { 
-    _nLogLevel = value; 
-  }
+
+  static void setLogLevel(DiagLevel value) { _nLogLevel = value; }
 
   static DiagLevel getLogLevel() { return _nLogLevel; }
 
@@ -87,13 +92,13 @@ public:
 
   static bool getPrintLabel() { return printLabel; }
 
-  static void push();  // pushes a Diag Config onto the stack
-  static void pop();   // pops the last diagConfig from the stack and reinstatiates its values;
+  static void push(); // pushes a Diag Config onto the stack
+  static void pop();  // pops the last diagConfig from the stack and
+                      // reinstatiates its values;
 
   Diag() = default;
   ~Diag() = default;
 };
-
 
 #define EH_DW(code)                                                            \
   do {                                                                         \
@@ -116,7 +121,7 @@ public:
 #ifndef DEBUG
 #define DEBUG
 #ifndef LOGLEVEL
-#define LOGLEVEL   5 // = DiagLevel::LOGV_DEBUG                                  
+#define LOGLEVEL 5 // = DiagLevel::LOGV_DEBUG
 // compile time level by default up to error can be overridden at
 // compiletime with a -D flag
 #endif
@@ -136,18 +141,23 @@ public:
     DIAG("%s:%d : ", __FILE__, __LINE__);                                      \
   DIAG(message);                                                               \
   if (Diag::getPrintln())                                                      \
-    DIAG("\n");         
+    DIAG("\n");
 #define LOGV_WARN_MSG(message...)                                              \
+  std::cout << rang::fg::yellow;                                               \
   DIAG("::[WRN]:");                                                            \
   if (Diag::getFileInfo())                                                     \
     DIAG("%s:%d : ", __FILE__, __LINE__);                                      \
   DIAG(message);                                                               \
   if (Diag::getPrintln())                                                      \
-    DIAG("\n");
+    DIAG("\n");                                                                \
+  std::cout << rang::fg::reset;
 #define LOGV_ERROR_MSG(message...)                                             \
-  DIAG("::[ERR]:%s:%d : ", __FILE__, __LINE__);                                \
+  std::cout << rang::fg::red;                                                  \
+  if (Diag::getFileInfo())                                                     \
+    DIAG("::[ERR]:%s:%d : ", __FILE__, __LINE__);                              \
   DIAG(message);                                                               \
-  DIAG("\n");
+  DIAG("\n");                                                                  \
+  std::cout << rang::fg::reset;
 #define LOGV_TRACE_MSG(message...)                                             \
   DIAG("::[TRC]:%s:%d : ", __FILE__, __LINE__);                                \
   DIAG(message);                                                               \
@@ -173,32 +183,46 @@ public:
 #define DBG(message...)
 #endif
 #if LOGLEVEL == LOGV_WARN
-#define INFO(message...) EH_DW(EH_IFLL(DiagLevel::LOGV_INFO, LOGV_INFO_MSG(message)))
-#define WARN(message...) EH_DW(EH_IFLL(DiagLevel::LOGV_WARN, LOGV_WARN_MSG(message)))
+#define INFO(message...)                                                       \
+  EH_DW(EH_IFLL(DiagLevel::LOGV_INFO, LOGV_INFO_MSG(message)))
+#define WARN(message...)                                                       \
+  EH_DW(EH_IFLL(DiagLevel::LOGV_WARN, LOGV_WARN_MSG(message)))
 #define ERR(message...)
 #define TRC(message...)
 #define DBG(message...)
 #endif
 #if LOGLEVEL == LOGV_ERROR
-#define INFO(message...) EH_DW(EH_IFLL(DiagLevel::LOGV_INFO, LOGV_INFO_MSG(message)))
-#define WARN(message...) EH_DW(EH_IFLL(DiagLevel::LOGV_WARN, LOGV_WARN_MSG(message)))
-#define ERR(message...) EH_DW(EH_IFLL(DiagLevel::LOGV_ERROR, LOGV_ERROR_MSG(message)))
+#define INFO(message...)                                                       \
+  EH_DW(EH_IFLL(DiagLevel::LOGV_INFO, LOGV_INFO_MSG(message)))
+#define WARN(message...)                                                       \
+  EH_DW(EH_IFLL(DiagLevel::LOGV_WARN, LOGV_WARN_MSG(message)))
+#define ERR(message...)                                                        \
+  EH_DW(EH_IFLL(DiagLevel::LOGV_ERROR, LOGV_ERROR_MSG(message)))
 #define TRC(message...)
 #define DBG(message...)
 #endif
 #if LOGLEVEL == LOGV_TRACE
-#define INFO(message...) EH_DW(EH_IFLL(DiagLevel::LOGV_INFO, LOGV_INFO_MSG(message)))
-#define WARN(message...) EH_DW(EH_IFLL(DiagLevel::LOGV_WARN, LOGV_WARN_MSG(message)))
-#define ERR(message...) EH_DW(EH_IFLL(DiagLevel::LOGV_ERROR, LOGV_ERROR_MSG(message)))
-#define TRC(message...) EH_DW(EH_IFLL(DiagLevel::LOGV_TRACE, LOGV_TRACE_MSG(message)))
+#define INFO(message...)                                                       \
+  EH_DW(EH_IFLL(DiagLevel::LOGV_INFO, LOGV_INFO_MSG(message)))
+#define WARN(message...)                                                       \
+  EH_DW(EH_IFLL(DiagLevel::LOGV_WARN, LOGV_WARN_MSG(message)))
+#define ERR(message...)                                                        \
+  EH_DW(EH_IFLL(DiagLevel::LOGV_ERROR, LOGV_ERROR_MSG(message)))
+#define TRC(message...)                                                        \
+  EH_DW(EH_IFLL(DiagLevel::LOGV_TRACE, LOGV_TRACE_MSG(message)))
 #define DBG(message...)
 #endif
 #if LOGLEVEL >= LOGV_DEBUG
-#define INFO(message...) EH_DW(EH_IFLL(DiagLevel::LOGV_INFO, LOGV_INFO_MSG(message)))
-#define WARN(message...) EH_DW(EH_IFLL(DiagLevel::LOGV_WARN, LOGV_WARN_MSG(message)))
-#define ERR(message...) EH_DW(EH_IFLL(DiagLevel::LOGV_ERROR, LOGV_ERROR_MSG(message)))
-#define TRC(message...) EH_DW(EH_IFLL(DiagLevel::LOGV_TRACE, LOGV_TRACE_MSG(message)))
-#define DBG(message...) EH_DW(EH_IFLL(DiagLevel::LOGV_DEBUG, LOGV_DEBUG_MSG(message)))
+#define INFO(message...)                                                       \
+  EH_DW(EH_IFLL(DiagLevel::LOGV_INFO, LOGV_INFO_MSG(message)))
+#define WARN(message...)                                                       \
+  EH_DW(EH_IFLL(DiagLevel::LOGV_WARN, LOGV_WARN_MSG(message)))
+#define ERR(message...)                                                        \
+  EH_DW(EH_IFLL(DiagLevel::LOGV_ERROR, LOGV_ERROR_MSG(message)))
+#define TRC(message...)                                                        \
+  EH_DW(EH_IFLL(DiagLevel::LOGV_TRACE, LOGV_TRACE_MSG(message)))
+#define DBG(message...)                                                        \
+  EH_DW(EH_IFLL(DiagLevel::LOGV_DEBUG, LOGV_DEBUG_MSG(message)))
 #endif
 
 #endif

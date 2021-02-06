@@ -27,59 +27,14 @@
  * DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-#ifndef CLI_FILEHISTORYSTORAGE_H_
-#define CLI_FILEHISTORYSTORAGE_H_
+#ifndef CLI_STANDALONEASIOCLIASYNCSESSION_H_
+#define CLI_STANDALONEASIOCLIASYNCSESSION_H_
 
-#include "historystorage.h"
-#include <fstream>
+#include "detail/genericcliasyncsession.h"
+#include "detail/standaloneasiolib.h"
 
-namespace cli
-{
 
-class FileHistoryStorage : public HistoryStorage
-{
-public:
-    FileHistoryStorage(const std::string& _fileName, std::size_t size = 1000) : 
-        maxSize(size),
-        fileName(_fileName)
-    {
-    }
-    void Store(const std::vector<std::string>& cmds) override
-    {
-        using dt = std::vector<std::string>::difference_type;
-        auto commands = Commands();
-        commands.insert(commands.end(), cmds.begin(), cmds.end());
-        if (commands.size() > maxSize)
-            commands.erase(
-                commands.begin(), 
-                commands.begin() + static_cast<dt>(commands.size() - maxSize)
-            );
-        std::ofstream f(fileName, std::ios_base::out);
-            for (const auto& line: commands)
-                f << line << '\n';
-    }
-    std::vector<std::string> Commands() const override
-    {
-        std::vector<std::string> commands;
-        std::ifstream in(fileName);
-        if (in)
-        {
-            std::string line;
-            while (std::getline(in, line))
-                commands.push_back(line);
-        }
-        return commands;
-    }
-    void Clear() override
-    {
-        std::ofstream f(fileName, std::ios_base::out | std::ios_base::trunc);
-    }
+namespace cli { using StandaloneAsioCliAsyncSession = detail::GenericCliAsyncSession<detail::StandaloneAsioLib>; }
 
-private:
-    const std::size_t maxSize;
-    const std::string fileName;
-};
+#endif // CLI_STANDALONEASIOCLIASYNCSESSION_H_
 
-} // namespace cli
-
-#endif // CLI_FILEHISTORYSTORAGE_H_

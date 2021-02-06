@@ -1,6 +1,6 @@
 /*******************************************************************************
  * CLI - A simple command line interface.
- * Copyright (C) 2016 Daniele Pallastrelli
+ * Copyright (C) 2016-2021 Daniele Pallastrelli
  *
  * Boost Software License - Version 1.0 - August 17th, 2003
  *
@@ -47,7 +47,7 @@ enum AfterInput { afterInput };
 
 inline std::ostream& operator<<(std::ostream& os, BeforePrompt)
 {
-    if ( Color() ) { os << rang::control::forceColor << rang::fg::green << rang::style::bold; }
+    if ( Color() ) { os << rang::control::forceColor << rang::fg::cyan << rang::style::bold; }
     return os;
 }
 

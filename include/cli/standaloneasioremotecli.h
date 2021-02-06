@@ -1,6 +1,6 @@
 /*******************************************************************************
  * CLI - A simple command line interface.
- * Copyright (C) 2019 Daniele Pallastrelli
+ * Copyright (C) 2016-2021 Daniele Pallastrelli
  *
  * Boost Software License - Version 1.0 - August 17th, 2003
  *
@@ -27,40 +27,14 @@
  * DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-#ifndef CLI_DETAIL_NEWBOOSTASIO_H_
-#define CLI_DETAIL_NEWBOOSTASIO_H_
+#ifndef CLI_STANDALONEASIOREMOTECLI_H_
+#define CLI_STANDALONEASIOREMOTECLI_H_
 
-#if BOOST_VERSION >= 107400
-#   define BOOST_ASIO_USE_TS_EXECUTOR_AS_DEFAULT
-#endif
+#include "detail/genericasioremotecli.h"
+#include "detail/standaloneasiolib.h"
 
-#include <boost/asio.hpp>
+namespace cli { using StandaloneAsioCliTelnetServer = detail::CliGenericTelnetServer<detail::StandaloneAsioLib>; }
 
-namespace cli {
-namespace detail {
-namespace newboost {
 
-class BoostExecutor
-{
-public:
-    using ContextType = boost::asio::io_context;
-    explicit BoostExecutor(ContextType& ios) :
-        executor(ios.get_executor()) {}
-    explicit BoostExecutor(boost::asio::ip::tcp::socket& socket) :
-        executor(socket.get_executor()) {}
-    template <typename T> void Post(T&& t) { boost::asio::post(executor, std::forward<T>(t)); }
-private:
-    boost::asio::executor executor;
-};
-
-inline boost::asio::ip::address IpAddressFromString(const std::string& address)
-{
-    return boost::asio::ip::make_address(address);
-}
-
-} // namespace newboost
-} // namespace detail
-} // namespace cli
-
-#endif // CLI_DETAIL_NEWBOOSTASIO_H_
+#endif // CLI_STANDALONEASIOREMOTECLI_H_
 

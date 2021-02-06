@@ -27,59 +27,61 @@
  * DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-#ifndef CLI_FILEHISTORYSTORAGE_H_
-#define CLI_FILEHISTORYSTORAGE_H_
+#ifndef CLI_DETAIL_GENERICASIOSCHEDULER_H_
+#define CLI_DETAIL_GENERICASIOSCHEDULER_H_
 
-#include "historystorage.h"
-#include <fstream>
+#include "../scheduler.h"
 
 namespace cli
 {
+namespace detail
+{
 
-class FileHistoryStorage : public HistoryStorage
+template <typename ASIOLIB>
+class GenericAsioScheduler : public Scheduler
 {
 public:
-    FileHistoryStorage(const std::string& _fileName, std::size_t size = 1000) : 
-        maxSize(size),
-        fileName(_fileName)
+
+    using ContextType = typename ASIOLIB::ContextType;
+
+    GenericAsioScheduler() : owned{true}, context{new ContextType()}, executor{*context} {}
+
+    GenericAsioScheduler(ContextType& _context) : context{&_context}, executor{*context} {}
+
+    ~GenericAsioScheduler() { if (owned) delete context; }
+
+    // non copyable
+    GenericAsioScheduler(const GenericAsioScheduler&) = delete;
+    GenericAsioScheduler& operator=(const GenericAsioScheduler&) = delete;
+
+    void Stop() { context->stop(); }
+
+    void Run()
     {
+        auto work = ASIOLIB::MakeWorkGuard(*context);
+        context->run();
     }
-    void Store(const std::vector<std::string>& cmds) override
+
+    void ExecOne() { context->run_one(); }
+
+    void Post(const std::function<void()>& f) override
     {
-        using dt = std::vector<std::string>::difference_type;
-        auto commands = Commands();
-        commands.insert(commands.end(), cmds.begin(), cmds.end());
-        if (commands.size() > maxSize)
-            commands.erase(
-                commands.begin(), 
-                commands.begin() + static_cast<dt>(commands.size() - maxSize)
-            );
-        std::ofstream f(fileName, std::ios_base::out);
-            for (const auto& line: commands)
-                f << line << '\n';
+        executor.Post(f);
     }
-    std::vector<std::string> Commands() const override
-    {
-        std::vector<std::string> commands;
-        std::ifstream in(fileName);
-        if (in)
-        {
-            std::string line;
-            while (std::getline(in, line))
-                commands.push_back(line);
-        }
-        return commands;
-    }
-    void Clear() override
-    {
-        std::ofstream f(fileName, std::ios_base::out | std::ios_base::trunc);
-    }
+
+    ContextType& AsioContext() { return *context; }
 
 private:
-    const std::size_t maxSize;
-    const std::string fileName;
+
+    using ExecutorType = typename ASIOLIB::Executor;
+
+    bool owned = false;
+    ContextType* context;
+    ExecutorType executor;
 };
 
+
+} // namespace detail
 } // namespace cli
 
-#endif // CLI_FILEHISTORYSTORAGE_H_
+#endif // CLI_DETAIL_GENERICASIOSCHEDULER_H_

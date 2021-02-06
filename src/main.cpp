@@ -22,8 +22,11 @@
 #include <iostream>
 #include <string>
 
+// #include "../include/rang.hpp"
+
 #include "DccConfig.hpp"
 #include "DccLayout.hpp"
+#include "DccShell.hpp"
 
 
 /**
@@ -43,9 +46,11 @@ void readJsonFile(const std::string &schema_filename, std::string *schema) {
                         std::istreambuf_iterator<char>());
 }
 
-auto main(int argc, char **argv) -> int {
+#define HEADING(x)  rang::style::bold << rang::fg::cyan << x << rang::style::reset << rang::fg::reset
 
-  std::cout << "Welcome to the DCC++ EX Layout generator!\n";
+auto main(int argc, char **argv) -> int {
+  // std::cout << rang::style::bold << rang::fg::cyan << "Welcome to the DCC++ EX Layout generator!\n";
+  std::cout << HEADING("Welcome to the DCC++ EX Layout generator!\n\n");
 
   Diag::setLogLevel(DiagLevel::LOGV_INFO);
   Diag::setFileInfo(false);
@@ -55,6 +60,16 @@ auto main(int argc, char **argv) -> int {
     // only continue if the configuration has been set properly
     return DCC_SUCCESS;
   };
+  
+  DccShell s;
+  
+  if (DccConfig::isInteractive) {
+      
+      // start the shell
+      s.runShell();
+      // on exit of the shell
+      return DCC_SUCCESS;
+  }
 
   // read layout and schema
   DccLayout myLayout;

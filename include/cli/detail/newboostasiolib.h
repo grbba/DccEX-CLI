@@ -27,59 +27,57 @@
  * DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-#ifndef CLI_FILEHISTORYSTORAGE_H_
-#define CLI_FILEHISTORYSTORAGE_H_
+#ifndef CLI_DETAIL_NEWBOOSTASIOLIB_H_
+#define CLI_DETAIL_NEWBOOSTASIOLIB_H_
 
-#include "historystorage.h"
-#include <fstream>
+#include <boost/version.hpp>
+#include <boost/asio.hpp>
 
 namespace cli
 {
+namespace detail
+{
 
-class FileHistoryStorage : public HistoryStorage
+namespace asiolib = boost::asio;
+namespace asiolibec = boost::system;
+
+class NewBoostAsioLib
 {
 public:
-    FileHistoryStorage(const std::string& _fileName, std::size_t size = 1000) : 
-        maxSize(size),
-        fileName(_fileName)
+
+    using ContextType = boost::asio::io_context;
+
+    class Executor
     {
-    }
-    void Store(const std::vector<std::string>& cmds) override
+    public:
+        explicit Executor(ContextType& ios) :
+            executor(ios.get_executor()) {}
+        explicit Executor(boost::asio::ip::tcp::socket& socket) :
+            executor(socket.get_executor()) {}
+        template <typename T> void Post(T&& t) { boost::asio::post(executor, std::forward<T>(t)); }
+    private:
+#if BOOST_VERSION >= 107400
+    using AsioExecutor = boost::asio::any_io_executor;
+#else
+    using AsioExecutor = boost::asio::executor;
+#endif
+         AsioExecutor executor;
+    };
+
+    static boost::asio::ip::address IpAddressFromString(const std::string& address)
     {
-        using dt = std::vector<std::string>::difference_type;
-        auto commands = Commands();
-        commands.insert(commands.end(), cmds.begin(), cmds.end());
-        if (commands.size() > maxSize)
-            commands.erase(
-                commands.begin(), 
-                commands.begin() + static_cast<dt>(commands.size() - maxSize)
-            );
-        std::ofstream f(fileName, std::ios_base::out);
-            for (const auto& line: commands)
-                f << line << '\n';
-    }
-    std::vector<std::string> Commands() const override
-    {
-        std::vector<std::string> commands;
-        std::ifstream in(fileName);
-        if (in)
-        {
-            std::string line;
-            while (std::getline(in, line))
-                commands.push_back(line);
-        }
-        return commands;
-    }
-    void Clear() override
-    {
-        std::ofstream f(fileName, std::ios_base::out | std::ios_base::trunc);
+        return boost::asio::ip::make_address(address);
     }
 
-private:
-    const std::size_t maxSize;
-    const std::string fileName;
+    static auto MakeWorkGuard(ContextType& context)
+    {
+        return boost::asio::make_work_guard(context);
+    }
+
 };
 
+} // namespace detail
 } // namespace cli
 
-#endif // CLI_FILEHISTORYSTORAGE_H_
+#endif // CLI_DETAIL_NEWBOOSTASIOLIB_H_
+

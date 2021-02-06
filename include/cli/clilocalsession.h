@@ -1,6 +1,6 @@
 /*******************************************************************************
  * CLI - A simple command line interface.
- * Copyright (C) 2016 Daniele Pallastrelli
+ * Copyright (C) 2016-2021 Daniele Pallastrelli
  *
  * Boost Software License - Version 1.0 - August 17th, 2003
  *
@@ -30,21 +30,25 @@
 #ifndef CLI_LOCALSESSION_H_
 #define CLI_LOCALSESSION_H_
 
-#include "detail/boostasio.h"
 #include "detail/keyboard.h"
 #include "detail/inputhandler.h"
-#include "cli.h" // CliSession
+#include "cli.h" 
+#include "clilocalsession.h"
+#include "clifilesession.h"
 
 namespace cli
 {
+
+class Scheduler; // forward declaration
+
 
 class CliLocalTerminalSession : public CliSession
 {
 public:
 
-    CliLocalTerminalSession(Cli& _cli, detail::asio::BoostExecutor::ContextType& ios, std::ostream& _out, std::size_t historySize = 100) :
+    CliLocalTerminalSession(Cli& _cli, Scheduler& scheduler, std::ostream& _out, std::size_t historySize = 100) :
         CliSession(_cli, _out, historySize),
-        kb(detail::asio::BoostExecutor(ios)),
+        kb(scheduler),
         ih(*this, kb)
     {
         Prompt();

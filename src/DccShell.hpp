@@ -19,47 +19,44 @@
  */
 
 /**
- * @class DccConfig
-T* his class reads the commandline option and flags and configures the run accordingly. 
- * If the -i flag is set a interactive shell will be spun up reading commands from the prompt.
+ * @class DccShell
+  * Interactive shell from which to interact with the tool for building, searching, connecting to the CS etc..
  * @note n/a
  * @author grbba
  */
 
-#ifndef DccConfig_h
-#define DccConfig_h
+#ifndef DccShell_h
+#define DccShell_h
 
+#include <thread>
 
-#include <string>
+#include <boost/asio.hpp>
 
-#include "config.h"
-#include "Diag.hpp"
+#include "../include/cli/cli.h"
+#include "../include/cli/clifilesession.h"
+#include <fstream>
 
-class DccConfig
+using namespace cli;
+
+class DccShell
 {
 private:
 
+    bool done = false;
+    Cli *_pCli = nullptr;
+    CliFileSession *_pInput = nullptr;
+    std::thread reciever;
 
 public:
 
-    /**
-     * @brief reads the commandline parameters and initalizes the environment
-     * 
-     * @param argc  from main()
-     * @param argv   from main()
-     */
-    static auto setup(int argc, char **argv) -> int;
+    // static bool shellExit; 
+    auto runShell() -> int;
+    bool isDone() {
+        return done;
+    }
 
-    static std::string dccLayoutFile;
-    static std::string dccSchemaFile;
-    static bool isInteractive;
-    static DiagLevel level;
-    static bool fileInfo;
-
-    DccConfig()= default;
-    ~DccConfig() = default;
+    DccShell() = default;
+    ~DccShell() = default;
 };
-
-
 
 #endif

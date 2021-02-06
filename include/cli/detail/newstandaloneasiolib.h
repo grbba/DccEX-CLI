@@ -27,59 +27,56 @@
  * DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 
-#ifndef CLI_FILEHISTORYSTORAGE_H_
-#define CLI_FILEHISTORYSTORAGE_H_
+#ifndef CLI_DETAIL_NEWSTANDALONEASIOLIB_H_
+#define CLI_DETAIL_NEWSTANDALONEASIOLIB_H_
 
-#include "historystorage.h"
-#include <fstream>
+#include <asio/version.hpp>
+#include <asio.hpp>
 
 namespace cli
 {
+namespace detail
+{
 
-class FileHistoryStorage : public HistoryStorage
+namespace asiolib = asio;
+namespace asiolibec = asio;
+
+class NewStandaloneAsioLib
 {
 public:
-    FileHistoryStorage(const std::string& _fileName, std::size_t size = 1000) : 
-        maxSize(size),
-        fileName(_fileName)
+
+    using ContextType = asio::io_context;
+
+    class Executor
     {
-    }
-    void Store(const std::vector<std::string>& cmds) override
+    public:
+        explicit Executor(ContextType& ios) :
+            executor(ios.get_executor()) {}
+        explicit Executor(asio::ip::tcp::socket& socket) :
+            executor(socket.get_executor()) {}
+        template <typename T> void Post(T&& t) { asio::post(executor, std::forward<T>(t)); }
+    private:
+#if ASIO_VERSION >= 101700
+    using AsioExecutor = asio::any_io_executor;
+#else
+    using AsioExecutor = asio::executor;
+#endif
+         AsioExecutor executor;
+    };
+
+    static asio::ip::address IpAddressFromString(const std::string& address)
     {
-        using dt = std::vector<std::string>::difference_type;
-        auto commands = Commands();
-        commands.insert(commands.end(), cmds.begin(), cmds.end());
-        if (commands.size() > maxSize)
-            commands.erase(
-                commands.begin(), 
-                commands.begin() + static_cast<dt>(commands.size() - maxSize)
-            );
-        std::ofstream f(fileName, std::ios_base::out);
-            for (const auto& line: commands)
-                f << line << '\n';
-    }
-    std::vector<std::string> Commands() const override
-    {
-        std::vector<std::string> commands;
-        std::ifstream in(fileName);
-        if (in)
-        {
-            std::string line;
-            while (std::getline(in, line))
-                commands.push_back(line);
-        }
-        return commands;
-    }
-    void Clear() override
-    {
-        std::ofstream f(fileName, std::ios_base::out | std::ios_base::trunc);
+        return asio::ip::make_address(address);
     }
 
-private:
-    const std::size_t maxSize;
-    const std::string fileName;
+    static auto MakeWorkGuard(ContextType& context)
+    {
+        return asio::make_work_guard(context);
+    }
 };
 
+} // namespace detail
 } // namespace cli
 
-#endif // CLI_FILEHISTORYSTORAGE_H_
+#endif // CLI_DETAIL_NEWSTANDALONEASIOLIB_H_
+

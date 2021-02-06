@@ -42,10 +42,12 @@ auto DccConfig::setup(int argc, char **argv) -> int {
                  "but no validation of the layout will be done and this may "
                  "yield \nunpredictable results")
       ->check(CLI::ExistingFile);
+
   app.add_option("-l,--layout", dccLayoutFile,
                  "path/name of the modelrailroad layout file")
       ->required()
       ->check(CLI::ExistingFile);
+
   app.add_option(
       "-c,--commandstation", dccLayoutFile,
       "IP address provided as e.g. 10.102.200.45 of the DCC++ EX "
@@ -57,12 +59,17 @@ auto DccConfig::setup(int argc, char **argv) -> int {
       ->transform(
           CLI::CheckedTransformer(Diag::getDiagMap(), CLI::ignore_case));
 
-  bool interactive = false;
-  app.add_flag("-i,--interactive", interactive,
+  app.add_flag("-i,--interactive", DccConfig::isInteractive,
                "Interactive mode; Opens a shell from which commands can be "
                "issued type --help for more info");
 
-  CLI11_PARSE(app, argc, argv);
+  // CLI11_PARSE(app, argc, argv);
+  try {
+    (app).parse((argc), (argv));
+  } catch (const CLI::ParseError &e) {
+        (app).exit(e);
+        return DCC_FAILURE;
+  }
 
   Diag::setLogLevel(
       level); // if not set via the commandline by default set to WARN

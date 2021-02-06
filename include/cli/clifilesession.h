@@ -1,6 +1,6 @@
 /*******************************************************************************
  * CLI - A simple command line interface.
- * Copyright (C) 2016-2018 Daniele Pallastrelli
+ * Copyright (C) 2016-2021 Daniele Pallastrelli
  *
  * Boost Software License - Version 1.0 - August 17th, 2003
  *
@@ -62,13 +62,17 @@ public:
         {
             Prompt();
             std::string line;
-            if (!in.good())
+            if (!in.good()) {
+                std::cout << "Got in not good exiting\n";
                 Exit();
+            }
             std::getline(in, line);
-            if (in.eof())
+            if (in.eof()) {
+                std::cout << "Got EOF exiting\n";
                 Exit();
-            else
+            } else {
                 Feed(line);
+            }
         }
     }
 
