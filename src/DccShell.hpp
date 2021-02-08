@@ -29,23 +29,40 @@
 #define DccShell_h
 
 #include <thread>
-
 #include <boost/asio.hpp>
+
+#include "BufferedAsyncSerial.h"
 
 #include "../include/cli/cli.h"
 #include "../include/cli/clifilesession.h"
 #include <fstream>
 
-using namespace cli;
+#define DCC_SERIAL 0
+#define DCC_ETHERNET 1
+#define DCC_CONN_UNKOWN 2
+
 
 class DccShell
 {
 private:
 
     bool done = false;
-    Cli *_pCli = nullptr;
-    CliFileSession *_pInput = nullptr;
+    cli::Cli *_pCli = nullptr;
+    cli::CliFileSession *_pInput = nullptr;
     std::thread reciever;
+
+    static BufferedAsyncSerial asyncSerial;
+    // static boost::asio::io_service *_pio;
+    // static boost::asio::serial_port *_pSerialPort;
+
+    static boost::asio::io_service io;
+    static boost::asio::serial_port serial;
+
+    void buildMenus();
+    // void buildCsMenu(std::unique_ptr<cli::Menu> &csMenu);
+    // void buildRootMenu(std::unique_ptr<cli::Menu>  * rootMenu);
+    void buildRootMenu(cli::Menu * rootMenu);
+    void buildCsMenu(cli::Menu * csMenu);
 
 public:
 

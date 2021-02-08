@@ -30,7 +30,6 @@
   }
 
 #include "../include/cli/cli.h"
-// #include "../include/cli/clifilesession.h"
 #include "../include/cli/clilocalsession.h"
 #include "../include/cli/filehistorystorage.h"
 
@@ -47,9 +46,14 @@ using std::chrono::system_clock;
 boost::asio::io_service DccShell::io;
 boost::asio::serial_port DccShell::serial(io);
 
+BufferedAsyncSerial DccShell::asyncSerial;
+
+
 // opens the connection on the serial port / connects over ethernet
+// int openConnection(BufferedAsyncSerial *sp, std::string type,
+//                   const std::string port, const int baud, int *sfd) {
 int openConnection(boost::asio::serial_port *sp, std::string type,
-                   const std::string port, const int baud, int *sfd) {
+                    const std::string port, const int baud, int *sfd) {
 
   boost::system::error_code ec;
 
@@ -78,6 +82,7 @@ int openConnection(boost::asio::serial_port *sp, std::string type,
     baudRate = baud;
 
     try {
+      // sp->open(port.c_str(), baudRate);
       sp->open(port.c_str(), ec);
       sp->set_option(boost::asio::serial_port_base::baud_rate(baudRate), ec);
       *sfd = ec.value();
@@ -139,6 +144,7 @@ void DccShell::buildCsMenu(cli::Menu * csMenu) {
          const int &baud) {
         int sfd;
         // ptr to the thread started here // the port is not yet open
+        // if (openConnection(&asyncSerial, type, port, baud, &sfd)) {
         if (openConnection(&serial, type, port, baud, &sfd)) {
           out << rang::fg::green << "Success(" << sfd << ")\n"
               << rang::fg::reset;
@@ -156,6 +162,7 @@ void DccShell::buildCsMenu(cli::Menu * csMenu) {
 }
 
 void DccShell::buildMenus() {
+  cli::SetColor();
 
   auto rootMenu = std::make_unique<cli::Menu>("DccEX");
   buildRootMenu(&*rootMenu);
@@ -169,7 +176,7 @@ void DccShell::buildMenus() {
 
   // // global exit action
   cli.ExitAction(
-      [](auto &out) { out << "Goodbye and thanks for all the fish.\n"; });
+      [&](auto &out) { done = true; out << "Goodbye and thanks for all the fish.\n"; });
 
   // std exception custom handler
   cli.StdExceptionHandler(
@@ -181,40 +188,90 @@ void DccShell::buildMenus() {
   // cli::CliFileSession input(cli);
   // input.Start();
 
+ 
     cli::MainScheduler scheduler;
-    cli::CliLocalTerminalSession localSession(cli, scheduler, std::cout, 200);
+    cli::CliLocalSession localSession(cli, scheduler, std::cout, 200);
+
     localSession.ExitAction(
-        [&scheduler](auto& out) // session exit action
+        [&](auto& out) // session exit action
         {
+            done = true;
             out << "Closing App...\n";
             scheduler.Stop();
         }
     );
 
-    // setup server
-
-    cli::CliTelnetServer server(scheduler, 5000, cli);
-    // exit action for all the connections
-    server.ExitAction( [](auto& out) { out << "Terminating this session...\n"; } );
-
     scheduler.Run();
 
+    // setup server
+
+    // cli::CliTelnetServer server(scheduler, 2560, cli);
+    // // exit action for all the connections
+    // server.ExitAction( [](auto& out) { out << "Terminating this session...\n"; } );
 
   return;
 }
 
-// function running in the reciever thread
-void dccReciever(bool *exit, boost::asio::serial_port *sp) {
-  std::cout << "inital exit signal " << *exit << '\n';
-  std::cout << "port is " << sp->is_open() << '\n';
-  // while ( sp->is_open() == false ) {};
-  //std::cout << "port is " << sp->is_open() << '\n';
+std::string readLine(boost::asio::serial_port *port) {
+  // Reading data char by char, code is optimized for simplicity, not speed
+  char c;
+  std::string result;
+  DBG("Reading line");
+  for (;;) {
+    boost::asio::read(*port, boost::asio::buffer(&c, 1));
+    DBG("Decode char");
+    switch (c) {
+    case '\r':
+      break;
+    case '\n': {
+      DBG ("Reading done ..");
+      return result;
+    }
+    default:
+      result += c;
+    }
+  }
+}
 
+// function running in the reciever thread
+void dccReciever1(bool *exit, boost::asio::serial_port *sp) {
+  // std::cout << "\ninital exit signal " << *exit << '\n';
+
+  while ( sp->is_open() == false ) {
+    sleep_for(500ms);
+  };   
+
+  // std::cout << "\nport is " << (sp->is_open() ? "open":"closed") << '\n';
+  
   int l = 0;
   while (*exit == false) {
-    l++; // std::cout << "read port\n";
+    std::cout << rang::fg::magenta;
+    std::cout << readLine(sp) << '\n';
+    std::cout.flush();
+    l++;
+    std::cout << rang::fg::reset;
   }
-  std::cout << "thread exiting with " << l << " reads\n";
+  std::cout << "\nthread exiting with " << l << " lines read\n";
+
+}
+
+// function running in the reciever thread
+void dccReciever2(bool *exit, BufferedAsyncSerial *sp) {
+
+  // std::cout << "inital exit signal " << *exit << '\n';
+  while ( sp->isOpen() == false ) {
+    sleep_for(500ms);
+  };   
+  
+  // std::cout << "port is " << (sp->isOpen() ? "open":"closed") << '\n';
+  // while ( sp->is_open() == false ) {};
+  //std::cout << "port is " << sp->is_open() << '\n';
+  // int l = 0;
+  while (*exit == false) {
+    // std::cout << sp->readStringUntil("\n") << '\n';
+    // l++; // std::cout << "read port\n";
+  }
+  // std::cout << "thread exiting with " << l << " reads\n";
 }
 
 auto DccShell::runShell() -> int {
@@ -224,13 +281,16 @@ auto DccShell::runShell() -> int {
   // buildMenus();
 
   DBG("Run Shell");
-  reciever = std::thread(dccReciever, &done, &serial);
+  // reciever = std::thread(dccReciever, &done, &asyncSerial);  
+  reciever = std::thread(dccReciever1, &done, &serial);  
+  
   DBG("Shell reciever thread started");
   // simulate loop of the shell
   // sleep_for(5ms);
   buildMenus();
   // once done set the exit flag to true
   done = true;
+  // char ex = 0x03;
   reciever.join();
   DBG("Shell done");
   Diag::pop();
