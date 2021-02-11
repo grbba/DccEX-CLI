@@ -28,10 +28,14 @@
 #ifndef DccShell_h
 #define DccShell_h
 
+// #define ASYNC
+
 #include <thread>
 #include <boost/asio.hpp>
 
+#ifdef ASYNC
 #include "BufferedAsyncSerial.h"
+#endif
 
 #include "../include/cli/cli.h"
 #include "../include/cli/clifilesession.h"
@@ -41,22 +45,21 @@
 #define DCC_ETHERNET 1
 #define DCC_CONN_UNKOWN 2
 
-
 class DccShell
 {
 private:
 
     bool done = false;
-    cli::Cli *_pCli = nullptr;
-    cli::CliFileSession *_pInput = nullptr;
-    std::thread reciever;
-
+    // cli::Cli *_pCli = nullptr;
+    // cli::CliFileSession *_pInput = nullptr;
+    
+#ifdef ASYNC
     static BufferedAsyncSerial asyncSerial;
-    // static boost::asio::io_service *_pio;
-    // static boost::asio::serial_port *_pSerialPort;
+#endif
 
     static boost::asio::io_service io;
     static boost::asio::serial_port serial;
+    static std::thread reciever;
 
     void buildMenus();
     // void buildCsMenu(std::unique_ptr<cli::Menu> &csMenu);
@@ -64,13 +67,27 @@ private:
     void buildRootMenu(cli::Menu * rootMenu);
     void buildCsMenu(cli::Menu * csMenu);
 
+#ifdef ASYNC
+    int openConnection(BufferedAsyncSerial *sp, std::string type,
+                   const std::string port, const int baud, int *sfd);
+    static void dccReciever2(bool *exit, BufferedAsyncSerial *sp);
+
+#else
+    int openConnection(boost::asio::serial_port *sp, std::string type,
+                    const std::string port, const int baud, int *sfd);
+    static void dccReciever1(bool *exit, boost::asio::serial_port *sp);
+#endif
+
+
+
+
 public:
 
-    // static bool shellExit; 
     auto runShell() -> int;
+
     bool isDone() {
         return done;
-    }
+    };
 
     DccShell() = default;
     ~DccShell() = default;
