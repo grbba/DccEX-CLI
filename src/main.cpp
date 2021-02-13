@@ -28,7 +28,6 @@
 #include "DccLayout.hpp"
 #include "DccShell.hpp"
 
-
 /**
  * @brief Reading a file containing json;
  * Usable for small files as it fills a potentially large string.
@@ -46,12 +45,14 @@ void readJsonFile(const std::string &schema_filename, std::string *schema) {
                         std::istreambuf_iterator<char>());
 }
 
-#define HEADING(x)  rang::style::bold << rang::fg::cyan << x << rang::style::reset << rang::fg::reset
+#define HEADING(x)                                                             \
+  rang::style::bold << rang::fg::cyan << x << rang::style::reset               \
+                    << rang::fg::reset
 
 auto main(int argc, char **argv) -> int {
-  // std::cout << rang::style::bold << rang::fg::cyan << "Welcome to the DCC++ EX Layout generator!\n";
-  std::cout << HEADING("Welcome to the DCC++ EX Layout generator!\n\n");
-
+  // clear screen
+  std::cout<<"\e[2J\e[1;1H";
+  std::cout << HEADING("Welcome to the DCC++ EX Commandline Interface\n\n");
   Diag::setLogLevel(DiagLevel::LOGV_INFO);
   Diag::setFileInfo(false);
 
@@ -60,29 +61,23 @@ auto main(int argc, char **argv) -> int {
     // only continue if the configuration has been set properly
     return DCC_SUCCESS;
   };
-  
+
   DccShell s;
-  
+
   if (DccConfig::isInteractive) {
-      
-      // start the shell
-      s.runShell();
-      // on exit of the shell
-      return DCC_SUCCESS;
+    s.runShell();
+  } else {
+    // read layout and schema
+    DccLayout myLayout;
+    // reads the layout validates and builds the model by means of the supplied
+    // schema; creates the graph and calculates all paths through the layout
+    // (direct and indirect)
+    myLayout.build();
+    // get some info
+    myLayout.info();
+    // print out all paths
+    myLayout.listPaths();
   }
-
-  // read layout and schema
-  DccLayout myLayout;
-  
-  // reads the layout validates and builds the model by means of the supplied schema; 
-  // creates the graph and calculates all paths through the layout (direct and indirect)
-  myLayout.build();
-
-  // get some info
-  myLayout.info();
-
-  // print out all paths
-  myLayout.listPaths();
 
   return DCC_SUCCESS;
 }

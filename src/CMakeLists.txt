@@ -20,7 +20,7 @@ add_executable( dcclayout
                 DccPath.cpp
                 DccShell.cpp
                 AsyncSerial.cpp
-                BufferedAsyncSerial.cpp
+                DccSerial.cpp
               )
 
 target_compile_features(dcclayout PRIVATE cxx_std_17)

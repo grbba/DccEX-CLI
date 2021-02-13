@@ -30,7 +30,7 @@ DiagLevel DccConfig::level =
 
 auto DccConfig::setup(int argc, char **argv) -> int {
 
-  CLI::App app{"DCC++ EX Layout Generator Help"};
+  CLI::App app{"DCC++ EX Commandline Interface Help"};
 
   app.get_formatter()->label("REQUIRED", "(mandatory)");
   app.get_formatter()->column_width(40);
@@ -50,14 +50,15 @@ auto DccConfig::setup(int argc, char **argv) -> int {
 
   app.add_option(
       "-c,--commandstation", dccLayoutFile,
-      "IP address provided as e.g. 10.102.200.45 of the DCC++ EX "
-      "commandstation. If the\nIP address is provided commands for creating "
-      "Turnouts, Accessories etc. will be send to \nthe commandstation if we "
-      "can connnect to it.\nCommandstation Version 3.0.1 is required");
+      "Provide either the serial port or the IP address (e.g. 10.102.200.45) of the DCC++ EX"
+      "commandstation.\nUpon connection commands for creating "
+      "Turnouts, Accessories etc. will be send to the commandstation.\n"
+      "Commandstation Version 3.0.1 is required. If -i has been specified as well, after sending, \n"
+      "the interactive commandline interface will be available.");
 
-  app.add_option("-v,--verbose", level, "Verbose settings")
-      ->transform(
-          CLI::CheckedTransformer(Diag::getDiagMap(), CLI::ignore_case));
+//   app.add_option("-v,--verbose", level, "Verbose settings")
+//       ->transform(
+//           CLI::CheckedTransformer(Diag::getDiagMap(), CLI::ignore_case));
 
   app.add_flag("-i,--interactive", DccConfig::isInteractive,
                "Interactive mode; Opens a shell from which commands can be "

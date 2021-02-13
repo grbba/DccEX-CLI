@@ -19,7 +19,7 @@ const std::map<std::string, DiagLevel> Diag::diagMap{
 
 void Diag::push() {
 
-    DiagConfig *dc = new DiagConfig();
+    auto *dc = new DiagConfig();
 
     dc->println = println;
     dc->_nLogLevel = _nLogLevel;
