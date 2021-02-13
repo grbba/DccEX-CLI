@@ -104,6 +104,7 @@ void DccShell::buildMenus() {
       [&](auto &out) {
         serial.closePort();
         out << "Goodbye and thanks for all the steam.\n";
+        std::cout.setstate(std::ios_base::badbit);
       });
 
   cli.StdExceptionHandler(
