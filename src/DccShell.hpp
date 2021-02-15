@@ -58,3 +58,9 @@ public:
 };
 
 #endif
+
+#define CMD_OPEN                                                               \
+  "open <serial|ethernet> <port> <baud>; If serial indicate the used USB "     \
+  "port and for ethernet indicate the\n\tIP address of the commandstation "   \
+  "baud will be ignored for ethernet and, if not specified for serial,\n\t"  \
+  "the default of 115200 will be used."

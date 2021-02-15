@@ -428,7 +428,7 @@ void AsyncSerial::open(const std::string &devname, unsigned int baud_rate,
   setErrorStatus(false); // If we get here, no error
   pimpl->open = true;    // Port is now open
 
-  thread t(bind(&AsyncSerial::doRead, this));
+  thread t(std::bind(&AsyncSerial::doRead, this));
   pimpl->backgroundThread.swap(t);
 }
 

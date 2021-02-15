@@ -55,6 +55,7 @@ find_package(Boost REQUIRED)
 # Adds Boost::boost
 find_package(nlohmann_json REQUIRED)
 find_package(nlohmann_json_schema_validator REQUIRED)
+find_package(fmt REQUIRED)
 
 
 # The compiled library code is here

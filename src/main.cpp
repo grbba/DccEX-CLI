@@ -18,6 +18,7 @@
  * <https://www.gnu.org/licenses/>
  */
 
+#include <fmt/core.h>
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -27,6 +28,13 @@
 #include "DccConfig.hpp"
 #include "DccLayout.hpp"
 #include "DccShell.hpp"
+
+// Version information
+#define MAJOR 0
+#define MINOR 0
+#define PATCH 10
+
+
 
 /**
  * @brief Reading a file containing json;
@@ -45,14 +53,28 @@ void readJsonFile(const std::string &schema_filename, std::string *schema) {
                         std::istreambuf_iterator<char>());
 }
 
+
 #define HEADING(x)                                                             \
   rang::style::bold << rang::fg::cyan << x << rang::style::reset               \
                     << rang::fg::reset
+#define SUBHEADING(x) rang::fg::cyan << x << rang::fg::reset
 
 auto main(int argc, char **argv) -> int {
   // clear screen
-  std::cout<<"\e[2J\e[1;1H";
-  std::cout << HEADING("Welcome to the DCC++ EX Commandline Interface\n\n");
+  std::cout << "\e[2J\e[1;1H";
+
+  char month[4];
+  int day, year, hour, min, sec;
+  sscanf(__DATE__, "%s %i %i", &month[0], &day, &year);
+  sscanf(__TIME__, "%i:%i:%i", &hour, &min, &sec);
+
+  std::string version = fmt::format("Version {}.{}.{}", MAJOR, MINOR, PATCH);
+  std::string build = fmt::format("-{}{}{}\n", day, hour, min);
+
+  std::cout << HEADING("Welcome to the DCC++ EX Commandline Interface\n");
+  std::cout << SUBHEADING(version); std::cout << SUBHEADING(build);
+  std::cout << SUBHEADING("(c) 2020 grbba\n\n");
+
   Diag::setLogLevel(DiagLevel::LOGV_INFO);
   Diag::setFileInfo(false);
 

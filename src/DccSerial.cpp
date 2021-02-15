@@ -25,6 +25,17 @@
 
 #include "../include/cli/detail/rang.h"
 
+#define HEADING(x)                                                             \
+  out << rang::style::bold << rang::fg::cyan << x << rang::style::reset               \
+                    << rang::fg::reset
+#define WARNING(x)                                                             \
+  out << rang::style::bold << rang::fg::yellow << x << rang::style::reset              \
+                    << rang::fg::reset
+                  
+#define ERROR(x)                                                             \
+  out << rang::style::bold << rang::fg::red << x << rang::style::reset               \
+                    << rang::fg::reset
+
 // std::ostream &DccSerial::out;
 /**
  * @brief
@@ -66,14 +77,12 @@ bool DccSerial::openPort(std::ostream &out, std::string type, std::string d, int
     cType = DCC_SERIAL;
   } else {
     if (type.compare("ethernet") == 0) {
-      out << rang::fg::red << "Ethernet is not yet supported.\n"
-          << rang::fg::reset;
+      ERROR("Ethernet is not yet supported.\n");
       cType = DCC_ETHERNET;
       return DCC_FAILURE;
     } else {
       cType = DCC_CONN_UNKOWN;
-      out << rang::fg::red << "Unknown connection type specified.\n"
-          << rang::fg::reset;
+      ERROR("Unknown connection type specified.\n");
       return DCC_FAILURE;
     }
   }
@@ -83,6 +92,11 @@ bool DccSerial::openPort(std::ostream &out, std::string type, std::string d, int
     baud = b;
     port.setCallback(recieve);
     port.open(device, baud);
+    if (port.isOpen()) {
+      open = true;
+    } else {
+           ERROR("Could not open serial port. Maybe in use by another program ?\n");
+    }
     break;
   }
   case DCC_ETHERNET: {

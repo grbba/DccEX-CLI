@@ -47,6 +47,7 @@ private:
   CallbackAsyncSerial port;
   int baud = 115200;                                // default is 115200
   std::string device;
+  bool open = false;
   // std::ostream *out;
   // CmdParam_t cmd;  
 
@@ -62,6 +63,8 @@ public:
 
   void setDevice(std::string d) { device = d; }
   void setBaud(int b) { baud = b; }
+
+  bool isOpen() { return open; };
   // void setCmd(CmdParam_t c) { cmd = c; }            // current command to process
   // void execute(shellCommand cmd, std::ostream &out, CmdParam_t p1,CmdParam_t p2,CmdParam_t p3);
 
@@ -73,8 +76,3 @@ public:
 #endif
 
 
-#define CMD_OPEN                                                               \
-  "open <serial|ethernet> <port> <baud>; If serial indicate the used USB "     \
-  "port and for ethernet indicate the\n\tIP address of the commandstation "   \
-  "baud will be ignored for ethernet and, if not specified for serial,\n\t"  \
-  "the default of 115200 will be used."

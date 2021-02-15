@@ -20,6 +20,7 @@
 
 #include <chrono>
 #include <fstream>
+#include <fmt/core.h>
 
 
 #include "../include/cli/boostasioscheduler.h"
@@ -39,16 +40,22 @@ using MainScheduler = BoostAsioScheduler;
 #define HEADING(x)                                                             \
   rang::style::bold << rang::fg::cyan << x << rang::style::reset               \
                     << rang::fg::reset
+#define WARNING(x)                                                             \
+  rang::style::bold << rang::fg::yellow << x << rang::style::reset              \
+                    << rang::fg::reset         
+#define ERROR(x)                                                             \
+  rang::style::bold << rang::fg::red << x << rang::style::reset               \
+                    << rang::fg::reset
 
 using namespace std::this_thread;     // sleep_for, sleep_until
 using namespace std::chrono_literals; // ns, us, ms, s, h, etc.
 using std::chrono::system_clock;
 
-
-//////////////////////
-// Building the Menus
-/////////////////////
-
+/**
+ * @brief 
+ * 
+ * @param rootMenu 
+ */
 void DccShell::buildRootMenu(cli::Menu *rootMenu) {
 
   rootMenu->Insert(
@@ -57,6 +64,11 @@ void DccShell::buildRootMenu(cli::Menu *rootMenu) {
       "Shows the configuration items for the current session");
 }
 
+/**
+ * @brief 
+ * 
+ * @param csMenu 
+ */
 void DccShell::buildCsMenu(cli::Menu *csMenu) {
 
   auto rootMenu = std::make_unique<cli::Menu>("cli");
@@ -65,8 +77,6 @@ void DccShell::buildCsMenu(cli::Menu *csMenu) {
       "open", {"serial|ethernet", "serial port|ip address", "baud"},
       [&](std::ostream &out, const std::string &type,
                 const std::string &device, const int &baud) {
-        // serial.setCmd(S_OPEN);
-        // serial.execute(shellCommand::S_OPEN, out, type, device, baud);
         if (serial.openPort(out, type, device, baud)) {
           out << rang::fg::green << "Success()\n" << rang::fg::reset;
         } else {
@@ -80,13 +90,36 @@ void DccShell::buildCsMenu(cli::Menu *csMenu) {
       "status", {},
       [&](std::ostream &out) {
         std::string cmd = "<s>";
+        if(serial.isOpen()) {
         serial.write(&cmd);
-        sleep_for(10ms);
+        } else {
+          out << ERROR("Serial port is closed, please call open first.");
+        }
+        sleep_for(10ms);  // leave some time for the cs to reply before showing the prompt again
         out <<"\n";
       },
-      "requesting status from the command station");
+      "Requesting status from the commandstation");
+
+   csMenu->Insert(
+      "read", {"cv", "callbacknum", "callbacksub"},
+      [&](std::ostream &out, const int &cv, const int &cbNum, const int &cbSub) {
+        std::string cmd = fmt::format("<R {} {} {}>", cv, cbNum, cbSub);
+        out << "Sending: " << cmd << '\n';
+        if(serial.isOpen()) {
+          serial.write(&cmd);
+        } else {
+          out << ERROR("Serial port is closed, please call open first.");
+        }
+        sleep_for(20ms);  // leave some time for the cs to reply before showing the prompt again
+        out <<"\n";
+      },
+      "Reading CV. Allowed values for cv are 1 to 1024");
 }
 
+/**
+ * @brief 
+ * 
+ */
 void DccShell::buildMenus() {
   cli::SetColor();
 
@@ -127,7 +160,11 @@ void DccShell::buildMenus() {
   return;
 }
 
-
+/**
+ * @brief 
+ * 
+ * @return int 
+ */
 auto DccShell::runShell() -> int {
   // Diag::push();
   // Diag::setLogLevel(DiagLevel::LOGV_DEBUG);
