@@ -75,7 +75,7 @@ DccVertexPtr_t DccDoubleVertex::findSibling(DccVertexPtr_t v) {
 }
 
 void DccDoubleVertex::printDoubleVertex() {
-  INFO("(%d,%d) Siblings((%s  \t[%d],%d), <-> (%s  \t[%d],%d))",
+  INFO("({},{}) Siblings(({}  \t[{}],{}), <-> ({}  \t[{}],{}))",
        siblings.at(0).get()->getModule(), siblings.at(1).get()->getModule(),
        siblings.at(0).get()->getTrackElementType(),
        siblings.at(0).get()->getDccid(), siblings.at(0).get()->getNodeid(),
@@ -112,12 +112,12 @@ auto DccVertex::getTrackElementType() -> std::string {
 
 void DccVertex::printConnections() {
   for (auto v : connections) {
-    INFO("      Connected to: V(%d,%d)", v.get()->dccid, v.get()->nodeid);
+    INFO("      Connected to: V({},{})", v.get()->dccid, v.get()->nodeid);
   }
 }
 
 void DccVertex::printVertex() {
-  INFO("Module[%d] : V( %s(%d), %d ) with %d connections", module,
+  INFO("Module[{}] : V({}({}), {} ) with {} connections", module,
        getTrackElementType(), dccid, nodeid, connections.size());
   /*
   if (connections.size() > 0)

@@ -29,10 +29,14 @@
 #ifndef Diag_h
 #define Diag_h
 
-#include "../include/formatter.h"
-#include "../include/rang.hpp"
+// #include "../include/formatter.h"
+// #include "../include/rang.hpp"
+
+#include <fmt/core.h>
+#include <fmt/color.h>
 #include <iostream>
 #include <stack>
+#include <map>
 
 #define DCC_SUCCESS 1
 #define DCC_FAILURE 0
@@ -116,7 +120,13 @@ public:
     code                                                                       \
   }
 
-#define DIAG(message...) std::cout << string::formatter(message);
+#
+
+// #define DIAG(message...) std::cout << string::formatter(message);
+// #define DIAG(message...) fmt::print(fg(fmt::color::medium_turquoise), message);
+#define DIAG(message...) fmt::print(message);
+#define DIAGWARN(message...) fmt::print(fg(fmt::color::orange), message);
+#define DIAGERR(message...) fmt::print(fg(fmt::color::red), message);
 
 #ifndef DEBUG
 #define DEBUG
@@ -138,32 +148,31 @@ public:
   if (Diag::getPrintLabel())                                                   \
     DIAG("::[INF]:");                                                          \
   if (Diag::getFileInfo())                                                     \
-    DIAG("%s:%d : ", __FILE__, __LINE__);                                      \
+    DIAG("{}:{} : ", __FILE__, __LINE__);                                      \
   DIAG(message);                                                               \
   if (Diag::getPrintln())                                                      \
     DIAG("\n");
+
 #define LOGV_WARN_MSG(message...)                                              \
-  std::cout << rang::fg::yellow;                                               \
-  DIAG("::[WRN]:");                                                            \
+  DIAGWARN("::[WRN]:");                                                            \
   if (Diag::getFileInfo())                                                     \
-    DIAG("%s:%d : ", __FILE__, __LINE__);                                      \
-  DIAG(message);                                                               \
+    DIAGWARN("{}:{} : ", __FILE__, __LINE__);                                      \
+  DIAGWARN(message);                                                               \
   if (Diag::getPrintln())                                                      \
-    DIAG("\n");                                                                \
-  std::cout << rang::fg::reset;
+    DIAG("\n");                                                                
+
 #define LOGV_ERROR_MSG(message...)                                             \
-  std::cout << rang::fg::red;                                                  \
   if (Diag::getFileInfo())                                                     \
-    DIAG("::[ERR]:%s:%d : ", __FILE__, __LINE__);                              \
-  DIAG(message);                                                               \
-  DIAG("\n");                                                                  \
-  std::cout << rang::fg::reset;
+    DIAGERR("::[ERR]:{}:{} : ", __FILE__, __LINE__);                              \
+  DIAGERR(message);                                                               \
+  DIAG("\n");  
+
 #define LOGV_TRACE_MSG(message...)                                             \
-  DIAG("::[TRC]:%s:%d : ", __FILE__, __LINE__);                                \
+  DIAG("::[TRC]:{}:{} : ", __FILE__, __LINE__);                                \
   DIAG(message);                                                               \
   DIAG("\n");
 #define LOGV_DEBUG_MSG(message...)                                             \
-  DIAG("::[DBG]:%s:%d : ", __FILE__, __LINE__);                                \
+  DIAG("::[DBG]:{}:{} : ", __FILE__, __LINE__);                                \
   DIAG(message);                                                               \
   DIAG("\n");
 

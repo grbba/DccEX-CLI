@@ -19,11 +19,10 @@
  */
 
 #include <fmt/core.h>
+#include <fmt/color.h>
 #include <fstream>
 #include <iostream>
 #include <string>
-
-// #include "../include/rang.hpp"
 
 #include "DccConfig.hpp"
 #include "DccLayout.hpp"
@@ -53,11 +52,8 @@ void readJsonFile(const std::string &schema_filename, std::string *schema) {
                         std::istreambuf_iterator<char>());
 }
 
-
-#define HEADING(x)                                                             \
-  rang::style::bold << rang::fg::cyan << x << rang::style::reset               \
-                    << rang::fg::reset
-#define SUBHEADING(x) rang::fg::cyan << x << rang::fg::reset
+#define HEADING(x)  fmt::print(fg(fmt::color::medium_turquoise) | fmt::emphasis::bold, x);
+#define SUBHEADING(x)  fmt::print(fg(fmt::color::medium_turquoise), x);
 
 auto main(int argc, char **argv) -> int {
   // clear screen
@@ -71,9 +67,9 @@ auto main(int argc, char **argv) -> int {
   std::string version = fmt::format("Version {}.{}.{}", MAJOR, MINOR, PATCH);
   std::string build = fmt::format("-{}{}{}\n", day, hour, min);
 
-  std::cout << HEADING("Welcome to the DCC++ EX Commandline Interface\n");
-  std::cout << SUBHEADING(version); std::cout << SUBHEADING(build);
-  std::cout << SUBHEADING("(c) 2020 grbba\n\n");
+  HEADING("Welcome to the DCC++ EX Commandline Interface\n");
+  SUBHEADING(version); SUBHEADING(build);
+  SUBHEADING("(c) 2020 grbba\n\n");
 
   Diag::setLogLevel(DiagLevel::LOGV_INFO);
   Diag::setFileInfo(false);

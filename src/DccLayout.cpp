@@ -42,11 +42,11 @@ auto DccLayout::readLayout() -> int {
   std::ifstream schemaFile(DccConfig::dccSchemaFile);
 
   if (!layoutFile.is_open()) {
-    ERR("Layout file %s not found", DccConfig::dccLayoutFile);
+    ERR("Layout file {} not found", DccConfig::dccLayoutFile);
     return DCC_FAILURE;
   }
   if (!schemaFile.is_open()) {
-    WARN("Schema file %s not found. Trying to use the default DccEXLayout "
+    WARN("Schema file {} not found. Trying to use the default DccEXLayout "
          "schema file",
          DccConfig::dccSchemaFile);
   }
@@ -54,8 +54,8 @@ auto DccLayout::readLayout() -> int {
   try {
     schemaFile >> schema;
   } catch (const std::exception &e) {
-    ERR("Validation of schema failed: %s", e.what());
-    ERR("Validation failed at: [%s] while parsing schema", schemaFile.tellg());
+    ERR("Validation of schema failed: {}", e.what());
+    ERR("Validation failed at: [{}] while parsing schema", schemaFile.tellg());
     return DCC_FAILURE;
   }
 
@@ -63,7 +63,7 @@ auto DccLayout::readLayout() -> int {
   try {
     validator.set_root_schema(schema); // insert root-schema
   } catch (const std::exception &e) {
-    ERR("Schema initalization failed: %s", e.what());
+    ERR("Schema initalization failed: {}", e.what());
     return DCC_FAILURE;
   }
 
@@ -73,7 +73,7 @@ auto DccLayout::readLayout() -> int {
     layoutFile >> document;
   } catch (const std::exception &e) {
 
-    ERR("Validation failed at: [%s] while parsing layout", schemaFile.tellg());
+    ERR("Validation failed at: [{}] while parsing layout", schemaFile.tellg());
     return DCC_FAILURE;
   }
 
@@ -81,7 +81,7 @@ auto DccLayout::readLayout() -> int {
 
     validator.validate(document);
   } catch (const std::exception &e) {
-    ERR("Validation of parsed layout failed: %s", e.what());
+    ERR("Validation of parsed layout failed: {}", e.what());
     return DCC_FAILURE;
   }
 
@@ -95,7 +95,7 @@ auto DccLayout::readLayout() -> int {
   try {
     layout = nlohmann::json::parse(layoutFile);
   } catch (json::parse_error &e) {
-    ERR("Loading of the layout failed: %s", e.what());
+    ERR("Loading of the layout failed: {}", e.what());
     return DCC_FAILURE;
   }
 
@@ -112,8 +112,8 @@ auto DccLayout::build() -> int {
     return DCC_FAILURE;
   };
 
-  INFO("Generating Layout graph... : %s\n", layout.get_layout().get_name());
-  INFO("%s has %d module(s)", layout.get_layout().get_name(),
+  INFO("Generating Layout graph... : {}\n", layout.get_layout().get_name());
+  INFO("{} has {} module(s)", layout.get_layout().get_name(),
        layout.get_modules().size());
 
   DccPathFinder gpf(&graph, &path); // setup the Pathfinder for the graph g -> to be
@@ -149,8 +149,8 @@ auto DccLayout::build() -> int {
   // gpf.findAllPaths(1, 20);
   // gpf.findAllPaths(DccVertex::cantorEncode(1,9));
 
-  // INFO("Finished computation at %s", std::ctime(&end_time));
-  INFO("Elapsed time: [%d]ms", duration.count());
+  // INFO("Finished computation at {}", std::ctime(&end_time));
+  INFO("Elapsed time: [{}]ms", duration.count());
 
   return DCC_SUCCESS;
 }
@@ -159,7 +159,7 @@ void DccLayout::listPaths() {
   Diag::push();
   Diag::setPrintLabel(false);
 
-  INFO("Printing ALL %d paths available for this Layout", path.getNumberOfPaths());
+  INFO("Printing ALL {} paths available for this Layout", path.getNumberOfPaths());
 
   const auto start = path.getAllPaths()->begin();    
   const auto end = path.getAllPaths()->end();

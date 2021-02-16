@@ -26,13 +26,13 @@ auto DccGraph::checkModule(DccModel::Module *module) -> int {
   mn++; // each time called the number increases by one;
   module->set_dccid(mn);
 
-  DBG("Module[%d]: [%s] using track plan [%s]", module->get_dccid(),
+  DBG("Module[{}]: {} using track plan {}", module->get_dccid(),
       module->get_name(), module->get_trackplan());
   // Check if there is a Trackplan for the module
   bool hasTp = false;
   for (auto tp : layout->get_trackplans()) {
     if (tp.get_name() == module->get_trackplan()) {
-      INFO("Found track plan [%s] for Module [%s]", tp.get_name(),
+      INFO("Found track plan [{}] for Module [{}]", tp.get_name(),
            module->get_name());
       hasTp = true;
       tps.push_back(tp);
@@ -41,7 +41,7 @@ auto DccGraph::checkModule(DccModel::Module *module) -> int {
     }
   }
   if (!hasTp) {
-    ERR("  No track plan for Module [%s] found", module->get_name());
+    ERR("  No track plan for Module [{}] found", module->get_name());
     return 0;
   }
   return mn;
@@ -95,7 +95,7 @@ std::shared_ptr<DccVertex> DccGraph::createVertex(int16_t module, int32_t dccid,
   }
   }
 
-  TRC("Created %s vertices: Module:[%d], TrackElement:[%d], PathId:[%d]", type,
+  TRC("Created {} vertices: Module:[{}], TrackElement:[{}], PathId:[{}]", type,
       v->getModule(), v->getDccid(), v->getNodeid());
   return v;
 }
@@ -108,7 +108,7 @@ std::shared_ptr<DccVertex> DccGraph::createVertex(int16_t module, int32_t dccid,
  * @param te Address of the Trackelement (from the model )
  */
 void DccGraph::buildBumperVertex(int mn, int ten, DccModel::Trackelement *te) {
-  DBG("Bumper[%d] %s", te->get_dccid(),
+  DBG("Bumper[{}] {}", te->get_dccid(),
       te->get_bumper().get()->get_description() == nullptr
           ? ""
           : te->get_bumper().get()->get_description().get()->c_str());
@@ -120,7 +120,7 @@ void DccGraph::buildBumperVertex(int mn, int ten, DccModel::Trackelement *te) {
 void DccGraph::buildTurnoutVertex(int mn, int ten, DccModel::Trackelement *te) {
   // creates three vertices
 
-  DBG("Turnout[%d] %s", te->get_dccid(),
+  DBG("Turnout[{}] {}", te->get_dccid(),
       te->get_turnout().get()->get_description() == nullptr
           ? ""
           : te->get_turnout().get()->get_description().get()->c_str());
@@ -131,18 +131,18 @@ void DccGraph::buildTurnoutVertex(int mn, int ten, DccModel::Trackelement *te) {
   // vertices for the wide end
   for (Node_t vid : te->get_turnout().get()->get_wide()) {
     DccVertexPtr_t wide = createVertex(mn, ten, vid, te->get_turnout());
-    DBG("Adding narrow [%x] to wide [%x] connection", narrow, wide);
+    DBG("Adding narrow [{}] to wide [{}] connection",  narrow.get()->getNodeid(), wide.get()->getNodeid()); 
     wide.get()->addConnection(narrow);
-    DBG("Adding wide [%x] to narrow [%x] connection", wide, narrow);
+    DBG("Adding wide [{}] to narrow [{}] connection", wide.get()->getNodeid(), narrow.get()->getNodeid());
     narrow.get()->addConnection(wide);
   };
 
-  INFO("Turnout <T %d%d %d>", mn, vid, ten);
+  INFO("Turnout <T {}{} {}>", mn, vid, ten);
 }
 
 void DccGraph::buildRailVertex(int mn, int ten, DccModel::Trackelement *te) {
   // creates two vertices
-  DBG("Segment[%d] %s", te->get_dccid(),
+  DBG("Segment[{}] {}", te->get_dccid(),
       te->get_rail().get()->get_description() == nullptr
           ? ""
           : te->get_rail().get()->get_description().get()->c_str());
@@ -153,9 +153,9 @@ void DccGraph::buildRailVertex(int mn, int ten, DccModel::Trackelement *te) {
     DccVertexPtr_t in = createVertex(mn, ten, v1, te->get_rail());
     Node_t v2 = te->get_rail().get()->get_path().at(1);
     DccVertexPtr_t out = createVertex(mn, ten, v2, te->get_rail());
-    DBG("Adding out [%x] to in [%x] connection", out, in);
+    DBG("Adding out [{}] to in [{}] connection", out.get()->getNodeid(), in.get()->getNodeid());
     in.get()->addConnection(out);
-    DBG("Adding in [%x] to out [%x] connection", in, out);
+    DBG("Adding in [{}] to out [{}] connection", in.get()->getNodeid(), out.get()->getNodeid());
     out.get()->addConnection(in);
     length = length + te->get_rail().get()->get_length();
   }
@@ -169,7 +169,7 @@ void DccGraph::buildCrossingVertex(int mn, int ten,
   std::vector<DccVertexPtr_t> crNodes;
 
   // creates two vertices
-  DBG("Crossing [%d] %s", te->get_dccid(),
+  DBG("Crossing [{}] {}", te->get_dccid(),
       te->get_crossing().get()->get_description() == nullptr
           ? ""
           : te->get_crossing().get()->get_description().get()->c_str());
@@ -177,7 +177,7 @@ void DccGraph::buildCrossingVertex(int mn, int ten,
     ERR("Crossing hasn't the required set of nodes (4)");
   } else {
     // create vertices for the crossing
-    DBG("Create [%d] vertices for the crossing",
+    DBG("Create [{}] vertices for the crossing",
         te->get_crossing().get()->get_path().size());
     for (unsigned long i = 0; i < te->get_crossing().get()->get_path().size();
          i++) {
@@ -190,16 +190,16 @@ void DccGraph::buildCrossingVertex(int mn, int ten,
     for (int i = 0; i < 2; i++) {
       in = crNodes.at(i);
       out = crNodes.at(i + 2);
-      DBG("Adding out [%d] to in [%d] connection", out.get()->getNodeid(),
+      DBG("Adding out [{}] to in [{}] connection", out.get()->getNodeid(),
           in.get()->getNodeid());
       in.get()->addConnection(out);
-      DBG("Adding in [%d] to out [%d] connection", in.get()->getNodeid(),
+      DBG("Adding in [{}] to out [{}] connection", in.get()->getNodeid(),
           out.get()->getNodeid());
       out.get()->addConnection(in);
     }
     // add slips if any; none -> just a crossing
     if (te->get_crossing().get()->get_slip().size() > 0) {
-      DBG("Adding [%d] slips to the connections between the vertices of the "
+      DBG("Adding [{}] slips to the connections between the vertices of the "
           "crossing",
           te->get_crossing().get()->get_slip().size());
       // loop over all slips
@@ -216,7 +216,7 @@ void DccGraph::buildCrossingVertex(int mn, int ten,
           }
         }
 
-        DBG("Found first j [%d] i [%d]", j, i);
+        DBG("Found first j [{}] i [{}]", j, i);
         // find the opposite for the slip point; As the user can define any node
         // as the start/end of the slip look for the direction
         if (j == 0 || j == 2) {
@@ -224,13 +224,13 @@ void DccGraph::buildCrossingVertex(int mn, int ten,
         } else {
           j--;
         }
-        DBG("Found second j [%d] i [%d]", j, i);
+        DBG("Found second j [{}] i [{}]", j, i);
         out = crNodes.at(j);
 
-        DBG("Adding out [%d] to in [%d] connection", out.get()->getNodeid(),
+        DBG("Adding out [{}] to in [{}] connection", out.get()->getNodeid(),
             in.get()->getNodeid());
         in.get()->addConnection(out);
-        DBG("Adding in [%d] to out [%d] connection", in.get()->getNodeid(),
+        DBG("Adding in [{}] to out [{}] connection", in.get()->getNodeid(),
             out.get()->getNodeid());
         out.get()->addConnection(in);
       }
@@ -250,7 +250,7 @@ void DccGraph::buildGraph(int mn) {
   tp.set_dccid(tpn);
   tpn++;
 
-  INFO("Building TrackPlan[%d]: %s", tp.get_dccid(), tp.get_name());
+  INFO("Building TrackPlan[{}]: {}", tp.get_dccid(), tp.get_name());
 
   /**
    * @todo error checking on the contents of the layout if not caught before by
@@ -261,7 +261,7 @@ void DccGraph::buildGraph(int mn) {
   for (auto ts : tp.get_tracksections()) {
     ts.set_dccid(tsn);
     tsn++;
-    DBG("TrackSection[%d]: %s", ts.get_dccid(), ts.get_name());
+    DBG("TrackSection[{}]: {}", ts.get_dccid(), ts.get_name());
     for (auto te : ts.get_trackelements()) {
       te.set_dccid(ten);
       if (te.get_bumper()) {
@@ -308,7 +308,7 @@ void DccGraph::build(DccModel::DccExLayout *l) {
 
   if (layout->get_junctions() != nullptr) {
     jn = layout->get_junctions().get()->size();
-    INFO("Setting up [%d] Junctions ... ", jn);
+    INFO("Setting up [{}] Junctions ... ", jn);
   }
 
   // for each junction build a rail segement out of thin air ..
@@ -333,7 +333,7 @@ void DccGraph::build(DccModel::DccExLayout *l) {
     auto to =
         std::get_if<std::shared_ptr<DccModel::Junction>>(&j)->get()->get_to();
 
-    TRC("Creating Junction #%d from [%s : %d] to [%s : %d]", i,
+    TRC("Creating Junction #{} from [{} : {}] to [{} : {}]", i,
         from.get_from_module(), from.get_path(), to.get_to_module(),
         to.get_path());
 
@@ -354,7 +354,7 @@ void DccGraph::build(DccModel::DccExLayout *l) {
       in = createVertex(mn1, ten, from.get_path(), j);
       isJunction1 = true;
     } else {
-      ERR("No Module [%s] found for Junction node [%d]", from.get_from_module(),
+      ERR("No Module [{}] found for Junction node [{}]", from.get_from_module(),
           from.get_path());
       isJunction1 = false;
     }
@@ -366,14 +366,14 @@ void DccGraph::build(DccModel::DccExLayout *l) {
       out = createVertex(mn2, ten, to.get_path(), j);
       isJunction2 = true;
     } else {
-      ERR("No Module [%s] found for Junction node [%d]", to.get_to_module(),
+      ERR("No Module [{}] found for Junction node [{}]", to.get_to_module(),
           to.get_path());
       isJunction2 = false;
     }
     if (isJunction1 && isJunction2) {
-      DBG("Adding junction out [%x] to in [%x] connection", out, in);
+      DBG("Adding junction out [{}] to in [{}] connection", out.get()->getNodeid(), in.get()->getNodeid());
       in.get()->addConnection(out);
-      DBG("Adding junction in [%x] to out [%x] connection", in, out);
+      DBG("Adding junction in [{}] to out [{}] connection", in.get()->getNodeid(), out.get()->getNodeid());
       out.get()->addConnection(in);
       ten++;
     }
@@ -386,7 +386,7 @@ void DccGraph::build(DccModel::DccExLayout *l) {
   // vertices there is a double vertice for each of the trackelements; loop over
   // the track element number (ten) and get the vertices out of graph which have
   // the same nodeid eq to the current track element number;
-  DBG("Building Double Vertices for [%d] nodes", nodes.size());
+  DBG("Building Double Vertices for [{}] nodes", nodes.size());
   for (auto i : nodes)
   // for (int32_t i = 1; i <= getNumberOfNodes(); i++)
   {
@@ -394,7 +394,7 @@ void DccGraph::build(DccModel::DccExLayout *l) {
     auto dv = std::shared_ptr<DccDoubleVertex>(new DccDoubleVertex());
     auto siblings = dv.get()->getSiblings();
 
-    TRC("Searching siblings for nodeid [%d]", i);
+    TRC("Searching siblings for nodeid [{}]", i);
 
     for (auto v : graph) {
       auto vptr = v.second;
@@ -405,21 +405,21 @@ void DccGraph::build(DccModel::DccExLayout *l) {
         siblings->push_back(vptr);
       }
     }
-    DBG("Size [%d]", siblings->size());
+    DBG("Size [{}]", siblings->size());
     bool addSiblings = false;
     int sib0 = 0; // defaults if everything is ok i.e. there are two siblings
     int sib1 = 1;
     switch (siblings->size()) {
     case 0: {
       // not connected at all - can be ignored
-      WARN("WARNING: No siblings for nodeid [%d]: Node is (maybe "
+      WARN("WARNING: No siblings for nodeid [{}]: Node is (maybe "
            "intentionally) not connected/skipped in the track plan",
            i);
       break;
     }
     case 1: {
       // End of track i.e. Bumper ommitted most likely
-      WARN("WARNING: Missing sibling for nodeid [%d]: Bumper or connection is "
+      WARN("WARNING: Missing sibling for nodeid [{}]: Bumper or connection is "
            "missing",
            i);
       break;
@@ -435,10 +435,10 @@ void DccGraph::build(DccModel::DccExLayout *l) {
       // remove the bumper from the siblings ( costly though but no other
       // solution yet ) remove the bumper
       WARN("WARNING: Possible reconfiguration from a bumper to a junction "
-           "sibling for nodeid [%d]",
+           "sibling for nodeid [{}]",
            i);
       for (size_t i = 0; i < siblings->size(); i++) {
-        DBG("Found sibling #%d of type %s", i,
+        DBG("Found sibling #{} of type {}", i,
             siblings->at(i).get()->getTrackElementType());
         switch (siblings->at(i).get()->getTeType()) {
         case BUMPER: {
@@ -459,7 +459,7 @@ void DccGraph::build(DccModel::DccExLayout *l) {
     }
     default: {
       addSiblings = true;
-      WARN("Too many siblings for nodeid [%d]; ignoring the additional "
+      WARN("Too many siblings for nodeid [{}]; ignoring the additional "
            "siblings ",
            i);
     }
@@ -468,12 +468,12 @@ void DccGraph::build(DccModel::DccExLayout *l) {
     if (addSiblings) {
       int64_t id1 = siblings->at(sib0).get()->getGid();
       int64_t id2 = siblings->at(sib1).get()->getGid();
-      TRC("DV siblings %d", dv.get()->getSiblings()->size());
+      TRC("DV siblings {}", dv.get()->getSiblings()->size());
       dvGraph.insert({std::pair(id1, id2), dv});
     }
   }
 
-  TRC("DVGraph has [%d] nodes", dvGraph.size());
+  TRC("DVGraph has [{}] nodes", dvGraph.size());
   _isBuild = true;
 }
 
@@ -492,7 +492,7 @@ void DccGraph::printTrackElements() {
   INFO("Track Elements");
   INFO("-----------------------------------------");
   for (auto te : tev) {
-    INFO("TrackElement[%d] contains ", te.first);
+    INFO("TrackElement[{}] contains ", te.first);
     for (auto t : te.second) {
       t.get()->printVertex();
     }
@@ -507,23 +507,23 @@ void DccGraph::printInfo() {
   INFO("-----------------------------------------");
   INFO("Layout info");
   INFO("-----------------------------------------");
-  INFO("Name: %s has", layout->get_layout().get_name());
-  INFO("%d Modules using", mn);
+  INFO("Name: {} has", layout->get_layout().get_name());
+  INFO("{} Modules using", mn);
 
   for (auto m : layout->get_modules()) {
 
-    INFO("  Trackplan [%s] for Module [%s]", m.get_trackplan(), m.get_name());
+    INFO("  Trackplan [{}] for Module [{}]", m.get_trackplan(), m.get_name());
   }
 
-  INFO("%s has overall:", layout->get_layout().get_name());
-  INFO("%d Turnouts", tn);
-  INFO("%d Segments", sn);
-  INFO("%d Bumpers", bn);
-  INFO("%d Crossings", cn);
-  DBG("%d Trackelements", ten);
-  DBG("# Total number of nodes: %d", nodes.size());
-  INFO("Track length: %d", length);
-  DBG("# ngid: %d", ngid);
+  INFO("{} has overall:", layout->get_layout().get_name());
+  INFO("{} Turnouts", tn);
+  INFO("{} Segments", sn);
+  INFO("{} Bumpers", bn);
+  INFO("{} Crossings", cn);
+  DBG("{} Trackelements", ten);
+  DBG("# Total number of nodes: {}", nodes.size());
+  INFO("Track length: {}", length);
+  DBG("# ngid: {}", ngid);
 
   Diag::pop();
 }

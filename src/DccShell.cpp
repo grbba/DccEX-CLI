@@ -21,6 +21,8 @@
 #include <chrono>
 #include <fstream>
 #include <fmt/core.h>
+#include <fmt/color.h>
+#include <fmt/ostream.h>
 
 
 #include "../include/cli/boostasioscheduler.h"
@@ -37,15 +39,10 @@ using MainScheduler = BoostAsioScheduler;
 #include "Diag.hpp"
 
 
-#define HEADING(x)                                                             \
-  rang::style::bold << rang::fg::cyan << x << rang::style::reset               \
-                    << rang::fg::reset
-#define WARNING(x)                                                             \
-  rang::style::bold << rang::fg::yellow << x << rang::style::reset              \
-                    << rang::fg::reset         
-#define ERROR(x)                                                             \
-  rang::style::bold << rang::fg::red << x << rang::style::reset               \
-                    << rang::fg::reset
+#define HEADING(x)  fmt::format(fg(fmt::color::medium_turquoise) | fmt::emphasis::bold, x);
+#define WARNING(x)  fmt::format(fg(fmt::color::orange) | fmt::emphasis::bold, x);
+#define ERROR(x)  fmt::format(fg(fmt::color::red) | fmt::emphasis::bold, x);
+
 
 using namespace std::this_thread;     // sleep_for, sleep_until
 using namespace std::chrono_literals; // ns, us, ms, s, h, etc.

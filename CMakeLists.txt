@@ -51,7 +51,7 @@ if(${CMAKE_VERSION} VERSION_LESS 3.14)
 endif()
 
 # This is header only, so could be replaced with git submodules or FetchContent
-find_package(Boost REQUIRED)
+# find_package(Boost REQUIRED)
 # Adds Boost::boost
 find_package(nlohmann_json REQUIRED)
 find_package(nlohmann_json_schema_validator REQUIRED)

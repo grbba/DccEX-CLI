@@ -110,7 +110,7 @@ void DccPathFinder::findAllRail2RailPaths() {
   for (auto var : _graph->getGraph()) {
     if (var.second->getTeType() == RAIL) {
       var.second->cantorDecode(var.second->getNodeid(), &m, &n);
-      DBG("Find paths for %d - (%d/%d)", var.second->getNodeid(), m, n);
+      DBG("Find paths for {} - ({}/{})", var.second->getNodeid(), m, n);
       findAllPaths(var.second->getNodeid());
     }
   }
@@ -148,19 +148,18 @@ void DccPathFinder::findAllPaths(int32_t nodeid) {
     vertex.second->mark = NOK;
   }
 
-  DBG("start: %d end: %d", _start, _end);
-  DBG("Paths %x  size %d", paths, paths->size());
+  DBG("start: {} end: {}", _start, _end);
 
   if (findStartVertex(nodeid, &start, &v)) {
-    TRC("Calculating direct paths for module [%d] node [%d]", _sm, _sn);
-    DBG("Number of start nodes %d", start.size());
+    TRC("Calculating direct paths for module [{}] node [{}]", _sm, _sn);
+    DBG("Number of start nodes {}", start.size());
     for (auto v : start) {
       DccPath_t p;
-      DBG("v:%x p:%x sizeof p: %d", v, &p, p.size());
+      DBG("v:{} sizeof p: {}", v.get()->getNodeid(), p.size());
       DFS(p, v);
     }
   } else {
-    ERR("DFS::No such nodeid [%d]", _sn);
+    ERR("DFS::No such nodeid [{}]", _sn);
     return;
   }
 
@@ -196,17 +195,17 @@ void DccPathFinder::findAllPaths(int32_t s, int32_t e) {
 
   if (findStartVertex(s, &start, &v)) {
 
-    INFO("Calculating direct paths from node [%d] to node [%d]", _sn, _en);
+    INFO("Calculating direct paths from node [{}] to node [{}]", _sn, _en);
     for (auto v : start) {
       DccPath_t p;
       DFS(p, v, _end);
     }
   } else {
-    ERR("DFS::No such nodeid [%d]", _sn);
+    ERR("DFS::No such nodeid [{}]", _sn);
     return;
   }
   // report all paths found
-  INFO("[%d] direct paths are available from node [%d] to node [%d]",
+  INFO("[{}] direct paths are available from node [{}] to node [{}]",
        paths->size(), _sn, _en);
   for (auto pa : *paths) {
     int _pn, _pm;

@@ -31,6 +31,8 @@
 #ifndef DccGraph_h
 #define DccGraph_h
 
+#include <set>
+
 #include "DccModel.hpp"
 #include "DccVertex.hpp"
 #include "Diag.hpp"
