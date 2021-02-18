@@ -35,6 +35,8 @@ using MainScheduler = BoostAsioScheduler;
 #include "../include/cli/clilocalsession.h"
 
 #include "DccShell.hpp"
+#include "DccShellCmd.hpp"
+#include "ShellCmdConfig.hpp"
 #include "DccSerial.hpp"
 #include "Diag.hpp"
 
@@ -47,6 +49,30 @@ using MainScheduler = BoostAsioScheduler;
 using namespace std::this_thread;     // sleep_for, sleep_until
 using namespace std::chrono_literals; // ns, us, ms, s, h, etc.
 using std::chrono::system_clock;
+
+/* Menu item description to be inserted
+
+{
+  "name":"dosomething", 
+  "params": [ 
+    { "string": "string parameter text 1", "mandatory":1 },
+    { "string": "string parameter text 2", "mandatory":1 },
+    { "int": " int parameter text 3 ", "mandatory": 0, "default": 115200}
+  ],
+  "help": "Help text decribing the menu item"
+}
+
+*/
+
+
+
+std::string mi = "dosomething";
+std::vector<std::string> midesc = {"[ack|wifi|ethernet|cmd|wit]", "[on|off]"};
+std::string mihelp = "Enable/Disbale diganostics for the commandstation";
+
+void executeMenu(std::ostream &out, std::string mi,  std::vector<std::string> params) {
+    out << "execute menu item: " << mi << '\n';
+}
 
 /**
  * @brief 
@@ -107,10 +133,33 @@ void DccShell::buildCsMenu(cli::Menu *csMenu) {
         } else {
           out << ERROR("Serial port is closed, please call open first.");
         }
-        sleep_for(20ms);  // leave some time for the cs to reply before showing the prompt again
+        sleep_for(1s);  // leave some time for the cs to reply before showing the prompt again
         out <<"\n";
       },
       "Reading CV. Allowed values for cv are 1 to 1024");
+
+    csMenu->Insert(
+      "diag", {"[ack|wifi|ethernet|cmd|wit]", "[on|off]"},
+      [&](std::ostream &out, const std::string &item, const std::string &state) {
+        std::string cmd = fmt::format("<D {} {}>", item, state);
+        if(serial.isOpen()) {
+          serial.write(&cmd);
+        } else {
+          out << ERROR("Serial port is closed, please call open first.");
+        }
+        sleep_for(1s);  // leave some time for the cs to reply before showing the prompt again
+        out <<"\n";
+      },
+      "Enable/Disbale diganostics for the commandstation");
+
+
+    csMenu->Insert(
+      mi,                 // Name
+      midesc,  // description as many strings as parameters
+      [&](std::ostream &out, std::vector<std::string> params) {     // lambda to execute for this menu item
+        executeMenu(out, mi, params);
+      },
+      mihelp);   // helptext for the menu item
 }
 
 /**
@@ -118,6 +167,17 @@ void DccShell::buildCsMenu(cli::Menu *csMenu) {
  * 
  */
 void DccShell::buildMenus() {
+
+  DccShellCmd csCmdMenu(csMenuItems);  // constructs the menuItems
+  
+  for(auto var : csCmdMenu.menuCommands)
+  {
+    
+  }
+ 
+  
+  
+
   cli::SetColor();
 
   auto rootMenu = std::make_unique<cli::Menu>("DccEX");
