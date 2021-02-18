@@ -19,22 +19,17 @@
  * <https://www.gnu.org/licenses/>
  */
 
-#include "DccSerial.hpp"
 #include <iostream>
 #include <vector>
+#include <fmt/core.h>
+#include <fmt/color.h>
+#include <fmt/ostream.h>
 
-#include "../include/cli/detail/rang.h"
+#include "DccSerial.hpp"
 
-#define HEADING(x)                                                             \
-  out << rang::style::bold << rang::fg::cyan << x << rang::style::reset               \
-                    << rang::fg::reset
-#define WARNING(x)                                                             \
-  out << rang::style::bold << rang::fg::yellow << x << rang::style::reset              \
-                    << rang::fg::reset
-                  
-#define ERROR(x)                                                             \
-  out << rang::style::bold << rang::fg::red << x << rang::style::reset               \
-                    << rang::fg::reset
+#define HEADING(x)  fmt::format(fg(fmt::color::medium_turquoise) | fmt::emphasis::bold, x);
+#define WARNING(x)  fmt::format(fg(fmt::color::orange) | fmt::emphasis::bold, x);
+#define ERROR(x)  fmt::format(fg(fmt::color::red) | fmt::emphasis::bold, x);
 
 // std::ostream &DccSerial::out;
 /**
@@ -45,7 +40,7 @@
  */
 void DccSerial::recieve(const char *data, unsigned int len) {
   std::vector<char> v(data, data + len);
-  std::cout << rang::fg::magenta;
+  // std::cout << rang::fg::magenta;
   for (unsigned int i = 0; i < v.size(); i++) {
     if (v[i] == '\n') {
       std::cout << '\n';
@@ -53,10 +48,11 @@ void DccSerial::recieve(const char *data, unsigned int len) {
       if (v[i] < 32 || v[i] >= 0x7f)
         std::cout.put(' '); // Remove non-ascii char
       else
-       std::cout.put(v[i]);
+      fmt::print(fg(fmt::color::magenta),"{}", v[i]);
+      // std::cout.put(v[i]);
     }
   }
-  std::cout << rang::fg::reset;
+  //std::cout << rang::fg::reset;
   std::cout.flush(); // Flush screen buffer
 }
 
@@ -77,12 +73,12 @@ bool DccSerial::openPort(std::ostream &out, std::string type, std::string d, int
     cType = DCC_SERIAL;
   } else {
     if (type.compare("ethernet") == 0) {
-      ERROR("Ethernet is not yet supported.\n");
+      out << ERROR("Ethernet is not yet supported.\n");
       cType = DCC_ETHERNET;
       return DCC_FAILURE;
     } else {
       cType = DCC_CONN_UNKOWN;
-      ERROR("Unknown connection type specified.\n");
+      out << ERROR("Unknown connection type specified.\n");
       return DCC_FAILURE;
     }
   }
@@ -95,7 +91,7 @@ bool DccSerial::openPort(std::ostream &out, std::string type, std::string d, int
     if (port.isOpen()) {
       open = true;
     } else {
-           ERROR("Could not open serial port. Maybe in use by another program ?\n");
+           out << ERROR("Could not open serial port. Maybe in use by another program ?\n");
     }
     break;
   }

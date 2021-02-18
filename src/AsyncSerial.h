@@ -97,7 +97,7 @@ public:
      * \param data array of char to be sent through the serial device
      * \param size array size
      */
-    void write(const char *data, size_t size);
+    void write(const char *data, ssize_t size);
 
      /**
      * Write data asynchronously. Returns immediately.

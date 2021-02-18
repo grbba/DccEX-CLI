@@ -172,10 +172,8 @@ void DccShell::buildMenus() {
   
   for(auto var : csCmdMenu.menuCommands)
   {
-    
+      
   }
- 
-  
   
 
   cli::SetColor();

@@ -7,7 +7,12 @@ endif()
 include(CTest)
 enable_testing()
 
-include_directories(../include ../../boost_1_75_0 /usr/local/Cellar/nlohmann-json/3.9.1_1/include /usr/local/Cellar/llvm/11.0.0_1/include )
+include_directories(../include 
+                    /usr/local/include 
+                    ../../boost_1_75_0 
+                    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1
+                    /usr/local/Cellar/nlohmann-json/3.9.1_1/include 
+                    /usr/local/Cellar/llvm/11.0.0_1/include )
 
 add_executable( dcclayout 
                 main.cpp 
@@ -21,6 +26,7 @@ add_executable( dcclayout
                 DccShell.cpp
                 AsyncSerial.cpp
                 DccSerial.cpp
+                DccShellCmd.cpp
               )
 
 target_compile_features(dcclayout PRIVATE cxx_std_17)

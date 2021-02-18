@@ -33,8 +33,6 @@
 #define MINOR 0
 #define PATCH 10
 
-
-
 /**
  * @brief Reading a file containing json;
  * Usable for small files as it fills a potentially large string.
@@ -71,7 +69,7 @@ auto main(int argc, char **argv) -> int {
   SUBHEADING(version); SUBHEADING(build);
   SUBHEADING("(c) 2020 grbba\n\n");
 
-  Diag::setLogLevel(DiagLevel::LOGV_INFO);
+  Diag::setLogLevel(DiagLevel::LOGV_DEBUG);
   Diag::setFileInfo(false);
 
   // setup the configuration

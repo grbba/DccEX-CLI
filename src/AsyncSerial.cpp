@@ -264,6 +264,9 @@ void AsyncSerial::clearReadCallback() {
 #include <termios.h>
 #include <unistd.h>
 
+
+#define UNUSED(p) ((p)=(p))
+
 class AsyncSerialImpl : private noncopyable {
 public:
   AsyncSerialImpl() : backgroundThread(), open(false), error(false) {}
@@ -297,6 +300,12 @@ void AsyncSerial::open(const std::string &devname, unsigned int baud_rate,
                        asio::serial_port_base::character_size opt_csize,
                        asio::serial_port_base::flow_control opt_flow,
                        asio::serial_port_base::stop_bits opt_stop) {
+
+  UNUSED(opt_parity);  // stop compiler warnings
+  UNUSED(opt_csize);
+  UNUSED(opt_flow);
+  UNUSED(opt_stop);
+
   if (isOpen())
     close();
 
@@ -455,18 +464,18 @@ void AsyncSerial::close() {
   }
 }
 
-void AsyncSerial::write(const char *data, size_t size) {
+void AsyncSerial::write(const char *data, ssize_t size) {
   if (::write(pimpl->fd, data, size) != size)
     setErrorStatus(true);
 }
 
 void AsyncSerial::write(const std::vector<char> &data) {
-  if (::write(pimpl->fd, &data[0], data.size()) != data.size())
+  if (::write(pimpl->fd, &data[0], data.size()) != (ssize_t)data.size())
     setErrorStatus(true);
 }
 
 void AsyncSerial::writeString(const std::string &s) {
-  if (::write(pimpl->fd, &s[0], s.size()) != s.size())
+  if (::write(pimpl->fd, &s[0], s.size()) != (ssize_t)s.size())
     setErrorStatus(true);
 }
 
@@ -500,6 +509,9 @@ void AsyncSerial::doRead() {
 void AsyncSerial::readEnd(const boost::system::error_code &error,
                           size_t bytes_transferred) {
   // Not used
+  // UNUSED(error); 
+  (void)(error);
+  UNUSED(bytes_transferred);
 }
 
 void AsyncSerial::doWrite() {
@@ -508,6 +520,7 @@ void AsyncSerial::doWrite() {
 
 void AsyncSerial::writeEnd(const boost::system::error_code &error) {
   // Not used
+  (void)(error);
 }
 
 void AsyncSerial::doClose() {

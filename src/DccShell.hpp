@@ -59,6 +59,21 @@ public:
 
 #endif
 
+enum class csCmd {
+    OPEN,
+    READ,
+    DIAG,
+    CONFIG,
+    RAM,
+    CABS
+};
+
+struct shellCmd {
+    csCmd command;
+    // function pointer to the excecutor of the command
+};
+
+
 #define CMD_OPEN                                                               \
   "open <serial|ethernet> <port> <baud>; If serial indicate the used USB "     \
   "port and for ethernet indicate the\n\tIP address of the commandstation "   \

@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.7...3.19)
 
-if(${CMAKE_VERSION} VERSION_LESS 3.12)
+if(${CMAKE_VERSION} VERSION_LESS 3.14)
     cmake_policy(VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION})
 endif()
 
@@ -34,8 +34,8 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
   
   set(MEMORYCHECK_COMMAND FILEPATH=/usr/local/bin/valgrind)
 
-  # Docs only available if this is the main app
-  find_package(Doxygen)
+# Docs only available if this is the main app
+find_package(Doxygen)
   if(Doxygen_FOUND)
     add_subdirectory(docs)
   else()
@@ -43,23 +43,15 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
   endif()
 endif()
 
-# FetchContent added in CMake 3.11, downloads during the configure step
-include(FetchContent)
-# FetchContent_MakeAvailable was not added until CMake 3.14; use our shim
-if(${CMAKE_VERSION} VERSION_LESS 3.14)
-  include(cmake/add_FetchContent_MakeAvailable.cmake)
-endif()
-
-# This is header only, so could be replaced with git submodules or FetchContent
 # find_package(Boost REQUIRED)
-# Adds Boost::boost
 find_package(nlohmann_json REQUIRED)
 find_package(nlohmann_json_schema_validator REQUIRED)
 find_package(fmt REQUIRED)
 
-
-# The compiled library code is here
+# The source code is here
 add_subdirectory(src)
+
+
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
