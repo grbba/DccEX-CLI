@@ -24,14 +24,12 @@
 #include <fmt/color.h>
 #include <fmt/ostream.h>
 
-
 #include "../include/cli/boostasioscheduler.h"
 
-namespace cli {
-using MainScheduler = BoostAsioScheduler;
+namespace cli
+{
+  using MainScheduler = BoostAsioScheduler;
 } // namespace cli
-
-// #include "../include/cli/cli.h"
 #include "../include/cli/clilocalsession.h"
 
 #include "DccShell.hpp"
@@ -40,152 +38,64 @@ using MainScheduler = BoostAsioScheduler;
 #include "DccSerial.hpp"
 #include "Diag.hpp"
 
-
-#define HEADING(x)  fmt::format(fg(fmt::color::medium_turquoise) | fmt::emphasis::bold, x);
-#define WARNING(x)  fmt::format(fg(fmt::color::orange) | fmt::emphasis::bold, x);
-#define ERROR(x)  fmt::format(fg(fmt::color::red) | fmt::emphasis::bold, x);
-
+#define HEADING(x) fmt::format(fg(fmt::color::medium_turquoise) | fmt::emphasis::bold, x);
+#define WARNING(x) fmt::format(fg(fmt::color::orange) | fmt::emphasis::bold, x);
+#define ERROR(x) fmt::format(fg(fmt::color::red) | fmt::emphasis::bold, x);
 
 using namespace std::this_thread;     // sleep_for, sleep_until
 using namespace std::chrono_literals; // ns, us, ms, s, h, etc.
 using std::chrono::system_clock;
 
-/* Menu item description to be inserted
-
+/**
+ * @brief Command distributor; identifies the command verifies the parameters send and calls the execution accordingly
+ * 
+ */
+void executeMenu(std::ostream &out, const std::pair<int,std::shared_ptr<cmdItem>> var, const std::vector<std::string> params)
 {
-  "name":"dosomething", 
-  "params": [ 
-    { "string": "string parameter text 1", "mandatory":1 },
-    { "string": "string parameter text 2", "mandatory":1 },
-    { "int": " int parameter text 3 ", "mandatory": 0, "default": 115200}
-  ],
-  "help": "Help text decribing the menu item"
-}
-
-*/
-
-
-
-std::string mi = "dosomething";
-std::vector<std::string> midesc = {"[ack|wifi|ethernet|cmd|wit]", "[on|off]"};
-std::string mihelp = "Enable/Disbale diganostics for the commandstation";
-
-void executeMenu(std::ostream &out, std::string mi,  std::vector<std::string> params) {
-    out << "execute menu item: " << mi << '\n';
+  out << "execute menu item: " << var.second->name << '\n';
 }
 
 /**
- * @brief 
- * 
- * @param rootMenu 
+ * @brief crates the menu structure for a given menu; Need to find a way to register the executor somehow here... 
  */
-void DccShell::buildRootMenu(cli::Menu *rootMenu) {
+void DccShell::buildMenuCommands(cli::Menu *menu, DccShellCmd *menuItems) {
 
-  rootMenu->Insert(
-      "config",
-      [](std::ostream &) { std::cout << "Printing config" << std::endl; },
-      "Shows the configuration items for the current session");
-}
-
-/**
- * @brief 
- * 
- * @param csMenu 
- */
-void DccShell::buildCsMenu(cli::Menu *csMenu) {
-
-  auto rootMenu = std::make_unique<cli::Menu>("cli");
-
-  csMenu->Insert(
-      "open", {"serial|ethernet", "serial port|ip address", "baud"},
-      [&](std::ostream &out, const std::string &type,
-                const std::string &device, const int &baud) {
-        if (serial.openPort(out, type, device, baud)) {
-          out << rang::fg::green << "Success()\n" << rang::fg::reset;
-        } else {
-          out << rang::fg::red << "Failed()\n" << rang::fg::reset;
-        };
-        sleep_for(8s);
-      },
-      CMD_OPEN);
-
-  csMenu->Insert(
-      "status", {},
-      [&](std::ostream &out) {
-        std::string cmd = "<s>";
-        if(serial.isOpen()) {
-        serial.write(&cmd);
-        } else {
-          out << ERROR("Serial port is closed, please call open first.");
-        }
-        sleep_for(10ms);  // leave some time for the cs to reply before showing the prompt again
-        out <<"\n";
-      },
-      "Requesting status from the commandstation");
-
-   csMenu->Insert(
-      "read", {"cv", "callbacknum", "callbacksub"},
-      [&](std::ostream &out, const int &cv, const int &cbNum, const int &cbSub) {
-        std::string cmd = fmt::format("<R {} {} {}>", cv, cbNum, cbSub);
-        out << "Sending: " << cmd << '\n';
-        if(serial.isOpen()) {
-          serial.write(&cmd);
-        } else {
-          out << ERROR("Serial port is closed, please call open first.");
-        }
-        sleep_for(1s);  // leave some time for the cs to reply before showing the prompt again
-        out <<"\n";
-      },
-      "Reading CV. Allowed values for cv are 1 to 1024");
-
-    csMenu->Insert(
-      "diag", {"[ack|wifi|ethernet|cmd|wit]", "[on|off]"},
-      [&](std::ostream &out, const std::string &item, const std::string &state) {
-        std::string cmd = fmt::format("<D {} {}>", item, state);
-        if(serial.isOpen()) {
-          serial.write(&cmd);
-        } else {
-          out << ERROR("Serial port is closed, please call open first.");
-        }
-        sleep_for(1s);  // leave some time for the cs to reply before showing the prompt again
-        out <<"\n";
-      },
-      "Enable/Disbale diganostics for the commandstation");
-
-
-    csMenu->Insert(
-      mi,                 // Name
-      midesc,  // description as many strings as parameters
-      [&](std::ostream &out, std::vector<std::string> params) {     // lambda to execute for this menu item
-        executeMenu(out, mi, params);
-      },
-      mihelp);   // helptext for the menu item
-}
-
-/**
- * @brief 
- * 
- */
-void DccShell::buildMenus() {
-
-  DccShellCmd csCmdMenu(csMenuItems);  // constructs the menuItems
-  
-  for(auto var : csCmdMenu.menuCommands)
+  for (auto var : menuItems->menuCommands)
   {
-      
+    menu->Insert(
+        var.second->name,                                         // Name
+        var.second->paramDesc,                                    // description as many strings as parameters
+        [=](std::ostream &out, std::vector<std::string> params) { // lambda to execute for this menu item
+          executeMenu(out, var, params);
+        },
+        var.second->help); // helptext for the menu item
   }
-  
+
+}
+/**
+ * @brief 
+ * 
+ */
+void DccShell::buildMenus()
+{
 
   cli::SetColor();
 
+  // Root Menu
   auto rootMenu = std::make_unique<cli::Menu>("DccEX");
-  buildRootMenu(&*rootMenu);
+  DccShellCmd rootCmdMenu(rootMenuItems);
+  buildMenuCommands(&*rootMenu, &rootCmdMenu);
 
-  auto csMenu = std::make_unique<cli::Menu>("cs");
-  buildCsMenu(&*csMenu);
+  // CommandStation sub menu
+  auto csMenu = std::make_unique<cli::Menu>("cs"); // make a new cli menu
+  DccShellCmd csCmdMenu(csMenuItems);              // constructs the menuItems
+  buildMenuCommands(&*csMenu, &csCmdMenu);
+  rootMenu->Insert(std::move(csMenu));             // attach the submenu to the root menu
 
-  rootMenu->Insert(std::move(csMenu));
+  // Graph/Build sub menu
 
+
+  // attach the menu structure to the cli
   cli::Cli cli(std::move(rootMenu));
 
   cli.ExitAction(
@@ -211,7 +121,6 @@ void DccShell::buildMenus() {
                           });
 
   scheduler.Run();
-
   return;
 }
 
@@ -220,18 +129,131 @@ void DccShell::buildMenus() {
  * 
  * @return int 
  */
-auto DccShell::runShell() -> int {
-  // Diag::push();
-  // Diag::setLogLevel(DiagLevel::LOGV_DEBUG);
-
-  // std::cout<<"\e[2J\e[1;1H";
-  // std::cout << HEADING("Welcome to the DCC++ EX Commandline Interface\n\n");
+auto DccShell::runShell() -> int
+{
 
   DBG("Run Shell");
 
   buildMenus();
 
   DBG("Shell done");
-  // Diag::pop();
   return DCC_SUCCESS;
 }
+
+// ====== Stash
+
+/*
+void DccShell::buildCsMenu(cli::Menu *csMenu)
+{
+  csMenu->Insert(
+      "open", {"serial|ethernet", "serial port|ip address", "baud"},
+      [&](std::ostream &out, const std::string &type,
+          const std::string &device, const int &baud) {
+        if (serial.openPort(out, type, device, baud))
+        {
+          out << rang::fg::green << "Success()\n"
+              << rang::fg::reset;
+        }
+        else
+        {
+          out << rang::fg::red << "Failed()\n"
+              << rang::fg::reset;
+        };
+        sleep_for(8s);
+      },
+      CMD_OPEN);
+
+  csMenu->Insert(
+      "status", {},
+      [&](std::ostream &out) {
+        std::string cmd = "<s>";
+        if (serial.isOpen())
+        {
+          serial.write(&cmd);
+        }
+        else
+        {
+          out << ERROR("Serial port is closed, please call open first.");
+        }
+        sleep_for(10ms); // leave some time for the cs to reply before showing the prompt again
+        out << "\n";
+      },
+      "Requesting status from the commandstation");
+
+  csMenu->Insert(
+      "read", {"cv", "callbacknum", "callbacksub"},
+      [&](std::ostream &out, const int &cv, const int &cbNum, const int &cbSub) {
+        std::string cmd = fmt::format("<R {} {} {}>", cv, cbNum, cbSub);
+        out << "Sending: " << cmd << '\n';
+        if (serial.isOpen())
+        {
+          serial.write(&cmd);
+        }
+        else
+        {
+          out << ERROR("Serial port is closed, please call open first.");
+        }
+        sleep_for(1s); // leave some time for the cs to reply before showing the prompt again
+        out << "\n";
+      },
+      "Reading CV. Allowed values for cv are 1 to 1024");
+
+  csMenu->Insert(
+      "diag", {"[ack|wifi|ethernet|cmd|wit]", "[on|off]"},
+      [&](std::ostream &out, const std::string &item, const std::string &state) {
+        std::string cmd = fmt::format("<D {} {}>", item, state);
+        if (serial.isOpen())
+        {
+          serial.write(&cmd);
+        }
+        else
+        {
+          out << ERROR("Serial port is closed, please call open first.");
+        }
+        sleep_for(1s); // leave some time for the cs to reply before showing the prompt again
+        out << "\n";
+      },
+      "Enable/Disbale diganostics for the commandstation");
+
+  csMenu->Insert(
+      mi,                                                       // Name
+      midesc,                                                   // description as many strings as parameters
+      [&](std::ostream &out, std::vector<std::string> params) { // lambda to execute for this menu item
+        executeMenu(out, mi, params);
+      },
+      mihelp); // helptext for the menu item
+}
+*/
+
+    /*
+    fmt::print("Command: {}\n", var.second->name);
+    std::cout << "Parameters : { ";
+    for (auto pd : var.second->paramDesc)
+    {
+      fmt::print("{} ", pd);
+    }
+    std::cout << " }\n";
+    std::cout << "Types : { ";
+    for (auto pt : var.second->paramType)
+    {
+      fmt::print("{}:{} ", pt.second.first, pt.second.second);
+    }
+    std::cout << " }\n";
+    fmt::print("Help: {}\n", var.second->help);
+    */
+
+/**
+ * @brief 
+ * 
+ * @param rootMenu 
+ */
+/*
+void DccShell::buildRootMenu(cli::Menu *rootMenu)
+{
+
+  rootMenu->Insert(
+      "config",
+      [](std::ostream &) { std::cout << "Printing config" << std::endl; },
+      "Shows the configuration items for the current session");
+}
+*/
