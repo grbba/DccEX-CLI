@@ -1,18 +1,4 @@
-cmake_minimum_required(VERSION 3.7...3.19)
-
-if(${CMAKE_VERSION} VERSION_LESS 3.12)
-    cmake_policy(VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION})
-endif()
-
-include(CTest)
-enable_testing()
-
-include_directories(../include 
-                    /usr/local/include 
-                    ../../boost_1_75_0 
-                    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1
-                    /usr/local/Cellar/nlohmann-json/3.9.1_1/include 
-                    /usr/local/Cellar/llvm/11.0.0_1/include )
+cmake_minimum_required(VERSION 3.12...3.19)
 
 add_executable( dcclayout 
                 main.cpp 

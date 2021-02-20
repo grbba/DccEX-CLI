@@ -25,50 +25,61 @@
 
 #include <nlohmann/json.hpp>
 
+const std::string rootMenuItems = R"(
+  {
+    "Commands" :
+    [
+      {
+        "name": "config",
+        "params": [],
+        "help": [ "Shows the configuration items for the current session" ]
+      }
+    ]
+  }
+)";
+
+
+
+// Commandstation Menu
 const std::string csMenuItems = R"(
-{
+  {
     "Commands": [
       {
-        "name": "dosomething",
-        "params": [
-          {
-            "type": "string",
-            "desc": "string parameter text 1",
-            "mandatory": 1
-          },
-          {
-            "type": "string",
-            "desc": "string parameter text 2",
-            "mandatory": 1
-          },
-          {
-            "type":"integer",
-            "desc": "int parameter text 3",
-            "mandatory": 0
-          }
+        "name": "open",
+        "params": 
+        [
+          { "type": "string", "desc": "serial|ethernet", "mandatory": 1 },
+          { "type": "string", "desc": "serial port|ip address", "mandatory": 1 },
+          { "type": "integer", "desc": "baud", "mandatory": 0 }
         ],
-        "help": "Help text decribing the menu item"
+        "help": [ 
+            "open <serial|ethernet> <port> <baud>; If serial indicate the used USB",
+            "\tport and for ethernet indicate the IP address of the commandstation",
+            "\tbaud will be ignored for ethernet and, if not specified for serial,",
+            "\tthe default of 115200 will be used."
+        ]
       },
       {
-        "name": "dosomethingelse",
+        "name":"status",
+        "params": [],
+        "help" :[ "Requesting status from the commandstation" ]
+      },
+      {
+        "name":"read",
         "params": [
-          {
-            "type": "string",
-            "desc": "string parameter text 1",
-            "mandatory": 1
-          },
-          {
-            "type": "string",
-            "desc": "string parameter text 2",
-            "mandatory": 1
-          },
-          {
-            "type":"integer",
-            "desc": "int parameter text 3",
-            "mandatory": 0,
-          }
+          { "type": "integer", "desc": "cv", "mandatory": 1 },
+          { "type": "integer", "desc": "callbacknum", "mandatory": 0 },
+          { "type": "integer", "desc": "callbacksub", "mandatory": 0 }
         ],
-        "help": "Help text decribing the menu item"
+        "help" :[ "Reading CV. Allowed values for cv are 1 to 1024" ]
+      },
+      {
+        "name":"diag",
+        "params": [
+          { "type": "string", "desc": "[ack|wifi|ethernet|cmd|wit]", "mandatory": 1 },
+          { "type": "string", "desc": "[on|off]", "mandatory": 1 }
+        ],
+        "help" :[ "Enable/Disbale diganostics for the commandstation" ]
       }
       ]
   }

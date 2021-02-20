@@ -33,6 +33,18 @@
 
 using namespace nlohmann;
 
+void join(const std::vector<std::string>& v, char c, std::string& s) {
+
+   s.clear();
+
+   for (std::vector<std::string>::const_iterator p = v.begin();
+        p != v.end(); ++p) {
+      s += *p;
+      if (p != v.end() - 1)
+        s += c;
+   }
+}
+
 /**
  * @brief Read the commnds json / handle error and insert into the map the
  * CmdItem
@@ -53,22 +65,25 @@ void DccShellCmd::buildMenuCommands(const std::string commands) {
   for (auto c : _cmd) {
       std::shared_ptr _ci = std::make_shared<cmdItem>();
       c.at("name").get_to(_ci.get()->name);       // store the name of the menu item
-      INFO("Command name: {}\n", _ci.get()->name);
+      DBG("Command name: {}\n", _ci.get()->name);
       _ci->maxParameters = c.at("params").size();
       
       // loop over all the params
       int i = 0;
       for ( auto p: c.at("params")) {
-          std::cout << p["type"] << std::endl;
-          _ci->paramType.insert({i, p["type"]});
-          std::cout << p["desc"] << std::endl;
-          _ci->paramDesc.insert({i, p["desc"]});
-          if(p["mandatory"]) {
+          _ci->paramDesc.push_back(p["desc"]);
+          if(p["mandatory"] == 1) {
+            _ci->paramType.insert({i, {1, p["type"]}});
             _ci->minParameters++;
+          } else {
+            _ci->paramType.insert({i, {0, p["type"]}});
           }
-          std::cout << p["mandatory"] << std::endl;
           i++;
       }
+
+      join(c.at("help").get<std::vector<std::string>>(), '\n', _ci.get()->help);
+    
+      // c.at("help").get_to(_ci.get()->help); 
       menuCommands.insert({j, _ci});
       j++;
   }

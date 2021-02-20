@@ -41,9 +41,9 @@ enum paramTypes {
 struct cmdItem
 {
     std::string name;
-    std::map<int8_t, std::string> paramDesc;
+    std::vector<std::string> paramDesc;
     std::string help;
-    std::map<int8_t, std::string> paramType;  
+    std::map<int8_t, std::pair<int,std::string>> paramType;  
     int8_t minParameters = 0; // calculated from the mandatory field
     int8_t maxParameters = 0; // calculated from the mandatory field  
 };
