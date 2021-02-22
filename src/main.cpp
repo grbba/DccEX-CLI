@@ -69,10 +69,7 @@ auto main(int argc, char **argv) -> int {
   SUBHEADING(version); SUBHEADING(build);
   SUBHEADING("(c) 2020 grbba\n\n");
 
-  Diag::setLogLevel(DiagLevel::LOGV_DEBUG);
-  Diag::setFileInfo(false);
-
-  // setup the configuration
+  // setup the configuration including default log levels
   if (!DccConfig::setup(argc, argv)) {
     // only continue if the configuration has been set properly
     return DCC_SUCCESS;
@@ -88,7 +85,13 @@ auto main(int argc, char **argv) -> int {
     // reads the layout validates and builds the model by means of the supplied
     // schema; creates the graph and calculates all paths through the layout
     // (direct and indirect)
-    myLayout.build();
+    Diag::setLogLevel(DiagLevel::LOGV_INFO);
+    // Diag::setFileInfo(true);
+    if(!myLayout.build()) {
+      return DCC_FAILURE;
+    }
+
+    
     // get some info
     myLayout.info();
     // print out all paths

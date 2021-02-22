@@ -35,12 +35,13 @@ namespace cli
 #include "DccShell.hpp"
 #include "DccShellCmd.hpp"
 #include "ShellCmdConfig.hpp"
+#include "ShellCmdExec.hpp"
 #include "DccSerial.hpp"
 #include "Diag.hpp"
 
 #define HEADING(x) fmt::format(fg(fmt::color::medium_turquoise) | fmt::emphasis::bold, x);
 #define WARNING(x) fmt::format(fg(fmt::color::orange) | fmt::emphasis::bold, x);
-#define ERROR(x) fmt::format(fg(fmt::color::red) | fmt::emphasis::bold, x);
+#define ERROR(x...) fmt::format(fg(fmt::color::red) | fmt::emphasis::bold, x);
 
 using namespace std::this_thread;     // sleep_for, sleep_until
 using namespace std::chrono_literals; // ns, us, ms, s, h, etc.
@@ -52,7 +53,16 @@ using std::chrono::system_clock;
  */
 void executeMenu(std::ostream &out, const std::pair<int,std::shared_ptr<cmdItem>> var, const std::vector<std::string> params)
 {
-  out << "execute menu item: " << var.second->name << '\n';
+    // find the function to call
+    DBG("Executing: MenuID {} CommandID {} Name {} ", var.second->menuID, var.second->itemID, var.second->name );
+    auto call = ShellCmdExec::getFMap()->find({var.second->menuID,var.second->name});
+
+    // if found exeute the function
+    if (call != ShellCmdExec::getFMap()->end()) {
+      call->second(out, var.second, params);
+    } else {
+      out << fmt::format(fg(fmt::color::red) | fmt::emphasis::bold, "No executor for {}\n", var.second->name);
+    }
 }
 
 /**
@@ -92,8 +102,10 @@ void DccShell::buildMenus()
   buildMenuCommands(&*csMenu, &csCmdMenu);
   rootMenu->Insert(std::move(csMenu));             // attach the submenu to the root menu
 
-  // Graph/Build sub menu
+  // Diag::setLogLevel(DiagLevel::LOGV_DEBUG);
 
+  ShellCmdExec::setup(); 
+  // Graph/Build sub menu
 
   // attach the menu structure to the cli
   cli::Cli cli(std::move(rootMenu));
@@ -107,18 +119,21 @@ void DccShell::buildMenus()
 
   cli.StdExceptionHandler(
       [](std::ostream &out, const std::string &cmd, const std::exception &e) {
-        out << "Exception caught in cli handler: " << e.what()
-            << " handling command: " << cmd << ".\n";
+        ERR("{} in command [{}]\n", e.what(), cmd);
+        // out << "Exception caught in cli handler: " << e.what()
+        //     << " in command: " << cmd << ".\n";
       });
 
   cli::MainScheduler scheduler;
   cli::CliLocalSession localSession(cli, scheduler, std::cout, 200);
 
-  localSession.ExitAction([&](auto &out) // session exit action
-                          {
-                            out << "Closing App...\n";
-                            scheduler.Stop();
-                          });
+  localSession.ExitAction( 
+                            [&](auto &out) // session exit action
+                            {
+                              out << "Closing App...\n";
+                              scheduler.Stop();
+                            }
+                          );
 
   scheduler.Run();
   return;
@@ -140,120 +155,3 @@ auto DccShell::runShell() -> int
   return DCC_SUCCESS;
 }
 
-// ====== Stash
-
-/*
-void DccShell::buildCsMenu(cli::Menu *csMenu)
-{
-  csMenu->Insert(
-      "open", {"serial|ethernet", "serial port|ip address", "baud"},
-      [&](std::ostream &out, const std::string &type,
-          const std::string &device, const int &baud) {
-        if (serial.openPort(out, type, device, baud))
-        {
-          out << rang::fg::green << "Success()\n"
-              << rang::fg::reset;
-        }
-        else
-        {
-          out << rang::fg::red << "Failed()\n"
-              << rang::fg::reset;
-        };
-        sleep_for(8s);
-      },
-      CMD_OPEN);
-
-  csMenu->Insert(
-      "status", {},
-      [&](std::ostream &out) {
-        std::string cmd = "<s>";
-        if (serial.isOpen())
-        {
-          serial.write(&cmd);
-        }
-        else
-        {
-          out << ERROR("Serial port is closed, please call open first.");
-        }
-        sleep_for(10ms); // leave some time for the cs to reply before showing the prompt again
-        out << "\n";
-      },
-      "Requesting status from the commandstation");
-
-  csMenu->Insert(
-      "read", {"cv", "callbacknum", "callbacksub"},
-      [&](std::ostream &out, const int &cv, const int &cbNum, const int &cbSub) {
-        std::string cmd = fmt::format("<R {} {} {}>", cv, cbNum, cbSub);
-        out << "Sending: " << cmd << '\n';
-        if (serial.isOpen())
-        {
-          serial.write(&cmd);
-        }
-        else
-        {
-          out << ERROR("Serial port is closed, please call open first.");
-        }
-        sleep_for(1s); // leave some time for the cs to reply before showing the prompt again
-        out << "\n";
-      },
-      "Reading CV. Allowed values for cv are 1 to 1024");
-
-  csMenu->Insert(
-      "diag", {"[ack|wifi|ethernet|cmd|wit]", "[on|off]"},
-      [&](std::ostream &out, const std::string &item, const std::string &state) {
-        std::string cmd = fmt::format("<D {} {}>", item, state);
-        if (serial.isOpen())
-        {
-          serial.write(&cmd);
-        }
-        else
-        {
-          out << ERROR("Serial port is closed, please call open first.");
-        }
-        sleep_for(1s); // leave some time for the cs to reply before showing the prompt again
-        out << "\n";
-      },
-      "Enable/Disbale diganostics for the commandstation");
-
-  csMenu->Insert(
-      mi,                                                       // Name
-      midesc,                                                   // description as many strings as parameters
-      [&](std::ostream &out, std::vector<std::string> params) { // lambda to execute for this menu item
-        executeMenu(out, mi, params);
-      },
-      mihelp); // helptext for the menu item
-}
-*/
-
-    /*
-    fmt::print("Command: {}\n", var.second->name);
-    std::cout << "Parameters : { ";
-    for (auto pd : var.second->paramDesc)
-    {
-      fmt::print("{} ", pd);
-    }
-    std::cout << " }\n";
-    std::cout << "Types : { ";
-    for (auto pt : var.second->paramType)
-    {
-      fmt::print("{}:{} ", pt.second.first, pt.second.second);
-    }
-    std::cout << " }\n";
-    fmt::print("Help: {}\n", var.second->help);
-    */
-
-/**
- * @brief 
- * 
- * @param rootMenu 
- */
-/*
-void DccShell::buildRootMenu(cli::Menu *rootMenu)
-{
-
-  rootMenu->Insert(
-      "config",
-      [](std::ostream &) { std::cout << "Printing config" << std::endl; },
-      "Shows the configuration items for the current session");
-}
-*/

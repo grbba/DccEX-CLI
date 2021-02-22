@@ -55,6 +55,8 @@ void DccShellCmd::buildMenuCommands(const std::string commands) {
 
   json cmds = json::parse(commands);
 
+  
+  auto _menuID = cmds["menuID"];
   auto _cmd = cmds["Commands"];
 
   if (_cmd == nullptr) {
@@ -64,6 +66,8 @@ void DccShellCmd::buildMenuCommands(const std::string commands) {
   int j = 0;
   for (auto c : _cmd) {
       std::shared_ptr _ci = std::make_shared<cmdItem>();
+      _ci.get()->menuID = _menuID;
+      _ci.get()->itemID = j;
       c.at("name").get_to(_ci.get()->name);       // store the name of the menu item
       DBG("Command name: {}\n", _ci.get()->name);
       _ci->maxParameters = c.at("params").size();
@@ -80,7 +84,6 @@ void DccShellCmd::buildMenuCommands(const std::string commands) {
           }
           i++;
       }
-
       join(c.at("help").get<std::vector<std::string>>(), '\n', _ci.get()->help);
     
       // c.at("help").get_to(_ci.get()->help); 

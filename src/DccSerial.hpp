@@ -57,6 +57,7 @@ private:
 public:
   bool openPort();  // open the port
   bool openPort(std::ostream &out, std::string type, std::string device, int baud );  // open the port
+  bool openPort(std::ostream &out, std::string device, int baud );  // open the port
   void closePort(); // close the port
   void write();     // write to the port
   void write(const std::string *cmd);

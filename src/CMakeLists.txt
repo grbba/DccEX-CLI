@@ -13,6 +13,7 @@ add_executable( dcclayout
                 AsyncSerial.cpp
                 DccSerial.cpp
                 DccShellCmd.cpp
+                ShellCmdExec.cpp
               )
 
 target_compile_features(dcclayout PRIVATE cxx_std_17)

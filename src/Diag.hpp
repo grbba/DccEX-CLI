@@ -42,10 +42,11 @@
 #define DCC_FAILURE 0
 
 enum class DiagLevel {
+  LOGV_ALWAYS,
   LOGV_SILENT,
-  LOGV_INFO,
   LOGV_WARN,
   LOGV_ERROR,
+  LOGV_INFO,
   LOGV_TRACE,
   LOGV_DEBUG
 };
@@ -131,18 +132,19 @@ public:
 #ifndef DEBUG
 #define DEBUG
 #ifndef LOGLEVEL
-#define LOGLEVEL 5 // = DiagLevel::LOGV_DEBUG
+#define LOGLEVEL 6 // = DiagLevel::LOGV_DEBUG
 // compile time level by default up to error can be overridden at
 // compiletime with a -D flag
 #endif
 #endif
 
-// #define LOGV_DEBUG 5
-// #define LOGV_TRACE 4
-// #define LOGV_ERROR 3
-// #define LOGV_WARN 2
-// #define LOGV_INFO 1
-// #define LOGV_SILENT 0
+// #define LOGV_DEBUG 6
+// #define LOGV_TRACE 5
+// #define LOGV_ERROR 4
+// #define LOGV_WARN 3
+// #define LOGV_INFO 2
+// #define LOGV_SILENT 1
+// #define LOGV_ALWAYS 0
 
 #define LOGV_INFO_MSG(message...)                                              \
   if (Diag::getPrintLabel())                                                   \
@@ -154,6 +156,7 @@ public:
     DIAG("\n");
 
 #define LOGV_WARN_MSG(message...)                                              \
+  if (Diag::getPrintLabel())                                                   \
   DIAGWARN("::[WRN]:");                                                            \
   if (Diag::getFileInfo())                                                     \
     DIAGWARN("{}:{} : ", __FILE__, __LINE__);                                      \
@@ -162,8 +165,10 @@ public:
     DIAG("\n");                                                                
 
 #define LOGV_ERROR_MSG(message...)                                             \
+  if (Diag::getPrintLabel())                                                   \
+  DIAGERR("::[ERR]:");                                                            \
   if (Diag::getFileInfo())                                                     \
-    DIAGERR("::[ERR]:{}:{} : ", __FILE__, __LINE__);                              \
+    DIAGERR("{}:{} : ", __FILE__, __LINE__);                              \
   DIAGERR(message);                                                               \
   DIAG("\n");  
 
@@ -225,9 +230,9 @@ public:
 #define INFO(message...)                                                       \
   EH_DW(EH_IFLL(DiagLevel::LOGV_INFO, LOGV_INFO_MSG(message)))
 #define WARN(message...)                                                       \
-  EH_DW(EH_IFLL(DiagLevel::LOGV_WARN, LOGV_WARN_MSG(message)))
+  EH_DW(EH_IFLL(DiagLevel::LOGV_ALWAYS, LOGV_WARN_MSG(message)))
 #define ERR(message...)                                                        \
-  EH_DW(EH_IFLL(DiagLevel::LOGV_ERROR, LOGV_ERROR_MSG(message)))
+  EH_DW(EH_IFLL(DiagLevel::LOGV_ALWAYS, LOGV_ERROR_MSG(message)))
 #define TRC(message...)                                                        \
   EH_DW(EH_IFLL(DiagLevel::LOGV_TRACE, LOGV_TRACE_MSG(message)))
 #define DBG(message...)                                                        \

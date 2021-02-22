@@ -25,8 +25,7 @@ std::string DccConfig::dccLayoutFile;
 std::string DccConfig::dccSchemaFile = CONFIG_DCCEX_SCHEMA;
 bool DccConfig::isInteractive = CONFIG_INTERACTIVE;
 bool DccConfig::fileInfo = CONFIG_FILEINFO;
-DiagLevel DccConfig::level =
-    DiagLevel::LOGV_WARN; // by default show everything up to Warning level
+DiagLevel DccConfig::level = DiagLevel::LOGV_WARN; // by default show everything up to Warning level
 
 auto DccConfig::setup(int argc, char **argv) -> int {
 

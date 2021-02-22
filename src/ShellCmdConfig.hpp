@@ -23,10 +23,14 @@
  * @author grbba
  */
 
+#ifndef ShellCmdConfig_h
+#define ShellCmdConfig_h
 #include <nlohmann/json.hpp>
 
+// Root Menu
 const std::string rootMenuItems = R"(
   {
+    "menuID" : 1,
     "Commands" :
     [
       {
@@ -39,10 +43,10 @@ const std::string rootMenuItems = R"(
 )";
 
 
-
 // Commandstation Menu
 const std::string csMenuItems = R"(
   {
+    "menuID" : 2,
     "Commands": [
       {
         "name": "open",
@@ -84,3 +88,5 @@ const std::string csMenuItems = R"(
       ]
   }
 )";
+
+#endif

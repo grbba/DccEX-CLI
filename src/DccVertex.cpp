@@ -63,8 +63,7 @@ DccVertex::DccVertex(int64_t g, int16_t m, int32_t d, Node_t n,
 
 DccVertexPtr_t DccDoubleVertex::findSibling(DccVertexPtr_t v) {
   if (siblings.size() != 2) {
-    WARN("No sibling for");
-    v.get()->printVertex();
+    WARN("No sibling for : Module[{}] : V({}({}), {} ) with {} connections", v.get()->getModule(),  v.get()->getTrackElementType(), v.get()->getDccid(), v.get()->getNodeid(), v.get()->getConnections().size());
     return nullptr;
   }
   if (v == siblings.at(0)) {
@@ -75,7 +74,7 @@ DccVertexPtr_t DccDoubleVertex::findSibling(DccVertexPtr_t v) {
 }
 
 void DccDoubleVertex::printDoubleVertex() {
-  INFO("({},{}) Siblings(({}  \t[{}],{}), <-> ({}  \t[{}],{}))",
+  TRC("({},{}) Siblings(({}  \t[{}],{}), <-> ({}  \t[{}],{}))",
        siblings.at(0).get()->getModule(), siblings.at(1).get()->getModule(),
        siblings.at(0).get()->getTrackElementType(),
        siblings.at(0).get()->getDccid(), siblings.at(0).get()->getNodeid(),
@@ -119,11 +118,4 @@ void DccVertex::printConnections() {
 void DccVertex::printVertex() {
   INFO("Module[{}] : V({}({}), {} ) with {} connections", module,
        getTrackElementType(), dccid, nodeid, connections.size());
-  /*
-  if (connections.size() > 0)
-  {
-      printConnections();
-      // std::cout << std::endl;
-  }
-*/
 }

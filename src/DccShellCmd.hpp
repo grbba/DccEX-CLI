@@ -40,6 +40,8 @@ enum paramTypes {
 
 struct cmdItem
 {
+    int8_t menuID;         // 255 menus with
+    int8_t itemID;         // 255 items each
     std::string name;
     std::vector<std::string> paramDesc;
     std::string help;

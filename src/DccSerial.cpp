@@ -26,6 +26,7 @@
 #include <fmt/ostream.h>
 
 #include "DccSerial.hpp"
+#include "Diag.hpp"
 
 #define HEADING(x)  fmt::format(fg(fmt::color::medium_turquoise) | fmt::emphasis::bold, x);
 #define WARNING(x)  fmt::format(fg(fmt::color::orange) | fmt::emphasis::bold, x);
@@ -56,6 +57,22 @@ void DccSerial::recieve(const char *data, unsigned int len) {
   std::cout.flush(); // Flush screen buffer
 }
 
+bool DccSerial::openPort(std::ostream &out,std::string d, int b) {
+  device = d;
+  baud = b;
+    
+  port.setCallback(recieve);
+  port.open(device, baud);
+  
+  if (port.isOpen()) {
+      open = true;
+  } else {
+      out << ERROR("Could not open serial port. Maybe in use by another program ?\n");
+      return DCC_FAILURE;
+  }
+  return DCC_SUCCESS;
+}
+
 /**
  * @brief
  *
@@ -78,7 +95,7 @@ bool DccSerial::openPort(std::ostream &out, std::string type, std::string d, int
       return DCC_FAILURE;
     } else {
       cType = DCC_CONN_UNKOWN;
-      out << ERROR("Unknown connection type specified.\n");
+      ERR("Unknown connection type [{}] specified.", type);
       return DCC_FAILURE;
     }
   }

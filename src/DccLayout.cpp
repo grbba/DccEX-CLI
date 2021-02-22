@@ -112,7 +112,7 @@ auto DccLayout::build() -> int {
     return DCC_FAILURE;
   };
 
-  INFO("Generating Layout graph... : {}\n", layout.get_layout().get_name());
+  INFO("Generating Layout graph... : {}", layout.get_layout().get_name());
   INFO("{} has {} module(s)", layout.get_layout().get_name(),
        layout.get_modules().size());
 
@@ -139,17 +139,8 @@ auto DccLayout::build() -> int {
 
   INFO("Generating Paths ...");
 
-  Diag::setLogLevel(DiagLevel::LOGV_INFO);
-  Diag::setFileInfo(false);
-
   gpf.calculate();
 
-  // graph.setNumberOfDirectPaths(gpf.getAllPaths()->size());
-  // path.printAllPaths();
-  // gpf.findAllPaths(1, 20);
-  // gpf.findAllPaths(DccVertex::cantorEncode(1,9));
-
-  // INFO("Finished computation at {}", std::ctime(&end_time));
   INFO("Elapsed time: [{}]ms", duration.count());
 
   return DCC_SUCCESS;

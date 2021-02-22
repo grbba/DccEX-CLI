@@ -12,7 +12,7 @@ bool Diag::printLabel = true;
 std::stack<DiagConfig *> Diag::config;
 
 const std::map<std::string, DiagLevel> Diag::diagMap{
-    {"silent", DiagLevel::LOGV_SILENT}, {"info", DiagLevel::LOGV_INFO},
+    {"always", DiagLevel::LOGV_ALWAYS}, {"silent", DiagLevel::LOGV_SILENT}, {"info", DiagLevel::LOGV_INFO},
     {"warnings", DiagLevel::LOGV_WARN},      {"error", DiagLevel::LOGV_ERROR},
     {"trace", DiagLevel::LOGV_TRACE},        {"debug", DiagLevel::LOGV_DEBUG}};
 
