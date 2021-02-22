@@ -76,7 +76,8 @@ auto main(int argc, char **argv) -> int {
   };
 
   DccShell s;
-
+  Diag::setLogLevel(DiagLevel::LOGV_INFO);
+  
   if (DccConfig::isInteractive) {
     s.runShell();
   } else {
@@ -85,7 +86,7 @@ auto main(int argc, char **argv) -> int {
     // reads the layout validates and builds the model by means of the supplied
     // schema; creates the graph and calculates all paths through the layout
     // (direct and indirect)
-    Diag::setLogLevel(DiagLevel::LOGV_INFO);
+    
     // Diag::setFileInfo(true);
     if(!myLayout.build()) {
       return DCC_FAILURE;

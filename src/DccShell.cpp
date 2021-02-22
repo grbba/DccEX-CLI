@@ -54,7 +54,7 @@ using std::chrono::system_clock;
 void executeMenu(std::ostream &out, const std::pair<int,std::shared_ptr<cmdItem>> var, const std::vector<std::string> params)
 {
     // find the function to call
-    DBG("Executing: MenuID {} CommandID {} Name {} ", var.second->menuID, var.second->itemID, var.second->name );
+    loglevelDBG("Executing: MenuID {} CommandID {} Name {} ", var.second->menuID, var.second->itemID, var.second->name );
     auto call = ShellCmdExec::getFMap()->find({var.second->menuID,var.second->name});
 
     // if found exeute the function

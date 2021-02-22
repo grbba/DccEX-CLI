@@ -69,12 +69,17 @@ private:
   static bool fileInfo;
   static bool println;
   static bool printLabel;
-  static const std::map<std::string, DiagLevel> diagMap;
+  static const std::map<DiagLevel, std::string> diagMap;
+  static const std::map<std::string, DiagLevel> diagMapStr;
   static std::stack<DiagConfig *> config;
 
 public:
-  static auto getDiagMap() -> std::map<std::string, DiagLevel> {
+  static auto getDiagMap() -> std::map<DiagLevel, std::string> {
     return diagMap;
+  }
+
+  static auto getDiagMapStr() -> std::map<std::string, DiagLevel> {
+    return diagMapStr;
   }
 
   static void setLogLevel(DiagLevel value) { _nLogLevel = value; }

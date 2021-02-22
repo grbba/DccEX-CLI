@@ -37,6 +37,21 @@ const std::string rootMenuItems = R"(
         "name": "config",
         "params": [],
         "help": [ "Shows the configuration items for the current session" ]
+      },
+      {
+        "name": "loglevel",
+        "params": 
+        [
+          { "type": "string", "desc": "silent|info|trace|debug", "mandatory": 1 }
+        ],
+        "help": [ 
+          "Sets the loggingconfig level to one of the following values",
+          "\tsilent: no information besides errors and warings will be shown",
+          "\tinfo: some more basic information will be shown",
+          "\ttrace: more detailed information on the execution of various commands",
+          "\tdebug: full debugging information. This can be extremly verbose use with care",
+          "\tfor commandstation diagnostics use diag in the cs menu"
+          ]
       }
     ]
   }

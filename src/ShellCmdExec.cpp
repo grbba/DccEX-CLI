@@ -35,13 +35,9 @@
 #include "Diag.hpp"
 #include "DccShellCmd.hpp"
 #include "DccSerial.hpp"
+#include "DccConfig.hpp"
 
 #include "ShellCmdExec.hpp"
-
-// #define WARNING(x) fmt::format(fg(fmt::color::orange) | fmt::emphasis::bold, x);
-// #define ERROR(x) fmt::format(fg(fmt::color::red) | fmt::emphasis::bold, x);
-// #define OK(x) fmt::format(fg(fmt::color::green) | fmt::emphasis::bold, x);
-// #define INFO(x) fmt::format(fg(fmt::color::green), x);
 
 using namespace std::this_thread;     // sleep_for, sleep_until
 using namespace std::chrono_literals; // ns, us, ms, s, h, etc.
@@ -50,14 +46,55 @@ using std::chrono::system_clock;
 std::map<std::pair<int, std::string>, _fpShellCmd> ShellCmdExec::_fMap;
 DccSerial serial;
 
+static void rootLogLevel(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params)
+{
+    switch (params.size())
+    {
+        case 1:
+        {
+            auto map = Diag::getDiagMapStr();
+            try {
+                
+                auto it = map.at(params[0]);
+                DccConfig::level = it; // replace ev by an observer on the Diag class 
+                Diag::setLogLevel(it);
+
+            } catch (std::exception &e) {
+                auto s = fmt::format("Wrong keyword");
+                throw ShellCmdExecException(s);
+            }
+            break;
+        }
+        default:
+        {
+            auto s = fmt::format("Wrong number of arguments");
+            throw ShellCmdExecException(s);
+            break;
+        }
+    }
+
+}
+
 static void rootConfig(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params)
 {
-    INFO("Printing config\n");
+    Diag::push();
+    Diag::setLogLevel(DiagLevel::LOGV_INFO);
+    Diag::setFileInfo(false);
+    Diag::setPrintLabel(false);
+
+    INFO("Current session configuration:\n");
+    INFO("Dcc Schema file: {}", DccConfig::dccSchemaFile);
+    INFO("Dcc Layout file: {}", DccConfig::dccLayoutFile);
+    INFO("Current Log level: {}", Diag::getDiagMap()[DccConfig::level]);
+    INFO(":: Errors and Warnings will always be shown independent of the logging level set");
+    INFO("Show file information in logging messages: {}", DccConfig::fileInfo);
+
+    Diag::pop();
 }
 
 void csOpenSerial(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params) {
 
-   bool isOpen = false;
+    bool isOpen = false;
     int baudRate = 115200;
     switch (params.size())
     {
@@ -99,7 +136,8 @@ void csOpenSerial(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<s
     }
     default:
     {
-        ERR("Wrong number of arguments for [{}]", cmd->name);
+        auto s = fmt::format("Wrong number of arguments for [{}]", cmd->name);
+        throw ShellCmdExecException(s);
         break;
     }
     }
@@ -228,25 +266,9 @@ void ShellCmdExec::setup()
 
     DBG("Setup command executors");
     add(1, "config", rootConfig);
+    add(1, "loglevel", rootLogLevel);
     add(2, "open", csOpen);
     add(2, "read", csRead);
     add(2, "diag", csDiag);
     add(2, "status", csStatus);
 }
-
-/*
-    fmt::print("Command: {}\n", var.second->name);
-    std::cout << "Parameters : { ";
-    for (auto pd : var.second->paramDesc)
-    {
-      fmt::print("{} ", pd);
-    }
-    std::cout << " }\n";
-    std::cout << "Types : { ";
-    for (auto pt : var.second->paramType)
-    {
-      fmt::print("{}:{} ", pt.second.first, pt.second.second);
-    }
-    std::cout << " }\n";
-    fmt::print("Help: {}\n", var.second->help);
-*/
