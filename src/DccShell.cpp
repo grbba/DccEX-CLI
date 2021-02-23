@@ -54,7 +54,7 @@ using std::chrono::system_clock;
 void executeMenu(std::ostream &out, const std::pair<int,std::shared_ptr<cmdItem>> var, const std::vector<std::string> params)
 {
     // find the function to call
-    loglevelDBG("Executing: MenuID {} CommandID {} Name {} ", var.second->menuID, var.second->itemID, var.second->name );
+    DBG("Executing: MenuID {} CommandID {} Name {} ", var.second->menuID, var.second->itemID, var.second->name );
     auto call = ShellCmdExec::getFMap()->find({var.second->menuID,var.second->name});
 
     // if found exeute the function
@@ -92,12 +92,12 @@ void DccShell::buildMenus()
   cli::SetColor();
 
   // Root Menu
-  auto rootMenu = std::make_unique<cli::Menu>("DccEX");
+  auto rootMenu = std::make_unique<cli::Menu>("DccEX", "Main menu");
   DccShellCmd rootCmdMenu(rootMenuItems);
   buildMenuCommands(&*rootMenu, &rootCmdMenu);
 
   // CommandStation sub menu
-  auto csMenu = std::make_unique<cli::Menu>("cs"); // make a new cli menu
+  auto csMenu = std::make_unique<cli::Menu>("cs", "switch to commandstation mode"); // make a new cli menu
   DccShellCmd csCmdMenu(csMenuItems);              // constructs the menuItems
   buildMenuCommands(&*csMenu, &csCmdMenu);
   rootMenu->Insert(std::move(csMenu));             // attach the submenu to the root menu

@@ -45,12 +45,12 @@ const std::string rootMenuItems = R"(
           { "type": "string", "desc": "silent|info|trace|debug", "mandatory": 1 }
         ],
         "help": [ 
-          "Sets the loggingconfig level to one of the following values",
-          "\tsilent: no information besides errors and warings will be shown",
-          "\tinfo: some more basic information will be shown",
-          "\ttrace: more detailed information on the execution of various commands",
-          "\tdebug: full debugging information. This can be extremly verbose use with care",
-          "\tfor commandstation diagnostics use diag in the cs menu"
+          "Sets the logging level of the commandline interface to one of the following values",
+          "\t- silent: no information besides errors and warings will be shown",
+          "\t- info: some more basic information will be shown",
+          "\t- trace: more detailed information on the execution of various commands",
+          "\t- debug: full debugging information. This can be extremly verbose use with care",
+          "\tFor commandstation diagnostics use diag in the cs menu"
           ]
       }
     ]
@@ -98,7 +98,15 @@ const std::string csMenuItems = R"(
           { "type": "string", "desc": "[ack|wifi|ethernet|cmd|wit]", "mandatory": 1 },
           { "type": "string", "desc": "[on|off]", "mandatory": 1 }
         ],
-        "help" :[ "Enable/Disbale diganostics for the commandstation" ]
+        "help" : [ 
+          "Enable/Disbale diganostics for the commandstation for the follwing",
+          "\t- ack: capture information for decoder communication",
+          "\t- wifi: capture information for WiFi connection issues",
+          "\t- ethernet: capture information for ethernet connection issues",
+          "\t- cmd: capture JMRI / DCC command information",
+          "\t- wit: capture WiThrottle debug information",
+          "\tFor commandstation diagnostics use diag in the cs menu" 
+        ]
       }
       ]
   }
