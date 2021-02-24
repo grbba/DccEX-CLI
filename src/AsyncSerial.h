@@ -14,6 +14,10 @@
 #include <boost/asio.hpp>
 #include <boost/utility.hpp>
 
+#ifdef WIN32
+    typedef size_t ssize_t;
+#endif
+
 /**
  * Used internally (pimpl)
  */

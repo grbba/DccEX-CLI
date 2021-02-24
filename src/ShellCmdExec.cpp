@@ -50,8 +50,16 @@ const std::set<std::string> ctypes = {"serial","ethernet"};
 const std::set<std::string> diags = {"ack", "wifi", "ethernet", "cmd", "wit"};
 const std::map<std::string, bool> onoff = {{"on", 1}, {"off", 0}};
 
+// Utilities
 
+std::string str_toupper(std::string s) {
+    std::transform(s.begin(), s.end(), s.begin(), 
+                   [](unsigned char c){ return std::toupper(c); } 
+                  );
+    return s;
+}
 
+// Executors
 static void rootLogLevel(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params)
 {
     switch (params.size())
@@ -331,7 +339,8 @@ void csDiag(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::st
         throw ShellCmdExecException(s);
     }
 
-    std::string csCmd = fmt::format("<D {} {}>", params[0], params[1]);
+    std::string csCmd = fmt::format("<D {} {}>", str_toupper(params[0]), str_toupper(params[1]));
+    INFO("Sending: {}", csCmd);
     if (serial.isOpen())
     {
         serial.write(&csCmd);
@@ -341,8 +350,7 @@ void csDiag(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::st
         auto s = fmt::format("Serial port is closed, please call open first.");
         throw ShellCmdExecException(s);
     }
-    sleep_for(1s); // leave some time for the cs to reply before showing the prompt again
-    out << "\n";
+    // out << "\n";
 }
 
 void ShellCmdExec::setup()

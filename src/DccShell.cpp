@@ -102,10 +102,16 @@ void DccShell::buildMenus()
   buildMenuCommands(&*csMenu, &csCmdMenu);
   rootMenu->Insert(std::move(csMenu));             // attach the submenu to the root menu
 
+  // Layout sub menu
+  auto loMenu = std::make_unique<cli::Menu>("lo", "switch to layout mode"); // make a new cli menu
+  DccShellCmd loCmdMenu(loMenuItems);              // constructs the menuItems
+  buildMenuCommands(&*loMenu, &loCmdMenu);
+  rootMenu->Insert(std::move(loMenu));             // attach the submenu to the root menu
+
   // Diag::setLogLevel(DiagLevel::LOGV_DEBUG);
 
   ShellCmdExec::setup(); 
-  // Graph/Build sub menu
+  
 
   // attach the menu structure to the cli
   cli::Cli cli(std::move(rootMenu));

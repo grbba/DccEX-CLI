@@ -111,5 +111,53 @@ const std::string csMenuItems = R"(
       ]
   }
 )";
+// Layout Menu
+const std::string loMenuItems = R"(
+{
+    "menuID" : 3,
+    "Commands": [ 
+      {
+        "name": "layout-tbd",
+        "params":[
+            { "type": "string", "desc": "layout file", "mandatory": 1 }
+        ],
+        "help": [ 
+            "Load the layout description file"
+        ]
+      },
+      {
+        "name": "schema-tbd",
+        "params": [
+          { "type": "string", "desc": "schema file", "mandatory": 1 }
+        ],
+        "help": [ 
+            "Load the schema for the layout description file for validation purposes.",
+            "\tIf none is provided the system will try to find a valid schema file in the local folder",
+            "\tor from the dcc-ex.com website. If none is found, validation will be skipped and",
+            "\tprocessing will proceed as is albeit error detection in the layout is delayed and may",
+            "\tbe more complicated"
+        ]
+      },
+      {
+        "name": "build-tbd",
+        "params": [],
+        "help": [ 
+            "Builds the full directed graph and possible paths for the layout and generates all turnout commands",
+            "\tto be send to the command station"
+        ]
+      },
+      {
+        "name": "upload-tbd",
+        "params": 
+        [
+          { "type": "string", "desc": "all|turnouts|accesories|paths", "mandatory": 1 }
+        ],
+        "help": [ 
+            "Uploads the selected definitions to the commandstation"
+        ]
+      }
+    ]
+ }
+)";
 
 #endif
