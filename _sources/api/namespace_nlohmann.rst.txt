@@ -24,14 +24,6 @@ Functions
 ---------
 
 
-- :ref:`exhale_function__dcc_model_8hpp_1ad8448dac2b74f24f718b839b7f07f6ba`
-
-- :ref:`exhale_function__dcc_model_8hpp_1a1037e2d791d79376b53f1f373ed4cdeb`
-
-- :ref:`exhale_function__dcc_model_8hpp_1a0f5740f49418413e4f4463cf57392b76`
-
-- :ref:`exhale_function__dcc_model_8hpp_1a89f0a0c404c1a12891155d00f6696f58`
-
 - :ref:`exhale_function__dcc_model_8hpp_1a71701e6d0f3e66b75a189a15289eff48`
 
 - :ref:`exhale_function__dcc_model_8hpp_1af7309cfe41dacd335b47c8d763353218`
@@ -50,11 +42,13 @@ Functions
 
 - :ref:`exhale_function__dcc_model_8hpp_1aa71da80476a0094f110da3e37513eb0c`
 
-- :ref:`exhale_function__dcc_model_8hpp_1a767c18ce7066f53ee8aa3d2f34c1a8e4`
+- :ref:`exhale_function__dcc_model_8hpp_1ad8448dac2b74f24f718b839b7f07f6ba`
 
-- :ref:`exhale_function__dcc_model_8hpp_1ae0c82b3e6064c2b66be3a0db192fa259`
+- :ref:`exhale_function__dcc_model_8hpp_1a1037e2d791d79376b53f1f373ed4cdeb`
 
-- :ref:`exhale_function__dcc_model_8hpp_1aff327f1411b2796b26c1120f0782782d`
+- :ref:`exhale_function__dcc_model_8hpp_1a0f5740f49418413e4f4463cf57392b76`
+
+- :ref:`exhale_function__dcc_model_8hpp_1a89f0a0c404c1a12891155d00f6696f58`
 
 - :ref:`exhale_function__dcc_model_8hpp_1a89d0f4f10db6df65ecf794aa04307de0`
 
@@ -75,3 +69,9 @@ Functions
 - :ref:`exhale_function__dcc_model_8hpp_1ac32fb368cf7f7c94104167478b1c9536`
 
 - :ref:`exhale_function__dcc_model_8hpp_1a0da9a1827899392baf045086b5bf7356`
+
+- :ref:`exhale_function__dcc_model_8hpp_1a767c18ce7066f53ee8aa3d2f34c1a8e4`
+
+- :ref:`exhale_function__dcc_model_8hpp_1ae0c82b3e6064c2b66be3a0db192fa259`
+
+- :ref:`exhale_function__dcc_model_8hpp_1aff327f1411b2796b26c1120f0782782d`
