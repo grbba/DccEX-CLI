@@ -21,10 +21,10 @@
 /**
  * @class ShellCmdExec
  * @brief This class manages the execution of shell commands.
- * Each command has is own function and all have the same type _fShellCmd. They get isnsretd intoa map from which the eecutor
- * based on the recieved input getst he function to call for execution. each of the functions is responsible for parameter
+ * Each command has is own function and all have the same type _fShellCmd. They get inserted into a map from which the executor
+ * based on the recieved input gets the function to call for execution. Each of the functions is responsible for parameter
  * checking and casting as all parameters are delivered as strings.
- * @note The command definitions in ShellCmdConfig only support integer and string as types but that can be extended to any type 
+ * @note The command definitions in ShellCmdConfig only support integer and string as types but that will be extended to any type 
  * JSON supports
  * @author grbba
  */
