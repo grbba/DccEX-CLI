@@ -11,8 +11,13 @@
 #include <vector>
 #include <memory>
 #include <functional>
+
+#ifdef DCC_BOOST
 #include <boost/asio.hpp>
 #include <boost/utility.hpp>
+#else
+#include <asio.hpp>
+#endif
 
 #ifdef WIN32
     typedef size_t ssize_t;
@@ -27,7 +32,7 @@ class AsyncSerialImpl;
  * Asyncronous serial class.
  * Intended to be a base class.
  */
-class AsyncSerial: private boost::noncopyable
+class AsyncSerial: private asio::noncopyable
 {
 public:
     AsyncSerial();
@@ -40,21 +45,17 @@ public:
      * \param opt_csize serial character size, default 8bit
      * \param opt_flow serial flow control, default none
      * \param opt_stop serial stop bits, default 1
-     * \throws boost::system::system_error if cannot open the
+     * \throws system::system_error if cannot open the
      * serial device
      */
-    AsyncSerial(const std::string& devname, unsigned int baud_rate,
-        boost::asio::serial_port_base::parity opt_parity=
-            boost::asio::serial_port_base::parity(
-                boost::asio::serial_port_base::parity::none),
-        boost::asio::serial_port_base::character_size opt_csize=
-            boost::asio::serial_port_base::character_size(8),
-        boost::asio::serial_port_base::flow_control opt_flow=
-            boost::asio::serial_port_base::flow_control(
-                boost::asio::serial_port_base::flow_control::none),
-        boost::asio::serial_port_base::stop_bits opt_stop=
-            boost::asio::serial_port_base::stop_bits(
-                boost::asio::serial_port_base::stop_bits::one));
+    AsyncSerial(
+        const std::string& devname, 
+        unsigned int baud_rate,
+        asio::serial_port_base::parity opt_parity = asio::serial_port_base::parity(asio::serial_port_base::parity::none),
+        asio::serial_port_base::character_size opt_csize = asio::serial_port_base::character_size(8),
+        asio::serial_port_base::flow_control opt_flow = asio::serial_port_base::flow_control(asio::serial_port_base::flow_control::none),
+        asio::serial_port_base::stop_bits opt_stop = asio::serial_port_base::stop_bits(asio::serial_port_base::stop_bits::one)
+    );
 
     /**
     * Opens a serial device.
@@ -64,21 +65,17 @@ public:
     * \param opt_csize serial character size, default 8bit
     * \param opt_flow serial flow control, default none
     * \param opt_stop serial stop bits, default 1
-    * \throws boost::system::system_error if cannot open the
+    * \throws system::system_error if cannot open the
     * serial device
     */
-    void open(const std::string& devname, unsigned int baud_rate,
-        boost::asio::serial_port_base::parity opt_parity=
-            boost::asio::serial_port_base::parity(
-                boost::asio::serial_port_base::parity::none),
-        boost::asio::serial_port_base::character_size opt_csize=
-            boost::asio::serial_port_base::character_size(8),
-        boost::asio::serial_port_base::flow_control opt_flow=
-            boost::asio::serial_port_base::flow_control(
-                boost::asio::serial_port_base::flow_control::none),
-        boost::asio::serial_port_base::stop_bits opt_stop=
-            boost::asio::serial_port_base::stop_bits(
-                boost::asio::serial_port_base::stop_bits::one));
+    void open(
+        const std::string& devname, 
+        unsigned int baud_rate,
+        asio::serial_port_base::parity opt_parity = asio::serial_port_base::parity( asio::serial_port_base::parity::none),
+        asio::serial_port_base::character_size opt_csize = asio::serial_port_base::character_size(8),
+        asio::serial_port_base::flow_control opt_flow= asio::serial_port_base::flow_control( asio::serial_port_base::flow_control::none),
+        asio::serial_port_base::stop_bits opt_stop = asio::serial_port_base::stop_bits( asio::serial_port_base::stop_bits::one)
+        );
 
     /**
      * \return true if serial device is open
@@ -92,7 +89,7 @@ public:
 
     /**
      * Close the serial device
-     * \throws boost::system::system_error if any error
+     * \throws system::system_error if any error
      */
     void close();
 
@@ -135,7 +132,7 @@ private:
      * Callback called at the end of the asynchronous operation.
      * This callback is called by the io_service in the spawned thread.
      */
-    void readEnd(const boost::system::error_code& error,
+    void readEnd(const std::error_code& error,
         size_t bytes_transferred);
 
     /**
@@ -150,7 +147,7 @@ private:
      * if there is more data to write, restarts a new write operation.
      * This callback is called by the io_service in the spawned thread.
      */
-    void writeEnd(const boost::system::error_code& error);
+    void writeEnd(const std::error_code& error);
 
     /**
      * Callback to close serial port
@@ -199,21 +196,17 @@ public:
     * \param opt_csize serial character size, default 8bit
     * \param opt_flow serial flow control, default none
     * \param opt_stop serial stop bits, default 1
-    * \throws boost::system::system_error if cannot open the
+    * \throws system::system_error if cannot open the
     * serial device
     */
-    CallbackAsyncSerial(const std::string& devname, unsigned int baud_rate,
-        boost::asio::serial_port_base::parity opt_parity=
-            boost::asio::serial_port_base::parity(
-                boost::asio::serial_port_base::parity::none),
-        boost::asio::serial_port_base::character_size opt_csize=
-            boost::asio::serial_port_base::character_size(8),
-        boost::asio::serial_port_base::flow_control opt_flow=
-            boost::asio::serial_port_base::flow_control(
-                boost::asio::serial_port_base::flow_control::none),
-        boost::asio::serial_port_base::stop_bits opt_stop=
-            boost::asio::serial_port_base::stop_bits(
-                boost::asio::serial_port_base::stop_bits::one));
+    CallbackAsyncSerial(
+        const std::string& devname, 
+        unsigned int baud_rate,
+        asio::serial_port_base::parity opt_parity = asio::serial_port_base::parity(asio::serial_port_base::parity::none),
+        asio::serial_port_base::character_size opt_csize = asio::serial_port_base::character_size(8),
+        asio::serial_port_base::flow_control opt_flow = asio::serial_port_base::flow_control(asio::serial_port_base::flow_control::none),
+        asio::serial_port_base::stop_bits opt_stop = asio::serial_port_base::stop_bits(asio::serial_port_base::stop_bits::one)
+    );
 
     /**
      * Set the read callback, the callback will be called from a thread
