@@ -30,15 +30,20 @@
 #include "AsyncSerial.h"
 
 #include <algorithm>
+#ifdef DCC_BOOST
 #include <boost/bind/bind.hpp>
 #include <boost/shared_array.hpp>
+#else
+// #include <asio/bind_executor.hpp>
+#endif
+
 #include <iostream>
 #include <mutex>
 #include <string>
 #include <thread>
+#include <memory>
 
 using namespace std;
-using namespace boost;
 
 //
 // Class AsyncSerial
@@ -121,7 +126,7 @@ void AsyncSerial::close() {
   pimpl->backgroundThread.join();
   pimpl->io.reset();
   if (errorStatus()) {
-    throw(boost::system::system_error(boost::system::error_code(),
+    throw(std::system_error(std::error_code(),
                                       "Error while closing the device"));
   }
 }
@@ -167,7 +172,7 @@ void AsyncSerial::doRead() {
                   asio::placeholders::bytes_transferred));
 }
 
-void AsyncSerial::readEnd(const boost::system::error_code &error,
+void AsyncSerial::readEnd(const std::error_code &error,
                           size_t bytes_transferred) {
   if (error) {
 #ifdef __APPLE__
@@ -207,7 +212,7 @@ void AsyncSerial::doWrite() {
   }
 }
 
-void AsyncSerial::writeEnd(const boost::system::error_code &error) {
+void AsyncSerial::writeEnd(const std::error_code &error) {
   if (!error) {
     lock_guard<mutex> l(pimpl->writeQueueMutex);
     if (pimpl->writeQueue.empty()) {
@@ -232,7 +237,7 @@ void AsyncSerial::writeEnd(const boost::system::error_code &error) {
 }
 
 void AsyncSerial::doClose() {
-  boost::system::error_code ec;
+  std::error_code ec;
   pimpl->port.cancel(ec);
   if (ec)
     setErrorStatus(true);
@@ -267,7 +272,7 @@ void AsyncSerial::clearReadCallback() {
 
 #define UNUSED(p) ((p)=(p))
 
-class AsyncSerialImpl : private noncopyable {
+class AsyncSerialImpl : private asio::noncopyable {
 public:
   AsyncSerialImpl() : backgroundThread(), open(false), error(false) {}
 
@@ -284,7 +289,7 @@ public:
   std::function<void(const char *, size_t)> callback;
 };
 
-AsyncSerial::AsyncSerial() : pimpl(new AsyncSerialImpl) {}
+AsyncSerial::AsyncSerial() : pimpl(std::make_unique<AsyncSerialImpl>()) {}
 
 AsyncSerial::AsyncSerial(const std::string &devname, unsigned int baud_rate,
                          asio::serial_port_base::parity opt_parity,
@@ -318,15 +323,13 @@ void AsyncSerial::open(const std::string &devname, unsigned int baud_rate,
   // Open port
   pimpl->fd = ::open(devname.c_str(), O_RDWR | O_NOCTTY | O_NONBLOCK);
   if (pimpl->fd < 0)
-    throw(boost::system::system_error(boost::system::error_code(),
-                                      "Failed to open port"));
+    throw(std::system_error(std::error_code(), "Failed to open port"));
 
   // Set Port parameters.
   status = tcgetattr(pimpl->fd, &new_attributes);
   if (status < 0 || !isatty(pimpl->fd)) {
     ::close(pimpl->fd);
-    throw(boost::system::system_error(boost::system::error_code(),
-                                      "Device is not a tty"));
+    throw(std::system_error(std::error_code(), "Device is not a tty"));
   }
   new_attributes.c_iflag = IGNBRK;
 
@@ -413,7 +416,7 @@ void AsyncSerial::open(const std::string &devname, unsigned int baud_rate,
     break;
   default: {
     ::close(pimpl->fd);
-    throw(boost::system::system_error(boost::system::error_code(),
+    throw(std::system_error(std::error_code(),
                                       "Unsupported baud rate"));
   }
   }
@@ -425,7 +428,7 @@ void AsyncSerial::open(const std::string &devname, unsigned int baud_rate,
   status = tcsetattr(pimpl->fd, TCSANOW, &new_attributes);
   if (status < 0) {
     ::close(pimpl->fd);
-    throw(boost::system::system_error(boost::system::error_code(),
+    throw(std::system_error(std::error_code(),
                                       "Can't set port attributes"));
   }
 
@@ -459,7 +462,7 @@ void AsyncSerial::close() {
   pimpl->backgroundThread.join();
 
   if (errorStatus()) {
-    throw(boost::system::system_error(boost::system::error_code(),
+    throw(std::system_error(std::error_code(),
                                       "Error while closing the device"));
   }
 }
@@ -506,7 +509,7 @@ void AsyncSerial::doRead() {
   }
 }
 
-void AsyncSerial::readEnd(const boost::system::error_code &error,
+void AsyncSerial::readEnd(const std::error_code &error,
                           size_t bytes_transferred) {
   // Not used
   // UNUSED(error); 
@@ -518,7 +521,7 @@ void AsyncSerial::doWrite() {
   // Not used
 }
 
-void AsyncSerial::writeEnd(const boost::system::error_code &error) {
+void AsyncSerial::writeEnd(const std::error_code &error) {
   // Not used
   (void)(error);
 }
@@ -551,16 +554,15 @@ void AsyncSerial::clearReadCallback() {
 CallbackAsyncSerial::CallbackAsyncSerial() : AsyncSerial() {}
 
 CallbackAsyncSerial::CallbackAsyncSerial(
-    const std::string &devname, unsigned int baud_rate,
+    const std::string &devname, 
+    unsigned int baud_rate,
     asio::serial_port_base::parity opt_parity,
     asio::serial_port_base::character_size opt_csize,
     asio::serial_port_base::flow_control opt_flow,
     asio::serial_port_base::stop_bits opt_stop)
-    : AsyncSerial(devname, baud_rate, opt_parity, opt_csize, opt_flow,
-                  opt_stop) {}
+    : AsyncSerial(devname, baud_rate, opt_parity, opt_csize, opt_flow, opt_stop) {}
 
-void CallbackAsyncSerial::setCallback(
-    const std::function<void(const char *, size_t)> &callback) {
+void CallbackAsyncSerial::setCallback( const std::function<void(const char *, size_t)> &callback) {
   setReadCallback(callback);
 }
 

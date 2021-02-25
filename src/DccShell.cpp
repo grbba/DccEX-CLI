@@ -24,11 +24,11 @@
 #include <fmt/color.h>
 #include <fmt/ostream.h>
 
-#include "../include/cli/boostasioscheduler.h"
+#include "../include/cli/standaloneasioscheduler.h"
 
 namespace cli
 {
-  using MainScheduler = BoostAsioScheduler;
+  using MainScheduler = StandaloneAsioScheduler;
 } // namespace cli
 #include "../include/cli/clilocalsession.h"
 
