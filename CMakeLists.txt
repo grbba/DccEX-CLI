@@ -11,5 +11,6 @@ find_package(nlohmann_json_schema_validator)
 
 # The source code is here
 add_subdirectory(src)
+# docs here as well as how to build them with sphinx, breathe and exhale ( api doc )
 add_subdirectory(docs)
 
