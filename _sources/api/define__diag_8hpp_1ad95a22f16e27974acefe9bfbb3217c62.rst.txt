@@ -1,0 +1,13 @@
+.. _exhale_define__diag_8hpp_1ad95a22f16e27974acefe9bfbb3217c62:
+
+Define DIAGWARN
+===============
+
+- Defined in :ref:`file_src_Diag.hpp`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: DIAGWARN

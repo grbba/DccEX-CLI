@@ -1,0 +1,25 @@
+.. _exhale_class_class_buffered_async_serial:
+
+Class BufferedAsyncSerial
+=========================
+
+- Defined in :ref:`file_src_BufferedAsyncSerial.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public AsyncSerial`` (:ref:`exhale_class_class_async_serial`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: BufferedAsyncSerial
+   :members:
+   :protected-members:
+   :undoc-members:

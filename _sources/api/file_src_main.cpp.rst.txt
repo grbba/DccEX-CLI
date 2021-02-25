@@ -1,0 +1,75 @@
+
+.. _file_src_main.cpp:
+
+File main.cpp
+=============
+
+|exhale_lsh| :ref:`Parent directory <dir_src>` (``src``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/main.cpp``)
+-----------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_main.cpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``DccConfig.hpp`` (:ref:`file_src_DccConfig.hpp`)
+
+- ``DccLayout.hpp`` (:ref:`file_src_DccLayout.hpp`)
+
+- ``DccShell.hpp`` (:ref:`file_src_DccShell.hpp`)
+
+- ``fmt/color.h``
+
+- ``fmt/core.h``
+
+- ``fstream``
+
+- ``iostream``
+
+- ``string``
+
+
+
+
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_main_8cpp_1a808f40e2e9d6eb5463165c031dfa3eb1`
+
+- :ref:`exhale_function_main_8cpp_1ac82eafa835da9704339f394b65338de4`
+
+
+Defines
+-------
+
+
+- :ref:`exhale_define_main_8cpp_1a755a5f20e9e469e031640e4405c8a2ab`
+
+- :ref:`exhale_define_main_8cpp_1a877cce34f3e58fd7f9194fab90724cb8`
+
+- :ref:`exhale_define_main_8cpp_1a4e10915d93013542d442d78de0e02e9a`
+
+- :ref:`exhale_define_main_8cpp_1af59c44c1f3ff875c35393428624473aa`
+
+- :ref:`exhale_define_main_8cpp_1a5321e3f3f55537f9f7c1e6c739ed9e96`
+

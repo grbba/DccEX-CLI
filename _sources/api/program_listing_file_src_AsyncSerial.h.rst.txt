@@ -1,0 +1,124 @@
+
+.. _program_listing_file_src_AsyncSerial.h:
+
+Program Listing for File AsyncSerial.h
+======================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_AsyncSerial.h>` (``src/AsyncSerial.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   /*
+    * File:   AsyncSerial.h
+    * Author: Terraneo Federico
+    * Distributed under the Boost Software License, Version 1.0.
+    * Created on September 7, 2009, 10:46 AM
+    */
+   
+   #ifndef ASYNCSERIAL_H
+   #define ASYNCSERIAL_H
+   
+   #include <vector>
+   #include <memory>
+   #include <functional>
+   
+   #ifdef DCC_BOOST
+   #include <boost/asio.hpp>
+   #include <boost/utility.hpp>
+   #else
+   #include <asio.hpp>
+   #endif
+   
+   #ifdef WIN32
+       typedef size_t ssize_t;
+   #endif
+   
+   class AsyncSerialImpl;
+   
+   class AsyncSerial: private asio::noncopyable
+   {
+   public:
+       AsyncSerial();
+   
+       AsyncSerial(
+           const std::string& devname, 
+           unsigned int baud_rate,
+           asio::serial_port_base::parity opt_parity = asio::serial_port_base::parity(asio::serial_port_base::parity::none),
+           asio::serial_port_base::character_size opt_csize = asio::serial_port_base::character_size(8),
+           asio::serial_port_base::flow_control opt_flow = asio::serial_port_base::flow_control(asio::serial_port_base::flow_control::none),
+           asio::serial_port_base::stop_bits opt_stop = asio::serial_port_base::stop_bits(asio::serial_port_base::stop_bits::one)
+       );
+   
+       void open(
+           const std::string& devname, 
+           unsigned int baud_rate,
+           asio::serial_port_base::parity opt_parity = asio::serial_port_base::parity( asio::serial_port_base::parity::none),
+           asio::serial_port_base::character_size opt_csize = asio::serial_port_base::character_size(8),
+           asio::serial_port_base::flow_control opt_flow= asio::serial_port_base::flow_control( asio::serial_port_base::flow_control::none),
+           asio::serial_port_base::stop_bits opt_stop = asio::serial_port_base::stop_bits( asio::serial_port_base::stop_bits::one)
+           );
+   
+       bool isOpen() const;
+   
+       bool errorStatus() const;
+   
+       void close();
+   
+       void write(const char *data, ssize_t size);
+   
+       void write(const std::vector<char>& data);
+   
+       void writeString(const std::string& s);
+   
+       virtual ~AsyncSerial()=0;
+   
+       static const int readBufferSize=512;
+   private:
+   
+       void doRead();
+   
+       void readEnd(const std::error_code& error,
+           size_t bytes_transferred);
+   
+       void doWrite();
+   
+       void writeEnd(const std::error_code& error);
+   
+       void doClose();
+   
+       std::shared_ptr<AsyncSerialImpl> pimpl;
+   
+   protected:
+   
+       void setErrorStatus(bool e);
+   
+       void setReadCallback(const std::function<void (const char*, size_t)>& callback);
+   
+       void clearReadCallback();
+   
+   };
+   
+   class CallbackAsyncSerial: public AsyncSerial
+   {
+   public:
+       CallbackAsyncSerial();
+   
+       CallbackAsyncSerial(
+           const std::string& devname, 
+           unsigned int baud_rate,
+           asio::serial_port_base::parity opt_parity = asio::serial_port_base::parity(asio::serial_port_base::parity::none),
+           asio::serial_port_base::character_size opt_csize = asio::serial_port_base::character_size(8),
+           asio::serial_port_base::flow_control opt_flow = asio::serial_port_base::flow_control(asio::serial_port_base::flow_control::none),
+           asio::serial_port_base::stop_bits opt_stop = asio::serial_port_base::stop_bits(asio::serial_port_base::stop_bits::one)
+       );
+   
+       void setCallback(const std::function<void (const char*, size_t)>& callback);
+   
+       void clearCallback();
+   
+       virtual ~CallbackAsyncSerial();
+   };
+   
+   #endif //ASYNCSERIAL_H

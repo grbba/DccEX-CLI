@@ -1,0 +1,13 @@
+.. _exhale_function__shell_cmd_exec_8cpp_1ad4370837227275bf3ca1a385d905c4df:
+
+Function csOpenSerial
+=====================
+
+- Defined in :ref:`file_src_ShellCmdExec.cpp`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: csOpenSerial(std::ostream&, std::shared_ptr<cmdItem>, std::vector<std::string>)

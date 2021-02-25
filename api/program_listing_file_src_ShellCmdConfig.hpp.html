@@ -1,0 +1,368 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Program Listing for File ShellCmdConfig.hpp &mdash; DCC++ EX Commandline Interface 0.0.10 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> DCC++ EX Commandline Interface
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../DccEXcli.html">The DCC++ EX Commandline Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">DCC++ EX Commandline Interface API</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DCC++ EX Commandline Interface</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Program Listing for File ShellCmdConfig.hpp</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api/program_listing_file_src_ShellCmdConfig.hpp.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="program-listing-for-file-shellcmdconfig-hpp">
+<span id="program-listing-file-src-shellcmdconfig-hpp"></span><h1>Program Listing for File ShellCmdConfig.hpp<a class="headerlink" href="#program-listing-for-file-shellcmdconfig-hpp" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file_src_ShellCmdConfig.hpp.html#file-src-shellcmdconfig-hpp"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">src/ShellCmdConfig.hpp</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm"> * © 2021 Gregor Baues. All rights reserved.</span>
+<span class="cm"> *</span>
+<span class="cm"> * This is free software: you can redistribute it and/or modify it under</span>
+<span class="cm"> * the terms of the GNU General Public License as published by the</span>
+<span class="cm"> * Free Software Foundation, either version 3 of the License, or</span>
+<span class="cm"> * (at your option) any later version.</span>
+<span class="cm"> *</span>
+<span class="cm"> * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS</span>
+<span class="cm"> * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<span class="cm"> * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
+<span class="cm"> * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+<span class="cm"> * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING</span>
+<span class="cm"> * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER</span>
+<span class="cm"> * DEALINGS IN THE SOFTWARE.</span>
+<span class="cm"> *</span>
+<span class="cm"> * See the GNU General Public License for more details</span>
+<span class="cm"> * &lt;https://www.gnu.org/licenses/&gt;</span>
+<span class="cm"> */</span>
+<span class="cp">#ifndef ShellCmdConfig_h</span>
+<span class="cp">#define ShellCmdConfig_h</span>
+<span class="cp">#include</span> <span class="cpf">&lt;nlohmann/json.hpp&gt;</span><span class="cp"></span>
+
+<span class="c1">// Root Menu</span>
+<span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">rootMenuItems</span> <span class="o">=</span> <span class="sa">R</span><span class="s">&quot;</span><span class="dl">(</span><span class="s"></span>
+<span class="s">  {</span>
+<span class="s">    &quot;menuID&quot; : 1,</span>
+<span class="s">    &quot;Commands&quot; :</span>
+<span class="s">    [</span>
+<span class="s">      {</span>
+<span class="s">        &quot;name&quot;: &quot;config&quot;,</span>
+<span class="s">        &quot;params&quot;: [],</span>
+<span class="s">        &quot;help&quot;: [ &quot;Shows the configuration items for the current session&quot; ]</span>
+<span class="s">      },</span>
+<span class="s">      {</span>
+<span class="s">        &quot;name&quot;: &quot;loglevel&quot;,</span>
+<span class="s">        &quot;params&quot;:</span>
+<span class="s">        [</span>
+<span class="s">          { &quot;type&quot;: &quot;string&quot;, &quot;desc&quot;: &quot;silent|info|trace|debug&quot;, &quot;mandatory&quot;: 1 }</span>
+<span class="s">        ],</span>
+<span class="s">        &quot;help&quot;: [</span>
+<span class="s">          &quot;Sets the logging level of the commandline interface to one of the following values&quot;,</span>
+<span class="s">          &quot;\t- silent: no information besides errors and warings will be shown&quot;,</span>
+<span class="s">          &quot;\t- info: some more basic information will be shown&quot;,</span>
+<span class="s">          &quot;\t- trace: more detailed information on the execution of various commands&quot;,</span>
+<span class="s">          &quot;\t- debug: full debugging information. This can be extremly verbose use with care&quot;,</span>
+<span class="s">          &quot;\tFor commandstation diagnostics use diag in the cs menu&quot;</span>
+<span class="s">          ]</span>
+<span class="s">      }</span>
+<span class="s">    ]</span>
+<span class="s">  }</span>
+<span class="dl">)</span><span class="s">&quot;</span><span class="p">;</span>
+
+
+<span class="c1">// Commandstation Menu</span>
+<span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">csMenuItems</span> <span class="o">=</span> <span class="sa">R</span><span class="s">&quot;</span><span class="dl">(</span><span class="s"></span>
+<span class="s">  {</span>
+<span class="s">    &quot;menuID&quot; : 2,</span>
+<span class="s">    &quot;Commands&quot;: [</span>
+<span class="s">      {</span>
+<span class="s">        &quot;name&quot;: &quot;open&quot;,</span>
+<span class="s">        &quot;params&quot;:</span>
+<span class="s">        [</span>
+<span class="s">          { &quot;type&quot;: &quot;string&quot;, &quot;desc&quot;: &quot;serial|ethernet&quot;, &quot;mandatory&quot;: 1 },</span>
+<span class="s">          { &quot;type&quot;: &quot;string&quot;, &quot;desc&quot;: &quot;serial port|ip address&quot;, &quot;mandatory&quot;: 1 },</span>
+<span class="s">          { &quot;type&quot;: &quot;integer&quot;, &quot;desc&quot;: &quot;baud&quot;, &quot;mandatory&quot;: 0 }</span>
+<span class="s">        ],</span>
+<span class="s">        &quot;help&quot;: [</span>
+<span class="s">            &quot;open &lt;serial|ethernet&gt; &lt;port&gt; &lt;baud&gt;; If serial indicate the used USB&quot;,</span>
+<span class="s">            &quot;\tport and for ethernet indicate the IP address of the commandstation&quot;,</span>
+<span class="s">            &quot;\tbaud will be ignored for ethernet and, if not specified for serial,&quot;,</span>
+<span class="s">            &quot;\tthe default of 115200 will be used.&quot;</span>
+<span class="s">        ]</span>
+<span class="s">      },</span>
+<span class="s">      {</span>
+<span class="s">        &quot;name&quot;:&quot;status&quot;,</span>
+<span class="s">        &quot;params&quot;: [],</span>
+<span class="s">        &quot;help&quot; :[ &quot;Requesting status from the commandstation&quot; ]</span>
+<span class="s">      },</span>
+<span class="s">      {</span>
+<span class="s">        &quot;name&quot;:&quot;read&quot;,</span>
+<span class="s">        &quot;params&quot;: [</span>
+<span class="s">          { &quot;type&quot;: &quot;integer&quot;, &quot;desc&quot;: &quot;cv&quot;, &quot;mandatory&quot;: 1 },</span>
+<span class="s">          { &quot;type&quot;: &quot;integer&quot;, &quot;desc&quot;: &quot;callbacknum&quot;, &quot;mandatory&quot;: 0 },</span>
+<span class="s">          { &quot;type&quot;: &quot;integer&quot;, &quot;desc&quot;: &quot;callbacksub&quot;, &quot;mandatory&quot;: 0 }</span>
+<span class="s">        ],</span>
+<span class="s">        &quot;help&quot; :[ &quot;Reading CV. Allowed values for cv are 1 to 1024&quot; ]</span>
+<span class="s">      },</span>
+<span class="s">      {</span>
+<span class="s">        &quot;name&quot;:&quot;diag&quot;,</span>
+<span class="s">        &quot;params&quot;: [</span>
+<span class="s">          { &quot;type&quot;: &quot;string&quot;, &quot;desc&quot;: &quot;[ack|wifi|ethernet|cmd|wit]&quot;, &quot;mandatory&quot;: 1 },</span>
+<span class="s">          { &quot;type&quot;: &quot;string&quot;, &quot;desc&quot;: &quot;[on|off]&quot;, &quot;mandatory&quot;: 1 }</span>
+<span class="s">        ],</span>
+<span class="s">        &quot;help&quot; : [</span>
+<span class="s">          &quot;Enable/Disbale diganostics for the commandstation for the follwing&quot;,</span>
+<span class="s">          &quot;\t- ack: capture information for decoder communication&quot;,</span>
+<span class="s">          &quot;\t- wifi: capture information for WiFi connection issues&quot;,</span>
+<span class="s">          &quot;\t- ethernet: capture information for ethernet connection issues&quot;,</span>
+<span class="s">          &quot;\t- cmd: capture JMRI / DCC command information&quot;,</span>
+<span class="s">          &quot;\t- wit: capture WiThrottle debug information&quot;,</span>
+<span class="s">          &quot;\tFor commandstation diagnostics use diag in the cs menu&quot;</span>
+<span class="s">        ]</span>
+<span class="s">      }</span>
+<span class="s">      ]</span>
+<span class="s">  }</span>
+<span class="dl">)</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="c1">// Layout Menu</span>
+<span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">loMenuItems</span> <span class="o">=</span> <span class="sa">R</span><span class="s">&quot;</span><span class="dl">(</span><span class="s"></span>
+<span class="s">{</span>
+<span class="s">    &quot;menuID&quot; : 3,</span>
+<span class="s">    &quot;Commands&quot;: [</span>
+<span class="s">      {</span>
+<span class="s">        &quot;name&quot;: &quot;layout-tbd&quot;,</span>
+<span class="s">        &quot;params&quot;:[</span>
+<span class="s">            { &quot;type&quot;: &quot;string&quot;, &quot;desc&quot;: &quot;layout file&quot;, &quot;mandatory&quot;: 1 }</span>
+<span class="s">        ],</span>
+<span class="s">        &quot;help&quot;: [</span>
+<span class="s">            &quot;Load the layout description file&quot;</span>
+<span class="s">        ]</span>
+<span class="s">      },</span>
+<span class="s">      {</span>
+<span class="s">        &quot;name&quot;: &quot;schema-tbd&quot;,</span>
+<span class="s">        &quot;params&quot;: [</span>
+<span class="s">          { &quot;type&quot;: &quot;string&quot;, &quot;desc&quot;: &quot;schema file&quot;, &quot;mandatory&quot;: 1 }</span>
+<span class="s">        ],</span>
+<span class="s">        &quot;help&quot;: [</span>
+<span class="s">            &quot;Load the schema for the layout description file for validation purposes.&quot;,</span>
+<span class="s">            &quot;\tIf none is provided the system will try to find a valid schema file in the local folder&quot;,</span>
+<span class="s">            &quot;\tor from the dcc-ex.com website. If none is found, validation will be skipped and&quot;,</span>
+<span class="s">            &quot;\tprocessing will proceed as is albeit error detection in the layout is delayed and may&quot;,</span>
+<span class="s">            &quot;\tbe more complicated&quot;</span>
+<span class="s">        ]</span>
+<span class="s">      },</span>
+<span class="s">      {</span>
+<span class="s">        &quot;name&quot;: &quot;build-tbd&quot;,</span>
+<span class="s">        &quot;params&quot;: [],</span>
+<span class="s">        &quot;help&quot;: [</span>
+<span class="s">            &quot;Builds the full directed graph and possible paths for the layout and generates all turnout commands&quot;,</span>
+<span class="s">            &quot;\tto be send to the command station&quot;</span>
+<span class="s">        ]</span>
+<span class="s">      },</span>
+<span class="s">      {</span>
+<span class="s">        &quot;name&quot;: &quot;upload-tbd&quot;,</span>
+<span class="s">        &quot;params&quot;:</span>
+<span class="s">        [</span>
+<span class="s">          { &quot;type&quot;: &quot;string&quot;, &quot;desc&quot;: &quot;all|turnouts|accesories|paths&quot;, &quot;mandatory&quot;: 1 }</span>
+<span class="s">        ],</span>
+<span class="s">        &quot;help&quot;: [</span>
+<span class="s">            &quot;Uploads the selected definitions to the commandstation&quot;</span>
+<span class="s">        ]</span>
+<span class="s">      }</span>
+<span class="s">    ]</span>
+<span class="s"> }</span>
+<span class="dl">)</span><span class="s">&quot;</span><span class="p">;</span>
+
+<span class="cp">#endif</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, grbba.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+.. _exhale_define__dcc_vertex_8hpp_1a9591ed8155e7563e5997112c5f7a54de:
+
+Define getTurnout
+=================
+
+- Defined in :ref:`file_src_DccVertex.hpp`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: getTurnout

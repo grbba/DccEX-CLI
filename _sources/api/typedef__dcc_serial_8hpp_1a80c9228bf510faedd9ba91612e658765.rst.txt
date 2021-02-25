@@ -1,0 +1,13 @@
+.. _exhale_typedef__dcc_serial_8hpp_1a80c9228bf510faedd9ba91612e658765:
+
+Typedef CmdParam_t
+==================
+
+- Defined in :ref:`file_src_DccSerial.hpp`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: CmdParam_t

@@ -1,0 +1,13 @@
+.. _exhale_define__dcc_serial_8cpp_1a755a5f20e9e469e031640e4405c8a2ab:
+
+Define HEADING
+==============
+
+- Defined in :ref:`file_src_DccSerial.cpp`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: HEADING

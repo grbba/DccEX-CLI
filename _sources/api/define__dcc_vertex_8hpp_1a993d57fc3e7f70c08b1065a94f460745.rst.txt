@@ -1,0 +1,13 @@
+.. _exhale_define__dcc_vertex_8hpp_1a993d57fc3e7f70c08b1065a94f460745:
+
+Define isBumper
+===============
+
+- Defined in :ref:`file_src_DccVertex.hpp`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: isBumper

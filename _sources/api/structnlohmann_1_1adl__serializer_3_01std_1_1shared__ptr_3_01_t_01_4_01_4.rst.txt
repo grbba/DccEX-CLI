@@ -1,0 +1,16 @@
+.. _exhale_struct_structnlohmann_1_1adl__serializer_3_01std_1_1shared__ptr_3_01_t_01_4_01_4:
+
+Template Struct adl_serializer< std::shared_ptr< T > >
+======================================================
+
+- Defined in :ref:`file_src_DccModel.hpp`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: nlohmann::adl_serializer< std::shared_ptr< T > >
+   :members:
+   :protected-members:
+   :undoc-members:

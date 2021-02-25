@@ -1,0 +1,25 @@
+.. _exhale_class_class_dcc_model_1_1_trackelement:
+
+Class Trackelement
+==================
+
+- Defined in :ref:`file_src_DccModel.hpp`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public DccModel::DccObject`` (:ref:`exhale_class_class_dcc_model_1_1_dcc_object`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: DccModel::Trackelement
+   :members:
+   :protected-members:
+   :undoc-members:

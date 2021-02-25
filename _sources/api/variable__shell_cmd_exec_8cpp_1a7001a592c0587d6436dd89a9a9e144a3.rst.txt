@@ -1,0 +1,13 @@
+.. _exhale_variable__shell_cmd_exec_8cpp_1a7001a592c0587d6436dd89a9a9e144a3:
+
+Variable serial
+===============
+
+- Defined in :ref:`file_src_ShellCmdExec.cpp`
+
+
+Variable Documentation
+----------------------
+
+
+.. doxygenvariable:: serial

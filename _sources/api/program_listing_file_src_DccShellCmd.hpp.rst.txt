@@ -1,0 +1,70 @@
+
+.. _program_listing_file_src_DccShellCmd.hpp:
+
+Program Listing for File DccShellCmd.hpp
+========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_DccShellCmd.hpp>` (``src/DccShellCmd.hpp``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   /*
+    * © 2021 Gregor Baues. All rights reserved.
+    *
+    * This is free software: you can redistribute it and/or modify it under
+    * the terms of the GNU General Public License as published by the
+    * Free Software Foundation, either version 3 of the License, or
+    * (at your option) any later version.
+    *
+    * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+    * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+    * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+    * DEALINGS IN THE SOFTWARE.
+    *
+    * See the GNU General Public License for more details
+    * <https://www.gnu.org/licenses/>
+    */
+   #ifndef DccShellCmd_h
+   #define DccShellCmd_h
+   
+   #include <nlohmann/json.hpp>
+   
+   
+   
+   enum paramTypes {
+       string = 2,
+       integer
+   };
+   
+   struct cmdItem
+   {
+       int8_t menuID;         // 255 menus with
+       int8_t itemID;         // 255 items each
+       std::string name;
+       std::vector<std::string> paramDesc;
+       std::string help;
+       std::map<int8_t, std::pair<int,std::string>> paramType;  
+       int8_t minParameters = 0; // calculated from the mandatory field
+       int8_t maxParameters = 0; // calculated from the mandatory field  
+   };
+   
+   class DccShellCmd
+   {
+   private:
+       
+       void buildMenuCommands(const std::string commands);   // parses the JSON struct recieved and creates the menuCommands map
+   
+   public:
+   
+       std::map<int, std::shared_ptr<cmdItem>> menuCommands;               // holds all the menu commands after parsing before actually inserting 
+                                                          // the items into the cli structure
+       DccShellCmd(const std::string commands);
+       ~DccShellCmd() = default;
+   };
+   
+   #endif

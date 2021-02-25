@@ -1,0 +1,13 @@
+.. _exhale_define__diag_8hpp_1ab3305f90f8de7acae111cb0e4c25a51d:
+
+Define DIAG
+===========
+
+- Defined in :ref:`file_src_Diag.hpp`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: DIAG

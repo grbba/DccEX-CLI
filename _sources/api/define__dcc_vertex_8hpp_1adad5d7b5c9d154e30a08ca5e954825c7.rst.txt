@@ -1,0 +1,13 @@
+.. _exhale_define__dcc_vertex_8hpp_1adad5d7b5c9d154e30a08ca5e954825c7:
+
+Define getSegment
+=================
+
+- Defined in :ref:`file_src_DccVertex.hpp`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: getSegment

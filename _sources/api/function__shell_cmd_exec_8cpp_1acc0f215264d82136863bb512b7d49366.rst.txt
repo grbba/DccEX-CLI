@@ -1,0 +1,13 @@
+.. _exhale_function__shell_cmd_exec_8cpp_1acc0f215264d82136863bb512b7d49366:
+
+Function csRead
+===============
+
+- Defined in :ref:`file_src_ShellCmdExec.cpp`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: csRead(std::ostream&, std::shared_ptr<cmdItem>, std::vector<std::string>)

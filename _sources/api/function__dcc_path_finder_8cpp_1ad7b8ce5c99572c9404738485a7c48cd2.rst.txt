@@ -1,0 +1,13 @@
+.. _exhale_function__dcc_path_finder_8cpp_1ad7b8ce5c99572c9404738485a7c48cd2:
+
+Function findStartVertex
+========================
+
+- Defined in :ref:`file_src_DccPathFinder.cpp`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: findStartVertex(int32_t, std::vector<DccVertexPtr_t> *, DccVertexGraph_t *)

@@ -1,0 +1,13 @@
+.. _exhale_typedef__dcc_shell_8cpp_1a9bd4990bf0640e545aa7029efc9d5a69:
+
+Typedef cli::MainScheduler
+==========================
+
+- Defined in :ref:`file_src_DccShell.cpp`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: cli::MainScheduler

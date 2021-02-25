@@ -1,0 +1,1802 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>DCC++ EX Commandline Interface API &mdash; DCC++ EX Commandline Interface 0.0.10 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Namespace asio" href="namespace_asio.html" />
+    <link rel="prev" title="The DCC++ EX Commandline Interface" href="../DccEXcli.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> DCC++ EX Commandline Interface
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../DccEXcli.html">The DCC++ EX Commandline Interface</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">DCC++ EX Commandline Interface API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#class-hierarchy">Class Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#file-hierarchy">File Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#full-api">Full API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#namespaces">Namespaces</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="namespace_asio.html">Namespace asio</a></li>
+<li class="toctree-l4"><a class="reference internal" href="namespace_boost.html">Namespace boost</a></li>
+<li class="toctree-l4"><a class="reference internal" href="namespace_cli.html">Namespace cli</a></li>
+<li class="toctree-l4"><a class="reference internal" href="namespace_DccModel.html">Namespace DccModel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="namespace_nlohmann.html">Namespace nlohmann</a></li>
+<li class="toctree-l4"><a class="reference internal" href="namespace_std.html">Namespace std</a></li>
+<li class="toctree-l4"><a class="reference internal" href="namespace_std__chrono_literals.html">Namespace std::chrono_literals</a></li>
+<li class="toctree-l4"><a class="reference internal" href="namespace_std__placeholders.html">Namespace std::placeholders</a></li>
+<li class="toctree-l4"><a class="reference internal" href="namespace_std__this_thread.html">Namespace std::this_thread</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#classes-and-structs">Classes and Structs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="structcmd_item.html">Struct cmdItem</a></li>
+<li class="toctree-l4"><a class="reference internal" href="struct_diag_config.html">Struct DiagConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structnlohmann_1_1adl__serializer_3_01std_1_1shared__ptr_3_01_t_01_4_01_4.html">Template Struct adl_serializer&lt; std::shared_ptr&lt; T &gt; &gt;</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_async_serial.html">Class AsyncSerial</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_async_serial_impl.html">Class AsyncSerialImpl</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_buffered_async_serial.html">Class BufferedAsyncSerial</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_callback_async_serial.html">Class CallbackAsyncSerial</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_dcc_config.html">Class DccConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_dcc_double_vertex.html">Class DccDoubleVertex</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_dcc_graph.html">Class DccGraph</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_dcc_layout.html">Class DccLayout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_dcc_model_1_1_bumper.html">Class Bumper</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_dcc_model_1_1_crossing.html">Class Crossing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_dcc_model_1_1_dcc_ex_layout.html">Class DccExLayout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_dcc_model_1_1_dcc_object.html">Class DccObject</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_dcc_model_1_1_from.html">Class From</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_dcc_model_1_1_junction.html">Class Junction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_dcc_model_1_1_layout.html">Class Layout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_dcc_model_1_1_module.html">Class Module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_dcc_model_1_1_rail.html">Class Rail</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_dcc_model_1_1_to.html">Class To</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_dcc_model_1_1_trackelement.html">Class Trackelement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_dcc_model_1_1_trackplan.html">Class Trackplan</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_dcc_model_1_1_tracksection.html">Class Tracksection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_dcc_model_1_1_turnout.html">Class Turnout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_dcc_path.html">Class DccPath</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_dcc_path_finder.html">Class DccPathFinder</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_dcc_serial.html">Class DccSerial</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_dcc_shell.html">Class DccShell</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_dcc_shell_cmd.html">Class DccShellCmd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_dcc_vertex.html">Class DccVertex</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_diag.html">Class Diag</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_shell_cmd_exec.html">Class ShellCmdExec</a></li>
+<li class="toctree-l4"><a class="reference internal" href="class_shell_cmd_exec_exception.html">Class ShellCmdExecException</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#enums">Enums</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="enum__diag_8hpp_1a7e4c3f29f42cf9095a81c992a790b9fc.html">Enum DiagLevel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="enum__dcc_vertex_8hpp_1a827265a66831a1a50b3589c0fca89b86.html">Enum GraphMarker</a></li>
+<li class="toctree-l4"><a class="reference internal" href="enum__dcc_shell_cmd_8hpp_1a072bc3877a00578ba313e6ff9d3fe66d.html">Enum paramTypes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="enum__dcc_serial_8hpp_1add4e7ad063ad2296ad070a93e56f3676.html">Enum shellCommand</a></li>
+<li class="toctree-l4"><a class="reference internal" href="enum__dcc_vertex_8hpp_1a852e9a44a9aad194d370f6839a630f40.html">Enum Telement</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#functions">Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="function__shell_cmd_exec_8cpp_1a05ca2c040d041f692e2b49f13bc9998a.html">Function csDiag</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__shell_cmd_exec_8cpp_1a01259380367a37cf4aae491ab5431b9e.html">Function csOpen</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__shell_cmd_exec_8cpp_1ad4370837227275bf3ca1a385d905c4df.html">Function csOpenSerial</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__shell_cmd_exec_8cpp_1acc0f215264d82136863bb512b7d49366.html">Function csRead</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__shell_cmd_exec_8cpp_1a64187357f8a19d9b415376a06374850c.html">Function csStatus</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__dcc_model_8hpp_1a566a7798b1c8d69d4ae6381f839c3e1c.html">Template Function DccModel::get_optional</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__dcc_model_8hpp_1a2cfd65e74dceac2f4577c6a3970f8ac4.html">Function DccModel::get_untyped</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__dcc_shell_8cpp_1a66d65e9d7eeab71291bf0bdc111af631.html">Function executeMenu</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__dcc_path_finder_8cpp_1ad7b8ce5c99572c9404738485a7c48cd2.html">Function findStartVertex</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__dcc_shell_cmd_8cpp_1a53182082a27db1e9c28b34243809c96e.html">Function join</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function_main_8cpp_1a808f40e2e9d6eb5463165c031dfa3eb1.html">Function main</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__dcc_model_8hpp_1a93f8e360dd0c3331fbb8a7877d023ad2.html">Function nlohmann::from_json(const json&amp;, DccModel ::From&amp;)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__dcc_model_8hpp_1ac2f86da0cd3c994c7d7912b9c1da1902.html">Function nlohmann::from_json(const json&amp;, DccModel ::To&amp;)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__dcc_model_8hpp_1a9e6f41e5ebfb4c590875f6faedcea9a3.html">Function nlohmann::from_json(const json&amp;, DccModel ::Junction&amp;)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__dcc_model_8hpp_1aa71da80476a0094f110da3e37513eb0c.html">Function nlohmann::from_json(const json&amp;, DccModel ::Layout&amp;)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__dcc_model_8hpp_1ad8448dac2b74f24f718b839b7f07f6ba.html">Function nlohmann::from_json(const json&amp;, DccModel ::Module&amp;)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__dcc_model_8hpp_1a1037e2d791d79376b53f1f373ed4cdeb.html">Function nlohmann::from_json(const json&amp;, DccModel ::Bumper&amp;)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__dcc_model_8hpp_1a0f5740f49418413e4f4463cf57392b76.html">Function nlohmann::from_json(const json&amp;, DccModel ::Crossing&amp;)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__dcc_model_8hpp_1a89f0a0c404c1a12891155d00f6696f58.html">Function nlohmann::from_json(const json&amp;, DccModel ::Rail&amp;)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__dcc_model_8hpp_1a71701e6d0f3e66b75a189a15289eff48.html">Function nlohmann::from_json(const json&amp;, DccModel ::Turnout&amp;)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__dcc_model_8hpp_1af7309cfe41dacd335b47c8d763353218.html">Function nlohmann::from_json(const json&amp;, DccModel ::Trackelement&amp;)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__dcc_model_8hpp_1a86fac7dd943c51b507dba44e55dc2d29.html">Function nlohmann::from_json(const json&amp;, DccModel ::Tracksection&amp;)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__dcc_model_8hpp_1a3129f82694a69da152ad67f421cc6756.html">Function nlohmann::from_json(const json&amp;, DccModel ::Trackplan&amp;)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__dcc_model_8hpp_1a92fb659f38512e3f0a46ff688126a00e.html">Function nlohmann::from_json(const json&amp;, DccModel ::DccExLayout&amp;)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__dcc_model_8hpp_1a4688540e34e0cd6680899b88ba112a56.html">Function nlohmann::to_json(json&amp;, const DccModel ::From&amp;)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__dcc_model_8hpp_1ae2162207dca2de1e618122948c0012f7.html">Function nlohmann::to_json(json&amp;, const DccModel ::To&amp;)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__dcc_model_8hpp_1ac32fb368cf7f7c94104167478b1c9536.html">Function nlohmann::to_json(json&amp;, const DccModel ::Junction&amp;)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__dcc_model_8hpp_1a0da9a1827899392baf045086b5bf7356.html">Function nlohmann::to_json(json&amp;, const DccModel ::Layout&amp;)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__dcc_model_8hpp_1a767c18ce7066f53ee8aa3d2f34c1a8e4.html">Function nlohmann::to_json(json&amp;, const DccModel ::Module&amp;)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__dcc_model_8hpp_1ae0c82b3e6064c2b66be3a0db192fa259.html">Function nlohmann::to_json(json&amp;, const DccModel ::Bumper&amp;)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__dcc_model_8hpp_1aff327f1411b2796b26c1120f0782782d.html">Function nlohmann::to_json(json&amp;, const DccModel ::Crossing&amp;)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__dcc_model_8hpp_1a89d0f4f10db6df65ecf794aa04307de0.html">Function nlohmann::to_json(json&amp;, const DccModel ::Rail&amp;)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__dcc_model_8hpp_1a3410ae93f4610a432cfeeee1bf6cc736.html">Function nlohmann::to_json(json&amp;, const DccModel ::Turnout&amp;)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__dcc_model_8hpp_1a1b5b16b382023ded421ac2dcdc0ca3fc.html">Function nlohmann::to_json(json&amp;, const DccModel ::Trackelement&amp;)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__dcc_model_8hpp_1a52e69eb377be72a2af2d33cd182d71e9.html">Function nlohmann::to_json(json&amp;, const DccModel ::Tracksection&amp;)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__dcc_model_8hpp_1aa38c6ea0c22a2dd03f0afad3f3dce40f.html">Function nlohmann::to_json(json&amp;, const DccModel ::Trackplan&amp;)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__dcc_model_8hpp_1ac9ab642a667dbf591b579cb1455492cc.html">Function nlohmann::to_json(json&amp;, const DccModel ::DccExLayout&amp;)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function_main_8cpp_1ac82eafa835da9704339f394b65338de4.html">Function readJsonFile</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__shell_cmd_exec_8cpp_1a2a0e15eb918a626ef4c1f5b6dc25696e.html">Function rootConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__shell_cmd_exec_8cpp_1a33b6bf9c8059dcfb373f0a2888dbd98f.html">Function rootLogLevel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="function__shell_cmd_exec_8cpp_1a472d09efa5cbe02c63fd0427cec121ea.html">Function str_toupper</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#variables">Variables</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="variable__shell_cmd_config_8hpp_1ad2324e29dc7beb96931c77de9416a1ab.html">Variable csMenuItems</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variable__shell_cmd_exec_8cpp_1a009c2db1dc1b9dbad25778af684b2bc5.html">Variable ctypes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variable__shell_cmd_exec_8cpp_1a5ff5298dfdd9bef995e63ad88c6644ea.html">Variable diags</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variable__shell_cmd_config_8hpp_1aef88e0dfef2bcc2597b9eb9e12082bcc.html">Variable loMenuItems</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variable__shell_cmd_exec_8cpp_1ac981c7ecef717efd1b237970f23c945d.html">Variable onoff</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variable__shell_cmd_config_8hpp_1aeaef832b28edcd89cb883068152e45cd.html">Variable rootMenuItems</a></li>
+<li class="toctree-l4"><a class="reference internal" href="variable__shell_cmd_exec_8cpp_1a7001a592c0587d6436dd89a9a9e144a3.html">Variable serial</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#defines">Defines</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="define__dcc_shell_8hpp_1ad28b60868b6548c43e7a18f30c9b2022.html">Define ASYNC</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define_config_8h_1abd42c755957b77d8b2f50e1df35b9794.html">Define CONFIG_DCCEX_SCHEMA</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define_config_8h_1a94e8ec06eb915e33f3afcc4036fce13a.html">Define CONFIG_FILEINFO</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define_config_8h_1a44a277084e71bdba60d59131abbc3ca8.html">Define CONFIG_INTERACTIVE</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__diag_8hpp_1a445a14d10ffdece08ce75cb22baf2c6e.html">Define DBG</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__dcc_serial_8hpp_1abfecbf96fb1337464637a50c5db3e544.html">Define DCC_CONN_UNKOWN</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__dcc_serial_8hpp_1a296e37d79b30f47bdd8bd2b9c273ba68.html">Define DCC_ETHERNET</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__dcc_serial_8hpp_1a42c43f47b6596d7bb4c8b4665e4ebe3f.html">Define DCC_FAILURE</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__diag_8hpp_1a42c43f47b6596d7bb4c8b4665e4ebe3f.html">Define DCC_FAILURE</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__dcc_serial_8hpp_1ade731e62a6baeb176a539bda528c90f7.html">Define DCC_SERIAL</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__dcc_serial_8hpp_1af57e7197cc28d4e302795a8f0220ce12.html">Define DCC_SUCCESS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__diag_8hpp_1af57e7197cc28d4e302795a8f0220ce12.html">Define DCC_SUCCESS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__diag_8hpp_1ad72dbcf6d0153db1b8d8a58001feed83.html">Define DEBUG</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__diag_8hpp_1ab3305f90f8de7acae111cb0e4c25a51d.html">Define DIAG</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__diag_8hpp_1a75305167eb585b86e0fb96368113ec33.html">Define DIAGERR</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__diag_8hpp_1ad95a22f16e27974acefe9bfbb3217c62.html">Define DIAGWARN</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__diag_8hpp_1ace431af7538cd4bbd56d61731e08b887.html">Define EH_DW</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__diag_8hpp_1ac4d460558dd2106b51b9d5216a2527fa.html">Define EH_IFIL</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__diag_8hpp_1a6d98b0bab9c715fda514c71e0100d038.html">Define EH_IFLL</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__diag_8hpp_1aa173aaa724787eeb93e96de0e5556d76.html">Define ERR</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__dcc_serial_8cpp_1abac57baaff13f3a1ddbb0c8a193b7e32.html">Define ERROR</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__dcc_shell_8cpp_1a0f5c70e099c811cf37674cdff68a435a.html">Define ERROR</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__dcc_shell_cmd_8cpp_1abac57baaff13f3a1ddbb0c8a193b7e32.html">Define ERROR</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__dcc_vertex_8hpp_1ae9bc46f79efdaa89c01bc98cd88ecc08.html">Define getBumper</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__dcc_vertex_8hpp_1a762b062c67be3ede58b1a80540c690cc.html">Define getCrossing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__dcc_vertex_8hpp_1a8afffc6632a9c80674ff7a70a923dba9.html">Define getJunction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__dcc_vertex_8hpp_1adad5d7b5c9d154e30a08ca5e954825c7.html">Define getSegment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__dcc_vertex_8hpp_1a9591ed8155e7563e5997112c5f7a54de.html">Define getTurnout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__dcc_serial_8cpp_1a755a5f20e9e469e031640e4405c8a2ab.html">Define HEADING</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__dcc_shell_8cpp_1a755a5f20e9e469e031640e4405c8a2ab.html">Define HEADING</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__dcc_shell_cmd_8cpp_1a755a5f20e9e469e031640e4405c8a2ab.html">Define HEADING</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define_main_8cpp_1a755a5f20e9e469e031640e4405c8a2ab.html">Define HEADING</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__diag_8hpp_1ae19e2dbb70909d3e3311b8577efa9f93.html">Define INFO</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__dcc_vertex_8hpp_1a993d57fc3e7f70c08b1065a94f460745.html">Define isBumper</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__dcc_vertex_8hpp_1a888c85f2eaf59c60d4f0f967d035f615.html">Define isCrossing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__dcc_vertex_8hpp_1abf35e5e5a42aa185bd280ead0f657f9c.html">Define isJunction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__dcc_vertex_8hpp_1a88c2b8d2452cf318e143c590ea8f73ac.html">Define isSegement</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__dcc_vertex_8hpp_1a172cd6cb131cc71560963f5df8488655.html">Define isTurnout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__diag_8hpp_1a6c6fd5e242df15a7a42e9b75d55d5d3c.html">Define LOGLEVEL</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__diag_8hpp_1ae156666e0bfa4d7d364ec015d07e9229.html">Define LOGV_DEBUG_MSG</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__diag_8hpp_1afe2bf979640efe3d3cb6811cad7ea3ab.html">Define LOGV_ERROR_MSG</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__diag_8hpp_1a82b2aed356240e7b3e333abb7c14f1e1.html">Define LOGV_INFO_MSG</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__diag_8hpp_1aa4c700065714f68ece3bb5cab1387373.html">Define LOGV_TRACE_MSG</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__diag_8hpp_1a41d25bfa9f0ac92791918eb13da0b241.html">Define LOGV_WARN_MSG</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define_main_8cpp_1a877cce34f3e58fd7f9194fab90724cb8.html">Define MAJOR</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define_main_8cpp_1a4e10915d93013542d442d78de0e02e9a.html">Define MINOR</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define_main_8cpp_1af59c44c1f3ff875c35393428624473aa.html">Define PATCH</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define_main_8cpp_1a5321e3f3f55537f9f7c1e6c739ed9e96.html">Define SUBHEADING</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__diag_8hpp_1ae31fb81e1fe3e5c44839e319a44c8c5e.html">Define TRC</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__diag_8hpp_1a899e8c12f9c3b0c57e70fa25e87db5a0.html">Define WARN</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__dcc_serial_8cpp_1a9e1796fdadec0df60e8d280ee783b85c.html">Define WARNING</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__dcc_shell_8cpp_1a9e1796fdadec0df60e8d280ee783b85c.html">Define WARNING</a></li>
+<li class="toctree-l4"><a class="reference internal" href="define__dcc_shell_cmd_8cpp_1a9e1796fdadec0df60e8d280ee783b85c.html">Define WARNING</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#typedefs">Typedefs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="typedef__shell_cmd_exec_8hpp_1a91718507a999bde9913d105dd2a18328.html">Typedef _fpShellCmd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="typedef__shell_cmd_exec_8hpp_1adadc1109bdc4155ce4bcd1771b888d4d.html">Typedef _fShellCmd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="typedef__dcc_shell_8cpp_1a9bd4990bf0640e545aa7029efc9d5a69.html">Typedef cli::MainScheduler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="typedef__dcc_serial_8hpp_1a80c9228bf510faedd9ba91612e658765.html">Typedef CmdParam_t</a></li>
+<li class="toctree-l4"><a class="reference internal" href="typedef__dcc_vertex_8hpp_1ace54f98fb1f0b2300e6ec7de5197ae68.html">Typedef DccDoubleVertexGraph_t</a></li>
+<li class="toctree-l4"><a class="reference internal" href="typedef__dcc_vertex_8hpp_1a84d484a5596aa47962499418c5e6b6a7.html">Typedef DccDoubleVertexPtr_t</a></li>
+<li class="toctree-l4"><a class="reference internal" href="typedef__dcc_path_8hpp_1abefb3d4382504d093f6e5275d2decc47.html">Typedef DccNodePaths_t</a></li>
+<li class="toctree-l4"><a class="reference internal" href="typedef__dcc_path_8hpp_1af35e59e0b716508efbb064336184a4a7.html">Typedef DccPath_t</a></li>
+<li class="toctree-l4"><a class="reference internal" href="typedef__dcc_path_8hpp_1a61b619e0a788c126480c67379acf0892.html">Typedef DccPathMap_t</a></li>
+<li class="toctree-l4"><a class="reference internal" href="typedef__dcc_vertex_8hpp_1adcfb7fb5d32068005bdf661dba9d688e.html">Typedef DccVertexGraph_t</a></li>
+<li class="toctree-l4"><a class="reference internal" href="typedef__dcc_vertex_8hpp_1a4141a3a1d9ecefd60f5de141c813e5ba.html">Typedef DccVertexPtr_t</a></li>
+<li class="toctree-l4"><a class="reference internal" href="typedef__dcc_vertex_8hpp_1a5da8ca04970496d99b0f2bc5d4ea4a3b.html">Typedef Node_t</a></li>
+<li class="toctree-l4"><a class="reference internal" href="typedef__dcc_vertex_8hpp_1a04cfc7b1464154a632dcacc8176577fd.html">Typedef TrackElement_t</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DCC++ EX Commandline Interface</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>DCC++ EX Commandline Interface API</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api/library_root.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="dcc-ex-commandline-interface-api">
+<h1>DCC++ EX Commandline Interface API<a class="headerlink" href="#dcc-ex-commandline-interface-api" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="class-hierarchy">
+<h2>Class Hierarchy<a class="headerlink" href="#class-hierarchy" title="Permalink to this headline">¶</a></h2>
+<ul class="treeView" id="class-treeView">
+  <li>
+    <ul class="collapsibleList">
+      <li>Namespace <a href="namespace_DccModel.html#namespace-DccModel">DccModel</a><ul><li>Class <a href="class_dcc_model_1_1_bumper.html#exhale-class-class-dcc-model-1-1-bumper">Bumper</a></li><li>Class <a href="class_dcc_model_1_1_crossing.html#exhale-class-class-dcc-model-1-1-crossing">Crossing</a></li><li>Class <a href="class_dcc_model_1_1_dcc_ex_layout.html#exhale-class-class-dcc-model-1-1-dcc-ex-layout">DccExLayout</a></li><li>Class <a href="class_dcc_model_1_1_dcc_object.html#exhale-class-class-dcc-model-1-1-dcc-object">DccObject</a></li><li>Class <a href="class_dcc_model_1_1_from.html#exhale-class-class-dcc-model-1-1-from">From</a></li><li>Class <a href="class_dcc_model_1_1_junction.html#exhale-class-class-dcc-model-1-1-junction">Junction</a></li><li>Class <a href="class_dcc_model_1_1_layout.html#exhale-class-class-dcc-model-1-1-layout">Layout</a></li><li>Class <a href="class_dcc_model_1_1_module.html#exhale-class-class-dcc-model-1-1-module">Module</a></li><li>Class <a href="class_dcc_model_1_1_rail.html#exhale-class-class-dcc-model-1-1-rail">Rail</a></li><li>Class <a href="class_dcc_model_1_1_to.html#exhale-class-class-dcc-model-1-1-to">To</a></li><li>Class <a href="class_dcc_model_1_1_trackelement.html#exhale-class-class-dcc-model-1-1-trackelement">Trackelement</a></li><li>Class <a href="class_dcc_model_1_1_trackplan.html#exhale-class-class-dcc-model-1-1-trackplan">Trackplan</a></li><li>Class <a href="class_dcc_model_1_1_tracksection.html#exhale-class-class-dcc-model-1-1-tracksection">Tracksection</a></li><li class="lastChild">Class <a href="class_dcc_model_1_1_turnout.html#exhale-class-class-dcc-model-1-1-turnout">Turnout</a></li></ul></li><li>Namespace <a href="namespace_nlohmann.html#namespace-nlohmann">nlohmann</a><ul><li class="lastChild">Template Struct <a href="structnlohmann_1_1adl__serializer_3_01std_1_1shared__ptr_3_01_t_01_4_01_4.html#exhale-struct-structnlohmann-1-1adl-serializer-3-01std-1-1shared-ptr-3-01-t-01-4-01-4">adl_serializer&lt; std::shared_ptr&lt; T &gt; &gt;</a></li></ul></li><li>Struct <a href="structcmd_item.html#exhale-struct-structcmd-item">cmdItem</a></li><li>Struct <a href="struct_diag_config.html#exhale-struct-struct-diag-config">DiagConfig</a></li><li>Class <a href="class_async_serial.html#exhale-class-class-async-serial">AsyncSerial</a></li><li>Class <a href="class_async_serial_impl.html#exhale-class-class-async-serial-impl">AsyncSerialImpl</a></li><li>Class <a href="class_buffered_async_serial.html#exhale-class-class-buffered-async-serial">BufferedAsyncSerial</a></li><li>Class <a href="class_callback_async_serial.html#exhale-class-class-callback-async-serial">CallbackAsyncSerial</a></li><li>Class <a href="class_dcc_config.html#exhale-class-class-dcc-config">DccConfig</a></li><li>Class <a href="class_dcc_double_vertex.html#exhale-class-class-dcc-double-vertex">DccDoubleVertex</a></li><li>Class <a href="class_dcc_graph.html#exhale-class-class-dcc-graph">DccGraph</a></li><li>Class <a href="class_dcc_layout.html#exhale-class-class-dcc-layout">DccLayout</a></li><li>Class <a href="class_dcc_path.html#exhale-class-class-dcc-path">DccPath</a></li><li>Class <a href="class_dcc_path_finder.html#exhale-class-class-dcc-path-finder">DccPathFinder</a></li><li>Class <a href="class_dcc_serial.html#exhale-class-class-dcc-serial">DccSerial</a></li><li>Class <a href="class_dcc_shell.html#exhale-class-class-dcc-shell">DccShell</a></li><li>Class <a href="class_dcc_shell_cmd.html#exhale-class-class-dcc-shell-cmd">DccShellCmd</a></li><li>Class <a href="class_dcc_vertex.html#exhale-class-class-dcc-vertex">DccVertex</a></li><li>Class <a href="class_diag.html#exhale-class-class-diag">Diag</a></li><li>Class <a href="class_shell_cmd_exec.html#exhale-class-class-shell-cmd-exec">ShellCmdExec</a></li><li>Class <a href="class_shell_cmd_exec_exception.html#exhale-class-class-shell-cmd-exec-exception">ShellCmdExecException</a></li><li>Enum <a href="enum__diag_8hpp_1a7e4c3f29f42cf9095a81c992a790b9fc.html#exhale-enum-diag-8hpp-1a7e4c3f29f42cf9095a81c992a790b9fc">DiagLevel</a></li><li>Enum <a href="enum__dcc_vertex_8hpp_1a827265a66831a1a50b3589c0fca89b86.html#exhale-enum-dcc-vertex-8hpp-1a827265a66831a1a50b3589c0fca89b86">GraphMarker</a></li><li>Enum <a href="enum__dcc_shell_cmd_8hpp_1a072bc3877a00578ba313e6ff9d3fe66d.html#exhale-enum-dcc-shell-cmd-8hpp-1a072bc3877a00578ba313e6ff9d3fe66d">paramTypes</a></li><li>Enum <a href="enum__dcc_serial_8hpp_1add4e7ad063ad2296ad070a93e56f3676.html#exhale-enum-dcc-serial-8hpp-1add4e7ad063ad2296ad070a93e56f3676">shellCommand</a></li><li class="lastChild">Enum <a href="enum__dcc_vertex_8hpp_1a852e9a44a9aad194d370f6839a630f40.html#exhale-enum-dcc-vertex-8hpp-1a852e9a44a9aad194d370f6839a630f40">Telement</a></li>
+    </ul>
+  </li><!-- only tree view element -->
+</ul><!-- /treeView class-treeView --></div>
+<div class="section" id="file-hierarchy">
+<h2>File Hierarchy<a class="headerlink" href="#file-hierarchy" title="Permalink to this headline">¶</a></h2>
+<ul class="treeView" id="file-treeView">
+  <li>
+    <ul class="collapsibleList">
+      <li class="lastChild">Directory <a href="dir_src.html#dir-src">src</a><ul><li>File <a href="file_src_AsyncSerial.cpp.html#file-src-AsyncSerial.cpp">AsyncSerial.cpp</a></li><li>File <a href="file_src_AsyncSerial.h.html#file-src-AsyncSerial.h">AsyncSerial.h</a></li><li>File <a href="file_src_BufferedAsyncSerial.cpp.html#file-src-BufferedAsyncSerial.cpp">BufferedAsyncSerial.cpp</a></li><li>File <a href="file_src_BufferedAsyncSerial.h.html#file-src-BufferedAsyncSerial.h">BufferedAsyncSerial.h</a></li><li>File <a href="file_src_config.h.html#file-src-config.h">config.h</a></li><li>File <a href="file_src_DccConfig.cpp.html#file-src-DccConfig.cpp">DccConfig.cpp</a></li><li>File <a href="file_src_DccConfig.hpp.html#file-src-DccConfig.hpp">DccConfig.hpp</a></li><li>File <a href="file_src_DccGraph.cpp.html#file-src-DccGraph.cpp">DccGraph.cpp</a></li><li>File <a href="file_src_DccGraph.hpp.html#file-src-DccGraph.hpp">DccGraph.hpp</a></li><li>File <a href="file_src_DccLayout.cpp.html#file-src-DccLayout.cpp">DccLayout.cpp</a></li><li>File <a href="file_src_DccLayout.hpp.html#file-src-DccLayout.hpp">DccLayout.hpp</a></li><li>File <a href="file_src_DccModel.hpp.html#file-src-DccModel.hpp">DccModel.hpp</a></li><li>File <a href="file_src_DccPath.cpp.html#file-src-DccPath.cpp">DccPath.cpp</a></li><li>File <a href="file_src_DccPath.hpp.html#file-src-DccPath.hpp">DccPath.hpp</a></li><li>File <a href="file_src_DccPathFinder.cpp.html#file-src-DccPathFinder.cpp">DccPathFinder.cpp</a></li><li>File <a href="file_src_DccPathFinder.hpp.html#file-src-DccPathFinder.hpp">DccPathFinder.hpp</a></li><li>File <a href="file_src_DccSerial.cpp.html#file-src-DccSerial.cpp">DccSerial.cpp</a></li><li>File <a href="file_src_DccSerial.hpp.html#file-src-DccSerial.hpp">DccSerial.hpp</a></li><li>File <a href="file_src_DccShell.cpp.html#file-src-DccShell.cpp">DccShell.cpp</a></li><li>File <a href="file_src_DccShell.hpp.html#file-src-DccShell.hpp">DccShell.hpp</a></li><li>File <a href="file_src_DccShellCmd.cpp.html#file-src-DccShellCmd.cpp">DccShellCmd.cpp</a></li><li>File <a href="file_src_DccShellCmd.hpp.html#file-src-DccShellCmd.hpp">DccShellCmd.hpp</a></li><li>File <a href="file_src_DccVertex.cpp.html#file-src-DccVertex.cpp">DccVertex.cpp</a></li><li>File <a href="file_src_DccVertex.hpp.html#file-src-DccVertex.hpp">DccVertex.hpp</a></li><li>File <a href="file_src_Diag.cpp.html#file-src-Diag.cpp">Diag.cpp</a></li><li>File <a href="file_src_Diag.hpp.html#file-src-Diag.hpp">Diag.hpp</a></li><li>File <a href="file_src_main.cpp.html#file-src-main.cpp">main.cpp</a></li><li>File <a href="file_src_mainpage.md.html#file-src-mainpage.md">mainpage.md</a></li><li>File <a href="file_src_ShellCmdConfig.hpp.html#file-src-ShellCmdConfig.hpp">ShellCmdConfig.hpp</a></li><li>File <a href="file_src_ShellCmdExec.cpp.html#file-src-ShellCmdExec.cpp">ShellCmdExec.cpp</a></li><li class="lastChild">File <a href="file_src_ShellCmdExec.hpp.html#file-src-ShellCmdExec.hpp">ShellCmdExec.hpp</a></li></ul></li>
+    </ul>
+  </li><!-- only tree view element -->
+</ul><!-- /treeView file-treeView --></div>
+<div class="section" id="full-api">
+<h2>Full API<a class="headerlink" href="#full-api" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="namespaces">
+<h3>Namespaces<a class="headerlink" href="#namespaces" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="namespace_asio.html">Namespace asio</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="namespace_boost.html">Namespace boost</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="namespace_cli.html">Namespace cli</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="namespace_cli.html#typedefs">Typedefs</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="namespace_DccModel.html">Namespace DccModel</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="namespace_DccModel.html#classes">Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="namespace_DccModel.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="namespace_nlohmann.html">Namespace nlohmann</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="namespace_nlohmann.html#classes">Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="namespace_nlohmann.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="namespace_std.html">Namespace std</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="namespace_std.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="namespace_std__chrono_literals.html">Namespace std::chrono_literals</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="namespace_std__placeholders.html">Namespace std::placeholders</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="namespace_std__this_thread.html">Namespace std::this_thread</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="classes-and-structs">
+<h3>Classes and Structs<a class="headerlink" href="#classes-and-structs" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="structcmd_item.html">Struct cmdItem</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="structcmd_item.html#struct-documentation">Struct Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="struct_diag_config.html">Struct DiagConfig</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="struct_diag_config.html#struct-documentation">Struct Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="structnlohmann_1_1adl__serializer_3_01std_1_1shared__ptr_3_01_t_01_4_01_4.html">Template Struct adl_serializer&lt; std::shared_ptr&lt; T &gt; &gt;</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="structnlohmann_1_1adl__serializer_3_01std_1_1shared__ptr_3_01_t_01_4_01_4.html#struct-documentation">Struct Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_async_serial.html">Class AsyncSerial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_async_serial.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_async_serial.html#base-type">Base Type</a></li>
+<li class="toctree-l3"><a class="reference internal" href="class_async_serial.html#derived-types">Derived Types</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_async_serial.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_async_serial_impl.html">Class AsyncSerialImpl</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_async_serial_impl.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_async_serial_impl.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_async_serial_impl.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_buffered_async_serial.html">Class BufferedAsyncSerial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_buffered_async_serial.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_buffered_async_serial.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_buffered_async_serial.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_callback_async_serial.html">Class CallbackAsyncSerial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_callback_async_serial.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_callback_async_serial.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_callback_async_serial.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_dcc_config.html">Class DccConfig</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_config.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_dcc_double_vertex.html">Class DccDoubleVertex</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_double_vertex.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_dcc_graph.html">Class DccGraph</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_graph.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_dcc_layout.html">Class DccLayout</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_layout.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_dcc_model_1_1_bumper.html">Class Bumper</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_model_1_1_bumper.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_dcc_model_1_1_bumper.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_model_1_1_bumper.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_dcc_model_1_1_crossing.html">Class Crossing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_model_1_1_crossing.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_dcc_model_1_1_crossing.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_model_1_1_crossing.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_dcc_model_1_1_dcc_ex_layout.html">Class DccExLayout</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_model_1_1_dcc_ex_layout.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_dcc_model_1_1_dcc_object.html">Class DccObject</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_model_1_1_dcc_object.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_dcc_model_1_1_dcc_object.html#derived-types">Derived Types</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_model_1_1_dcc_object.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_dcc_model_1_1_from.html">Class From</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_model_1_1_from.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_dcc_model_1_1_from.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_model_1_1_from.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_dcc_model_1_1_junction.html">Class Junction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_model_1_1_junction.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_dcc_model_1_1_junction.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_model_1_1_junction.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_dcc_model_1_1_layout.html">Class Layout</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_model_1_1_layout.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_dcc_model_1_1_layout.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_model_1_1_layout.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_dcc_model_1_1_module.html">Class Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_model_1_1_module.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_dcc_model_1_1_module.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_model_1_1_module.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_dcc_model_1_1_rail.html">Class Rail</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_model_1_1_rail.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_dcc_model_1_1_rail.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_model_1_1_rail.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_dcc_model_1_1_to.html">Class To</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_model_1_1_to.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_dcc_model_1_1_to.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_model_1_1_to.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_dcc_model_1_1_trackelement.html">Class Trackelement</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_model_1_1_trackelement.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_dcc_model_1_1_trackelement.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_model_1_1_trackelement.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_dcc_model_1_1_trackplan.html">Class Trackplan</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_model_1_1_trackplan.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_dcc_model_1_1_trackplan.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_model_1_1_trackplan.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_dcc_model_1_1_tracksection.html">Class Tracksection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_model_1_1_tracksection.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_dcc_model_1_1_tracksection.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_model_1_1_tracksection.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_dcc_model_1_1_turnout.html">Class Turnout</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_model_1_1_turnout.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_dcc_model_1_1_turnout.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_model_1_1_turnout.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_dcc_path.html">Class DccPath</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_path.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_dcc_path_finder.html">Class DccPathFinder</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_path_finder.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_dcc_serial.html">Class DccSerial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_serial.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_dcc_shell.html">Class DccShell</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_shell.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_dcc_shell_cmd.html">Class DccShellCmd</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_shell_cmd.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_dcc_vertex.html">Class DccVertex</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_dcc_vertex.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_diag.html">Class Diag</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_diag.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_shell_cmd_exec.html">Class ShellCmdExec</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_shell_cmd_exec.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="class_shell_cmd_exec_exception.html">Class ShellCmdExecException</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="class_shell_cmd_exec_exception.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="class_shell_cmd_exec_exception.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_shell_cmd_exec_exception.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="enums">
+<h3>Enums<a class="headerlink" href="#enums" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="enum__diag_8hpp_1a7e4c3f29f42cf9095a81c992a790b9fc.html">Enum DiagLevel</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="enum__diag_8hpp_1a7e4c3f29f42cf9095a81c992a790b9fc.html#enum-documentation">Enum Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="enum__dcc_vertex_8hpp_1a827265a66831a1a50b3589c0fca89b86.html">Enum GraphMarker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="enum__dcc_vertex_8hpp_1a827265a66831a1a50b3589c0fca89b86.html#enum-documentation">Enum Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="enum__dcc_shell_cmd_8hpp_1a072bc3877a00578ba313e6ff9d3fe66d.html">Enum paramTypes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="enum__dcc_shell_cmd_8hpp_1a072bc3877a00578ba313e6ff9d3fe66d.html#enum-documentation">Enum Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="enum__dcc_serial_8hpp_1add4e7ad063ad2296ad070a93e56f3676.html">Enum shellCommand</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="enum__dcc_serial_8hpp_1add4e7ad063ad2296ad070a93e56f3676.html#enum-documentation">Enum Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="enum__dcc_vertex_8hpp_1a852e9a44a9aad194d370f6839a630f40.html">Enum Telement</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="enum__dcc_vertex_8hpp_1a852e9a44a9aad194d370f6839a630f40.html#enum-documentation">Enum Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__shell_cmd_exec_8cpp_1a05ca2c040d041f692e2b49f13bc9998a.html">Function csDiag</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__shell_cmd_exec_8cpp_1a05ca2c040d041f692e2b49f13bc9998a.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__shell_cmd_exec_8cpp_1a01259380367a37cf4aae491ab5431b9e.html">Function csOpen</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__shell_cmd_exec_8cpp_1a01259380367a37cf4aae491ab5431b9e.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__shell_cmd_exec_8cpp_1ad4370837227275bf3ca1a385d905c4df.html">Function csOpenSerial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__shell_cmd_exec_8cpp_1ad4370837227275bf3ca1a385d905c4df.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__shell_cmd_exec_8cpp_1acc0f215264d82136863bb512b7d49366.html">Function csRead</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__shell_cmd_exec_8cpp_1acc0f215264d82136863bb512b7d49366.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__shell_cmd_exec_8cpp_1a64187357f8a19d9b415376a06374850c.html">Function csStatus</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__shell_cmd_exec_8cpp_1a64187357f8a19d9b415376a06374850c.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__dcc_model_8hpp_1a566a7798b1c8d69d4ae6381f839c3e1c.html">Template Function DccModel::get_optional</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__dcc_model_8hpp_1a566a7798b1c8d69d4ae6381f839c3e1c.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__dcc_model_8hpp_1a2cfd65e74dceac2f4577c6a3970f8ac4.html">Function DccModel::get_untyped</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__dcc_model_8hpp_1a2cfd65e74dceac2f4577c6a3970f8ac4.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__dcc_shell_8cpp_1a66d65e9d7eeab71291bf0bdc111af631.html">Function executeMenu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__dcc_shell_8cpp_1a66d65e9d7eeab71291bf0bdc111af631.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__dcc_path_finder_8cpp_1ad7b8ce5c99572c9404738485a7c48cd2.html">Function findStartVertex</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__dcc_path_finder_8cpp_1ad7b8ce5c99572c9404738485a7c48cd2.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__dcc_shell_cmd_8cpp_1a53182082a27db1e9c28b34243809c96e.html">Function join</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__dcc_shell_cmd_8cpp_1a53182082a27db1e9c28b34243809c96e.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function_main_8cpp_1a808f40e2e9d6eb5463165c031dfa3eb1.html">Function main</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function_main_8cpp_1a808f40e2e9d6eb5463165c031dfa3eb1.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__dcc_model_8hpp_1a93f8e360dd0c3331fbb8a7877d023ad2.html">Function nlohmann::from_json(const json&amp;, DccModel ::From&amp;)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__dcc_model_8hpp_1a93f8e360dd0c3331fbb8a7877d023ad2.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__dcc_model_8hpp_1ac2f86da0cd3c994c7d7912b9c1da1902.html">Function nlohmann::from_json(const json&amp;, DccModel ::To&amp;)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__dcc_model_8hpp_1ac2f86da0cd3c994c7d7912b9c1da1902.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__dcc_model_8hpp_1a9e6f41e5ebfb4c590875f6faedcea9a3.html">Function nlohmann::from_json(const json&amp;, DccModel ::Junction&amp;)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__dcc_model_8hpp_1a9e6f41e5ebfb4c590875f6faedcea9a3.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__dcc_model_8hpp_1aa71da80476a0094f110da3e37513eb0c.html">Function nlohmann::from_json(const json&amp;, DccModel ::Layout&amp;)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__dcc_model_8hpp_1aa71da80476a0094f110da3e37513eb0c.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__dcc_model_8hpp_1ad8448dac2b74f24f718b839b7f07f6ba.html">Function nlohmann::from_json(const json&amp;, DccModel ::Module&amp;)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__dcc_model_8hpp_1ad8448dac2b74f24f718b839b7f07f6ba.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__dcc_model_8hpp_1a1037e2d791d79376b53f1f373ed4cdeb.html">Function nlohmann::from_json(const json&amp;, DccModel ::Bumper&amp;)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__dcc_model_8hpp_1a1037e2d791d79376b53f1f373ed4cdeb.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__dcc_model_8hpp_1a0f5740f49418413e4f4463cf57392b76.html">Function nlohmann::from_json(const json&amp;, DccModel ::Crossing&amp;)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__dcc_model_8hpp_1a0f5740f49418413e4f4463cf57392b76.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__dcc_model_8hpp_1a89f0a0c404c1a12891155d00f6696f58.html">Function nlohmann::from_json(const json&amp;, DccModel ::Rail&amp;)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__dcc_model_8hpp_1a89f0a0c404c1a12891155d00f6696f58.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__dcc_model_8hpp_1a71701e6d0f3e66b75a189a15289eff48.html">Function nlohmann::from_json(const json&amp;, DccModel ::Turnout&amp;)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__dcc_model_8hpp_1a71701e6d0f3e66b75a189a15289eff48.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__dcc_model_8hpp_1af7309cfe41dacd335b47c8d763353218.html">Function nlohmann::from_json(const json&amp;, DccModel ::Trackelement&amp;)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__dcc_model_8hpp_1af7309cfe41dacd335b47c8d763353218.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__dcc_model_8hpp_1a86fac7dd943c51b507dba44e55dc2d29.html">Function nlohmann::from_json(const json&amp;, DccModel ::Tracksection&amp;)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__dcc_model_8hpp_1a86fac7dd943c51b507dba44e55dc2d29.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__dcc_model_8hpp_1a3129f82694a69da152ad67f421cc6756.html">Function nlohmann::from_json(const json&amp;, DccModel ::Trackplan&amp;)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__dcc_model_8hpp_1a3129f82694a69da152ad67f421cc6756.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__dcc_model_8hpp_1a92fb659f38512e3f0a46ff688126a00e.html">Function nlohmann::from_json(const json&amp;, DccModel ::DccExLayout&amp;)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__dcc_model_8hpp_1a92fb659f38512e3f0a46ff688126a00e.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__dcc_model_8hpp_1a4688540e34e0cd6680899b88ba112a56.html">Function nlohmann::to_json(json&amp;, const DccModel ::From&amp;)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__dcc_model_8hpp_1a4688540e34e0cd6680899b88ba112a56.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__dcc_model_8hpp_1ae2162207dca2de1e618122948c0012f7.html">Function nlohmann::to_json(json&amp;, const DccModel ::To&amp;)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__dcc_model_8hpp_1ae2162207dca2de1e618122948c0012f7.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__dcc_model_8hpp_1ac32fb368cf7f7c94104167478b1c9536.html">Function nlohmann::to_json(json&amp;, const DccModel ::Junction&amp;)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__dcc_model_8hpp_1ac32fb368cf7f7c94104167478b1c9536.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__dcc_model_8hpp_1a0da9a1827899392baf045086b5bf7356.html">Function nlohmann::to_json(json&amp;, const DccModel ::Layout&amp;)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__dcc_model_8hpp_1a0da9a1827899392baf045086b5bf7356.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__dcc_model_8hpp_1a767c18ce7066f53ee8aa3d2f34c1a8e4.html">Function nlohmann::to_json(json&amp;, const DccModel ::Module&amp;)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__dcc_model_8hpp_1a767c18ce7066f53ee8aa3d2f34c1a8e4.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__dcc_model_8hpp_1ae0c82b3e6064c2b66be3a0db192fa259.html">Function nlohmann::to_json(json&amp;, const DccModel ::Bumper&amp;)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__dcc_model_8hpp_1ae0c82b3e6064c2b66be3a0db192fa259.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__dcc_model_8hpp_1aff327f1411b2796b26c1120f0782782d.html">Function nlohmann::to_json(json&amp;, const DccModel ::Crossing&amp;)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__dcc_model_8hpp_1aff327f1411b2796b26c1120f0782782d.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__dcc_model_8hpp_1a89d0f4f10db6df65ecf794aa04307de0.html">Function nlohmann::to_json(json&amp;, const DccModel ::Rail&amp;)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__dcc_model_8hpp_1a89d0f4f10db6df65ecf794aa04307de0.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__dcc_model_8hpp_1a3410ae93f4610a432cfeeee1bf6cc736.html">Function nlohmann::to_json(json&amp;, const DccModel ::Turnout&amp;)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__dcc_model_8hpp_1a3410ae93f4610a432cfeeee1bf6cc736.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__dcc_model_8hpp_1a1b5b16b382023ded421ac2dcdc0ca3fc.html">Function nlohmann::to_json(json&amp;, const DccModel ::Trackelement&amp;)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__dcc_model_8hpp_1a1b5b16b382023ded421ac2dcdc0ca3fc.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__dcc_model_8hpp_1a52e69eb377be72a2af2d33cd182d71e9.html">Function nlohmann::to_json(json&amp;, const DccModel ::Tracksection&amp;)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__dcc_model_8hpp_1a52e69eb377be72a2af2d33cd182d71e9.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__dcc_model_8hpp_1aa38c6ea0c22a2dd03f0afad3f3dce40f.html">Function nlohmann::to_json(json&amp;, const DccModel ::Trackplan&amp;)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__dcc_model_8hpp_1aa38c6ea0c22a2dd03f0afad3f3dce40f.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__dcc_model_8hpp_1ac9ab642a667dbf591b579cb1455492cc.html">Function nlohmann::to_json(json&amp;, const DccModel ::DccExLayout&amp;)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__dcc_model_8hpp_1ac9ab642a667dbf591b579cb1455492cc.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function_main_8cpp_1ac82eafa835da9704339f394b65338de4.html">Function readJsonFile</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function_main_8cpp_1ac82eafa835da9704339f394b65338de4.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__shell_cmd_exec_8cpp_1a2a0e15eb918a626ef4c1f5b6dc25696e.html">Function rootConfig</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__shell_cmd_exec_8cpp_1a2a0e15eb918a626ef4c1f5b6dc25696e.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__shell_cmd_exec_8cpp_1a33b6bf9c8059dcfb373f0a2888dbd98f.html">Function rootLogLevel</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__shell_cmd_exec_8cpp_1a33b6bf9c8059dcfb373f0a2888dbd98f.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="function__shell_cmd_exec_8cpp_1a472d09efa5cbe02c63fd0427cec121ea.html">Function str_toupper</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="function__shell_cmd_exec_8cpp_1a472d09efa5cbe02c63fd0427cec121ea.html#function-documentation">Function Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="variables">
+<h3>Variables<a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="variable__shell_cmd_config_8hpp_1ad2324e29dc7beb96931c77de9416a1ab.html">Variable csMenuItems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="variable__shell_cmd_config_8hpp_1ad2324e29dc7beb96931c77de9416a1ab.html#variable-documentation">Variable Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="variable__shell_cmd_exec_8cpp_1a009c2db1dc1b9dbad25778af684b2bc5.html">Variable ctypes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="variable__shell_cmd_exec_8cpp_1a009c2db1dc1b9dbad25778af684b2bc5.html#variable-documentation">Variable Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="variable__shell_cmd_exec_8cpp_1a5ff5298dfdd9bef995e63ad88c6644ea.html">Variable diags</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="variable__shell_cmd_exec_8cpp_1a5ff5298dfdd9bef995e63ad88c6644ea.html#variable-documentation">Variable Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="variable__shell_cmd_config_8hpp_1aef88e0dfef2bcc2597b9eb9e12082bcc.html">Variable loMenuItems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="variable__shell_cmd_config_8hpp_1aef88e0dfef2bcc2597b9eb9e12082bcc.html#variable-documentation">Variable Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="variable__shell_cmd_exec_8cpp_1ac981c7ecef717efd1b237970f23c945d.html">Variable onoff</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="variable__shell_cmd_exec_8cpp_1ac981c7ecef717efd1b237970f23c945d.html#variable-documentation">Variable Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="variable__shell_cmd_config_8hpp_1aeaef832b28edcd89cb883068152e45cd.html">Variable rootMenuItems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="variable__shell_cmd_config_8hpp_1aeaef832b28edcd89cb883068152e45cd.html#variable-documentation">Variable Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="variable__shell_cmd_exec_8cpp_1a7001a592c0587d6436dd89a9a9e144a3.html">Variable serial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="variable__shell_cmd_exec_8cpp_1a7001a592c0587d6436dd89a9a9e144a3.html#variable-documentation">Variable Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="defines">
+<h3>Defines<a class="headerlink" href="#defines" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__dcc_shell_8hpp_1ad28b60868b6548c43e7a18f30c9b2022.html">Define ASYNC</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__dcc_shell_8hpp_1ad28b60868b6548c43e7a18f30c9b2022.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define_config_8h_1abd42c755957b77d8b2f50e1df35b9794.html">Define CONFIG_DCCEX_SCHEMA</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define_config_8h_1abd42c755957b77d8b2f50e1df35b9794.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define_config_8h_1a94e8ec06eb915e33f3afcc4036fce13a.html">Define CONFIG_FILEINFO</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define_config_8h_1a94e8ec06eb915e33f3afcc4036fce13a.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define_config_8h_1a44a277084e71bdba60d59131abbc3ca8.html">Define CONFIG_INTERACTIVE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define_config_8h_1a44a277084e71bdba60d59131abbc3ca8.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__diag_8hpp_1a445a14d10ffdece08ce75cb22baf2c6e.html">Define DBG</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__diag_8hpp_1a445a14d10ffdece08ce75cb22baf2c6e.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__dcc_serial_8hpp_1abfecbf96fb1337464637a50c5db3e544.html">Define DCC_CONN_UNKOWN</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__dcc_serial_8hpp_1abfecbf96fb1337464637a50c5db3e544.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__dcc_serial_8hpp_1a296e37d79b30f47bdd8bd2b9c273ba68.html">Define DCC_ETHERNET</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__dcc_serial_8hpp_1a296e37d79b30f47bdd8bd2b9c273ba68.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__dcc_serial_8hpp_1a42c43f47b6596d7bb4c8b4665e4ebe3f.html">Define DCC_FAILURE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__dcc_serial_8hpp_1a42c43f47b6596d7bb4c8b4665e4ebe3f.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__diag_8hpp_1a42c43f47b6596d7bb4c8b4665e4ebe3f.html">Define DCC_FAILURE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__diag_8hpp_1a42c43f47b6596d7bb4c8b4665e4ebe3f.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__dcc_serial_8hpp_1ade731e62a6baeb176a539bda528c90f7.html">Define DCC_SERIAL</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__dcc_serial_8hpp_1ade731e62a6baeb176a539bda528c90f7.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__dcc_serial_8hpp_1af57e7197cc28d4e302795a8f0220ce12.html">Define DCC_SUCCESS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__dcc_serial_8hpp_1af57e7197cc28d4e302795a8f0220ce12.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__diag_8hpp_1af57e7197cc28d4e302795a8f0220ce12.html">Define DCC_SUCCESS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__diag_8hpp_1af57e7197cc28d4e302795a8f0220ce12.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__diag_8hpp_1ad72dbcf6d0153db1b8d8a58001feed83.html">Define DEBUG</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__diag_8hpp_1ad72dbcf6d0153db1b8d8a58001feed83.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__diag_8hpp_1ab3305f90f8de7acae111cb0e4c25a51d.html">Define DIAG</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__diag_8hpp_1ab3305f90f8de7acae111cb0e4c25a51d.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__diag_8hpp_1a75305167eb585b86e0fb96368113ec33.html">Define DIAGERR</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__diag_8hpp_1a75305167eb585b86e0fb96368113ec33.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__diag_8hpp_1ad95a22f16e27974acefe9bfbb3217c62.html">Define DIAGWARN</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__diag_8hpp_1ad95a22f16e27974acefe9bfbb3217c62.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__diag_8hpp_1ace431af7538cd4bbd56d61731e08b887.html">Define EH_DW</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__diag_8hpp_1ace431af7538cd4bbd56d61731e08b887.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__diag_8hpp_1ac4d460558dd2106b51b9d5216a2527fa.html">Define EH_IFIL</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__diag_8hpp_1ac4d460558dd2106b51b9d5216a2527fa.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__diag_8hpp_1a6d98b0bab9c715fda514c71e0100d038.html">Define EH_IFLL</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__diag_8hpp_1a6d98b0bab9c715fda514c71e0100d038.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__diag_8hpp_1aa173aaa724787eeb93e96de0e5556d76.html">Define ERR</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__diag_8hpp_1aa173aaa724787eeb93e96de0e5556d76.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__dcc_serial_8cpp_1abac57baaff13f3a1ddbb0c8a193b7e32.html">Define ERROR</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__dcc_serial_8cpp_1abac57baaff13f3a1ddbb0c8a193b7e32.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__dcc_shell_8cpp_1a0f5c70e099c811cf37674cdff68a435a.html">Define ERROR</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__dcc_shell_8cpp_1a0f5c70e099c811cf37674cdff68a435a.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__dcc_shell_cmd_8cpp_1abac57baaff13f3a1ddbb0c8a193b7e32.html">Define ERROR</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__dcc_shell_cmd_8cpp_1abac57baaff13f3a1ddbb0c8a193b7e32.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__dcc_vertex_8hpp_1ae9bc46f79efdaa89c01bc98cd88ecc08.html">Define getBumper</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__dcc_vertex_8hpp_1ae9bc46f79efdaa89c01bc98cd88ecc08.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__dcc_vertex_8hpp_1a762b062c67be3ede58b1a80540c690cc.html">Define getCrossing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__dcc_vertex_8hpp_1a762b062c67be3ede58b1a80540c690cc.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__dcc_vertex_8hpp_1a8afffc6632a9c80674ff7a70a923dba9.html">Define getJunction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__dcc_vertex_8hpp_1a8afffc6632a9c80674ff7a70a923dba9.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__dcc_vertex_8hpp_1adad5d7b5c9d154e30a08ca5e954825c7.html">Define getSegment</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__dcc_vertex_8hpp_1adad5d7b5c9d154e30a08ca5e954825c7.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__dcc_vertex_8hpp_1a9591ed8155e7563e5997112c5f7a54de.html">Define getTurnout</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__dcc_vertex_8hpp_1a9591ed8155e7563e5997112c5f7a54de.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__dcc_serial_8cpp_1a755a5f20e9e469e031640e4405c8a2ab.html">Define HEADING</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__dcc_serial_8cpp_1a755a5f20e9e469e031640e4405c8a2ab.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__dcc_shell_8cpp_1a755a5f20e9e469e031640e4405c8a2ab.html">Define HEADING</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__dcc_shell_8cpp_1a755a5f20e9e469e031640e4405c8a2ab.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__dcc_shell_cmd_8cpp_1a755a5f20e9e469e031640e4405c8a2ab.html">Define HEADING</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__dcc_shell_cmd_8cpp_1a755a5f20e9e469e031640e4405c8a2ab.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define_main_8cpp_1a755a5f20e9e469e031640e4405c8a2ab.html">Define HEADING</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define_main_8cpp_1a755a5f20e9e469e031640e4405c8a2ab.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__diag_8hpp_1ae19e2dbb70909d3e3311b8577efa9f93.html">Define INFO</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__diag_8hpp_1ae19e2dbb70909d3e3311b8577efa9f93.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__dcc_vertex_8hpp_1a993d57fc3e7f70c08b1065a94f460745.html">Define isBumper</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__dcc_vertex_8hpp_1a993d57fc3e7f70c08b1065a94f460745.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__dcc_vertex_8hpp_1a888c85f2eaf59c60d4f0f967d035f615.html">Define isCrossing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__dcc_vertex_8hpp_1a888c85f2eaf59c60d4f0f967d035f615.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__dcc_vertex_8hpp_1abf35e5e5a42aa185bd280ead0f657f9c.html">Define isJunction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__dcc_vertex_8hpp_1abf35e5e5a42aa185bd280ead0f657f9c.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__dcc_vertex_8hpp_1a88c2b8d2452cf318e143c590ea8f73ac.html">Define isSegement</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__dcc_vertex_8hpp_1a88c2b8d2452cf318e143c590ea8f73ac.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__dcc_vertex_8hpp_1a172cd6cb131cc71560963f5df8488655.html">Define isTurnout</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__dcc_vertex_8hpp_1a172cd6cb131cc71560963f5df8488655.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__diag_8hpp_1a6c6fd5e242df15a7a42e9b75d55d5d3c.html">Define LOGLEVEL</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__diag_8hpp_1a6c6fd5e242df15a7a42e9b75d55d5d3c.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__diag_8hpp_1ae156666e0bfa4d7d364ec015d07e9229.html">Define LOGV_DEBUG_MSG</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__diag_8hpp_1ae156666e0bfa4d7d364ec015d07e9229.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__diag_8hpp_1afe2bf979640efe3d3cb6811cad7ea3ab.html">Define LOGV_ERROR_MSG</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__diag_8hpp_1afe2bf979640efe3d3cb6811cad7ea3ab.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__diag_8hpp_1a82b2aed356240e7b3e333abb7c14f1e1.html">Define LOGV_INFO_MSG</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__diag_8hpp_1a82b2aed356240e7b3e333abb7c14f1e1.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__diag_8hpp_1aa4c700065714f68ece3bb5cab1387373.html">Define LOGV_TRACE_MSG</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__diag_8hpp_1aa4c700065714f68ece3bb5cab1387373.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__diag_8hpp_1a41d25bfa9f0ac92791918eb13da0b241.html">Define LOGV_WARN_MSG</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__diag_8hpp_1a41d25bfa9f0ac92791918eb13da0b241.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define_main_8cpp_1a877cce34f3e58fd7f9194fab90724cb8.html">Define MAJOR</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define_main_8cpp_1a877cce34f3e58fd7f9194fab90724cb8.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define_main_8cpp_1a4e10915d93013542d442d78de0e02e9a.html">Define MINOR</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define_main_8cpp_1a4e10915d93013542d442d78de0e02e9a.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define_main_8cpp_1af59c44c1f3ff875c35393428624473aa.html">Define PATCH</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define_main_8cpp_1af59c44c1f3ff875c35393428624473aa.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define_main_8cpp_1a5321e3f3f55537f9f7c1e6c739ed9e96.html">Define SUBHEADING</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define_main_8cpp_1a5321e3f3f55537f9f7c1e6c739ed9e96.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__diag_8hpp_1ae31fb81e1fe3e5c44839e319a44c8c5e.html">Define TRC</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__diag_8hpp_1ae31fb81e1fe3e5c44839e319a44c8c5e.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__diag_8hpp_1a899e8c12f9c3b0c57e70fa25e87db5a0.html">Define WARN</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__diag_8hpp_1a899e8c12f9c3b0c57e70fa25e87db5a0.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__dcc_serial_8cpp_1a9e1796fdadec0df60e8d280ee783b85c.html">Define WARNING</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__dcc_serial_8cpp_1a9e1796fdadec0df60e8d280ee783b85c.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__dcc_shell_8cpp_1a9e1796fdadec0df60e8d280ee783b85c.html">Define WARNING</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__dcc_shell_8cpp_1a9e1796fdadec0df60e8d280ee783b85c.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="define__dcc_shell_cmd_8cpp_1a9e1796fdadec0df60e8d280ee783b85c.html">Define WARNING</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="define__dcc_shell_cmd_8cpp_1a9e1796fdadec0df60e8d280ee783b85c.html#define-documentation">Define Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="typedefs">
+<h3>Typedefs<a class="headerlink" href="#typedefs" title="Permalink to this headline">¶</a></h3>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="typedef__shell_cmd_exec_8hpp_1a91718507a999bde9913d105dd2a18328.html">Typedef _fpShellCmd</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="typedef__shell_cmd_exec_8hpp_1a91718507a999bde9913d105dd2a18328.html#typedef-documentation">Typedef Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="typedef__shell_cmd_exec_8hpp_1adadc1109bdc4155ce4bcd1771b888d4d.html">Typedef _fShellCmd</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="typedef__shell_cmd_exec_8hpp_1adadc1109bdc4155ce4bcd1771b888d4d.html#typedef-documentation">Typedef Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="typedef__dcc_shell_8cpp_1a9bd4990bf0640e545aa7029efc9d5a69.html">Typedef cli::MainScheduler</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="typedef__dcc_shell_8cpp_1a9bd4990bf0640e545aa7029efc9d5a69.html#typedef-documentation">Typedef Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="typedef__dcc_serial_8hpp_1a80c9228bf510faedd9ba91612e658765.html">Typedef CmdParam_t</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="typedef__dcc_serial_8hpp_1a80c9228bf510faedd9ba91612e658765.html#typedef-documentation">Typedef Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="typedef__dcc_vertex_8hpp_1ace54f98fb1f0b2300e6ec7de5197ae68.html">Typedef DccDoubleVertexGraph_t</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="typedef__dcc_vertex_8hpp_1ace54f98fb1f0b2300e6ec7de5197ae68.html#typedef-documentation">Typedef Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="typedef__dcc_vertex_8hpp_1a84d484a5596aa47962499418c5e6b6a7.html">Typedef DccDoubleVertexPtr_t</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="typedef__dcc_vertex_8hpp_1a84d484a5596aa47962499418c5e6b6a7.html#typedef-documentation">Typedef Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="typedef__dcc_path_8hpp_1abefb3d4382504d093f6e5275d2decc47.html">Typedef DccNodePaths_t</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="typedef__dcc_path_8hpp_1abefb3d4382504d093f6e5275d2decc47.html#typedef-documentation">Typedef Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="typedef__dcc_path_8hpp_1af35e59e0b716508efbb064336184a4a7.html">Typedef DccPath_t</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="typedef__dcc_path_8hpp_1af35e59e0b716508efbb064336184a4a7.html#typedef-documentation">Typedef Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="typedef__dcc_path_8hpp_1a61b619e0a788c126480c67379acf0892.html">Typedef DccPathMap_t</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="typedef__dcc_path_8hpp_1a61b619e0a788c126480c67379acf0892.html#typedef-documentation">Typedef Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="typedef__dcc_vertex_8hpp_1adcfb7fb5d32068005bdf661dba9d688e.html">Typedef DccVertexGraph_t</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="typedef__dcc_vertex_8hpp_1adcfb7fb5d32068005bdf661dba9d688e.html#typedef-documentation">Typedef Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="typedef__dcc_vertex_8hpp_1a4141a3a1d9ecefd60f5de141c813e5ba.html">Typedef DccVertexPtr_t</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="typedef__dcc_vertex_8hpp_1a4141a3a1d9ecefd60f5de141c813e5ba.html#typedef-documentation">Typedef Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="typedef__dcc_vertex_8hpp_1a5da8ca04970496d99b0f2bc5d4ea4a3b.html">Typedef Node_t</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="typedef__dcc_vertex_8hpp_1a5da8ca04970496d99b0f2bc5d4ea4a3b.html#typedef-documentation">Typedef Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="typedef__dcc_vertex_8hpp_1a04cfc7b1464154a632dcacc8176577fd.html">Typedef TrackElement_t</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="typedef__dcc_vertex_8hpp_1a04cfc7b1464154a632dcacc8176577fd.html#typedef-documentation">Typedef Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="namespace_asio.html" class="btn btn-neutral float-right" title="Namespace asio" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../DccEXcli.html" class="btn btn-neutral float-left" title="The DCC++ EX Commandline Interface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, grbba.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+.. _exhale_class_class_async_serial_impl:
+
+Class AsyncSerialImpl
+=====================
+
+- Defined in :ref:`file_src_AsyncSerial.cpp`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``private boost::noncopyable``
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: AsyncSerialImpl
+   :members:
+   :protected-members:
+   :undoc-members:

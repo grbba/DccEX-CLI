@@ -1,0 +1,16 @@
+.. _exhale_class_class_dcc_layout:
+
+Class DccLayout
+===============
+
+- Defined in :ref:`file_src_DccLayout.hpp`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: DccLayout
+   :members:
+   :protected-members:
+   :undoc-members:

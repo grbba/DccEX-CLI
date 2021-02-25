@@ -1,0 +1,13 @@
+.. _exhale_define__diag_8hpp_1af57e7197cc28d4e302795a8f0220ce12:
+
+Define DCC_SUCCESS
+==================
+
+- Defined in :ref:`file_src_Diag.hpp`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: DCC_SUCCESS

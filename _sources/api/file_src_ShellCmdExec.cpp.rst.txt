@@ -1,0 +1,95 @@
+
+.. _file_src_ShellCmdExec.cpp:
+
+File ShellCmdExec.cpp
+=====================
+
+|exhale_lsh| :ref:`Parent directory <dir_src>` (``src``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/ShellCmdExec.cpp``)
+-------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_ShellCmdExec.cpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``../include/lexical_cast.hpp``
+
+- ``DccConfig.hpp`` (:ref:`file_src_DccConfig.hpp`)
+
+- ``DccSerial.hpp`` (:ref:`file_src_DccSerial.hpp`)
+
+- ``DccShellCmd.hpp`` (:ref:`file_src_DccShellCmd.hpp`)
+
+- ``Diag.hpp`` (:ref:`file_src_Diag.hpp`)
+
+- ``ShellCmdExec.hpp`` (:ref:`file_src_ShellCmdExec.hpp`)
+
+- ``chrono``
+
+- ``fmt/color.h``
+
+- ``fmt/core.h``
+
+- ``fmt/ostream.h``
+
+- ``iostream``
+
+- ``map``
+
+- ``set``
+
+
+
+
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function__shell_cmd_exec_8cpp_1a05ca2c040d041f692e2b49f13bc9998a`
+
+- :ref:`exhale_function__shell_cmd_exec_8cpp_1a01259380367a37cf4aae491ab5431b9e`
+
+- :ref:`exhale_function__shell_cmd_exec_8cpp_1ad4370837227275bf3ca1a385d905c4df`
+
+- :ref:`exhale_function__shell_cmd_exec_8cpp_1acc0f215264d82136863bb512b7d49366`
+
+- :ref:`exhale_function__shell_cmd_exec_8cpp_1a64187357f8a19d9b415376a06374850c`
+
+- :ref:`exhale_function__shell_cmd_exec_8cpp_1a2a0e15eb918a626ef4c1f5b6dc25696e`
+
+- :ref:`exhale_function__shell_cmd_exec_8cpp_1a33b6bf9c8059dcfb373f0a2888dbd98f`
+
+- :ref:`exhale_function__shell_cmd_exec_8cpp_1a472d09efa5cbe02c63fd0427cec121ea`
+
+
+Variables
+---------
+
+
+- :ref:`exhale_variable__shell_cmd_exec_8cpp_1a009c2db1dc1b9dbad25778af684b2bc5`
+
+- :ref:`exhale_variable__shell_cmd_exec_8cpp_1a5ff5298dfdd9bef995e63ad88c6644ea`
+
+- :ref:`exhale_variable__shell_cmd_exec_8cpp_1ac981c7ecef717efd1b237970f23c945d`
+
+- :ref:`exhale_variable__shell_cmd_exec_8cpp_1a7001a592c0587d6436dd89a9a9e144a3`
+

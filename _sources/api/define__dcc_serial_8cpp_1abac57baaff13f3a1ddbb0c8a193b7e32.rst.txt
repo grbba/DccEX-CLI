@@ -1,0 +1,13 @@
+.. _exhale_define__dcc_serial_8cpp_1abac57baaff13f3a1ddbb0c8a193b7e32:
+
+Define ERROR
+============
+
+- Defined in :ref:`file_src_DccSerial.cpp`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: ERROR

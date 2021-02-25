@@ -1,0 +1,779 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Program Listing for File AsyncSerial.cpp &mdash; DCC++ EX Commandline Interface 0.0.10 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> DCC++ EX Commandline Interface
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../DccEXcli.html">The DCC++ EX Commandline Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">DCC++ EX Commandline Interface API</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DCC++ EX Commandline Interface</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Program Listing for File AsyncSerial.cpp</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api/program_listing_file_src_AsyncSerial.cpp.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="program-listing-for-file-asyncserial-cpp">
+<span id="program-listing-file-src-asyncserial-cpp"></span><h1>Program Listing for File AsyncSerial.cpp<a class="headerlink" href="#program-listing-for-file-asyncserial-cpp" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file_src_AsyncSerial.cpp.html#file-src-asyncserial-cpp"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">src/AsyncSerial.cpp</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm"> * File:   AsyncSerial.cpp</span>
+<span class="cm"> * Author: Terraneo Federico</span>
+<span class="cm"> * Distributed under the Boost Software License, Version 1.0.</span>
+<span class="cm"> * Created on September 7, 2009, 10:46 AM</span>
+<span class="cm"> *</span>
+<span class="cm"> * v1.03: C++11 support</span>
+<span class="cm"> *</span>
+<span class="cm"> * v1.02: Fixed a bug in BufferedAsyncSerial: Using the default constructor</span>
+<span class="cm"> * the callback was not set up and reading didn&#39;t work.</span>
+<span class="cm"> *</span>
+<span class="cm"> * v1.01: Fixed a bug that did not allow to reopen a closed serial port.</span>
+<span class="cm"> *</span>
+<span class="cm"> * v1.00: First release.</span>
+<span class="cm"> *</span>
+<span class="cm"> * IMPORTANT:</span>
+<span class="cm"> * On Mac OS X boost asio&#39;s serial ports have bugs, and the usual implementation</span>
+<span class="cm"> * of this class does not work. So a workaround class was written temporarily,</span>
+<span class="cm"> * until asio (hopefully) will fix Mac compatibility for serial ports.</span>
+<span class="cm"> *</span>
+<span class="cm"> * Please note that unlike said in the documentation on OS X until asio will</span>
+<span class="cm"> * be fixed serial port *writes* are *not* asynchronous, but at least</span>
+<span class="cm"> * asynchronous *read* works.</span>
+<span class="cm"> * In addition the serial port open ignores the following options: parity,</span>
+<span class="cm"> * character size, flow, stop bits, and defaults to 8N1 format.</span>
+<span class="cm"> * I know it is bad but at least it&#39;s better than nothing.</span>
+<span class="cm"> *</span>
+<span class="cm"> */</span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;AsyncSerial.h&quot;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
+<span class="cp">#ifdef DCC_BOOST</span>
+<span class="cp">#include</span> <span class="cpf">&lt;boost/bind/bind.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;boost/shared_array.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#else</span>
+<span class="c1">// #include &lt;asio/bind_executor.hpp&gt;</span>
+<span class="cp">#endif</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;mutex&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;thread&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;memory&gt;</span><span class="cp"></span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="c1">//</span>
+<span class="c1">// Class AsyncSerial</span>
+<span class="c1">//</span>
+
+<span class="cp">#ifndef __APPLE__</span>
+
+<span class="k">class</span> <span class="nc">AsyncSerialImpl</span> <span class="o">:</span> <span class="k">private</span> <span class="n">boost</span><span class="o">::</span><span class="n">noncopyable</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+  <span class="n">AsyncSerialImpl</span><span class="p">()</span>
+      <span class="o">:</span> <span class="n">io</span><span class="p">(),</span> <span class="n">port</span><span class="p">(</span><span class="n">io</span><span class="p">),</span> <span class="n">backgroundThread</span><span class="p">(),</span> <span class="n">open</span><span class="p">(</span><span class="nb">false</span><span class="p">),</span> <span class="n">error</span><span class="p">(</span><span class="nb">false</span><span class="p">)</span> <span class="p">{}</span>
+
+  <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">io_service</span> <span class="n">io</span><span class="p">;</span>
+  <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">serial_port</span> <span class="n">port</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="kr">thread</span> <span class="n">backgroundThread</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="n">open</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="n">error</span><span class="p">;</span>
+  <span class="k">mutable</span> <span class="n">std</span><span class="o">::</span><span class="n">mutex</span> <span class="n">errorMutex</span><span class="p">;</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="n">writeQueue</span><span class="p">;</span>
+  <span class="n">boost</span><span class="o">::</span><span class="n">shared_array</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="n">writeBuffer</span><span class="p">;</span>
+  <span class="kt">size_t</span> <span class="n">writeBufferSize</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">mutex</span> <span class="n">writeQueueMutex</span><span class="p">;</span>
+  <span class="kt">char</span> <span class="n">readBuffer</span><span class="p">[</span><span class="n">AsyncSerial</span><span class="o">::</span><span class="n">readBufferSize</span><span class="p">];</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="p">,</span> <span class="kt">size_t</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">callback</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="n">AsyncSerial</span><span class="o">::</span><span class="n">AsyncSerial</span><span class="p">()</span> <span class="o">:</span> <span class="n">pimpl</span><span class="p">(</span><span class="k">new</span> <span class="n">AsyncSerialImpl</span><span class="p">)</span> <span class="p">{}</span>
+
+<span class="n">AsyncSerial</span><span class="o">::</span><span class="n">AsyncSerial</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">devname</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">baud_rate</span><span class="p">,</span>
+                         <span class="n">asio</span><span class="o">::</span><span class="n">serial_port_base</span><span class="o">::</span><span class="n">parity</span> <span class="n">opt_parity</span><span class="p">,</span>
+                         <span class="n">asio</span><span class="o">::</span><span class="n">serial_port_base</span><span class="o">::</span><span class="n">character_size</span> <span class="n">opt_csize</span><span class="p">,</span>
+                         <span class="n">asio</span><span class="o">::</span><span class="n">serial_port_base</span><span class="o">::</span><span class="n">flow_control</span> <span class="n">opt_flow</span><span class="p">,</span>
+                         <span class="n">asio</span><span class="o">::</span><span class="n">serial_port_base</span><span class="o">::</span><span class="n">stop_bits</span> <span class="n">opt_stop</span><span class="p">)</span>
+    <span class="o">:</span> <span class="n">pimpl</span><span class="p">(</span><span class="k">new</span> <span class="n">AsyncSerialImpl</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">open</span><span class="p">(</span><span class="n">devname</span><span class="p">,</span> <span class="n">baud_rate</span><span class="p">,</span> <span class="n">opt_parity</span><span class="p">,</span> <span class="n">opt_csize</span><span class="p">,</span> <span class="n">opt_flow</span><span class="p">,</span> <span class="n">opt_stop</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">AsyncSerial</span><span class="o">::</span><span class="n">open</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">devname</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">baud_rate</span><span class="p">,</span>
+                       <span class="n">asio</span><span class="o">::</span><span class="n">serial_port_base</span><span class="o">::</span><span class="n">parity</span> <span class="n">opt_parity</span><span class="p">,</span>
+                       <span class="n">asio</span><span class="o">::</span><span class="n">serial_port_base</span><span class="o">::</span><span class="n">character_size</span> <span class="n">opt_csize</span><span class="p">,</span>
+                       <span class="n">asio</span><span class="o">::</span><span class="n">serial_port_base</span><span class="o">::</span><span class="n">flow_control</span> <span class="n">opt_flow</span><span class="p">,</span>
+                       <span class="n">asio</span><span class="o">::</span><span class="n">serial_port_base</span><span class="o">::</span><span class="n">stop_bits</span> <span class="n">opt_stop</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">isOpen</span><span class="p">())</span>
+    <span class="n">close</span><span class="p">();</span>
+
+  <span class="n">setErrorStatus</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span> <span class="c1">// If an exception is thrown, error_ remains true</span>
+  <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">port</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">devname</span><span class="p">);</span>
+  <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">port</span><span class="p">.</span><span class="n">set_option</span><span class="p">(</span><span class="n">asio</span><span class="o">::</span><span class="n">serial_port_base</span><span class="o">::</span><span class="n">baud_rate</span><span class="p">(</span><span class="n">baud_rate</span><span class="p">));</span>
+  <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">port</span><span class="p">.</span><span class="n">set_option</span><span class="p">(</span><span class="n">opt_parity</span><span class="p">);</span>
+  <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">port</span><span class="p">.</span><span class="n">set_option</span><span class="p">(</span><span class="n">opt_csize</span><span class="p">);</span>
+  <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">port</span><span class="p">.</span><span class="n">set_option</span><span class="p">(</span><span class="n">opt_flow</span><span class="p">);</span>
+  <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">port</span><span class="p">.</span><span class="n">set_option</span><span class="p">(</span><span class="n">opt_stop</span><span class="p">);</span>
+
+  <span class="c1">// This gives some work to the io_service before it is started</span>
+  <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">io</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">AsyncSerial</span><span class="o">::</span><span class="n">doRead</span><span class="p">,</span> <span class="k">this</span><span class="p">));</span>
+
+  <span class="kr">thread</span> <span class="nf">t</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">asio</span><span class="o">::</span><span class="n">io_service</span><span class="o">::</span><span class="n">run</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">io</span><span class="p">));</span>
+  <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">backgroundThread</span><span class="p">.</span><span class="n">swap</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
+  <span class="n">setErrorStatus</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span> <span class="c1">// If we get here, no error</span>
+  <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">open</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>    <span class="c1">// Port is now open</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="n">AsyncSerial</span><span class="o">::</span><span class="n">isOpen</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">open</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="kt">bool</span> <span class="n">AsyncSerial</span><span class="o">::</span><span class="n">errorStatus</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">l</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">errorMutex</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">error</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">AsyncSerial</span><span class="o">::</span><span class="n">close</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">isOpen</span><span class="p">())</span>
+    <span class="k">return</span><span class="p">;</span>
+
+  <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">open</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+  <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">io</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">AsyncSerial</span><span class="o">::</span><span class="n">doClose</span><span class="p">,</span> <span class="k">this</span><span class="p">));</span>
+  <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">backgroundThread</span><span class="p">.</span><span class="n">join</span><span class="p">();</span>
+  <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">io</span><span class="p">.</span><span class="n">reset</span><span class="p">();</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">errorStatus</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">throw</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">system_error</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">error_code</span><span class="p">(),</span>
+                                      <span class="s">&quot;Error while closing the device&quot;</span><span class="p">));</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">AsyncSerial</span><span class="o">::</span><span class="n">write</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">data</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">size</span><span class="p">)</span> <span class="p">{</span>
+  <span class="p">{</span>
+    <span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">l</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeQueueMutex</span><span class="p">);</span>
+    <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeQueue</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeQueue</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">data</span><span class="p">,</span> <span class="n">data</span> <span class="o">+</span> <span class="n">size</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">io</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">AsyncSerial</span><span class="o">::</span><span class="n">doWrite</span><span class="p">,</span> <span class="k">this</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">AsyncSerial</span><span class="o">::</span><span class="n">write</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="p">{</span>
+    <span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">l</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeQueueMutex</span><span class="p">);</span>
+    <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeQueue</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeQueue</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">data</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">data</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+  <span class="p">}</span>
+  <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">io</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">AsyncSerial</span><span class="o">::</span><span class="n">doWrite</span><span class="p">,</span> <span class="k">this</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">AsyncSerial</span><span class="o">::</span><span class="n">writeString</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+  <span class="p">{</span>
+    <span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">l</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeQueueMutex</span><span class="p">);</span>
+    <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeQueue</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeQueue</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">s</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">s</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+  <span class="p">}</span>
+  <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">io</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">AsyncSerial</span><span class="o">::</span><span class="n">doWrite</span><span class="p">,</span> <span class="k">this</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="n">AsyncSerial</span><span class="o">::~</span><span class="n">AsyncSerial</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">isOpen</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="p">{</span>
+      <span class="n">close</span><span class="p">();</span>
+    <span class="p">}</span> <span class="k">catch</span> <span class="p">(...)</span> <span class="p">{</span>
+      <span class="c1">// Don&#39;t throw from a destructor</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">AsyncSerial</span><span class="o">::</span><span class="n">doRead</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">port</span><span class="p">.</span><span class="n">async_read_some</span><span class="p">(</span>
+      <span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">readBuffer</span><span class="p">,</span> <span class="n">readBufferSize</span><span class="p">),</span>
+      <span class="n">boost</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">AsyncSerial</span><span class="o">::</span><span class="n">readEnd</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="n">asio</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">error</span><span class="p">,</span>
+                  <span class="n">asio</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">bytes_transferred</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">AsyncSerial</span><span class="o">::</span><span class="n">readEnd</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">error_code</span> <span class="o">&amp;</span><span class="n">error</span><span class="p">,</span>
+                          <span class="kt">size_t</span> <span class="n">bytes_transferred</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+<span class="cp">#ifdef __APPLE__</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">error</span><span class="p">.</span><span class="n">value</span><span class="p">()</span> <span class="o">==</span> <span class="mi">45</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// Bug on OS X, it might be necessary to repeat the setup</span>
+      <span class="c1">// http://osdir.com/ml/lib.boost.asio.user/2008-08/msg00004.html</span>
+      <span class="n">doRead</span><span class="p">();</span>
+      <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="cp">#endif </span><span class="c1">//__APPLE__</span>
+    <span class="c1">// error can be true even because the serial port was closed.</span>
+    <span class="c1">// In this case it is not a real error, so ignore</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">isOpen</span><span class="p">())</span> <span class="p">{</span>
+      <span class="n">doClose</span><span class="p">();</span>
+      <span class="n">setErrorStatus</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">callback</span><span class="p">)</span>
+      <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">callback</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">readBuffer</span><span class="p">,</span> <span class="n">bytes_transferred</span><span class="p">);</span>
+    <span class="n">doRead</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">AsyncSerial</span><span class="o">::</span><span class="n">doWrite</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// If a write operation is already in progress, do nothing</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeBuffer</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">l</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeQueueMutex</span><span class="p">);</span>
+    <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeBufferSize</span> <span class="o">=</span> <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeQueue</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+    <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeBuffer</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeQueue</span><span class="p">.</span><span class="n">size</span><span class="p">()]);</span>
+    <span class="n">copy</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeQueue</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeQueue</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span>
+         <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeBuffer</span><span class="p">.</span><span class="n">get</span><span class="p">());</span>
+    <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeQueue</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
+    <span class="n">async_write</span><span class="p">(</span>
+        <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">port</span><span class="p">,</span>
+        <span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeBuffer</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeBufferSize</span><span class="p">),</span>
+        <span class="n">boost</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">AsyncSerial</span><span class="o">::</span><span class="n">writeEnd</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="n">asio</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">error</span><span class="p">));</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">AsyncSerial</span><span class="o">::</span><span class="n">writeEnd</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">error_code</span> <span class="o">&amp;</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">l</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeQueueMutex</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeQueue</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+      <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeBuffer</span><span class="p">.</span><span class="n">reset</span><span class="p">();</span>
+      <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeBufferSize</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+      <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeBufferSize</span> <span class="o">=</span> <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeQueue</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+    <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeBuffer</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeQueue</span><span class="p">.</span><span class="n">size</span><span class="p">()]);</span>
+    <span class="n">copy</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeQueue</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeQueue</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span>
+         <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeBuffer</span><span class="p">.</span><span class="n">get</span><span class="p">());</span>
+    <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeQueue</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
+    <span class="n">async_write</span><span class="p">(</span>
+        <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">port</span><span class="p">,</span>
+        <span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeBuffer</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">writeBufferSize</span><span class="p">),</span>
+        <span class="n">boost</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">AsyncSerial</span><span class="o">::</span><span class="n">writeEnd</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="n">asio</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">error</span><span class="p">));</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">setErrorStatus</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+    <span class="n">doClose</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">AsyncSerial</span><span class="o">::</span><span class="n">doClose</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">error_code</span> <span class="n">ec</span><span class="p">;</span>
+  <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">port</span><span class="p">.</span><span class="n">cancel</span><span class="p">(</span><span class="n">ec</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">ec</span><span class="p">)</span>
+    <span class="n">setErrorStatus</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+  <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">port</span><span class="p">.</span><span class="n">close</span><span class="p">(</span><span class="n">ec</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">ec</span><span class="p">)</span>
+    <span class="n">setErrorStatus</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">AsyncSerial</span><span class="o">::</span><span class="n">setErrorStatus</span><span class="p">(</span><span class="kt">bool</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">l</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">errorMutex</span><span class="p">);</span>
+  <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">error</span> <span class="o">=</span> <span class="n">e</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">AsyncSerial</span><span class="o">::</span><span class="n">setReadCallback</span><span class="p">(</span>
+    <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="p">,</span> <span class="kt">size_t</span><span class="p">)</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">callback</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">AsyncSerial</span><span class="o">::</span><span class="n">clearReadCallback</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="p">,</span> <span class="kt">size_t</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">empty</span><span class="p">;</span>
+  <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">callback</span><span class="p">.</span><span class="n">swap</span><span class="p">(</span><span class="n">empty</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cp">#else </span><span class="c1">//__APPLE__</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;fcntl.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;sys/stat.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;sys/types.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;termios.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp"></span>
+
+
+<span class="cp">#define UNUSED(p) ((p)=(p))</span>
+
+<span class="k">class</span> <span class="nc">AsyncSerialImpl</span> <span class="o">:</span> <span class="k">private</span> <span class="n">asio</span><span class="o">::</span><span class="n">noncopyable</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+  <span class="n">AsyncSerialImpl</span><span class="p">()</span> <span class="o">:</span> <span class="n">backgroundThread</span><span class="p">(),</span> <span class="n">open</span><span class="p">(</span><span class="nb">false</span><span class="p">),</span> <span class="n">error</span><span class="p">(</span><span class="nb">false</span><span class="p">)</span> <span class="p">{}</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="kr">thread</span> <span class="n">backgroundThread</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="n">open</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="n">error</span><span class="p">;</span>
+  <span class="k">mutable</span> <span class="n">std</span><span class="o">::</span><span class="n">mutex</span> <span class="n">errorMutex</span><span class="p">;</span>
+
+  <span class="kt">int</span> <span class="n">fd</span><span class="p">;</span>
+
+  <span class="kt">char</span> <span class="n">readBuffer</span><span class="p">[</span><span class="n">AsyncSerial</span><span class="o">::</span><span class="n">readBufferSize</span><span class="p">];</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="p">,</span> <span class="kt">size_t</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">callback</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="n">AsyncSerial</span><span class="o">::</span><span class="n">AsyncSerial</span><span class="p">()</span> <span class="o">:</span> <span class="n">pimpl</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">AsyncSerialImpl</span><span class="o">&gt;</span><span class="p">())</span> <span class="p">{}</span>
+
+<span class="n">AsyncSerial</span><span class="o">::</span><span class="n">AsyncSerial</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">devname</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">baud_rate</span><span class="p">,</span>
+                         <span class="n">asio</span><span class="o">::</span><span class="n">serial_port_base</span><span class="o">::</span><span class="n">parity</span> <span class="n">opt_parity</span><span class="p">,</span>
+                         <span class="n">asio</span><span class="o">::</span><span class="n">serial_port_base</span><span class="o">::</span><span class="n">character_size</span> <span class="n">opt_csize</span><span class="p">,</span>
+                         <span class="n">asio</span><span class="o">::</span><span class="n">serial_port_base</span><span class="o">::</span><span class="n">flow_control</span> <span class="n">opt_flow</span><span class="p">,</span>
+                         <span class="n">asio</span><span class="o">::</span><span class="n">serial_port_base</span><span class="o">::</span><span class="n">stop_bits</span> <span class="n">opt_stop</span><span class="p">)</span>
+    <span class="o">:</span> <span class="n">pimpl</span><span class="p">(</span><span class="k">new</span> <span class="n">AsyncSerialImpl</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">open</span><span class="p">(</span><span class="n">devname</span><span class="p">,</span> <span class="n">baud_rate</span><span class="p">,</span> <span class="n">opt_parity</span><span class="p">,</span> <span class="n">opt_csize</span><span class="p">,</span> <span class="n">opt_flow</span><span class="p">,</span> <span class="n">opt_stop</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">AsyncSerial</span><span class="o">::</span><span class="n">open</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">devname</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">baud_rate</span><span class="p">,</span>
+                       <span class="n">asio</span><span class="o">::</span><span class="n">serial_port_base</span><span class="o">::</span><span class="n">parity</span> <span class="n">opt_parity</span><span class="p">,</span>
+                       <span class="n">asio</span><span class="o">::</span><span class="n">serial_port_base</span><span class="o">::</span><span class="n">character_size</span> <span class="n">opt_csize</span><span class="p">,</span>
+                       <span class="n">asio</span><span class="o">::</span><span class="n">serial_port_base</span><span class="o">::</span><span class="n">flow_control</span> <span class="n">opt_flow</span><span class="p">,</span>
+                       <span class="n">asio</span><span class="o">::</span><span class="n">serial_port_base</span><span class="o">::</span><span class="n">stop_bits</span> <span class="n">opt_stop</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="n">UNUSED</span><span class="p">(</span><span class="n">opt_parity</span><span class="p">);</span>  <span class="c1">// stop compiler warnings</span>
+  <span class="n">UNUSED</span><span class="p">(</span><span class="n">opt_csize</span><span class="p">);</span>
+  <span class="n">UNUSED</span><span class="p">(</span><span class="n">opt_flow</span><span class="p">);</span>
+  <span class="n">UNUSED</span><span class="p">(</span><span class="n">opt_stop</span><span class="p">);</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">isOpen</span><span class="p">())</span>
+    <span class="n">close</span><span class="p">();</span>
+
+  <span class="n">setErrorStatus</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span> <span class="c1">// If an exception is thrown, error remains true</span>
+
+  <span class="k">struct</span> <span class="nc">termios</span> <span class="n">new_attributes</span><span class="p">;</span>
+  <span class="n">speed_t</span> <span class="n">speed</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">status</span><span class="p">;</span>
+
+  <span class="c1">// Open port</span>
+  <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">fd</span> <span class="o">=</span> <span class="o">::</span><span class="n">open</span><span class="p">(</span><span class="n">devname</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">O_RDWR</span> <span class="o">|</span> <span class="n">O_NOCTTY</span> <span class="o">|</span> <span class="n">O_NONBLOCK</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">fd</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">throw</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">system_error</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">error_code</span><span class="p">(),</span> <span class="s">&quot;Failed to open port&quot;</span><span class="p">));</span>
+
+  <span class="c1">// Set Port parameters.</span>
+  <span class="n">status</span> <span class="o">=</span> <span class="n">tcgetattr</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">fd</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">new_attributes</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">status</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="o">!</span><span class="n">isatty</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">fd</span><span class="p">))</span> <span class="p">{</span>
+    <span class="o">::</span><span class="n">close</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">fd</span><span class="p">);</span>
+    <span class="k">throw</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">system_error</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">error_code</span><span class="p">(),</span> <span class="s">&quot;Device is not a tty&quot;</span><span class="p">));</span>
+  <span class="p">}</span>
+  <span class="n">new_attributes</span><span class="p">.</span><span class="n">c_iflag</span> <span class="o">=</span> <span class="n">IGNBRK</span><span class="p">;</span>
+
+  <span class="n">new_attributes</span><span class="p">.</span><span class="n">c_oflag</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="n">new_attributes</span><span class="p">.</span><span class="n">c_lflag</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="n">new_attributes</span><span class="p">.</span><span class="n">c_cflag</span> <span class="o">=</span> <span class="p">(</span><span class="n">CS8</span> <span class="o">|</span> <span class="n">CREAD</span> <span class="o">|</span> <span class="n">CLOCAL</span><span class="p">);</span> <span class="c1">//8 data bit,Enable</span>
+  <span class="c1">// receiver,Ignore modem</span>
+
+<span class="c1">//   new_attributes.c_cflag &amp;= ~PARENB; // No parity bit is added to the output characters</span>
+<span class="c1">//   new_attributes.c_cflag &amp;= ~CSTOPB; // Only one stop-bit is used</span>
+<span class="c1">//   new_attributes.c_cflag &amp;= ~CSIZE; // CSIZE is a mask for the number of bits per character</span>
+<span class="c1">//   new_attributes.c_cflag |= CS8;     // Set to 8 bits per character</span>
+<span class="c1">//   new_attributes.c_cflag &amp;= ~CRTSCTS; // Disable hadrware flow control (RTS/CTS)</span>
+<span class="c1">//   new_attributes.c_cflag |= CREAD | CLOCAL; // Turn on READ &amp; ignore ctrl lines (CLOCAL = 1)</span>
+
+  <span class="cm">/* In non canonical mode (Ctrl-C and other disabled, no echo,...) VMIN and</span>
+<span class="cm">  VTIME work this way: if the function read() has&#39;nt read at least VMIN chars it</span>
+<span class="cm">  waits until has read at least VMIN chars (even if VTIME timeout expires); once</span>
+<span class="cm">  it has read at least vmin chars, if subsequent chars do not arrive before</span>
+<span class="cm">  VTIME expires, it returns error; if a char arrives, it resets the</span>
+<span class="cm">  timeout, so the internal timer will again start from zero (for the nex char,if</span>
+<span class="cm">  any)*/</span>
+
+  <span class="n">new_attributes</span><span class="p">.</span><span class="n">c_cc</span><span class="p">[</span><span class="n">VMIN</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// Minimum number of characters to read before returning error</span>
+  <span class="n">new_attributes</span><span class="p">.</span><span class="n">c_cc</span><span class="p">[</span><span class="n">VTIME</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="c1">// Set timeouts in tenths of second</span>
+
+  <span class="c1">// Set baud rate</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="n">baud_rate</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">case</span> <span class="mi">50</span><span class="o">:</span>
+    <span class="n">speed</span> <span class="o">=</span> <span class="n">B50</span><span class="p">;</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="k">case</span> <span class="mi">75</span><span class="o">:</span>
+    <span class="n">speed</span> <span class="o">=</span> <span class="n">B75</span><span class="p">;</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="k">case</span> <span class="mi">110</span><span class="o">:</span>
+    <span class="n">speed</span> <span class="o">=</span> <span class="n">B110</span><span class="p">;</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="k">case</span> <span class="mi">134</span><span class="o">:</span>
+    <span class="n">speed</span> <span class="o">=</span> <span class="n">B134</span><span class="p">;</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="k">case</span> <span class="mi">150</span><span class="o">:</span>
+    <span class="n">speed</span> <span class="o">=</span> <span class="n">B150</span><span class="p">;</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="k">case</span> <span class="mi">200</span><span class="o">:</span>
+    <span class="n">speed</span> <span class="o">=</span> <span class="n">B200</span><span class="p">;</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="k">case</span> <span class="mi">300</span><span class="o">:</span>
+    <span class="n">speed</span> <span class="o">=</span> <span class="n">B300</span><span class="p">;</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="k">case</span> <span class="mi">600</span><span class="o">:</span>
+    <span class="n">speed</span> <span class="o">=</span> <span class="n">B600</span><span class="p">;</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="k">case</span> <span class="mi">1200</span><span class="o">:</span>
+    <span class="n">speed</span> <span class="o">=</span> <span class="n">B1200</span><span class="p">;</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="k">case</span> <span class="mi">1800</span><span class="o">:</span>
+    <span class="n">speed</span> <span class="o">=</span> <span class="n">B1800</span><span class="p">;</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="k">case</span> <span class="mi">2400</span><span class="o">:</span>
+    <span class="n">speed</span> <span class="o">=</span> <span class="n">B2400</span><span class="p">;</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="k">case</span> <span class="mi">4800</span><span class="o">:</span>
+    <span class="n">speed</span> <span class="o">=</span> <span class="n">B4800</span><span class="p">;</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="k">case</span> <span class="mi">9600</span><span class="o">:</span>
+    <span class="n">speed</span> <span class="o">=</span> <span class="n">B9600</span><span class="p">;</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="k">case</span> <span class="mi">19200</span><span class="o">:</span>
+    <span class="n">speed</span> <span class="o">=</span> <span class="n">B19200</span><span class="p">;</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="k">case</span> <span class="mi">38400</span><span class="o">:</span>
+    <span class="n">speed</span> <span class="o">=</span> <span class="n">B38400</span><span class="p">;</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="k">case</span> <span class="mi">57600</span><span class="o">:</span>
+    <span class="n">speed</span> <span class="o">=</span> <span class="n">B57600</span><span class="p">;</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="k">case</span> <span class="mi">115200</span><span class="o">:</span>
+    <span class="n">speed</span> <span class="o">=</span> <span class="n">B115200</span><span class="p">;</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="k">case</span> <span class="mi">230400</span><span class="o">:</span>
+    <span class="n">speed</span> <span class="o">=</span> <span class="n">B230400</span><span class="p">;</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="k">default</span><span class="o">:</span> <span class="p">{</span>
+    <span class="o">::</span><span class="n">close</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">fd</span><span class="p">);</span>
+    <span class="k">throw</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">system_error</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">error_code</span><span class="p">(),</span>
+                                      <span class="s">&quot;Unsupported baud rate&quot;</span><span class="p">));</span>
+  <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="n">cfsetospeed</span><span class="p">(</span><span class="o">&amp;</span><span class="n">new_attributes</span><span class="p">,</span> <span class="n">speed</span><span class="p">);</span>
+  <span class="n">cfsetispeed</span><span class="p">(</span><span class="o">&amp;</span><span class="n">new_attributes</span><span class="p">,</span> <span class="n">speed</span><span class="p">);</span>
+
+  <span class="c1">// Make changes effective</span>
+  <span class="n">status</span> <span class="o">=</span> <span class="n">tcsetattr</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">fd</span><span class="p">,</span> <span class="n">TCSANOW</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">new_attributes</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">status</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="o">::</span><span class="n">close</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">fd</span><span class="p">);</span>
+    <span class="k">throw</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">system_error</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">error_code</span><span class="p">(),</span>
+                                      <span class="s">&quot;Can&#39;t set port attributes&quot;</span><span class="p">));</span>
+  <span class="p">}</span>
+
+  <span class="c1">// These 3 lines clear the O_NONBLOCK flag</span>
+  <span class="n">status</span> <span class="o">=</span> <span class="n">fcntl</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">fd</span><span class="p">,</span> <span class="n">F_GETFL</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">status</span> <span class="o">!=</span> <span class="mi">-1</span><span class="p">)</span>
+    <span class="n">fcntl</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">fd</span><span class="p">,</span> <span class="n">F_SETFL</span><span class="p">,</span> <span class="n">status</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">O_NONBLOCK</span><span class="p">);</span>
+
+  <span class="n">setErrorStatus</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span> <span class="c1">// If we get here, no error</span>
+  <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">open</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>    <span class="c1">// Port is now open</span>
+
+  <span class="kr">thread</span> <span class="nf">t</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">AsyncSerial</span><span class="o">::</span><span class="n">doRead</span><span class="p">,</span> <span class="k">this</span><span class="p">));</span>
+  <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">backgroundThread</span><span class="p">.</span><span class="n">swap</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span> <span class="n">AsyncSerial</span><span class="o">::</span><span class="n">isOpen</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">open</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="kt">bool</span> <span class="n">AsyncSerial</span><span class="o">::</span><span class="n">errorStatus</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">l</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">errorMutex</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">error</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">AsyncSerial</span><span class="o">::</span><span class="n">close</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">isOpen</span><span class="p">())</span>
+    <span class="k">return</span><span class="p">;</span>
+
+  <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">open</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+
+  <span class="o">::</span><span class="n">close</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">fd</span><span class="p">);</span> <span class="c1">// The thread waiting on I/O should return</span>
+
+  <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">backgroundThread</span><span class="p">.</span><span class="n">join</span><span class="p">();</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">errorStatus</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">throw</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">system_error</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">error_code</span><span class="p">(),</span>
+                                      <span class="s">&quot;Error while closing the device&quot;</span><span class="p">));</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">AsyncSerial</span><span class="o">::</span><span class="n">write</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">data</span><span class="p">,</span> <span class="kt">ssize_t</span> <span class="n">size</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">::</span><span class="n">write</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">fd</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span> <span class="o">!=</span> <span class="n">size</span><span class="p">)</span>
+    <span class="n">setErrorStatus</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">AsyncSerial</span><span class="o">::</span><span class="n">write</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">::</span><span class="n">write</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">fd</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">.</span><span class="n">size</span><span class="p">())</span> <span class="o">!=</span> <span class="p">(</span><span class="kt">ssize_t</span><span class="p">)</span><span class="n">data</span><span class="p">.</span><span class="n">size</span><span class="p">())</span>
+    <span class="n">setErrorStatus</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">AsyncSerial</span><span class="o">::</span><span class="n">writeString</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">::</span><span class="n">write</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">fd</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">())</span> <span class="o">!=</span> <span class="p">(</span><span class="kt">ssize_t</span><span class="p">)</span><span class="n">s</span><span class="p">.</span><span class="n">size</span><span class="p">())</span>
+    <span class="n">setErrorStatus</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">AsyncSerial</span><span class="o">::~</span><span class="n">AsyncSerial</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">isOpen</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="p">{</span>
+      <span class="n">close</span><span class="p">();</span>
+    <span class="p">}</span> <span class="k">catch</span> <span class="p">(...)</span> <span class="p">{</span>
+      <span class="c1">// Don&#39;t throw from a destructor</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">AsyncSerial</span><span class="o">::</span><span class="n">doRead</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Read loop in spawned thread</span>
+  <span class="k">for</span> <span class="p">(;;)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">received</span> <span class="o">=</span> <span class="o">::</span><span class="n">read</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">fd</span><span class="p">,</span> <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">readBuffer</span><span class="p">,</span> <span class="n">readBufferSize</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">received</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">isOpen</span><span class="p">()</span> <span class="o">==</span> <span class="nb">false</span><span class="p">)</span>
+        <span class="k">return</span><span class="p">;</span> <span class="c1">// Thread interrupted because port closed</span>
+      <span class="k">else</span> <span class="p">{</span>
+        <span class="n">setErrorStatus</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+        <span class="k">continue</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">callback</span><span class="p">)</span>
+      <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">callback</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">readBuffer</span><span class="p">,</span> <span class="n">received</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">AsyncSerial</span><span class="o">::</span><span class="n">readEnd</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">error_code</span> <span class="o">&amp;</span><span class="n">error</span><span class="p">,</span>
+                          <span class="kt">size_t</span> <span class="n">bytes_transferred</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Not used</span>
+  <span class="c1">// UNUSED(error);</span>
+  <span class="p">(</span><span class="kt">void</span><span class="p">)(</span><span class="n">error</span><span class="p">);</span>
+  <span class="n">UNUSED</span><span class="p">(</span><span class="n">bytes_transferred</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">AsyncSerial</span><span class="o">::</span><span class="n">doWrite</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Not used</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">AsyncSerial</span><span class="o">::</span><span class="n">writeEnd</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">error_code</span> <span class="o">&amp;</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Not used</span>
+  <span class="p">(</span><span class="kt">void</span><span class="p">)(</span><span class="n">error</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">AsyncSerial</span><span class="o">::</span><span class="n">doClose</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Not used</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">AsyncSerial</span><span class="o">::</span><span class="n">setErrorStatus</span><span class="p">(</span><span class="kt">bool</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">l</span><span class="p">(</span><span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">errorMutex</span><span class="p">);</span>
+  <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">error</span> <span class="o">=</span> <span class="n">e</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">AsyncSerial</span><span class="o">::</span><span class="n">setReadCallback</span><span class="p">(</span>
+    <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="p">,</span> <span class="kt">size_t</span><span class="p">)</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">callback</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">AsyncSerial</span><span class="o">::</span><span class="n">clearReadCallback</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="p">,</span> <span class="kt">size_t</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">empty</span><span class="p">;</span>
+  <span class="n">pimpl</span><span class="o">-&gt;</span><span class="n">callback</span><span class="p">.</span><span class="n">swap</span><span class="p">(</span><span class="n">empty</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cp">#endif </span><span class="c1">//__APPLE__</span>
+
+<span class="c1">//</span>
+<span class="c1">// Class CallbackAsyncSerial</span>
+<span class="c1">//</span>
+
+<span class="n">CallbackAsyncSerial</span><span class="o">::</span><span class="n">CallbackAsyncSerial</span><span class="p">()</span> <span class="o">:</span> <span class="n">AsyncSerial</span><span class="p">()</span> <span class="p">{}</span>
+
+<span class="n">CallbackAsyncSerial</span><span class="o">::</span><span class="n">CallbackAsyncSerial</span><span class="p">(</span>
+    <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">devname</span><span class="p">,</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">baud_rate</span><span class="p">,</span>
+    <span class="n">asio</span><span class="o">::</span><span class="n">serial_port_base</span><span class="o">::</span><span class="n">parity</span> <span class="n">opt_parity</span><span class="p">,</span>
+    <span class="n">asio</span><span class="o">::</span><span class="n">serial_port_base</span><span class="o">::</span><span class="n">character_size</span> <span class="n">opt_csize</span><span class="p">,</span>
+    <span class="n">asio</span><span class="o">::</span><span class="n">serial_port_base</span><span class="o">::</span><span class="n">flow_control</span> <span class="n">opt_flow</span><span class="p">,</span>
+    <span class="n">asio</span><span class="o">::</span><span class="n">serial_port_base</span><span class="o">::</span><span class="n">stop_bits</span> <span class="n">opt_stop</span><span class="p">)</span>
+    <span class="o">:</span> <span class="n">AsyncSerial</span><span class="p">(</span><span class="n">devname</span><span class="p">,</span> <span class="n">baud_rate</span><span class="p">,</span> <span class="n">opt_parity</span><span class="p">,</span> <span class="n">opt_csize</span><span class="p">,</span> <span class="n">opt_flow</span><span class="p">,</span> <span class="n">opt_stop</span><span class="p">)</span> <span class="p">{}</span>
+
+<span class="kt">void</span> <span class="n">CallbackAsyncSerial</span><span class="o">::</span><span class="n">setCallback</span><span class="p">(</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="p">,</span> <span class="kt">size_t</span><span class="p">)</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">callback</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">setReadCallback</span><span class="p">(</span><span class="n">callback</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">CallbackAsyncSerial</span><span class="o">::</span><span class="n">clearCallback</span><span class="p">()</span> <span class="p">{</span> <span class="n">clearReadCallback</span><span class="p">();</span> <span class="p">}</span>
+
+<span class="n">CallbackAsyncSerial</span><span class="o">::~</span><span class="n">CallbackAsyncSerial</span><span class="p">()</span> <span class="p">{</span> <span class="n">clearReadCallback</span><span class="p">();</span> <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, grbba.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

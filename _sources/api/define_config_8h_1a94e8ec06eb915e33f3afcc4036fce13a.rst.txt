@@ -1,0 +1,13 @@
+.. _exhale_define_config_8h_1a94e8ec06eb915e33f3afcc4036fce13a:
+
+Define CONFIG_FILEINFO
+======================
+
+- Defined in :ref:`file_src_config.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: CONFIG_FILEINFO

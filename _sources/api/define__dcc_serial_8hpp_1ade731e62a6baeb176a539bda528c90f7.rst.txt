@@ -1,0 +1,13 @@
+.. _exhale_define__dcc_serial_8hpp_1ade731e62a6baeb176a539bda528c90f7:
+
+Define DCC_SERIAL
+=================
+
+- Defined in :ref:`file_src_DccSerial.hpp`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: DCC_SERIAL

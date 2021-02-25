@@ -1,0 +1,13 @@
+.. _exhale_define_main_8cpp_1a4e10915d93013542d442d78de0e02e9a:
+
+Define MINOR
+============
+
+- Defined in :ref:`file_src_main.cpp`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: MINOR

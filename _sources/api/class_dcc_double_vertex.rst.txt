@@ -1,0 +1,16 @@
+.. _exhale_class_class_dcc_double_vertex:
+
+Class DccDoubleVertex
+=====================
+
+- Defined in :ref:`file_src_DccVertex.hpp`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: DccDoubleVertex
+   :members:
+   :protected-members:
+   :undoc-members:

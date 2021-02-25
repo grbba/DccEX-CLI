@@ -1,0 +1,13 @@
+.. _exhale_function__shell_cmd_exec_8cpp_1a2a0e15eb918a626ef4c1f5b6dc25696e:
+
+Function rootConfig
+===================
+
+- Defined in :ref:`file_src_ShellCmdExec.cpp`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: rootConfig(std::ostream&, std::shared_ptr<cmdItem>, std::vector<std::string>)

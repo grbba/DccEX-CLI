@@ -1,0 +1,13 @@
+.. _exhale_define__diag_8hpp_1ad72dbcf6d0153db1b8d8a58001feed83:
+
+Define DEBUG
+============
+
+- Defined in :ref:`file_src_Diag.hpp`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: DEBUG

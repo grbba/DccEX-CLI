@@ -1,0 +1,13 @@
+.. _exhale_define__diag_8hpp_1a6c6fd5e242df15a7a42e9b75d55d5d3c:
+
+Define LOGLEVEL
+===============
+
+- Defined in :ref:`file_src_Diag.hpp`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: LOGLEVEL

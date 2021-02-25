@@ -1,0 +1,13 @@
+.. _exhale_function__shell_cmd_exec_8cpp_1a01259380367a37cf4aae491ab5431b9e:
+
+Function csOpen
+===============
+
+- Defined in :ref:`file_src_ShellCmdExec.cpp`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: csOpen(std::ostream&, std::shared_ptr<cmdItem>, std::vector<std::string>)

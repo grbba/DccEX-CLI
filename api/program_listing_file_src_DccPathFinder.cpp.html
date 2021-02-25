@@ -1,0 +1,483 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Program Listing for File DccPathFinder.cpp &mdash; DCC++ EX Commandline Interface 0.0.10 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> DCC++ EX Commandline Interface
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../DccEXcli.html">The DCC++ EX Commandline Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">DCC++ EX Commandline Interface API</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DCC++ EX Commandline Interface</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Program Listing for File DccPathFinder.cpp</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api/program_listing_file_src_DccPathFinder.cpp.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="program-listing-for-file-dccpathfinder-cpp">
+<span id="program-listing-file-src-dccpathfinder-cpp"></span><h1>Program Listing for File DccPathFinder.cpp<a class="headerlink" href="#program-listing-for-file-dccpathfinder-cpp" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file_src_DccPathFinder.cpp.html#file-src-dccpathfinder-cpp"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">src/DccPathFinder.cpp</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm"> * © 2020 Gregor Baues. All rights reserved.</span>
+<span class="cm"> *</span>
+<span class="cm"> * This is free software: you can redistribute it and/or modify it under</span>
+<span class="cm"> * the terms of the GNU General Public License as published by the</span>
+<span class="cm"> * Free Software Foundation, either version 3 of the License, or</span>
+<span class="cm"> * (at your option) any later version.</span>
+<span class="cm"> *</span>
+<span class="cm"> * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS</span>
+<span class="cm"> * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<span class="cm"> * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
+<span class="cm"> * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+<span class="cm"> * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING</span>
+<span class="cm"> * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER</span>
+<span class="cm"> * DEALINGS IN THE SOFTWARE.</span>
+<span class="cm"> *</span>
+<span class="cm"> * See the GNU General Public License for more details</span>
+<span class="cm"> * &lt;https://www.gnu.org/licenses/&gt;</span>
+<span class="cm"> */</span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;DccPathFinder.hpp&quot;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;DccPath.hpp&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;DccGraph.hpp&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;DccVertex.hpp&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;Diag.hpp&quot;</span><span class="cp"></span>
+
+
+<span class="kt">void</span> <span class="n">DccPathFinder</span><span class="o">::</span><span class="n">calculate</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">//Diag::push();</span>
+
+  <span class="c1">//Diag::setFileInfo(true);</span>
+  <span class="c1">//Diag::setLogLevel(DiagLevel::LOGV_DEBUG);</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">_graph</span><span class="o">-&gt;</span><span class="n">isBuild</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">findAllRail2RailPaths</span><span class="p">();</span>
+    <span class="n">isCalculated</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="n">_path</span><span class="o">-&gt;</span><span class="n">setCalculatedFlag</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">isCalculated</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="n">_path</span><span class="o">-&gt;</span><span class="n">setCalculatedFlag</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+    <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;Layout Graph has not been build; Can&#39;t continue&quot;</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="c1">//Diag::pop();</span>
+  <span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">auto</span> <span class="n">findStartVertex</span><span class="p">(</span><span class="kt">int32_t</span> <span class="n">nodeid</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">DccVertexPtr_t</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">start</span><span class="p">,</span>
+                     <span class="n">DccVertexGraph_t</span> <span class="o">*</span><span class="n">g</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">bool</span><span class="p">{</span>
+  <span class="kt">bool</span> <span class="n">foundStart</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">vertex</span> <span class="p">:</span> <span class="o">*</span><span class="n">g</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">vertex</span><span class="p">.</span><span class="n">second</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">()</span> <span class="o">==</span> <span class="n">nodeid</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">switch</span> <span class="p">(</span><span class="n">vertex</span><span class="p">.</span><span class="n">second</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getTeType</span><span class="p">())</span> <span class="p">{</span>
+      <span class="k">case</span> <span class="nl">BUMPER</span><span class="p">:</span> <span class="c1">// start from its sibling</span>
+      <span class="p">{</span>
+        <span class="n">DccVertexPtr_t</span> <span class="n">pb</span> <span class="o">=</span>
+            <span class="n">vertex</span><span class="p">.</span><span class="n">second</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getDv</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">findSibling</span><span class="p">(</span><span class="n">vertex</span><span class="p">.</span><span class="n">second</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">pb</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">start</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span><span class="n">pb</span><span class="p">);</span>
+        <span class="n">foundStart</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="k">break</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">case</span> <span class="nl">JUNCTION</span><span class="p">:</span>
+      <span class="k">case</span> <span class="nl">CROSSING</span><span class="p">:</span>
+      <span class="k">case</span> <span class="nl">TURNOUT</span><span class="p">:</span>
+      <span class="k">case</span> <span class="nl">RAIL</span><span class="p">:</span> <span class="c1">// add both except if the sibling is a BUMPER</span>
+      <span class="p">{</span>
+        <span class="n">start</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span><span class="n">vertex</span><span class="p">.</span><span class="n">second</span><span class="p">);</span>
+        <span class="n">DccVertexPtr_t</span> <span class="n">pb</span> <span class="o">=</span>
+            <span class="n">vertex</span><span class="p">.</span><span class="n">second</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getDv</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">findSibling</span><span class="p">(</span><span class="n">vertex</span><span class="p">.</span><span class="n">second</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">pb</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">pb</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getTeType</span><span class="p">()</span> <span class="o">!=</span> <span class="n">BUMPER</span><span class="p">)</span> <span class="p">{</span>
+          <span class="n">start</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span><span class="n">pb</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="n">foundStart</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="p">}</span>
+      <span class="c1">// no need to continue the loop</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">foundStart</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">break</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">foundStart</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">DccPathFinder</span><span class="o">::</span><span class="n">findAllRail2RailPaths</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">m</span><span class="p">;</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">var</span> <span class="p">:</span> <span class="n">_graph</span><span class="o">-&gt;</span><span class="n">getGraph</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">var</span><span class="p">.</span><span class="n">second</span><span class="o">-&gt;</span><span class="n">getTeType</span><span class="p">()</span> <span class="o">==</span> <span class="n">RAIL</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">var</span><span class="p">.</span><span class="n">second</span><span class="o">-&gt;</span><span class="n">cantorDecode</span><span class="p">(</span><span class="n">var</span><span class="p">.</span><span class="n">second</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">(),</span> <span class="o">&amp;</span><span class="n">m</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">n</span><span class="p">);</span>
+      <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Find paths for {} - ({}/{})&quot;</span><span class="p">,</span> <span class="n">var</span><span class="p">.</span><span class="n">second</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">(),</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+      <span class="n">findAllPaths</span><span class="p">(</span><span class="n">var</span><span class="p">.</span><span class="n">second</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">());</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="c1">// find all nodeid from rail segments</span>
+  <span class="c1">// for each nodeid run the path finder and insert all the pointers of found</span>
+  <span class="c1">// paths into a nxn matrix ( n be the modeids) and store in (x,y) the poitner</span>
+  <span class="c1">// to the path allowing to go from x to y providing a second graph allwing to</span>
+  <span class="c1">// determine ev reverse operatons to get from one segment to another where you</span>
+  <span class="c1">// can not go directly e.g. in time saver 1 6 R 12 R 15 R 20</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">DccPathFinder</span><span class="o">::</span><span class="n">findAllPaths</span><span class="p">(</span><span class="kt">int32_t</span> <span class="n">nodeid</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">DccVertexPtr_t</span><span class="o">&gt;</span> <span class="n">start</span><span class="p">;</span>
+  <span class="k">auto</span> <span class="n">paths</span> <span class="o">=</span> <span class="n">_path</span><span class="o">-&gt;</span><span class="n">getNodePaths</span><span class="p">();</span>
+  <span class="k">auto</span> <span class="n">allPaths</span> <span class="o">=</span> <span class="n">_path</span><span class="o">-&gt;</span><span class="n">getAllPaths</span><span class="p">();</span>
+
+  <span class="kt">int</span> <span class="n">_sn</span><span class="p">,</span> <span class="n">_sm</span><span class="p">;</span>
+  <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;-&gt; findAllPaths&quot;</span><span class="p">);</span>
+  <span class="n">DccVertex</span><span class="o">::</span><span class="n">cantorDecode</span><span class="p">(</span><span class="n">nodeid</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">_sm</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">_sn</span><span class="p">);</span>
+
+  <span class="n">_start</span> <span class="o">=</span> <span class="n">nodeid</span><span class="p">;</span>
+  <span class="n">_end</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="k">auto</span> <span class="n">v</span> <span class="o">=</span> <span class="n">_graph</span><span class="o">-&gt;</span><span class="n">getGraph</span><span class="p">();</span>
+
+  <span class="c1">// reset the mark left from a previous run</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">vertex</span> <span class="p">:</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">vertex</span><span class="p">.</span><span class="n">second</span><span class="o">-&gt;</span><span class="n">mark</span> <span class="o">=</span> <span class="n">NOK</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;start: {} end: {}&quot;</span><span class="p">,</span> <span class="n">_start</span><span class="p">,</span> <span class="n">_end</span><span class="p">);</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">findStartVertex</span><span class="p">(</span><span class="n">nodeid</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">start</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">v</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">TRC</span><span class="p">(</span><span class="s">&quot;Calculating direct paths for module [{}] node [{}]&quot;</span><span class="p">,</span> <span class="n">_sm</span><span class="p">,</span> <span class="n">_sn</span><span class="p">);</span>
+    <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Number of start nodes {}&quot;</span><span class="p">,</span> <span class="n">start</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">v</span> <span class="p">:</span> <span class="n">start</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">DccPath_t</span> <span class="n">p</span><span class="p">;</span>
+      <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;v:{} sizeof p: {}&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">(),</span> <span class="n">p</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+      <span class="n">DFS</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;DFS::No such nodeid [{}]&quot;</span><span class="p">,</span> <span class="n">_sn</span><span class="p">);</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">allPaths</span><span class="o">-&gt;</span><span class="n">insert</span><span class="p">({</span><span class="n">nodeid</span><span class="p">,</span> <span class="o">*</span><span class="n">paths</span><span class="p">});</span>
+  <span class="n">paths</span><span class="o">-&gt;</span><span class="n">clear</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">DccPathFinder</span><span class="o">::</span><span class="n">findAllPaths</span><span class="p">(</span><span class="kt">int32_t</span> <span class="n">s</span><span class="p">,</span> <span class="kt">int32_t</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">_sm</span><span class="p">,</span> <span class="n">_em</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">_sn</span><span class="p">,</span> <span class="n">_en</span><span class="p">;</span>
+  <span class="k">auto</span> <span class="n">paths</span> <span class="o">=</span> <span class="n">_path</span><span class="o">-&gt;</span><span class="n">getNodePaths</span><span class="p">();</span>
+
+  <span class="n">DccVertex</span><span class="o">::</span><span class="n">cantorDecode</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">_sm</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">_sn</span><span class="p">);</span>
+  <span class="n">DccVertex</span><span class="o">::</span><span class="n">cantorDecode</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">_em</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">_en</span><span class="p">);</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">DccVertexPtr_t</span><span class="o">&gt;</span> <span class="n">start</span><span class="p">;</span>
+
+  <span class="n">_start</span> <span class="o">=</span> <span class="n">s</span><span class="p">;</span>
+  <span class="n">_end</span> <span class="o">=</span> <span class="n">e</span><span class="p">;</span>
+
+  <span class="k">auto</span> <span class="n">v</span> <span class="o">=</span> <span class="n">_graph</span><span class="o">-&gt;</span><span class="n">getGraph</span><span class="p">();</span>
+  <span class="c1">// reset the marks left from a previous run</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">vertex</span> <span class="p">:</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">vertex</span><span class="p">.</span><span class="n">second</span><span class="o">-&gt;</span><span class="n">mark</span> <span class="o">=</span> <span class="n">NOK</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">findStartVertex</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">start</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">v</span><span class="p">))</span> <span class="p">{</span>
+
+    <span class="n">INFO</span><span class="p">(</span><span class="s">&quot;Calculating direct paths from node [{}] to node [{}]&quot;</span><span class="p">,</span> <span class="n">_sn</span><span class="p">,</span> <span class="n">_en</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">v</span> <span class="p">:</span> <span class="n">start</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">DccPath_t</span> <span class="n">p</span><span class="p">;</span>
+      <span class="n">DFS</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">_end</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;DFS::No such nodeid [{}]&quot;</span><span class="p">,</span> <span class="n">_sn</span><span class="p">);</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="c1">// report all paths found</span>
+  <span class="n">INFO</span><span class="p">(</span><span class="s">&quot;[{}] direct paths are available from node [{}] to node [{}]&quot;</span><span class="p">,</span>
+       <span class="n">paths</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">(),</span> <span class="n">_sn</span><span class="p">,</span> <span class="n">_en</span><span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">pa</span> <span class="p">:</span> <span class="o">*</span><span class="n">paths</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">_pn</span><span class="p">,</span> <span class="n">_pm</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">n</span> <span class="p">:</span> <span class="n">pa</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">DccVertex</span><span class="o">::</span><span class="n">cantorDecode</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">_pm</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">_pn</span><span class="p">);</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">_pn</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; &quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">paths</span><span class="o">-&gt;</span><span class="n">clear</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">DccPathFinder</span><span class="o">::</span><span class="n">DFS</span><span class="p">(</span><span class="n">DccPath_t</span> <span class="n">path</span><span class="p">,</span> <span class="n">DccVertexPtr_t</span> <span class="n">start</span><span class="p">,</span> <span class="kt">int32_t</span> <span class="n">end</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="n">paths</span> <span class="o">=</span> <span class="n">_path</span><span class="o">-&gt;</span><span class="n">getNodePaths</span><span class="p">();</span>
+  <span class="c1">// auto allPaths = *_path-&gt;getAllPaths();</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">DccVertexPtr_t</span><span class="o">&gt;</span> <span class="n">toVisit</span><span class="p">;</span>
+
+  <span class="c1">// we are done if there are no more connections</span>
+  <span class="c1">// or if we find the inital start node again ( circle )</span>
+  <span class="c1">// or when we reached the end node</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getConnections</span><span class="p">().</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span>
+      <span class="n">start</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">()</span> <span class="o">==</span> <span class="n">end</span> <span class="o">||</span>
+      <span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">()</span> <span class="o">==</span> <span class="n">_start</span> <span class="o">&amp;&amp;</span> <span class="n">start</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">mark</span> <span class="o">==</span> <span class="n">OK</span><span class="p">))</span> <span class="p">{</span>
+    <span class="c1">// add the last node and save the path in paths</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">()</span> <span class="o">==</span> <span class="n">end</span> <span class="o">||</span> <span class="n">start</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">()</span> <span class="o">==</span> <span class="n">_start</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">path</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">());</span>
+      <span class="n">paths</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">start</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">mark</span> <span class="o">=</span> <span class="n">OK</span><span class="p">;</span> <span class="c1">// mark as visited</span>
+  <span class="n">path</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">());</span>
+
+  <span class="c1">// Add the sibiling of the reachable vertex</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">c</span> <span class="p">:</span> <span class="n">start</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getConnections</span><span class="p">())</span> <span class="p">{</span>
+
+    <span class="c1">// for each connected vertex of start get the dv of that vertex and look for</span>
+    <span class="c1">// its sibling</span>
+    <span class="n">DccVertexPtr_t</span> <span class="n">add</span> <span class="o">=</span> <span class="n">c</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getDv</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">findSibling</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">add</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">toVisit</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">add</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">v</span> <span class="p">:</span> <span class="n">toVisit</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">DFS</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">end</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">DccPathFinder</span><span class="o">::</span><span class="n">DFS</span><span class="p">(</span><span class="n">DccPath_t</span> <span class="n">path</span><span class="p">,</span> <span class="n">DccVertexPtr_t</span> <span class="n">start</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">auto</span> <span class="n">paths</span> <span class="o">=</span> <span class="n">_path</span><span class="o">-&gt;</span><span class="n">getNodePaths</span><span class="p">();</span>
+  <span class="c1">// auto allPaths = *_path-&gt;getAllPaths();</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">DccVertexPtr_t</span><span class="o">&gt;</span> <span class="n">toVisit</span><span class="p">;</span>
+
+  <span class="c1">// we are done if there are no more connections</span>
+  <span class="c1">// or if we find the inital start node again and this one has been visited</span>
+  <span class="c1">// already ( circle )</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getConnections</span><span class="p">().</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span>
+      <span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">()</span> <span class="o">==</span> <span class="n">_start</span> <span class="o">&amp;&amp;</span> <span class="n">start</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">mark</span> <span class="o">==</span> <span class="n">OK</span><span class="p">))</span> <span class="p">{</span>
+    <span class="c1">// we are done and can push the graph into the paths vector</span>
+    <span class="n">path</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">());</span>
+    <span class="c1">// _path-&gt;printDccPath(path);</span>
+    <span class="n">paths</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">start</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">mark</span> <span class="o">=</span> <span class="n">OK</span><span class="p">;</span> <span class="c1">// mark as visited</span>
+  <span class="n">path</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">start</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">());</span>
+
+  <span class="c1">// Add the sibiling of the reachable vertex</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">c</span> <span class="p">:</span> <span class="n">start</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getConnections</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">DccVertexPtr_t</span> <span class="n">add</span> <span class="o">=</span> <span class="n">c</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getDv</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">findSibling</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">add</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">toVisit</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">add</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">v</span> <span class="p">:</span> <span class="n">toVisit</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">DFS</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">v</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="c1">// get all dccVertices adjacent to start</span>
+<span class="p">}</span>
+
+<span class="n">DccPathFinder</span><span class="o">::</span><span class="n">DccPathFinder</span><span class="p">(</span><span class="n">DccGraph</span> <span class="o">*</span><span class="n">g</span><span class="p">,</span> <span class="n">DccPath</span> <span class="o">*</span><span class="n">p</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">_graph</span> <span class="o">=</span> <span class="n">g</span><span class="p">;</span>
+  <span class="n">_path</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span>
+  <span class="n">_start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="n">_end</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, grbba.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

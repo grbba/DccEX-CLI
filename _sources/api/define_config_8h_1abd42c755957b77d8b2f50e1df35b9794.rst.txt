@@ -1,0 +1,13 @@
+.. _exhale_define_config_8h_1abd42c755957b77d8b2f50e1df35b9794:
+
+Define CONFIG_DCCEX_SCHEMA
+==========================
+
+- Defined in :ref:`file_src_config.h`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: CONFIG_DCCEX_SCHEMA

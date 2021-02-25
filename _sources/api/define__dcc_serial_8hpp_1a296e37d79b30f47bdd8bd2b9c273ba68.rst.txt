@@ -1,0 +1,13 @@
+.. _exhale_define__dcc_serial_8hpp_1a296e37d79b30f47bdd8bd2b9c273ba68:
+
+Define DCC_ETHERNET
+===================
+
+- Defined in :ref:`file_src_DccSerial.hpp`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: DCC_ETHERNET

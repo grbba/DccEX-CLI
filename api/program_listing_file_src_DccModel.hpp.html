@@ -1,0 +1,816 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Program Listing for File DccModel.hpp &mdash; DCC++ EX Commandline Interface 0.0.10 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> DCC++ EX Commandline Interface
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../DccEXcli.html">The DCC++ EX Commandline Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">DCC++ EX Commandline Interface API</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DCC++ EX Commandline Interface</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Program Listing for File DccModel.hpp</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api/program_listing_file_src_DccModel.hpp.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="program-listing-for-file-dccmodel-hpp">
+<span id="program-listing-file-src-dccmodel-hpp"></span><h1>Program Listing for File DccModel.hpp<a class="headerlink" href="#program-listing-for-file-dccmodel-hpp" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file_src_DccModel.hpp.html#file-src-dccmodel-hpp"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">src/DccModel.hpp</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm"> * © 2021 Gregor Baues. All rights reserved.</span>
+<span class="cm"> *</span>
+<span class="cm"> * This is free software: you can redistribute it and/or modify it under</span>
+<span class="cm"> * the terms of the GNU General Public License as published by the</span>
+<span class="cm"> * Free Software Foundation, either version 3 of the License, or</span>
+<span class="cm"> * (at your option) any later version.</span>
+<span class="cm"> *</span>
+<span class="cm"> * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS</span>
+<span class="cm"> * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<span class="cm"> * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
+<span class="cm"> * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+<span class="cm"> * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING</span>
+<span class="cm"> * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER</span>
+<span class="cm"> * DEALINGS IN THE SOFTWARE.</span>
+<span class="cm"> *</span>
+<span class="cm"> * See the GNU General Public License for more details</span>
+<span class="cm"> * &lt;https://www.gnu.org/licenses/&gt;</span>
+<span class="cm"> */</span>
+
+<span class="c1">// Generated by https://DccModel.io</span>
+
+<span class="cp">#pragma once</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;stdexcept&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;regex&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;nlohmann/json.hpp&quot;</span><span class="cp"></span>
+
+
+<span class="k">namespace</span> <span class="n">nlohmann</span> <span class="p">{</span>
+    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">T</span><span class="o">&gt;</span>
+    <span class="k">struct</span> <span class="nc">adl_serializer</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="p">{</span>
+        <span class="k">static</span> <span class="kt">void</span> <span class="n">to_json</span><span class="p">(</span><span class="n">json</span><span class="o">&amp;</span> <span class="n">j</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&amp;</span> <span class="n">opt</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">opt</span><span class="p">)</span> <span class="n">j</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span> <span class="k">else</span> <span class="n">j</span> <span class="o">=</span> <span class="o">*</span><span class="n">opt</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">static</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">from_json</span><span class="p">(</span><span class="k">const</span> <span class="n">json</span><span class="o">&amp;</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">j</span><span class="p">.</span><span class="n">is_null</span><span class="p">())</span> <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">();</span> <span class="k">else</span> <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="k">new</span> <span class="n">T</span><span class="p">(</span><span class="n">j</span><span class="p">.</span><span class="n">get</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">()));</span>
+        <span class="p">}</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="k">namespace</span> <span class="n">DccModel</span> <span class="p">{</span>
+    <span class="k">using</span> <span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span><span class="p">;</span>
+
+    <span class="kr">inline</span> <span class="n">json</span> <span class="n">get_untyped</span><span class="p">(</span><span class="k">const</span> <span class="n">json</span> <span class="o">&amp;</span><span class="n">j</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">property</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">j</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">property</span><span class="p">)</span> <span class="o">!=</span> <span class="n">j</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">property</span><span class="p">).</span><span class="n">get</span><span class="o">&lt;</span><span class="n">json</span><span class="o">&gt;</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">json</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">T</span><span class="o">&gt;</span>
+    <span class="kr">inline</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">get_optional</span><span class="p">(</span><span class="k">const</span> <span class="n">json</span> <span class="o">&amp;</span><span class="n">j</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">property</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">j</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">property</span><span class="p">)</span> <span class="o">!=</span> <span class="n">j</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">property</span><span class="p">).</span><span class="n">get</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">class</span> <span class="nc">DccObject</span>
+    <span class="p">{</span>
+
+    <span class="k">public</span><span class="o">:</span>
+        <span class="n">DccObject</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+        <span class="k">virtual</span> <span class="o">~</span><span class="n">DccObject</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+
+    <span class="k">private</span><span class="o">:</span>
+        <span class="kt">int64_t</span> <span class="n">_dccid</span><span class="p">;</span>
+
+    <span class="k">public</span><span class="o">:</span>
+        <span class="kt">int64_t</span> <span class="n">get_dccid</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_dccid</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_dccid</span><span class="p">(</span><span class="kt">int64_t</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">_dccid</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">};</span>
+
+    <span class="k">class</span> <span class="nc">From</span>  <span class="o">:</span> <span class="k">public</span> <span class="n">DccObject</span> <span class="p">{</span>
+        <span class="k">public</span><span class="o">:</span>
+        <span class="n">From</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+        <span class="k">virtual</span> <span class="o">~</span><span class="n">From</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+
+        <span class="k">private</span><span class="o">:</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">from_module</span><span class="p">;</span>
+        <span class="kt">int64_t</span> <span class="n">path</span><span class="p">;</span>
+
+        <span class="k">public</span><span class="o">:</span>
+        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">get_from_module</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">from_module</span><span class="p">;</span> <span class="p">}</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">get_mutable_from_module</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">from_module</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_from_module</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">from_module</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">const</span> <span class="kt">int64_t</span> <span class="o">&amp;</span> <span class="n">get_path</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">path</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">int64_t</span> <span class="o">&amp;</span> <span class="n">get_mutable_path</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">path</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_path</span><span class="p">(</span><span class="k">const</span> <span class="kt">int64_t</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">path</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">};</span>
+
+    <span class="k">class</span> <span class="nc">To</span>  <span class="o">:</span> <span class="k">public</span> <span class="n">DccObject</span> <span class="p">{</span>
+        <span class="k">public</span><span class="o">:</span>
+        <span class="n">To</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+        <span class="k">virtual</span> <span class="o">~</span><span class="n">To</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+
+        <span class="k">private</span><span class="o">:</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">to_module</span><span class="p">;</span>
+        <span class="kt">int64_t</span> <span class="n">path</span><span class="p">;</span>
+
+        <span class="k">public</span><span class="o">:</span>
+        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">get_to_module</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">to_module</span><span class="p">;</span> <span class="p">}</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">get_mutable_to_module</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">to_module</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_to_module</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">to_module</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">const</span> <span class="kt">int64_t</span> <span class="o">&amp;</span> <span class="n">get_path</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">path</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">int64_t</span> <span class="o">&amp;</span> <span class="n">get_mutable_path</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">path</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_path</span><span class="p">(</span><span class="k">const</span> <span class="kt">int64_t</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">path</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">};</span>
+
+    <span class="k">class</span> <span class="nc">Junction</span>  <span class="o">:</span> <span class="k">public</span> <span class="n">DccObject</span> <span class="p">{</span>
+        <span class="k">public</span><span class="o">:</span>
+        <span class="n">Junction</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+        <span class="k">virtual</span> <span class="o">~</span><span class="n">Junction</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+
+        <span class="k">private</span><span class="o">:</span>
+        <span class="n">From</span> <span class="n">from</span><span class="p">;</span>
+        <span class="n">To</span> <span class="n">to</span><span class="p">;</span>
+
+        <span class="k">public</span><span class="o">:</span>
+        <span class="k">const</span> <span class="n">From</span> <span class="o">&amp;</span> <span class="n">get_from</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">from</span><span class="p">;</span> <span class="p">}</span>
+        <span class="n">From</span> <span class="o">&amp;</span> <span class="n">get_mutable_from</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">from</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_from</span><span class="p">(</span><span class="k">const</span> <span class="n">From</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">from</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">const</span> <span class="n">To</span> <span class="o">&amp;</span> <span class="n">get_to</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">to</span><span class="p">;</span> <span class="p">}</span>
+        <span class="n">To</span> <span class="o">&amp;</span> <span class="n">get_mutable_to</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">to</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_to</span><span class="p">(</span><span class="k">const</span> <span class="n">To</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">to</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">};</span>
+
+    <span class="k">class</span> <span class="nc">Layout</span> <span class="o">:</span> <span class="k">public</span> <span class="n">DccObject</span> <span class="p">{</span>
+        <span class="k">public</span><span class="o">:</span>
+        <span class="n">Layout</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+        <span class="k">virtual</span> <span class="o">~</span><span class="n">Layout</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+
+        <span class="k">private</span><span class="o">:</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">author</span><span class="p">;</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">description</span><span class="p">;</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">name</span><span class="p">;</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">version</span><span class="p">;</span>
+
+        <span class="k">public</span><span class="o">:</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">get_author</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">author</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_author</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">author</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">get_description</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">description</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_description</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">description</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">get_name</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">name</span><span class="p">;</span> <span class="p">}</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">get_mutable_name</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">name</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_name</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">get_version</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">version</span><span class="p">;</span> <span class="p">}</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">get_mutable_version</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">version</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_version</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">version</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">};</span>
+
+    <span class="k">class</span> <span class="nc">Module</span>  <span class="o">:</span> <span class="k">public</span> <span class="n">DccObject</span> <span class="p">{</span>
+        <span class="k">public</span><span class="o">:</span>
+        <span class="n">Module</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+        <span class="k">virtual</span> <span class="o">~</span><span class="n">Module</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+
+        <span class="k">private</span><span class="o">:</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">description</span><span class="p">;</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">name</span><span class="p">;</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">trackplan</span><span class="p">;</span>
+
+        <span class="k">public</span><span class="o">:</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">get_description</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">description</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_description</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">description</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">get_name</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">name</span><span class="p">;</span> <span class="p">}</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">get_mutable_name</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">name</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_name</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">get_trackplan</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">trackplan</span><span class="p">;</span> <span class="p">}</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">get_mutable_trackplan</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">trackplan</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_trackplan</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">trackplan</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">};</span>
+
+    <span class="k">class</span> <span class="nc">Bumper</span>  <span class="o">:</span> <span class="k">public</span> <span class="n">DccObject</span> <span class="p">{</span>
+        <span class="k">public</span><span class="o">:</span>
+        <span class="n">Bumper</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+        <span class="k">virtual</span> <span class="o">~</span><span class="n">Bumper</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+
+        <span class="k">private</span><span class="o">:</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">description</span><span class="p">;</span>
+        <span class="kt">int64_t</span> <span class="n">path</span><span class="p">;</span>
+
+        <span class="k">public</span><span class="o">:</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">get_description</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">description</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_description</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">description</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">const</span> <span class="kt">int64_t</span> <span class="o">&amp;</span> <span class="n">get_path</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">path</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">int64_t</span> <span class="o">&amp;</span> <span class="n">get_mutable_path</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">path</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_path</span><span class="p">(</span><span class="k">const</span> <span class="kt">int64_t</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">path</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">};</span>
+
+    <span class="k">class</span> <span class="nc">Crossing</span>  <span class="o">:</span> <span class="k">public</span> <span class="n">DccObject</span> <span class="p">{</span>
+        <span class="k">public</span><span class="o">:</span>
+        <span class="n">Crossing</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+        <span class="k">virtual</span> <span class="o">~</span><span class="n">Crossing</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+
+        <span class="k">private</span><span class="o">:</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">description</span><span class="p">;</span>
+        <span class="kt">int64_t</span> <span class="n">length</span><span class="p">;</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;</span> <span class="n">path</span><span class="p">;</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;</span> <span class="n">slip</span><span class="p">;</span>
+
+        <span class="k">public</span><span class="o">:</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">get_description</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">description</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_description</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">description</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">const</span> <span class="kt">int64_t</span> <span class="o">&amp;</span> <span class="n">get_length</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">length</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">int64_t</span> <span class="o">&amp;</span> <span class="n">get_mutable_length</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">length</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_length</span><span class="p">(</span><span class="k">const</span> <span class="kt">int64_t</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">length</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">get_path</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">path</span><span class="p">;</span> <span class="p">}</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">get_mutable_path</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">path</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_path</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">path</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">get_slip</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">slip</span><span class="p">;</span> <span class="p">}</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">get_mutable_slip</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">slip</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_slip</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">slip</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">};</span>
+
+    <span class="k">class</span> <span class="nc">Rail</span>  <span class="o">:</span> <span class="k">public</span> <span class="n">DccObject</span> <span class="p">{</span>
+        <span class="k">public</span><span class="o">:</span>
+        <span class="n">Rail</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+        <span class="k">virtual</span> <span class="o">~</span><span class="n">Rail</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+
+        <span class="k">private</span><span class="o">:</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">description</span><span class="p">;</span>
+        <span class="kt">int64_t</span> <span class="n">length</span><span class="p">;</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;</span> <span class="n">path</span><span class="p">;</span>
+
+        <span class="k">public</span><span class="o">:</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">get_description</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">description</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_description</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">description</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">const</span> <span class="kt">int64_t</span> <span class="o">&amp;</span> <span class="n">get_length</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">length</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">int64_t</span> <span class="o">&amp;</span> <span class="n">get_mutable_length</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">length</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_length</span><span class="p">(</span><span class="k">const</span> <span class="kt">int64_t</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">length</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">get_path</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">path</span><span class="p">;</span> <span class="p">}</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">get_mutable_path</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">path</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_path</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">path</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">};</span>
+
+    <span class="k">class</span> <span class="nc">Turnout</span>  <span class="o">:</span> <span class="k">public</span> <span class="n">DccObject</span> <span class="p">{</span>
+        <span class="k">public</span><span class="o">:</span>
+        <span class="n">Turnout</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+        <span class="k">virtual</span> <span class="o">~</span><span class="n">Turnout</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+
+        <span class="k">private</span><span class="o">:</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">description</span><span class="p">;</span>
+        <span class="kt">int64_t</span> <span class="n">length</span><span class="p">;</span>
+        <span class="kt">int64_t</span> <span class="n">narrow</span><span class="p">;</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;</span> <span class="n">wide</span><span class="p">;</span>
+
+        <span class="k">public</span><span class="o">:</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">get_description</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">description</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_description</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">description</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">const</span> <span class="kt">int64_t</span> <span class="o">&amp;</span> <span class="n">get_length</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">length</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">int64_t</span> <span class="o">&amp;</span> <span class="n">get_mutable_length</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">length</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_length</span><span class="p">(</span><span class="k">const</span> <span class="kt">int64_t</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">length</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">const</span> <span class="kt">int64_t</span> <span class="o">&amp;</span> <span class="n">get_narrow</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">narrow</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">int64_t</span> <span class="o">&amp;</span> <span class="n">get_mutable_narrow</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">narrow</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_narrow</span><span class="p">(</span><span class="k">const</span> <span class="kt">int64_t</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">narrow</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">get_wide</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">wide</span><span class="p">;</span> <span class="p">}</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">get_mutable_wide</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">wide</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_wide</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">wide</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">};</span>
+
+    <span class="k">class</span> <span class="nc">Trackelement</span>  <span class="o">:</span> <span class="k">public</span> <span class="n">DccObject</span> <span class="p">{</span>
+        <span class="k">public</span><span class="o">:</span>
+        <span class="n">Trackelement</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+        <span class="k">virtual</span> <span class="o">~</span><span class="n">Trackelement</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+
+        <span class="k">private</span><span class="o">:</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Bumper</span><span class="o">&gt;</span> <span class="n">bumper</span><span class="p">;</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Rail</span><span class="o">&gt;</span> <span class="n">rail</span><span class="p">;</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Turnout</span><span class="o">&gt;</span> <span class="n">turnout</span><span class="p">;</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Crossing</span><span class="o">&gt;</span> <span class="n">crossing</span><span class="p">;</span>
+
+        <span class="k">public</span><span class="o">:</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Bumper</span><span class="o">&gt;</span> <span class="n">get_bumper</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">bumper</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_bumper</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Bumper</span><span class="o">&gt;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">bumper</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Rail</span><span class="o">&gt;</span> <span class="n">get_rail</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">rail</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_rail</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Rail</span><span class="o">&gt;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">rail</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Turnout</span><span class="o">&gt;</span> <span class="n">get_turnout</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">turnout</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_turnout</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Turnout</span><span class="o">&gt;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">turnout</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Crossing</span><span class="o">&gt;</span> <span class="n">get_crossing</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">crossing</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_crossing</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Crossing</span><span class="o">&gt;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">crossing</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">};</span>
+
+    <span class="k">class</span> <span class="nc">Tracksection</span>   <span class="o">:</span> <span class="k">public</span> <span class="n">DccObject</span><span class="p">{</span>
+        <span class="k">public</span><span class="o">:</span>
+        <span class="n">Tracksection</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+        <span class="k">virtual</span> <span class="o">~</span><span class="n">Tracksection</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+
+        <span class="k">private</span><span class="o">:</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">name</span><span class="p">;</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Trackelement</span><span class="o">&gt;</span> <span class="n">trackelements</span><span class="p">;</span>
+
+        <span class="k">public</span><span class="o">:</span>
+        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">get_name</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">name</span><span class="p">;</span> <span class="p">}</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">get_mutable_name</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">name</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_name</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Trackelement</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">get_trackelements</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">trackelements</span><span class="p">;</span> <span class="p">}</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Trackelement</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">get_mutable_trackelements</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">trackelements</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_trackelements</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Trackelement</span><span class="o">&gt;&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">trackelements</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">};</span>
+
+    <span class="k">class</span> <span class="nc">Trackplan</span>  <span class="o">:</span> <span class="k">public</span> <span class="n">DccObject</span> <span class="p">{</span>
+        <span class="k">public</span><span class="o">:</span>
+        <span class="n">Trackplan</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+        <span class="k">virtual</span> <span class="o">~</span><span class="n">Trackplan</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+
+        <span class="k">private</span><span class="o">:</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">description</span><span class="p">;</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">name</span><span class="p">;</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Tracksection</span><span class="o">&gt;</span> <span class="n">tracksections</span><span class="p">;</span>
+
+        <span class="k">public</span><span class="o">:</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">get_description</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">description</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_description</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">description</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">get_name</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">name</span><span class="p">;</span> <span class="p">}</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">get_mutable_name</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">name</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_name</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Tracksection</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">get_tracksections</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">tracksections</span><span class="p">;</span> <span class="p">}</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Tracksection</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">get_mutable_tracksections</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">tracksections</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_tracksections</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Tracksection</span><span class="o">&gt;&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">tracksections</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">};</span>
+
+    <span class="k">class</span> <span class="nc">DccExLayout</span> <span class="p">{</span>
+        <span class="k">public</span><span class="o">:</span>
+        <span class="n">DccExLayout</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+        <span class="k">virtual</span> <span class="o">~</span><span class="n">DccExLayout</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+
+        <span class="k">private</span><span class="o">:</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Junction</span><span class="o">&gt;&gt;</span> <span class="n">junctions</span><span class="p">;</span>
+        <span class="n">Layout</span> <span class="n">layout</span><span class="p">;</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Module</span><span class="o">&gt;</span> <span class="n">modules</span><span class="p">;</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Trackplan</span><span class="o">&gt;</span> <span class="n">trackplans</span><span class="p">;</span>
+        <span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span> <span class="n">schema</span><span class="p">;</span>
+
+        <span class="k">public</span><span class="o">:</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Junction</span><span class="o">&gt;&gt;</span> <span class="n">get_junctions</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">junctions</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_junctions</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Junction</span><span class="o">&gt;&gt;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">junctions</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">const</span> <span class="n">Layout</span> <span class="o">&amp;</span> <span class="n">get_layout</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">layout</span><span class="p">;</span> <span class="p">}</span>
+        <span class="n">Layout</span> <span class="o">&amp;</span> <span class="n">get_mutable_layout</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">layout</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_layout</span><span class="p">(</span><span class="k">const</span> <span class="n">Layout</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">layout</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Module</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">get_modules</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">modules</span><span class="p">;</span> <span class="p">}</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Module</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">get_mutable_modules</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">modules</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_modules</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Module</span><span class="o">&gt;&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">modules</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Trackplan</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">get_trackplans</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">trackplans</span><span class="p">;</span> <span class="p">}</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Trackplan</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">get_mutable_trackplans</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">trackplans</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_trackplans</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Trackplan</span><span class="o">&gt;&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">trackplans</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+
+        <span class="k">const</span> <span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span> <span class="o">&amp;</span> <span class="n">get_schema</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">schema</span><span class="p">;</span> <span class="p">}</span>
+        <span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span> <span class="o">&amp;</span> <span class="n">get_mutable_schema</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">schema</span><span class="p">;</span> <span class="p">}</span>
+        <span class="kt">void</span> <span class="n">set_schema</span><span class="p">(</span><span class="k">const</span> <span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">schema</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="k">namespace</span> <span class="n">nlohmann</span> <span class="p">{</span>
+    <span class="kr">inline</span> <span class="kt">void</span> <span class="n">from_json</span><span class="p">(</span><span class="k">const</span> <span class="n">json</span><span class="o">&amp;</span> <span class="n">_j</span><span class="p">,</span> <span class="n">DccModel</span>
+<span class="o">::</span><span class="n">From</span><span class="o">&amp;</span> <span class="n">_x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_from_module</span><span class="p">(</span> <span class="n">_j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="s">&quot;module&quot;</span><span class="p">).</span><span class="n">get</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">()</span> <span class="p">);</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_path</span><span class="p">(</span> <span class="n">_j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="s">&quot;path&quot;</span><span class="p">).</span><span class="n">get</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;</span><span class="p">()</span> <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kr">inline</span> <span class="kt">void</span> <span class="n">to_json</span><span class="p">(</span><span class="n">json</span><span class="o">&amp;</span> <span class="n">_j</span><span class="p">,</span> <span class="k">const</span> <span class="n">DccModel</span>
+<span class="o">::</span><span class="n">From</span><span class="o">&amp;</span> <span class="n">_x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_j</span> <span class="o">=</span> <span class="n">json</span><span class="o">::</span><span class="n">object</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;module&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_from_module</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_path</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kr">inline</span> <span class="kt">void</span> <span class="n">from_json</span><span class="p">(</span><span class="k">const</span> <span class="n">json</span><span class="o">&amp;</span> <span class="n">_j</span><span class="p">,</span> <span class="n">DccModel</span>
+<span class="o">::</span><span class="n">To</span><span class="o">&amp;</span> <span class="n">_x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_to_module</span><span class="p">(</span> <span class="n">_j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="s">&quot;module&quot;</span><span class="p">).</span><span class="n">get</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">()</span> <span class="p">);</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_path</span><span class="p">(</span> <span class="n">_j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="s">&quot;path&quot;</span><span class="p">).</span><span class="n">get</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;</span><span class="p">()</span> <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kr">inline</span> <span class="kt">void</span> <span class="n">to_json</span><span class="p">(</span><span class="n">json</span><span class="o">&amp;</span> <span class="n">_j</span><span class="p">,</span> <span class="k">const</span> <span class="n">DccModel</span>
+<span class="o">::</span><span class="n">To</span><span class="o">&amp;</span> <span class="n">_x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_j</span> <span class="o">=</span> <span class="n">json</span><span class="o">::</span><span class="n">object</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;module&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_to_module</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_path</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kr">inline</span> <span class="kt">void</span> <span class="n">from_json</span><span class="p">(</span><span class="k">const</span> <span class="n">json</span><span class="o">&amp;</span> <span class="n">_j</span><span class="p">,</span> <span class="n">DccModel</span>
+<span class="o">::</span><span class="n">Junction</span><span class="o">&amp;</span> <span class="n">_x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_from</span><span class="p">(</span> <span class="n">_j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="s">&quot;from&quot;</span><span class="p">).</span><span class="n">get</span><span class="o">&lt;</span><span class="n">DccModel</span>
+    <span class="o">::</span><span class="n">From</span><span class="o">&gt;</span><span class="p">()</span> <span class="p">);</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_to</span><span class="p">(</span> <span class="n">_j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="s">&quot;to&quot;</span><span class="p">).</span><span class="n">get</span><span class="o">&lt;</span><span class="n">DccModel</span>
+    <span class="o">::</span><span class="n">To</span><span class="o">&gt;</span><span class="p">()</span> <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kr">inline</span> <span class="kt">void</span> <span class="n">to_json</span><span class="p">(</span><span class="n">json</span><span class="o">&amp;</span> <span class="n">_j</span><span class="p">,</span> <span class="k">const</span> <span class="n">DccModel</span>
+<span class="o">::</span><span class="n">Junction</span><span class="o">&amp;</span> <span class="n">_x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_j</span> <span class="o">=</span> <span class="n">json</span><span class="o">::</span><span class="n">object</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;from&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_from</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;to&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_to</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kr">inline</span> <span class="kt">void</span> <span class="n">from_json</span><span class="p">(</span><span class="k">const</span> <span class="n">json</span><span class="o">&amp;</span> <span class="n">_j</span><span class="p">,</span> <span class="n">DccModel</span>
+<span class="o">::</span><span class="n">Layout</span><span class="o">&amp;</span> <span class="n">_x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_author</span><span class="p">(</span> <span class="n">DccModel</span>
+    <span class="o">::</span><span class="n">get_optional</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_j</span><span class="p">,</span> <span class="s">&quot;author&quot;</span><span class="p">)</span> <span class="p">);</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_description</span><span class="p">(</span> <span class="n">DccModel</span>
+    <span class="o">::</span><span class="n">get_optional</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_j</span><span class="p">,</span> <span class="s">&quot;description&quot;</span><span class="p">)</span> <span class="p">);</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_name</span><span class="p">(</span> <span class="n">_j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">).</span><span class="n">get</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">()</span> <span class="p">);</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_version</span><span class="p">(</span> <span class="n">_j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="s">&quot;version&quot;</span><span class="p">).</span><span class="n">get</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">()</span> <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kr">inline</span> <span class="kt">void</span> <span class="n">to_json</span><span class="p">(</span><span class="n">json</span><span class="o">&amp;</span> <span class="n">_j</span><span class="p">,</span> <span class="k">const</span> <span class="n">DccModel</span>
+<span class="o">::</span><span class="n">Layout</span><span class="o">&amp;</span> <span class="n">_x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_j</span> <span class="o">=</span> <span class="n">json</span><span class="o">::</span><span class="n">object</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;author&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_author</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_description</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_name</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;version&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_version</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kr">inline</span> <span class="kt">void</span> <span class="n">from_json</span><span class="p">(</span><span class="k">const</span> <span class="n">json</span><span class="o">&amp;</span> <span class="n">_j</span><span class="p">,</span> <span class="n">DccModel</span>
+<span class="o">::</span><span class="n">Module</span><span class="o">&amp;</span> <span class="n">_x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_description</span><span class="p">(</span> <span class="n">DccModel</span>
+    <span class="o">::</span><span class="n">get_optional</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_j</span><span class="p">,</span> <span class="s">&quot;description&quot;</span><span class="p">)</span> <span class="p">);</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_name</span><span class="p">(</span> <span class="n">_j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">).</span><span class="n">get</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">()</span> <span class="p">);</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_trackplan</span><span class="p">(</span> <span class="n">_j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="s">&quot;trackplan&quot;</span><span class="p">).</span><span class="n">get</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">()</span> <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kr">inline</span> <span class="kt">void</span> <span class="n">to_json</span><span class="p">(</span><span class="n">json</span><span class="o">&amp;</span> <span class="n">_j</span><span class="p">,</span> <span class="k">const</span> <span class="n">DccModel</span>
+<span class="o">::</span><span class="n">Module</span><span class="o">&amp;</span> <span class="n">_x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_j</span> <span class="o">=</span> <span class="n">json</span><span class="o">::</span><span class="n">object</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_description</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_name</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;trackplan&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_trackplan</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kr">inline</span> <span class="kt">void</span> <span class="n">from_json</span><span class="p">(</span><span class="k">const</span> <span class="n">json</span><span class="o">&amp;</span> <span class="n">_j</span><span class="p">,</span> <span class="n">DccModel</span>
+<span class="o">::</span><span class="n">Bumper</span><span class="o">&amp;</span> <span class="n">_x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_description</span><span class="p">(</span> <span class="n">DccModel</span>
+    <span class="o">::</span><span class="n">get_optional</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_j</span><span class="p">,</span> <span class="s">&quot;description&quot;</span><span class="p">)</span> <span class="p">);</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_path</span><span class="p">(</span> <span class="n">_j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="s">&quot;path&quot;</span><span class="p">).</span><span class="n">get</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;</span><span class="p">()</span> <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kr">inline</span> <span class="kt">void</span> <span class="n">to_json</span><span class="p">(</span><span class="n">json</span><span class="o">&amp;</span> <span class="n">_j</span><span class="p">,</span> <span class="k">const</span> <span class="n">DccModel</span>
+<span class="o">::</span><span class="n">Bumper</span><span class="o">&amp;</span> <span class="n">_x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_j</span> <span class="o">=</span> <span class="n">json</span><span class="o">::</span><span class="n">object</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_description</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_path</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kr">inline</span> <span class="kt">void</span> <span class="n">from_json</span><span class="p">(</span><span class="k">const</span> <span class="n">json</span><span class="o">&amp;</span> <span class="n">_j</span><span class="p">,</span> <span class="n">DccModel</span>
+<span class="o">::</span><span class="n">Crossing</span><span class="o">&amp;</span> <span class="n">_x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_description</span><span class="p">(</span> <span class="n">DccModel</span>
+    <span class="o">::</span><span class="n">get_optional</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_j</span><span class="p">,</span> <span class="s">&quot;description&quot;</span><span class="p">)</span> <span class="p">);</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_length</span><span class="p">(</span> <span class="n">_j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="s">&quot;length&quot;</span><span class="p">).</span><span class="n">get</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;</span><span class="p">()</span> <span class="p">);</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_path</span><span class="p">(</span> <span class="n">_j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="s">&quot;path&quot;</span><span class="p">).</span><span class="n">get</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;&gt;</span><span class="p">()</span> <span class="p">);</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_slip</span><span class="p">(</span> <span class="n">_j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="s">&quot;slip&quot;</span><span class="p">).</span><span class="n">get</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;&gt;</span><span class="p">()</span> <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kr">inline</span> <span class="kt">void</span> <span class="n">to_json</span><span class="p">(</span><span class="n">json</span><span class="o">&amp;</span> <span class="n">_j</span><span class="p">,</span> <span class="k">const</span> <span class="n">DccModel</span>
+<span class="o">::</span><span class="n">Crossing</span><span class="o">&amp;</span> <span class="n">_x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_j</span> <span class="o">=</span> <span class="n">json</span><span class="o">::</span><span class="n">object</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_description</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;length&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_length</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_path</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;slip&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_slip</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kr">inline</span> <span class="kt">void</span> <span class="n">from_json</span><span class="p">(</span><span class="k">const</span> <span class="n">json</span><span class="o">&amp;</span> <span class="n">_j</span><span class="p">,</span> <span class="n">DccModel</span>
+<span class="o">::</span><span class="n">Rail</span><span class="o">&amp;</span> <span class="n">_x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_description</span><span class="p">(</span> <span class="n">DccModel</span>
+    <span class="o">::</span><span class="n">get_optional</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_j</span><span class="p">,</span> <span class="s">&quot;description&quot;</span><span class="p">)</span> <span class="p">);</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_length</span><span class="p">(</span> <span class="n">_j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="s">&quot;length&quot;</span><span class="p">).</span><span class="n">get</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;</span><span class="p">()</span> <span class="p">);</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_path</span><span class="p">(</span> <span class="n">_j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="s">&quot;path&quot;</span><span class="p">).</span><span class="n">get</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;&gt;</span><span class="p">()</span> <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kr">inline</span> <span class="kt">void</span> <span class="n">to_json</span><span class="p">(</span><span class="n">json</span><span class="o">&amp;</span> <span class="n">_j</span><span class="p">,</span> <span class="k">const</span> <span class="n">DccModel</span>
+<span class="o">::</span><span class="n">Rail</span><span class="o">&amp;</span> <span class="n">_x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_j</span> <span class="o">=</span> <span class="n">json</span><span class="o">::</span><span class="n">object</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_description</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;length&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_length</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_path</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kr">inline</span> <span class="kt">void</span> <span class="n">from_json</span><span class="p">(</span><span class="k">const</span> <span class="n">json</span><span class="o">&amp;</span> <span class="n">_j</span><span class="p">,</span> <span class="n">DccModel</span>
+<span class="o">::</span><span class="n">Turnout</span><span class="o">&amp;</span> <span class="n">_x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_description</span><span class="p">(</span> <span class="n">DccModel</span>
+    <span class="o">::</span><span class="n">get_optional</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_j</span><span class="p">,</span> <span class="s">&quot;description&quot;</span><span class="p">)</span> <span class="p">);</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_length</span><span class="p">(</span> <span class="n">_j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="s">&quot;length&quot;</span><span class="p">).</span><span class="n">get</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;</span><span class="p">()</span> <span class="p">);</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_narrow</span><span class="p">(</span> <span class="n">_j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="s">&quot;narrow&quot;</span><span class="p">).</span><span class="n">get</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;</span><span class="p">()</span> <span class="p">);</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_wide</span><span class="p">(</span> <span class="n">_j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="s">&quot;wide&quot;</span><span class="p">).</span><span class="n">get</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="o">&gt;&gt;</span><span class="p">()</span> <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kr">inline</span> <span class="kt">void</span> <span class="n">to_json</span><span class="p">(</span><span class="n">json</span><span class="o">&amp;</span> <span class="n">_j</span><span class="p">,</span> <span class="k">const</span> <span class="n">DccModel</span>
+<span class="o">::</span><span class="n">Turnout</span><span class="o">&amp;</span> <span class="n">_x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_j</span> <span class="o">=</span> <span class="n">json</span><span class="o">::</span><span class="n">object</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_description</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;length&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_length</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;narrow&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_narrow</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;wide&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_wide</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kr">inline</span> <span class="kt">void</span> <span class="n">from_json</span><span class="p">(</span><span class="k">const</span> <span class="n">json</span><span class="o">&amp;</span> <span class="n">_j</span><span class="p">,</span> <span class="n">DccModel</span>
+<span class="o">::</span><span class="n">Trackelement</span><span class="o">&amp;</span> <span class="n">_x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_bumper</span><span class="p">(</span> <span class="n">DccModel</span>
+    <span class="o">::</span><span class="n">get_optional</span><span class="o">&lt;</span><span class="n">DccModel</span>
+    <span class="o">::</span><span class="n">Bumper</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_j</span><span class="p">,</span> <span class="s">&quot;bumper&quot;</span><span class="p">)</span> <span class="p">);</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_rail</span><span class="p">(</span> <span class="n">DccModel</span>
+    <span class="o">::</span><span class="n">get_optional</span><span class="o">&lt;</span><span class="n">DccModel</span>
+    <span class="o">::</span><span class="n">Rail</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_j</span><span class="p">,</span> <span class="s">&quot;rail&quot;</span><span class="p">)</span> <span class="p">);</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_turnout</span><span class="p">(</span> <span class="n">DccModel</span>
+    <span class="o">::</span><span class="n">get_optional</span><span class="o">&lt;</span><span class="n">DccModel</span>
+    <span class="o">::</span><span class="n">Turnout</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_j</span><span class="p">,</span> <span class="s">&quot;turnout&quot;</span><span class="p">)</span> <span class="p">);</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_crossing</span><span class="p">(</span> <span class="n">DccModel</span>
+    <span class="o">::</span><span class="n">get_optional</span><span class="o">&lt;</span><span class="n">DccModel</span>
+    <span class="o">::</span><span class="n">Crossing</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_j</span><span class="p">,</span> <span class="s">&quot;crossing&quot;</span><span class="p">)</span> <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kr">inline</span> <span class="kt">void</span> <span class="n">to_json</span><span class="p">(</span><span class="n">json</span><span class="o">&amp;</span> <span class="n">_j</span><span class="p">,</span> <span class="k">const</span> <span class="n">DccModel</span>
+<span class="o">::</span><span class="n">Trackelement</span><span class="o">&amp;</span> <span class="n">_x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_j</span> <span class="o">=</span> <span class="n">json</span><span class="o">::</span><span class="n">object</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;bumper&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_bumper</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;rail&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_rail</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;turnout&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_turnout</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;crossing&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_crossing</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kr">inline</span> <span class="kt">void</span> <span class="n">from_json</span><span class="p">(</span><span class="k">const</span> <span class="n">json</span><span class="o">&amp;</span> <span class="n">_j</span><span class="p">,</span> <span class="n">DccModel</span>
+<span class="o">::</span><span class="n">Tracksection</span><span class="o">&amp;</span> <span class="n">_x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_name</span><span class="p">(</span> <span class="n">_j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">).</span><span class="n">get</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">()</span> <span class="p">);</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_trackelements</span><span class="p">(</span> <span class="n">_j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="s">&quot;trackelements&quot;</span><span class="p">).</span><span class="n">get</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">DccModel</span>
+    <span class="o">::</span><span class="n">Trackelement</span><span class="o">&gt;&gt;</span><span class="p">()</span> <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kr">inline</span> <span class="kt">void</span> <span class="n">to_json</span><span class="p">(</span><span class="n">json</span><span class="o">&amp;</span> <span class="n">_j</span><span class="p">,</span> <span class="k">const</span> <span class="n">DccModel</span>
+<span class="o">::</span><span class="n">Tracksection</span><span class="o">&amp;</span> <span class="n">_x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_j</span> <span class="o">=</span> <span class="n">json</span><span class="o">::</span><span class="n">object</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_name</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;trackelements&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_trackelements</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kr">inline</span> <span class="kt">void</span> <span class="n">from_json</span><span class="p">(</span><span class="k">const</span> <span class="n">json</span><span class="o">&amp;</span> <span class="n">_j</span><span class="p">,</span> <span class="n">DccModel</span>
+<span class="o">::</span><span class="n">Trackplan</span><span class="o">&amp;</span> <span class="n">_x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_description</span><span class="p">(</span> <span class="n">DccModel</span>
+    <span class="o">::</span><span class="n">get_optional</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_j</span><span class="p">,</span> <span class="s">&quot;description&quot;</span><span class="p">)</span> <span class="p">);</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_name</span><span class="p">(</span> <span class="n">_j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">).</span><span class="n">get</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">()</span> <span class="p">);</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_tracksections</span><span class="p">(</span> <span class="n">_j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="s">&quot;tracksections&quot;</span><span class="p">).</span><span class="n">get</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">DccModel</span>
+    <span class="o">::</span><span class="n">Tracksection</span><span class="o">&gt;&gt;</span><span class="p">()</span> <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kr">inline</span> <span class="kt">void</span> <span class="n">to_json</span><span class="p">(</span><span class="n">json</span><span class="o">&amp;</span> <span class="n">_j</span><span class="p">,</span> <span class="k">const</span> <span class="n">DccModel</span>
+<span class="o">::</span><span class="n">Trackplan</span><span class="o">&amp;</span> <span class="n">_x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_j</span> <span class="o">=</span> <span class="n">json</span><span class="o">::</span><span class="n">object</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;description&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_description</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_name</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;tracksections&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_tracksections</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kr">inline</span> <span class="kt">void</span> <span class="n">from_json</span><span class="p">(</span><span class="k">const</span> <span class="n">json</span><span class="o">&amp;</span> <span class="n">_j</span><span class="p">,</span> <span class="n">DccModel</span>
+<span class="o">::</span><span class="n">DccExLayout</span><span class="o">&amp;</span> <span class="n">_x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_junctions</span><span class="p">(</span> <span class="n">DccModel</span>
+    <span class="o">::</span><span class="n">get_optional</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">DccModel</span>
+    <span class="o">::</span><span class="n">Junction</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="n">_j</span><span class="p">,</span> <span class="s">&quot;junctions&quot;</span><span class="p">)</span> <span class="p">);</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_layout</span><span class="p">(</span> <span class="n">_j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="s">&quot;layout&quot;</span><span class="p">).</span><span class="n">get</span><span class="o">&lt;</span><span class="n">DccModel</span>
+    <span class="o">::</span><span class="n">Layout</span><span class="o">&gt;</span><span class="p">()</span> <span class="p">);</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_modules</span><span class="p">(</span> <span class="n">_j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="s">&quot;modules&quot;</span><span class="p">).</span><span class="n">get</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">DccModel</span>
+    <span class="o">::</span><span class="n">Module</span><span class="o">&gt;&gt;</span><span class="p">()</span> <span class="p">);</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_trackplans</span><span class="p">(</span> <span class="n">_j</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="s">&quot;trackplans&quot;</span><span class="p">).</span><span class="n">get</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">DccModel</span>
+    <span class="o">::</span><span class="n">Trackplan</span><span class="o">&gt;&gt;</span><span class="p">()</span> <span class="p">);</span>
+        <span class="n">_x</span><span class="p">.</span><span class="n">set_schema</span><span class="p">(</span> <span class="n">DccModel</span>
+    <span class="o">::</span><span class="n">get_untyped</span><span class="p">(</span><span class="n">_j</span><span class="p">,</span> <span class="s">&quot;$schema&quot;</span><span class="p">)</span> <span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kr">inline</span> <span class="kt">void</span> <span class="n">to_json</span><span class="p">(</span><span class="n">json</span><span class="o">&amp;</span> <span class="n">_j</span><span class="p">,</span> <span class="k">const</span> <span class="n">DccModel</span>
+<span class="o">::</span><span class="n">DccExLayout</span><span class="o">&amp;</span> <span class="n">_x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_j</span> <span class="o">=</span> <span class="n">json</span><span class="o">::</span><span class="n">object</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;junctions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_junctions</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;layout&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_layout</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;modules&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_modules</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;trackplans&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_trackplans</span><span class="p">();</span>
+        <span class="n">_j</span><span class="p">[</span><span class="s">&quot;$schema&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_x</span><span class="p">.</span><span class="n">get_schema</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, grbba.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

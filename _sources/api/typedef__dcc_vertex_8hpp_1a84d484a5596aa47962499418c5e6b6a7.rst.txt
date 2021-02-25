@@ -1,0 +1,13 @@
+.. _exhale_typedef__dcc_vertex_8hpp_1a84d484a5596aa47962499418c5e6b6a7:
+
+Typedef DccDoubleVertexPtr_t
+============================
+
+- Defined in :ref:`file_src_DccVertex.hpp`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: DccDoubleVertexPtr_t

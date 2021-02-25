@@ -1,0 +1,304 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Program Listing for File main.cpp &mdash; DCC++ EX Commandline Interface 0.0.10 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> DCC++ EX Commandline Interface
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../DccEXcli.html">The DCC++ EX Commandline Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">DCC++ EX Commandline Interface API</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DCC++ EX Commandline Interface</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Program Listing for File main.cpp</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api/program_listing_file_src_main.cpp.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="program-listing-for-file-main-cpp">
+<span id="program-listing-file-src-main-cpp"></span><h1>Program Listing for File main.cpp<a class="headerlink" href="#program-listing-for-file-main-cpp" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file_src_main.cpp.html#file-src-main-cpp"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">src/main.cpp</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm"> * © 2020 Gregor Baues. All rights reserved.</span>
+<span class="cm"> *</span>
+<span class="cm"> * This is free software: you can redistribute it and/or modify it under</span>
+<span class="cm"> * the terms of the GNU General Public License as published by the</span>
+<span class="cm"> * Free Software Foundation, either version 3 of the License, or</span>
+<span class="cm"> * (at your option) any later version.</span>
+<span class="cm"> *</span>
+<span class="cm"> * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS</span>
+<span class="cm"> * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<span class="cm"> * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
+<span class="cm"> * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+<span class="cm"> * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING</span>
+<span class="cm"> * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER</span>
+<span class="cm"> * DEALINGS IN THE SOFTWARE.</span>
+<span class="cm"> *</span>
+<span class="cm"> * See the GNU General Public License for more details</span>
+<span class="cm"> * &lt;https://www.gnu.org/licenses/&gt;</span>
+<span class="cm"> */</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;fmt/core.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;fmt/color.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;fstream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;DccConfig.hpp&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;DccLayout.hpp&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;DccShell.hpp&quot;</span><span class="cp"></span>
+
+<span class="c1">// Version information</span>
+<span class="cp">#define MAJOR 0</span>
+<span class="cp">#define MINOR 0</span>
+<span class="cp">#define PATCH 10</span>
+
+<span class="kt">void</span> <span class="nf">readJsonFile</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">schema_filename</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">*</span><span class="n">schema</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">ifstream</span> <span class="n">schema_file</span><span class="p">(</span><span class="n">schema_filename</span><span class="p">);</span>
+
+  <span class="o">*</span><span class="n">schema</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">istreambuf_iterator</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="p">(</span><span class="n">schema_file</span><span class="p">),</span>
+                        <span class="n">std</span><span class="o">::</span><span class="n">istreambuf_iterator</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="cp">#define HEADING(x)  fmt::print(fg(fmt::color::medium_turquoise) | fmt::emphasis::bold, x);</span>
+<span class="cp">#define SUBHEADING(x)  fmt::print(fg(fmt::color::medium_turquoise), x);</span>
+
+<span class="k">auto</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">int</span> <span class="p">{</span>
+  <span class="c1">// clear screen</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;\e[2J\e[1;1H&quot;</span><span class="p">;</span>
+
+  <span class="kt">char</span> <span class="n">month</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+  <span class="kt">int</span> <span class="n">day</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span> <span class="n">hour</span><span class="p">,</span> <span class="n">min</span><span class="p">,</span> <span class="n">sec</span><span class="p">;</span>
+  <span class="n">sscanf</span><span class="p">(</span><span class="n">__DATE__</span><span class="p">,</span> <span class="s">&quot;%s %i %i&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">month</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">day</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">year</span><span class="p">);</span>
+  <span class="n">sscanf</span><span class="p">(</span><span class="n">__TIME__</span><span class="p">,</span> <span class="s">&quot;%i:%i:%i&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">hour</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">min</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">sec</span><span class="p">);</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">version</span> <span class="o">=</span> <span class="n">fmt</span><span class="o">::</span><span class="n">format</span><span class="p">(</span><span class="s">&quot;Version {}.{}.{}&quot;</span><span class="p">,</span> <span class="n">MAJOR</span><span class="p">,</span> <span class="n">MINOR</span><span class="p">,</span> <span class="n">PATCH</span><span class="p">);</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">build</span> <span class="o">=</span> <span class="n">fmt</span><span class="o">::</span><span class="n">format</span><span class="p">(</span><span class="s">&quot;-{}{}{}</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">day</span><span class="p">,</span> <span class="n">hour</span><span class="p">,</span> <span class="n">min</span><span class="p">);</span>
+
+  <span class="n">HEADING</span><span class="p">(</span><span class="s">&quot;Welcome to the DCC++ EX Commandline Interface</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+  <span class="n">SUBHEADING</span><span class="p">(</span><span class="n">version</span><span class="p">);</span> <span class="n">SUBHEADING</span><span class="p">(</span><span class="n">build</span><span class="p">);</span>
+  <span class="n">SUBHEADING</span><span class="p">(</span><span class="s">&quot;(c) 2020 grbba</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="p">);</span>
+
+  <span class="c1">// setup the configuration including default log levels</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">DccConfig</span><span class="o">::</span><span class="n">setup</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">))</span> <span class="p">{</span>
+    <span class="c1">// only continue if the configuration has been set properly</span>
+    <span class="k">return</span> <span class="n">DCC_SUCCESS</span><span class="p">;</span>
+  <span class="p">};</span>
+
+  <span class="n">DccShell</span> <span class="n">s</span><span class="p">;</span>
+  <span class="n">Diag</span><span class="o">::</span><span class="n">setLogLevel</span><span class="p">(</span><span class="n">DiagLevel</span><span class="o">::</span><span class="n">LOGV_INFO</span><span class="p">);</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">DccConfig</span><span class="o">::</span><span class="n">isInteractive</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">s</span><span class="p">.</span><span class="n">runShell</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="c1">// read layout and schema</span>
+    <span class="n">DccLayout</span> <span class="n">myLayout</span><span class="p">;</span>
+    <span class="c1">// reads the layout validates and builds the model by means of the supplied</span>
+    <span class="c1">// schema; creates the graph and calculates all paths through the layout</span>
+    <span class="c1">// (direct and indirect)</span>
+
+    <span class="c1">// Diag::setFileInfo(true);</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">myLayout</span><span class="p">.</span><span class="n">build</span><span class="p">())</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="n">DCC_FAILURE</span><span class="p">;</span>
+    <span class="p">}</span>
+
+
+    <span class="c1">// get some info</span>
+    <span class="n">myLayout</span><span class="p">.</span><span class="n">info</span><span class="p">();</span>
+    <span class="c1">// print out all paths</span>
+    <span class="n">myLayout</span><span class="p">.</span><span class="n">listPaths</span><span class="p">();</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span> <span class="n">DCC_SUCCESS</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, grbba.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

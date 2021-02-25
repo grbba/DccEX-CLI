@@ -1,0 +1,717 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Program Listing for File DccGraph.cpp &mdash; DCC++ EX Commandline Interface 0.0.10 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> DCC++ EX Commandline Interface
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../DccEXcli.html">The DCC++ EX Commandline Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">DCC++ EX Commandline Interface API</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DCC++ EX Commandline Interface</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Program Listing for File DccGraph.cpp</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api/program_listing_file_src_DccGraph.cpp.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="program-listing-for-file-dccgraph-cpp">
+<span id="program-listing-file-src-dccgraph-cpp"></span><h1>Program Listing for File DccGraph.cpp<a class="headerlink" href="#program-listing-for-file-dccgraph-cpp" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file_src_DccGraph.cpp.html#file-src-dccgraph-cpp"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">src/DccGraph.cpp</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm"> * © 2020 Gregor Baues. All rights reserved.</span>
+<span class="cm"> *</span>
+<span class="cm"> * This is free software: you can redistribute it and/or modify it under</span>
+<span class="cm"> * the terms of the GNU General Public License as published by the</span>
+<span class="cm"> * Free Software Foundation, either version 3 of the License, or</span>
+<span class="cm"> * (at your option) any later version.</span>
+<span class="cm"> *</span>
+<span class="cm"> * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS</span>
+<span class="cm"> * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<span class="cm"> * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
+<span class="cm"> * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+<span class="cm"> * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING</span>
+<span class="cm"> * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER</span>
+<span class="cm"> * DEALINGS IN THE SOFTWARE.</span>
+<span class="cm"> *</span>
+<span class="cm"> * See the GNU General Public License for more details</span>
+<span class="cm"> * &lt;https://www.gnu.org/licenses/&gt;</span>
+<span class="cm"> */</span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;DccGraph.hpp&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;DccVertex.hpp&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&quot;Diag.hpp&quot;</span><span class="cp"></span>
+
+<span class="k">auto</span> <span class="n">DccGraph</span><span class="o">::</span><span class="n">checkModule</span><span class="p">(</span><span class="n">DccModel</span><span class="o">::</span><span class="n">Module</span> <span class="o">*</span><span class="k">module</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">int</span> <span class="p">{</span>
+  <span class="n">mn</span><span class="o">++</span><span class="p">;</span> <span class="c1">// each time called the number increases by one;</span>
+  <span class="k">module</span><span class="o">-&gt;</span><span class="n">set_dccid</span><span class="p">(</span><span class="n">mn</span><span class="p">);</span>
+
+  <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Module[{}]: {} using track plan {}&quot;</span><span class="p">,</span> <span class="k">module</span><span class="o">-&gt;</span><span class="n">get_dccid</span><span class="p">(),</span>
+      <span class="k">module</span><span class="o">-&gt;</span><span class="n">get_name</span><span class="p">(),</span> <span class="k">module</span><span class="o">-&gt;</span><span class="n">get_trackplan</span><span class="p">());</span>
+  <span class="c1">// Check if there is a Trackplan for the module</span>
+  <span class="kt">bool</span> <span class="n">hasTp</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">tp</span> <span class="p">:</span> <span class="n">layout</span><span class="o">-&gt;</span><span class="n">get_trackplans</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">tp</span><span class="p">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">==</span> <span class="k">module</span><span class="o">-&gt;</span><span class="n">get_trackplan</span><span class="p">())</span> <span class="p">{</span>
+      <span class="n">INFO</span><span class="p">(</span><span class="s">&quot;Found track plan [{}] for Module [{}]&quot;</span><span class="p">,</span> <span class="n">tp</span><span class="p">.</span><span class="n">get_name</span><span class="p">(),</span>
+           <span class="k">module</span><span class="o">-&gt;</span><span class="n">get_name</span><span class="p">());</span>
+      <span class="n">hasTp</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+      <span class="n">tps</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">tp</span><span class="p">);</span>
+      <span class="n">modules</span><span class="p">.</span><span class="n">insert</span><span class="p">({</span><span class="k">module</span><span class="o">-&gt;</span><span class="n">get_name</span><span class="p">(),</span> <span class="n">mn</span><span class="p">});</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">hasTp</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;  No track plan for Module [{}] found&quot;</span><span class="p">,</span> <span class="k">module</span><span class="o">-&gt;</span><span class="n">get_name</span><span class="p">());</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="n">mn</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">DccVertex</span><span class="o">&gt;</span> <span class="n">DccGraph</span><span class="o">::</span><span class="n">createVertex</span><span class="p">(</span><span class="kt">int16_t</span> <span class="k">module</span><span class="p">,</span> <span class="kt">int32_t</span> <span class="n">dccid</span><span class="p">,</span>
+                                                  <span class="n">Node_t</span> <span class="n">nodeid</span><span class="p">,</span>
+                                                  <span class="n">TrackElement_t</span> <span class="n">te</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">DccVertex</span><span class="o">&gt;</span> <span class="n">v</span> <span class="o">=</span>
+      <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">DccVertex</span><span class="o">&gt;</span><span class="p">(</span><span class="n">obtainNGid</span><span class="p">(),</span> <span class="k">module</span><span class="p">,</span> <span class="n">dccid</span><span class="p">,</span> <span class="n">nodeid</span><span class="p">,</span> <span class="n">te</span><span class="p">);</span>
+
+  <span class="k">auto</span> <span class="n">nodeIt</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">v</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">());</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">nodeIt</span> <span class="o">==</span> <span class="n">nodes</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">nodes</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">v</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">());</span>
+  <span class="p">}</span>
+  <span class="c1">// the vertex contains now the encoded nodeid;</span>
+
+  <span class="c1">// add the vertex to the appropriate vector of vertices for this trackelement</span>
+  <span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">tev</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">dccid</span><span class="p">);</span>
+  <span class="c1">// if the  vector exists just push the vertex into it otherwise create it and</span>
+  <span class="c1">// the push it</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">it</span> <span class="o">==</span> <span class="n">tev</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">tev</span><span class="p">.</span><span class="n">insert</span><span class="p">({</span><span class="n">dccid</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">DccVertexPtr_t</span><span class="o">&gt;</span><span class="p">()});</span>
+  <span class="p">}</span>
+  <span class="n">tev</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">dccid</span><span class="p">).</span><span class="n">push_back</span><span class="p">(</span><span class="n">v</span><span class="p">);</span>
+  <span class="n">graph</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="p">,</span> <span class="n">DccVertexPtr_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">v</span><span class="o">-&gt;</span><span class="n">getGid</span><span class="p">(),</span> <span class="n">v</span><span class="p">));</span>
+
+  <span class="c1">// figure out which trackelement type we got just ofr tracing purposes</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">type</span><span class="p">;</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="n">v</span><span class="o">-&gt;</span><span class="n">getTeType</span><span class="p">())</span> <span class="p">{</span>
+  <span class="k">case</span> <span class="nl">BUMPER</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;Bumper&quot;</span><span class="p">;</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">case</span> <span class="nl">TURNOUT</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;Turnout&quot;</span><span class="p">;</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">case</span> <span class="nl">RAIL</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;Rail&quot;</span><span class="p">;</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">case</span> <span class="nl">CROSSING</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;Crossing&quot;</span><span class="p">;</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">case</span> <span class="nl">JUNCTION</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;Junction&quot;</span><span class="p">;</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="n">TRC</span><span class="p">(</span><span class="s">&quot;Created {} vertices: Module:[{}], TrackElement:[{}], PathId:[{}]&quot;</span><span class="p">,</span> <span class="n">type</span><span class="p">,</span>
+      <span class="n">v</span><span class="o">-&gt;</span><span class="n">getModule</span><span class="p">(),</span> <span class="n">v</span><span class="o">-&gt;</span><span class="n">getDccid</span><span class="p">(),</span> <span class="n">v</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">());</span>
+  <span class="k">return</span> <span class="n">v</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">DccGraph</span><span class="o">::</span><span class="n">buildBumperVertex</span><span class="p">(</span><span class="kt">int</span> <span class="n">mn</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ten</span><span class="p">,</span> <span class="n">DccModel</span><span class="o">::</span><span class="n">Trackelement</span> <span class="o">*</span><span class="n">te</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Bumper[{}] {}&quot;</span><span class="p">,</span> <span class="n">te</span><span class="o">-&gt;</span><span class="n">get_dccid</span><span class="p">(),</span>
+      <span class="n">te</span><span class="o">-&gt;</span><span class="n">get_bumper</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_description</span><span class="p">()</span> <span class="o">==</span> <span class="k">nullptr</span>
+          <span class="o">?</span> <span class="s">&quot;&quot;</span>
+          <span class="o">:</span> <span class="n">te</span><span class="o">-&gt;</span><span class="n">get_bumper</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_description</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">c_str</span><span class="p">());</span>
+  <span class="c1">// creates one vertex</span>
+  <span class="n">Node_t</span> <span class="n">vid</span> <span class="o">=</span> <span class="n">te</span><span class="o">-&gt;</span><span class="n">get_bumper</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_path</span><span class="p">();</span>
+  <span class="n">createVertex</span><span class="p">(</span><span class="n">mn</span><span class="p">,</span> <span class="n">ten</span><span class="p">,</span> <span class="n">vid</span><span class="p">,</span> <span class="n">te</span><span class="o">-&gt;</span><span class="n">get_bumper</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">DccGraph</span><span class="o">::</span><span class="n">buildTurnoutVertex</span><span class="p">(</span><span class="kt">int</span> <span class="n">mn</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ten</span><span class="p">,</span> <span class="n">DccModel</span><span class="o">::</span><span class="n">Trackelement</span> <span class="o">*</span><span class="n">te</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// creates three vertices</span>
+
+  <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Turnout[{}] {}&quot;</span><span class="p">,</span> <span class="n">te</span><span class="o">-&gt;</span><span class="n">get_dccid</span><span class="p">(),</span>
+      <span class="n">te</span><span class="o">-&gt;</span><span class="n">get_turnout</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_description</span><span class="p">()</span> <span class="o">==</span> <span class="k">nullptr</span>
+          <span class="o">?</span> <span class="s">&quot;&quot;</span>
+          <span class="o">:</span> <span class="n">te</span><span class="o">-&gt;</span><span class="n">get_turnout</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_description</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">c_str</span><span class="p">());</span>
+  <span class="c1">// vertex for the narrow end</span>
+  <span class="n">Node_t</span> <span class="n">vid</span> <span class="o">=</span> <span class="n">te</span><span class="o">-&gt;</span><span class="n">get_turnout</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_narrow</span><span class="p">();</span>
+  <span class="n">DccVertexPtr_t</span> <span class="n">narrow</span> <span class="o">=</span> <span class="n">createVertex</span><span class="p">(</span><span class="n">mn</span><span class="p">,</span> <span class="n">ten</span><span class="p">,</span> <span class="n">vid</span><span class="p">,</span> <span class="n">te</span><span class="o">-&gt;</span><span class="n">get_turnout</span><span class="p">());</span>
+
+  <span class="c1">// vertices for the wide end</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">Node_t</span> <span class="nl">vid</span> <span class="p">:</span> <span class="n">te</span><span class="o">-&gt;</span><span class="n">get_turnout</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_wide</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">DccVertexPtr_t</span> <span class="n">wide</span> <span class="o">=</span> <span class="n">createVertex</span><span class="p">(</span><span class="n">mn</span><span class="p">,</span> <span class="n">ten</span><span class="p">,</span> <span class="n">vid</span><span class="p">,</span> <span class="n">te</span><span class="o">-&gt;</span><span class="n">get_turnout</span><span class="p">());</span>
+    <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Adding narrow [{}] to wide [{}] connection&quot;</span><span class="p">,</span>  <span class="n">narrow</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">(),</span> <span class="n">wide</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">());</span>
+    <span class="n">wide</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addConnection</span><span class="p">(</span><span class="n">narrow</span><span class="p">);</span>
+    <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Adding wide [{}] to narrow [{}] connection&quot;</span><span class="p">,</span> <span class="n">wide</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">(),</span> <span class="n">narrow</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">());</span>
+    <span class="n">narrow</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addConnection</span><span class="p">(</span><span class="n">wide</span><span class="p">);</span>
+  <span class="p">};</span>
+
+  <span class="n">INFO</span><span class="p">(</span><span class="s">&quot;Turnout &lt;T {}{} {}&gt;&quot;</span><span class="p">,</span> <span class="n">mn</span><span class="p">,</span> <span class="n">vid</span><span class="p">,</span> <span class="n">ten</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">DccGraph</span><span class="o">::</span><span class="n">buildRailVertex</span><span class="p">(</span><span class="kt">int</span> <span class="n">mn</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ten</span><span class="p">,</span> <span class="n">DccModel</span><span class="o">::</span><span class="n">Trackelement</span> <span class="o">*</span><span class="n">te</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// creates two vertices</span>
+  <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Segment[{}] {}&quot;</span><span class="p">,</span> <span class="n">te</span><span class="o">-&gt;</span><span class="n">get_dccid</span><span class="p">(),</span>
+      <span class="n">te</span><span class="o">-&gt;</span><span class="n">get_rail</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_description</span><span class="p">()</span> <span class="o">==</span> <span class="k">nullptr</span>
+          <span class="o">?</span> <span class="s">&quot;&quot;</span>
+          <span class="o">:</span> <span class="n">te</span><span class="o">-&gt;</span><span class="n">get_rail</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_description</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">c_str</span><span class="p">());</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">te</span><span class="o">-&gt;</span><span class="n">get_rail</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_path</span><span class="p">().</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;Segment has more than 2 nodes&quot;</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">Node_t</span> <span class="n">v1</span> <span class="o">=</span> <span class="n">te</span><span class="o">-&gt;</span><span class="n">get_rail</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_path</span><span class="p">().</span><span class="n">at</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="n">DccVertexPtr_t</span> <span class="n">in</span> <span class="o">=</span> <span class="n">createVertex</span><span class="p">(</span><span class="n">mn</span><span class="p">,</span> <span class="n">ten</span><span class="p">,</span> <span class="n">v1</span><span class="p">,</span> <span class="n">te</span><span class="o">-&gt;</span><span class="n">get_rail</span><span class="p">());</span>
+    <span class="n">Node_t</span> <span class="n">v2</span> <span class="o">=</span> <span class="n">te</span><span class="o">-&gt;</span><span class="n">get_rail</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_path</span><span class="p">().</span><span class="n">at</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="n">DccVertexPtr_t</span> <span class="n">out</span> <span class="o">=</span> <span class="n">createVertex</span><span class="p">(</span><span class="n">mn</span><span class="p">,</span> <span class="n">ten</span><span class="p">,</span> <span class="n">v2</span><span class="p">,</span> <span class="n">te</span><span class="o">-&gt;</span><span class="n">get_rail</span><span class="p">());</span>
+    <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Adding out [{}] to in [{}] connection&quot;</span><span class="p">,</span> <span class="n">out</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">(),</span> <span class="n">in</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">());</span>
+    <span class="n">in</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addConnection</span><span class="p">(</span><span class="n">out</span><span class="p">);</span>
+    <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Adding in [{}] to out [{}] connection&quot;</span><span class="p">,</span> <span class="n">in</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">(),</span> <span class="n">out</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">());</span>
+    <span class="n">out</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addConnection</span><span class="p">(</span><span class="n">in</span><span class="p">);</span>
+    <span class="n">length</span> <span class="o">=</span> <span class="n">length</span> <span class="o">+</span> <span class="n">te</span><span class="o">-&gt;</span><span class="n">get_rail</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_length</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">DccGraph</span><span class="o">::</span><span class="n">buildCrossingVertex</span><span class="p">(</span><span class="kt">int</span> <span class="n">mn</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ten</span><span class="p">,</span>
+                                   <span class="n">DccModel</span><span class="o">::</span><span class="n">Trackelement</span> <span class="o">*</span><span class="n">te</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="n">DccVertexPtr_t</span> <span class="n">in</span><span class="p">;</span>
+  <span class="n">DccVertexPtr_t</span> <span class="n">out</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">DccVertexPtr_t</span><span class="o">&gt;</span> <span class="n">crNodes</span><span class="p">;</span>
+
+  <span class="c1">// creates two vertices</span>
+  <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Crossing [{}] {}&quot;</span><span class="p">,</span> <span class="n">te</span><span class="o">-&gt;</span><span class="n">get_dccid</span><span class="p">(),</span>
+      <span class="n">te</span><span class="o">-&gt;</span><span class="n">get_crossing</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_description</span><span class="p">()</span> <span class="o">==</span> <span class="k">nullptr</span>
+          <span class="o">?</span> <span class="s">&quot;&quot;</span>
+          <span class="o">:</span> <span class="n">te</span><span class="o">-&gt;</span><span class="n">get_crossing</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_description</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">c_str</span><span class="p">());</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">te</span><span class="o">-&gt;</span><span class="n">get_crossing</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_path</span><span class="p">().</span><span class="n">size</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;Crossing hasn&#39;t the required set of nodes (4)&quot;</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="c1">// create vertices for the crossing</span>
+    <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Create [{}] vertices for the crossing&quot;</span><span class="p">,</span>
+        <span class="n">te</span><span class="o">-&gt;</span><span class="n">get_crossing</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_path</span><span class="p">().</span><span class="n">size</span><span class="p">());</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">te</span><span class="o">-&gt;</span><span class="n">get_crossing</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_path</span><span class="p">().</span><span class="n">size</span><span class="p">();</span>
+         <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">Node_t</span> <span class="n">v</span> <span class="o">=</span> <span class="n">te</span><span class="o">-&gt;</span><span class="n">get_crossing</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_path</span><span class="p">().</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+      <span class="n">crNodes</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">createVertex</span><span class="p">(</span><span class="n">mn</span><span class="p">,</span> <span class="n">ten</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">te</span><span class="o">-&gt;</span><span class="n">get_crossing</span><span class="p">()));</span>
+    <span class="p">}</span>
+    <span class="c1">// add connections i = 0 = top left of the crossing</span>
+    <span class="c1">// straight connections</span>
+    <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Adding connections between the vertices of the crossing&quot;</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">in</span> <span class="o">=</span> <span class="n">crNodes</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+      <span class="n">out</span> <span class="o">=</span> <span class="n">crNodes</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">);</span>
+      <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Adding out [{}] to in [{}] connection&quot;</span><span class="p">,</span> <span class="n">out</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">(),</span>
+          <span class="n">in</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">());</span>
+      <span class="n">in</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addConnection</span><span class="p">(</span><span class="n">out</span><span class="p">);</span>
+      <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Adding in [{}] to out [{}] connection&quot;</span><span class="p">,</span> <span class="n">in</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">(),</span>
+          <span class="n">out</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">());</span>
+      <span class="n">out</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addConnection</span><span class="p">(</span><span class="n">in</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="c1">// add slips if any; none -&gt; just a crossing</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">te</span><span class="o">-&gt;</span><span class="n">get_crossing</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_slip</span><span class="p">().</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Adding [{}] slips to the connections between the vertices of the &quot;</span>
+          <span class="s">&quot;crossing&quot;</span><span class="p">,</span>
+          <span class="n">te</span><span class="o">-&gt;</span><span class="n">get_crossing</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_slip</span><span class="p">().</span><span class="n">size</span><span class="p">());</span>
+      <span class="c1">// loop over all slips</span>
+      <span class="k">for</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">te</span><span class="o">-&gt;</span><span class="n">get_crossing</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_slip</span><span class="p">().</span><span class="n">size</span><span class="p">();</span>
+           <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// find the vertex for the first slip point in crNodes based on the</span>
+        <span class="c1">// index</span>
+        <span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">te</span><span class="o">-&gt;</span><span class="n">get_crossing</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_path</span><span class="p">().</span><span class="n">size</span><span class="p">();</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">if</span> <span class="p">(</span><span class="n">crNodes</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">j</span><span class="p">).</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">()</span> <span class="o">==</span>
+              <span class="n">te</span><span class="o">-&gt;</span><span class="n">get_crossing</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_slip</span><span class="p">().</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">in</span> <span class="o">=</span> <span class="n">crNodes</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">j</span><span class="p">);</span>
+            <span class="k">break</span><span class="p">;</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Found first j [{}] i [{}]&quot;</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+        <span class="c1">// find the opposite for the slip point; As the user can define any node</span>
+        <span class="c1">// as the start/end of the slip look for the direction</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">j</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+          <span class="n">j</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+          <span class="n">j</span><span class="o">--</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Found second j [{}] i [{}]&quot;</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">crNodes</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">j</span><span class="p">);</span>
+
+        <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Adding out [{}] to in [{}] connection&quot;</span><span class="p">,</span> <span class="n">out</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">(),</span>
+            <span class="n">in</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">());</span>
+        <span class="n">in</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addConnection</span><span class="p">(</span><span class="n">out</span><span class="p">);</span>
+        <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Adding in [{}] to out [{}] connection&quot;</span><span class="p">,</span> <span class="n">in</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">(),</span>
+            <span class="n">out</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">());</span>
+        <span class="n">out</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addConnection</span><span class="p">(</span><span class="n">in</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">DccGraph</span><span class="o">::</span><span class="n">buildGraph</span><span class="p">(</span><span class="kt">int</span> <span class="n">mn</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// vector index starts at 0 but we number the modules starting at 1</span>
+  <span class="n">DccModel</span><span class="o">::</span><span class="n">Trackplan</span> <span class="n">tp</span> <span class="o">=</span> <span class="n">tps</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">mn</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+
+  <span class="n">tp</span><span class="p">.</span><span class="n">set_dccid</span><span class="p">(</span><span class="n">tpn</span><span class="p">);</span>
+  <span class="n">tpn</span><span class="o">++</span><span class="p">;</span>
+
+  <span class="n">INFO</span><span class="p">(</span><span class="s">&quot;Building TrackPlan[{}]: {}&quot;</span><span class="p">,</span> <span class="n">tp</span><span class="p">.</span><span class="n">get_dccid</span><span class="p">(),</span> <span class="n">tp</span><span class="p">.</span><span class="n">get_name</span><span class="p">());</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">ts</span> <span class="p">:</span> <span class="n">tp</span><span class="p">.</span><span class="n">get_tracksections</span><span class="p">())</span> <span class="p">{</span>
+    <span class="n">ts</span><span class="p">.</span><span class="n">set_dccid</span><span class="p">(</span><span class="n">tsn</span><span class="p">);</span>
+    <span class="n">tsn</span><span class="o">++</span><span class="p">;</span>
+    <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;TrackSection[{}]: {}&quot;</span><span class="p">,</span> <span class="n">ts</span><span class="p">.</span><span class="n">get_dccid</span><span class="p">(),</span> <span class="n">ts</span><span class="p">.</span><span class="n">get_name</span><span class="p">());</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">te</span> <span class="p">:</span> <span class="n">ts</span><span class="p">.</span><span class="n">get_trackelements</span><span class="p">())</span> <span class="p">{</span>
+      <span class="n">te</span><span class="p">.</span><span class="n">set_dccid</span><span class="p">(</span><span class="n">ten</span><span class="p">);</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">te</span><span class="p">.</span><span class="n">get_bumper</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">buildBumperVertex</span><span class="p">(</span><span class="n">mn</span><span class="p">,</span> <span class="n">ten</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">te</span><span class="p">);</span>
+        <span class="n">bn</span><span class="o">++</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">te</span><span class="p">.</span><span class="n">get_turnout</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">buildTurnoutVertex</span><span class="p">(</span><span class="n">mn</span><span class="p">,</span> <span class="n">ten</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">te</span><span class="p">);</span>
+        <span class="n">tn</span><span class="o">++</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">te</span><span class="p">.</span><span class="n">get_rail</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">buildRailVertex</span><span class="p">(</span><span class="n">mn</span><span class="p">,</span> <span class="n">ten</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">te</span><span class="p">);</span>
+        <span class="n">sn</span><span class="o">++</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">te</span><span class="p">.</span><span class="n">get_crossing</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">buildCrossingVertex</span><span class="p">(</span><span class="n">mn</span><span class="p">,</span> <span class="n">ten</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">te</span><span class="p">);</span>
+        <span class="n">cn</span><span class="o">++</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="n">ten</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">DccGraph</span><span class="o">::</span><span class="n">build</span><span class="p">(</span><span class="n">DccModel</span><span class="o">::</span><span class="n">DccExLayout</span> <span class="o">*</span><span class="n">l</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Read all modules and check if there is a trackplan for each module</span>
+  <span class="c1">// as there may be more trackplans in there as are used by modules collect the</span>
+  <span class="c1">// used ones in a vector</span>
+  <span class="n">INFO</span><span class="p">(</span><span class="s">&quot;Setting up Modules ... &quot;</span><span class="p">);</span>
+  <span class="n">layout</span> <span class="o">=</span> <span class="n">l</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="k">module</span> <span class="o">:</span> <span class="n">layout</span><span class="o">-&gt;</span><span class="n">get_modules</span><span class="p">())</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">mn</span> <span class="o">=</span> <span class="n">checkModule</span><span class="p">(</span>
+        <span class="o">&amp;</span><span class="k">module</span><span class="p">);</span> <span class="c1">// get back the module number for the last checked module</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">mn</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// if it&#39;s 0 we don&#39;t have a trackplan for this module</span>
+      <span class="n">buildGraph</span><span class="p">(</span><span class="n">mn</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="kt">int</span> <span class="n">jn</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">layout</span><span class="o">-&gt;</span><span class="n">get_junctions</span><span class="p">()</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">jn</span> <span class="o">=</span> <span class="n">layout</span><span class="o">-&gt;</span><span class="n">get_junctions</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">();</span>
+    <span class="n">INFO</span><span class="p">(</span><span class="s">&quot;Setting up [{}] Junctions ... &quot;</span><span class="p">,</span> <span class="n">jn</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="c1">// for each junction build a rail segement out of thin air ..</span>
+  <span class="c1">// one vertex for m1 with from path</span>
+  <span class="c1">// one vertex for m2 with to path</span>
+  <span class="c1">// connect them together like in buildRailVertex ()</span>
+  <span class="c1">// when building the siblings ie double vertices they shall be picked up</span>
+  <span class="c1">// if there are bumpers we will have to many siblngs so dump the bumper</span>
+  <span class="c1">// if there are no siblings for the connecting node add this one to it</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">jn</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="n">TrackElement_t</span> <span class="n">j</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">DccModel</span><span class="o">::</span><span class="n">Junction</span><span class="o">&gt;</span><span class="p">(</span>
+        <span class="n">layout</span><span class="o">-&gt;</span><span class="n">get_junctions</span><span class="p">().</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="p">));</span>
+
+    <span class="c1">// dccid and the trackelement doesn&#39;t exists</span>
+    <span class="c1">// ten++; // to be set as dccid for the rail same for the second vertex</span>
+    <span class="c1">// the track element is to be the junction object!</span>
+
+    <span class="k">auto</span> <span class="n">from</span> <span class="o">=</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">get_if</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">DccModel</span><span class="o">::</span><span class="n">Junction</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">j</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_from</span><span class="p">();</span>
+    <span class="k">auto</span> <span class="n">to</span> <span class="o">=</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">get_if</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">DccModel</span><span class="o">::</span><span class="n">Junction</span><span class="o">&gt;&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">j</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">get_to</span><span class="p">();</span>
+
+    <span class="n">TRC</span><span class="p">(</span><span class="s">&quot;Creating Junction #{} from [{} : {}] to [{} : {}]&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span>
+        <span class="n">from</span><span class="p">.</span><span class="n">get_from_module</span><span class="p">(),</span> <span class="n">from</span><span class="p">.</span><span class="n">get_path</span><span class="p">(),</span> <span class="n">to</span><span class="p">.</span><span class="n">get_to_module</span><span class="p">(),</span>
+        <span class="n">to</span><span class="p">.</span><span class="n">get_path</span><span class="p">());</span>
+
+    <span class="kt">int</span> <span class="n">mn1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">mn2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="n">DccVertexPtr_t</span> <span class="n">in</span><span class="p">;</span>
+    <span class="n">DccVertexPtr_t</span> <span class="n">out</span><span class="p">;</span>
+
+    <span class="kt">bool</span> <span class="n">isJunction1</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">isJunction2</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+
+    <span class="k">auto</span> <span class="n">itf</span> <span class="o">=</span>
+        <span class="n">modules</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">from</span><span class="p">.</span><span class="n">get_from_module</span><span class="p">());</span> <span class="c1">// that gives me the name -&gt; find</span>
+                                              <span class="c1">// the module number</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">itf</span> <span class="o">!=</span> <span class="n">modules</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="p">{</span>
+      <span class="n">mn1</span> <span class="o">=</span> <span class="n">modules</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">from</span><span class="p">.</span><span class="n">get_from_module</span><span class="p">())</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">;</span>
+      <span class="n">in</span> <span class="o">=</span> <span class="n">createVertex</span><span class="p">(</span><span class="n">mn1</span><span class="p">,</span> <span class="n">ten</span><span class="p">,</span> <span class="n">from</span><span class="p">.</span><span class="n">get_path</span><span class="p">(),</span> <span class="n">j</span><span class="p">);</span>
+      <span class="n">isJunction1</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;No Module [{}] found for Junction node [{}]&quot;</span><span class="p">,</span> <span class="n">from</span><span class="p">.</span><span class="n">get_from_module</span><span class="p">(),</span>
+          <span class="n">from</span><span class="p">.</span><span class="n">get_path</span><span class="p">());</span>
+      <span class="n">isJunction1</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">auto</span> <span class="n">itt</span> <span class="o">=</span> <span class="n">modules</span><span class="p">.</span><span class="n">find</span><span class="p">(</span>
+        <span class="n">to</span><span class="p">.</span><span class="n">get_to_module</span><span class="p">());</span> <span class="c1">// that gives me the name -&gt; find the module number</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">itt</span> <span class="o">!=</span> <span class="n">modules</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="p">{</span>
+      <span class="n">mn2</span> <span class="o">=</span> <span class="n">modules</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">to</span><span class="p">.</span><span class="n">get_to_module</span><span class="p">())</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">;</span>
+      <span class="n">out</span> <span class="o">=</span> <span class="n">createVertex</span><span class="p">(</span><span class="n">mn2</span><span class="p">,</span> <span class="n">ten</span><span class="p">,</span> <span class="n">to</span><span class="p">.</span><span class="n">get_path</span><span class="p">(),</span> <span class="n">j</span><span class="p">);</span>
+      <span class="n">isJunction2</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">ERR</span><span class="p">(</span><span class="s">&quot;No Module [{}] found for Junction node [{}]&quot;</span><span class="p">,</span> <span class="n">to</span><span class="p">.</span><span class="n">get_to_module</span><span class="p">(),</span>
+          <span class="n">to</span><span class="p">.</span><span class="n">get_path</span><span class="p">());</span>
+      <span class="n">isJunction2</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">isJunction1</span> <span class="o">&amp;&amp;</span> <span class="n">isJunction2</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Adding junction out [{}] to in [{}] connection&quot;</span><span class="p">,</span> <span class="n">out</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">(),</span> <span class="n">in</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">());</span>
+      <span class="n">in</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addConnection</span><span class="p">(</span><span class="n">out</span><span class="p">);</span>
+      <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Adding junction in [{}] to out [{}] connection&quot;</span><span class="p">,</span> <span class="n">in</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">(),</span> <span class="n">out</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">());</span>
+      <span class="n">out</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">addConnection</span><span class="p">(</span><span class="n">in</span><span class="p">);</span>
+      <span class="n">ten</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c1">// length = length + te-&gt;get_rail().get()-&gt;get_length(); / do we have to</span>
+    <span class="c1">// care about the length ??</span>
+  <span class="p">}</span>
+
+  <span class="c1">// in tps we have now all the trackplans used by the layout</span>
+  <span class="c1">// and in graph all vertices ready to be combined together into the double</span>
+  <span class="c1">// vertices there is a double vertice for each of the trackelements; loop over</span>
+  <span class="c1">// the track element number (ten) and get the vertices out of graph which have</span>
+  <span class="c1">// the same nodeid eq to the current track element number;</span>
+  <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Building Double Vertices for [{}] nodes&quot;</span><span class="p">,</span> <span class="n">nodes</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">i</span> <span class="p">:</span> <span class="n">nodes</span><span class="p">)</span>
+  <span class="c1">// for (int32_t i = 1; i &lt;= getNumberOfNodes(); i++)</span>
+  <span class="p">{</span>
+
+    <span class="k">auto</span> <span class="n">dv</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">DccDoubleVertex</span><span class="o">&gt;</span><span class="p">(</span><span class="k">new</span> <span class="n">DccDoubleVertex</span><span class="p">());</span>
+    <span class="k">auto</span> <span class="n">siblings</span> <span class="o">=</span> <span class="n">dv</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getSiblings</span><span class="p">();</span>
+
+    <span class="n">TRC</span><span class="p">(</span><span class="s">&quot;Searching siblings for nodeid [{}]&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">v</span> <span class="p">:</span> <span class="n">graph</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">auto</span> <span class="n">vptr</span> <span class="o">=</span> <span class="n">v</span><span class="p">.</span><span class="n">second</span><span class="p">;</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">vptr</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getNodeid</span><span class="p">()</span> <span class="o">==</span> <span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// Tell the vertex which dv it is part of; allows to navigate from one</span>
+        <span class="c1">// Dv to the next based on the connections of one of the siblings</span>
+        <span class="n">vptr</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">setDv</span><span class="p">(</span><span class="n">dv</span><span class="p">);</span>
+        <span class="n">siblings</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span><span class="n">vptr</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Size [{}]&quot;</span><span class="p">,</span> <span class="n">siblings</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">());</span>
+    <span class="kt">bool</span> <span class="n">addSiblings</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">sib0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// defaults if everything is ok i.e. there are two siblings</span>
+    <span class="kt">int</span> <span class="n">sib1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="n">siblings</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="mi">0</span><span class="o">:</span> <span class="p">{</span>
+      <span class="c1">// not connected at all - can be ignored</span>
+      <span class="n">WARN</span><span class="p">(</span><span class="s">&quot;WARNING: No siblings for nodeid [{}]: Node is (maybe &quot;</span>
+           <span class="s">&quot;intentionally) not connected/skipped in the track plan&quot;</span><span class="p">,</span>
+           <span class="n">i</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">case</span> <span class="mi">1</span><span class="o">:</span> <span class="p">{</span>
+      <span class="c1">// End of track i.e. Bumper ommitted most likely</span>
+      <span class="n">WARN</span><span class="p">(</span><span class="s">&quot;WARNING: Missing sibling for nodeid [{}]: Bumper or connection is &quot;</span>
+           <span class="s">&quot;missing&quot;</span><span class="p">,</span>
+           <span class="n">i</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">case</span> <span class="mi">2</span><span class="o">:</span> <span class="p">{</span>
+      <span class="n">addSiblings</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">case</span> <span class="mi">3</span><span class="o">:</span> <span class="p">{</span>
+      <span class="c1">// this happens when we have a junction and a bumper on the same node id</span>
+      <span class="c1">// or any other error in linking nodes just like the deafult case</span>
+      <span class="c1">// ignore the Bumper and replace it by the junction</span>
+      <span class="c1">// remove the bumper from the siblings ( costly though but no other</span>
+      <span class="c1">// solution yet ) remove the bumper</span>
+      <span class="n">WARN</span><span class="p">(</span><span class="s">&quot;WARNING: Possible reconfiguration from a bumper to a junction &quot;</span>
+           <span class="s">&quot;sibling for nodeid [{}]&quot;</span><span class="p">,</span>
+           <span class="n">i</span><span class="p">);</span>
+      <span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">siblings</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;Found sibling #{} of type {}&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span>
+            <span class="n">siblings</span><span class="o">-&gt;</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getTrackElementType</span><span class="p">());</span>
+        <span class="k">switch</span> <span class="p">(</span><span class="n">siblings</span><span class="o">-&gt;</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getTeType</span><span class="p">())</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="nl">BUMPER</span><span class="p">:</span> <span class="p">{</span>
+          <span class="n">WARN</span><span class="p">(</span><span class="s">&quot;WARNING: Bumper has been deleted and replaced by a junction&quot;</span><span class="p">);</span>
+          <span class="n">siblings</span><span class="o">-&gt;</span><span class="n">erase</span><span class="p">(</span><span class="n">siblings</span><span class="o">-&gt;</span><span class="n">begin</span><span class="p">()</span> <span class="o">+</span> <span class="n">i</span><span class="p">);</span>
+          <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">default</span><span class="o">:</span> <span class="p">{</span>
+          <span class="c1">// don&#39;t do anything</span>
+        <span class="p">}</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+      <span class="c1">// Size should be ok now if there was a bumper</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">siblings</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">addSiblings</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="k">break</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">default</span><span class="o">:</span> <span class="p">{</span>
+      <span class="n">addSiblings</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+      <span class="n">WARN</span><span class="p">(</span><span class="s">&quot;Too many siblings for nodeid [{}]; ignoring the additional &quot;</span>
+           <span class="s">&quot;siblings &quot;</span><span class="p">,</span>
+           <span class="n">i</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">addSiblings</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kt">int64_t</span> <span class="n">id1</span> <span class="o">=</span> <span class="n">siblings</span><span class="o">-&gt;</span><span class="n">at</span><span class="p">(</span><span class="n">sib0</span><span class="p">).</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getGid</span><span class="p">();</span>
+      <span class="kt">int64_t</span> <span class="n">id2</span> <span class="o">=</span> <span class="n">siblings</span><span class="o">-&gt;</span><span class="n">at</span><span class="p">(</span><span class="n">sib1</span><span class="p">).</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getGid</span><span class="p">();</span>
+      <span class="n">TRC</span><span class="p">(</span><span class="s">&quot;DV siblings {}&quot;</span><span class="p">,</span> <span class="n">dv</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getSiblings</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">());</span>
+      <span class="n">dvGraph</span><span class="p">.</span><span class="n">insert</span><span class="p">({</span><span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="p">(</span><span class="n">id1</span><span class="p">,</span> <span class="n">id2</span><span class="p">),</span> <span class="n">dv</span><span class="p">});</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="n">TRC</span><span class="p">(</span><span class="s">&quot;DVGraph has [{}] nodes&quot;</span><span class="p">,</span> <span class="n">dvGraph</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+  <span class="n">_isBuild</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">DccGraph</span><span class="o">::</span><span class="n">printGraph</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">INFO</span><span class="p">(</span><span class="s">&quot;-----------------------------------------&quot;</span><span class="p">);</span>
+  <span class="n">INFO</span><span class="p">(</span><span class="s">&quot;Printing Graph:&quot;</span><span class="p">);</span>
+  <span class="n">INFO</span><span class="p">(</span><span class="s">&quot;-----------------------------------------&quot;</span><span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">mapItem</span> <span class="p">:</span> <span class="n">graph</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">DccVertexPtr_t</span> <span class="n">v</span> <span class="o">=</span> <span class="n">mapItem</span><span class="p">.</span><span class="n">second</span><span class="p">;</span>
+    <span class="n">v</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">printVertex</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">DccGraph</span><span class="o">::</span><span class="n">printTrackElements</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">INFO</span><span class="p">(</span><span class="s">&quot;-----------------------------------------&quot;</span><span class="p">);</span>
+  <span class="n">INFO</span><span class="p">(</span><span class="s">&quot;Track Elements&quot;</span><span class="p">);</span>
+  <span class="n">INFO</span><span class="p">(</span><span class="s">&quot;-----------------------------------------&quot;</span><span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">te</span> <span class="p">:</span> <span class="n">tev</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">INFO</span><span class="p">(</span><span class="s">&quot;TrackElement[{}] contains &quot;</span><span class="p">,</span> <span class="n">te</span><span class="p">.</span><span class="n">first</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">t</span> <span class="p">:</span> <span class="n">te</span><span class="p">.</span><span class="n">second</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">t</span><span class="p">.</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">printVertex</span><span class="p">();</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">DccGraph</span><span class="o">::</span><span class="n">printInfo</span><span class="p">()</span> <span class="p">{</span>
+
+  <span class="n">Diag</span><span class="o">::</span><span class="n">push</span><span class="p">();</span>
+  <span class="n">Diag</span><span class="o">::</span><span class="n">setPrintLabel</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+
+  <span class="n">INFO</span><span class="p">(</span><span class="s">&quot;-----------------------------------------&quot;</span><span class="p">);</span>
+  <span class="n">INFO</span><span class="p">(</span><span class="s">&quot;Layout info&quot;</span><span class="p">);</span>
+  <span class="n">INFO</span><span class="p">(</span><span class="s">&quot;-----------------------------------------&quot;</span><span class="p">);</span>
+  <span class="n">INFO</span><span class="p">(</span><span class="s">&quot;Name: {} has&quot;</span><span class="p">,</span> <span class="n">layout</span><span class="o">-&gt;</span><span class="n">get_layout</span><span class="p">().</span><span class="n">get_name</span><span class="p">());</span>
+  <span class="n">INFO</span><span class="p">(</span><span class="s">&quot;{} Modules using&quot;</span><span class="p">,</span> <span class="n">mn</span><span class="p">);</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">m</span> <span class="p">:</span> <span class="n">layout</span><span class="o">-&gt;</span><span class="n">get_modules</span><span class="p">())</span> <span class="p">{</span>
+
+    <span class="n">INFO</span><span class="p">(</span><span class="s">&quot;  Trackplan [{}] for Module [{}]&quot;</span><span class="p">,</span> <span class="n">m</span><span class="p">.</span><span class="n">get_trackplan</span><span class="p">(),</span> <span class="n">m</span><span class="p">.</span><span class="n">get_name</span><span class="p">());</span>
+  <span class="p">}</span>
+
+  <span class="n">INFO</span><span class="p">(</span><span class="s">&quot;{} has overall:&quot;</span><span class="p">,</span> <span class="n">layout</span><span class="o">-&gt;</span><span class="n">get_layout</span><span class="p">().</span><span class="n">get_name</span><span class="p">());</span>
+  <span class="n">INFO</span><span class="p">(</span><span class="s">&quot;{} Turnouts&quot;</span><span class="p">,</span> <span class="n">tn</span><span class="p">);</span>
+  <span class="n">INFO</span><span class="p">(</span><span class="s">&quot;{} Segments&quot;</span><span class="p">,</span> <span class="n">sn</span><span class="p">);</span>
+  <span class="n">INFO</span><span class="p">(</span><span class="s">&quot;{} Bumpers&quot;</span><span class="p">,</span> <span class="n">bn</span><span class="p">);</span>
+  <span class="n">INFO</span><span class="p">(</span><span class="s">&quot;{} Crossings&quot;</span><span class="p">,</span> <span class="n">cn</span><span class="p">);</span>
+  <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;{} Trackelements&quot;</span><span class="p">,</span> <span class="n">ten</span><span class="p">);</span>
+  <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;# Total number of nodes: {}&quot;</span><span class="p">,</span> <span class="n">nodes</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+  <span class="n">INFO</span><span class="p">(</span><span class="s">&quot;Track length: {}&quot;</span><span class="p">,</span> <span class="n">length</span><span class="p">);</span>
+  <span class="n">DBG</span><span class="p">(</span><span class="s">&quot;# ngid: {}&quot;</span><span class="p">,</span> <span class="n">ngid</span><span class="p">);</span>
+
+  <span class="n">Diag</span><span class="o">::</span><span class="n">pop</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, grbba.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

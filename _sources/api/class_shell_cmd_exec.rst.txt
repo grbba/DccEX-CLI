@@ -1,0 +1,16 @@
+.. _exhale_class_class_shell_cmd_exec:
+
+Class ShellCmdExec
+==================
+
+- Defined in :ref:`file_src_ShellCmdExec.hpp`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: ShellCmdExec
+   :members:
+   :protected-members:
+   :undoc-members:

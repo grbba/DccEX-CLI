@@ -1,0 +1,16 @@
+.. _exhale_struct_structcmd_item:
+
+Struct cmdItem
+==============
+
+- Defined in :ref:`file_src_DccShellCmd.hpp`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: cmdItem
+   :members:
+   :protected-members:
+   :undoc-members:

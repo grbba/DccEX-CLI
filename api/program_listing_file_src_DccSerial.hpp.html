@@ -1,0 +1,287 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Program Listing for File DccSerial.hpp &mdash; DCC++ EX Commandline Interface 0.0.10 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> DCC++ EX Commandline Interface
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../DccEXcli.html">The DCC++ EX Commandline Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">DCC++ EX Commandline Interface API</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DCC++ EX Commandline Interface</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Program Listing for File DccSerial.hpp</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api/program_listing_file_src_DccSerial.hpp.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="program-listing-for-file-dccserial-hpp">
+<span id="program-listing-file-src-dccserial-hpp"></span><h1>Program Listing for File DccSerial.hpp<a class="headerlink" href="#program-listing-for-file-dccserial-hpp" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file_src_DccSerial.hpp.html#file-src-dccserial-hpp"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">src/DccSerial.hpp</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm"> * © 2021 Gregor Baues. All rights reserved.</span>
+<span class="cm"> *</span>
+<span class="cm"> * This is free software: you can redistribute it and/or modify it under</span>
+<span class="cm"> * the terms of the GNU General Public License as published by the</span>
+<span class="cm"> * Free Software Foundation, either version 3 of the License, or</span>
+<span class="cm"> * (at your option) any later version.</span>
+<span class="cm"> *</span>
+<span class="cm"> * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS</span>
+<span class="cm"> * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<span class="cm"> * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
+<span class="cm"> * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+<span class="cm"> * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING</span>
+<span class="cm"> * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER</span>
+<span class="cm"> * DEALINGS IN THE SOFTWARE.</span>
+<span class="cm"> *</span>
+<span class="cm"> * See the GNU General Public License for more details</span>
+<span class="cm"> * &lt;https://www.gnu.org/licenses/&gt;</span>
+<span class="cm"> */</span>
+
+<span class="cp">#ifndef DccSerial_h</span>
+<span class="cp">#define DccSerial_h</span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;AsyncSerial.h&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;variant&gt;</span><span class="cp"></span>
+
+<span class="cp">#define DCC_FAILURE 0</span>
+<span class="cp">#define DCC_SUCCESS 1</span>
+
+<span class="cp">#define DCC_SERIAL 0</span>
+<span class="cp">#define DCC_ETHERNET 1</span>
+<span class="cp">#define DCC_CONN_UNKOWN 2</span>
+
+<span class="c1">// goes into DccShell.hpp</span>
+<span class="k">enum</span> <span class="k">class</span> <span class="nc">shellCommand</span> <span class="p">{</span>
+  <span class="n">S_OPEN</span><span class="p">,</span>
+  <span class="n">S_STATUS</span>
+<span class="p">};</span>
+
+<span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">variant</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="p">,</span>
+                      <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span>
+                      <span class="kt">int</span><span class="o">&gt;</span> <span class="n">CmdParam_t</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">DccSerial</span> <span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+  <span class="n">CallbackAsyncSerial</span> <span class="n">port</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">baud</span> <span class="o">=</span> <span class="mi">115200</span><span class="p">;</span>                                <span class="c1">// default is 115200</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">device</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="n">open</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+  <span class="c1">// std::ostream *out;</span>
+  <span class="c1">// CmdParam_t cmd;</span>
+
+  <span class="k">static</span> <span class="kt">void</span> <span class="n">recieve</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">data</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">len</span><span class="p">);</span> <span class="c1">// callback for reading</span>
+
+
+<span class="k">public</span><span class="o">:</span>
+  <span class="kt">bool</span> <span class="n">openPort</span><span class="p">();</span>  <span class="c1">// open the port</span>
+  <span class="kt">bool</span> <span class="nf">openPort</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">out</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">type</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">device</span><span class="p">,</span> <span class="kt">int</span> <span class="n">baud</span> <span class="p">);</span>  <span class="c1">// open the port</span>
+  <span class="kt">bool</span> <span class="nf">openPort</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">out</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">device</span><span class="p">,</span> <span class="kt">int</span> <span class="n">baud</span> <span class="p">);</span>  <span class="c1">// open the port</span>
+  <span class="kt">void</span> <span class="nf">closePort</span><span class="p">();</span> <span class="c1">// close the port</span>
+  <span class="kt">void</span> <span class="nf">write</span><span class="p">();</span>     <span class="c1">// write to the port</span>
+  <span class="kt">void</span> <span class="nf">write</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">*</span><span class="n">cmd</span><span class="p">);</span>
+
+  <span class="kt">void</span> <span class="nf">setDevice</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">d</span><span class="p">)</span> <span class="p">{</span> <span class="n">device</span> <span class="o">=</span> <span class="n">d</span><span class="p">;</span> <span class="p">}</span>
+  <span class="kt">void</span> <span class="nf">setBaud</span><span class="p">(</span><span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="n">baud</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="kt">bool</span> <span class="nf">isOpen</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">open</span><span class="p">;</span> <span class="p">};</span>
+  <span class="c1">// void setCmd(CmdParam_t c) { cmd = c; }            // current command to process</span>
+  <span class="c1">// void execute(shellCommand cmd, std::ostream &amp;out, CmdParam_t p1,CmdParam_t p2,CmdParam_t p3);</span>
+
+  <span class="n">DccSerial</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+  <span class="o">~</span><span class="n">DccSerial</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+  <span class="n">DccSerial</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">d</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="o">:</span> <span class="n">baud</span><span class="p">(</span><span class="n">b</span><span class="p">),</span> <span class="n">device</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="p">{};</span>
+<span class="p">};</span>
+
+<span class="cp">#endif</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, grbba.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

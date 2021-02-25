@@ -1,0 +1,16 @@
+.. _exhale_class_class_dcc_shell:
+
+Class DccShell
+==============
+
+- Defined in :ref:`file_src_DccShell.hpp`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: DccShell
+   :members:
+   :protected-members:
+   :undoc-members:

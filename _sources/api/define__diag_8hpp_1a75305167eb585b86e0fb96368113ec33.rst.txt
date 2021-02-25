@@ -1,0 +1,13 @@
+.. _exhale_define__diag_8hpp_1a75305167eb585b86e0fb96368113ec33:
+
+Define DIAGERR
+==============
+
+- Defined in :ref:`file_src_Diag.hpp`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: DIAGERR

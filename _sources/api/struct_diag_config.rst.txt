@@ -1,0 +1,16 @@
+.. _exhale_struct_struct_diag_config:
+
+Struct DiagConfig
+=================
+
+- Defined in :ref:`file_src_Diag.hpp`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: DiagConfig
+   :members:
+   :protected-members:
+   :undoc-members:

@@ -1,0 +1,13 @@
+.. _exhale_define__dcc_serial_8hpp_1abfecbf96fb1337464637a50c5db3e544:
+
+Define DCC_CONN_UNKOWN
+======================
+
+- Defined in :ref:`file_src_DccSerial.hpp`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: DCC_CONN_UNKOWN

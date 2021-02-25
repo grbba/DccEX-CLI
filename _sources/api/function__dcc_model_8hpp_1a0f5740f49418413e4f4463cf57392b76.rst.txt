@@ -1,0 +1,13 @@
+.. _exhale_function__dcc_model_8hpp_1a0f5740f49418413e4f4463cf57392b76:
+
+Function nlohmann::from_json(const json&, DccModel ::Crossing&)
+===============================================================
+
+- Defined in :ref:`file_src_DccModel.hpp`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: nlohmann::from_json(const json&, DccModel ::Crossing&)

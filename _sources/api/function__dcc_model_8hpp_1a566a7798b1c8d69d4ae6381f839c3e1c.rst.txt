@@ -1,0 +1,13 @@
+.. _exhale_function__dcc_model_8hpp_1a566a7798b1c8d69d4ae6381f839c3e1c:
+
+Template Function DccModel::get_optional
+========================================
+
+- Defined in :ref:`file_src_DccModel.hpp`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: DccModel::get_optional(const json&, const char *)

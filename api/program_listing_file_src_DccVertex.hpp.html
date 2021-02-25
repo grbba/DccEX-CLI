@@ -1,0 +1,366 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Program Listing for File DccVertex.hpp &mdash; DCC++ EX Commandline Interface 0.0.10 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> DCC++ EX Commandline Interface
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../DccEXcli.html">The DCC++ EX Commandline Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">DCC++ EX Commandline Interface API</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DCC++ EX Commandline Interface</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Program Listing for File DccVertex.hpp</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api/program_listing_file_src_DccVertex.hpp.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="program-listing-for-file-dccvertex-hpp">
+<span id="program-listing-file-src-dccvertex-hpp"></span><h1>Program Listing for File DccVertex.hpp<a class="headerlink" href="#program-listing-for-file-dccvertex-hpp" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file_src_DccVertex.hpp.html#file-src-dccvertex-hpp"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">src/DccVertex.hpp</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm"> * © 2020 Gregor Baues. All rights reserved.</span>
+<span class="cm"> *</span>
+<span class="cm"> * This is free software: you can redistribute it and/or modify it under</span>
+<span class="cm"> * the terms of the GNU General Public License as published by the</span>
+<span class="cm"> * Free Software Foundation, either version 3 of the License, or</span>
+<span class="cm"> * (at your option) any later version.</span>
+<span class="cm"> *</span>
+<span class="cm"> * THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS</span>
+<span class="cm"> * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<span class="cm"> * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
+<span class="cm"> * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+<span class="cm"> * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING</span>
+<span class="cm"> * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER</span>
+<span class="cm"> * DEALINGS IN THE SOFTWARE.</span>
+<span class="cm"> *</span>
+<span class="cm"> * See the GNU General Public License for more details</span>
+<span class="cm"> * &lt;https://www.gnu.org/licenses/&gt;</span>
+<span class="cm"> */</span>
+
+<span class="cp">#ifndef DccVertex_h</span>
+<span class="cp">#define DccVertex_h</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;memory&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;variant&gt;</span><span class="cp"></span>
+
+<span class="cp">#include</span> <span class="cpf">&quot;DccModel.hpp&quot;</span><span class="cp"></span>
+
+<span class="cp">#define isTurnout(x)                                                           \</span>
+<span class="cp">  std::get_if&lt;std::shared_ptr&lt;DccModel::Turnout&gt;&gt;(&amp;x) != nullptr</span>
+<span class="cp">#define getTurnout(x) std::get_if&lt;std::shared_ptr&lt;DccModel::Turnout&gt;&gt;(&amp;x)</span>
+
+<span class="cp">#define isBumper(x)                                                            \</span>
+<span class="cp">  std::get_if&lt;std::shared_ptr&lt;DccModel::Bumper&gt;&gt;(&amp;x) != nullptr</span>
+<span class="cp">#define getBumper(x) std::get_if&lt;std::shared_ptr&lt;DccModel::Bumper&gt;&gt;(&amp;x)</span>
+
+<span class="cp">#define isSegement(x)                                                          \</span>
+<span class="cp">  std::get_if&lt;std::shared_ptr&lt;DccModel::Rail&gt;&gt;(&amp;x) != nullptr</span>
+<span class="cp">#define getSegment(x) std::get_if&lt;std::shared_ptr&lt;DccModel::Rail&gt;&gt;(&amp;x)</span>
+
+<span class="cp">#define isCrossing(x)                                                          \</span>
+<span class="cp">  std::get_if&lt;std::shared_ptr&lt;DccModel::Crossing&gt;&gt;(&amp;x) != nullptr</span>
+<span class="cp">#define getCrossing(x) std::get_if&lt;std::shared_ptr&lt;DccModel::Crossing&gt;&gt;(&amp;x)</span>
+
+<span class="cp">#define isJunction(x)                                                          \</span>
+<span class="cp">  std::get_if&lt;std::shared_ptr&lt;DccModel::Junction&gt;&gt;(&amp;x) != nullptr</span>
+<span class="cp">#define getJunction(x) std::get_if&lt;std::shared_ptr&lt;DccModel::Junction&gt;&gt;(&amp;x)</span>
+
+<span class="k">class</span> <span class="nc">DccDoubleVertex</span><span class="p">;</span>
+<span class="k">class</span> <span class="nc">DccVertex</span><span class="p">;</span>
+
+<span class="k">enum</span> <span class="nc">Telement</span> <span class="p">{</span>
+  <span class="n">BUMPER</span><span class="p">,</span>
+  <span class="n">RAIL</span><span class="p">,</span>
+  <span class="n">TURNOUT</span><span class="p">,</span>
+  <span class="n">CROSSING</span><span class="p">,</span>
+  <span class="n">JUNCTION</span> <span class="c1">// connection between modules</span>
+<span class="p">};</span>
+
+<span class="k">enum</span> <span class="nc">GraphMarker</span> <span class="p">{</span> <span class="n">NOK</span><span class="p">,</span> <span class="n">OK</span><span class="p">,</span> <span class="n">UNKNOWN</span> <span class="p">};</span>
+
+<span class="c1">// to be completed with crossing, singe/double slips</span>
+<span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">variant</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">DccModel</span><span class="o">::</span><span class="n">Bumper</span><span class="o">&gt;</span><span class="p">,</span>
+                     <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">DccModel</span><span class="o">::</span><span class="n">Rail</span><span class="o">&gt;</span><span class="p">,</span>
+                     <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">DccModel</span><span class="o">::</span><span class="n">Turnout</span><span class="o">&gt;</span><span class="p">,</span>
+                     <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">DccModel</span><span class="o">::</span><span class="n">Crossing</span><span class="o">&gt;</span><span class="p">,</span>
+                     <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">DccModel</span><span class="o">::</span><span class="n">Junction</span><span class="o">&gt;&gt;</span>
+    <span class="n">TrackElement_t</span><span class="p">;</span>
+
+<span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">DccVertex</span><span class="o">&gt;</span> <span class="n">DccVertexPtr_t</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">DccDoubleVertex</span><span class="o">&gt;</span> <span class="n">DccDoubleVertexPtr_t</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="kt">int32_t</span><span class="p">,</span> <span class="n">DccVertexPtr_t</span><span class="o">&gt;</span> <span class="n">DccVertexGraph_t</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int64_t</span><span class="p">,</span> <span class="kt">int64_t</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">DccDoubleVertexPtr_t</span><span class="o">&gt;</span>
+    <span class="n">DccDoubleVertexGraph_t</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="kt">int32_t</span> <span class="n">Node_t</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">DccVertex</span> <span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+  <span class="kt">int64_t</span> <span class="n">gid</span><span class="p">;</span>    <span class="c1">// graphid unique number of each vertex</span>
+  <span class="kt">int16_t</span> <span class="k">module</span><span class="p">;</span> <span class="c1">// module on which the node is located</span>
+  <span class="kt">int32_t</span> <span class="n">dccid</span><span class="p">;</span>  <span class="c1">// unique id per trackelement ( but not for the vertices of a</span>
+                  <span class="c1">// trackelement )</span>
+  <span class="n">Node_t</span>
+      <span class="n">nodeid</span><span class="p">;</span> <span class="c1">// Attn the node id is not unique as the same id will be used in</span>
+              <span class="c1">// the layout description multiple times to represent connectoins</span>
+  <span class="n">Telement</span> <span class="n">teType</span><span class="p">;</span> <span class="c1">// enum indicating the Track element type</span>
+  <span class="n">TrackElement_t</span> <span class="n">trackelement</span><span class="p">;</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">DccVertexPtr_t</span><span class="o">&gt;</span>
+      <span class="n">connections</span><span class="p">;</span> <span class="c1">// all the other vertices to which this one is connected</span>
+  <span class="n">DccDoubleVertexPtr_t</span> <span class="n">dv</span><span class="p">;</span> <span class="c1">// The double vertex wich this vertex is part of</span>
+
+<span class="k">public</span><span class="o">:</span>
+  <span class="n">GraphMarker</span> <span class="n">mark</span> <span class="o">=</span> <span class="n">NOK</span><span class="p">;</span>
+  <span class="c1">// Getter/Setter</span>
+  <span class="kt">void</span> <span class="nf">setTrackelement</span><span class="p">(</span><span class="n">TrackElement_t</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="n">trackelement</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+  <span class="n">TrackElement_t</span> <span class="nf">getTrackelement</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">trackelement</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="nf">setTeType</span><span class="p">(</span><span class="n">Telement</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="n">teType</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+  <span class="n">Telement</span> <span class="nf">getTeType</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">teType</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="kt">int16_t</span> <span class="nf">getModule</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">module</span><span class="p">;</span> <span class="p">}</span>
+  <span class="kt">void</span> <span class="nf">setModule</span><span class="p">(</span><span class="kt">int16_t</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="k">module</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="nf">setGid</span><span class="p">(</span><span class="kt">int64_t</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="n">gid</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">};</span>
+  <span class="kt">int64_t</span> <span class="nf">getGid</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">gid</span><span class="p">;</span> <span class="p">};</span>
+
+  <span class="kt">void</span> <span class="nf">setDccid</span><span class="p">(</span><span class="kt">int32_t</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="n">dccid</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">};</span>
+  <span class="kt">int32_t</span> <span class="nf">getDccid</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">dccid</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="kt">int32_t</span> <span class="nf">getNodeid</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">nodeid</span><span class="p">;</span> <span class="p">}</span>
+  <span class="kt">void</span> <span class="nf">setNodeid</span><span class="p">(</span><span class="kt">int32_t</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="n">nodeid</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">};</span>
+
+  <span class="kt">void</span> <span class="nf">addConnection</span><span class="p">(</span><span class="n">DccVertexPtr_t</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span> <span class="n">connections</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">v</span><span class="p">);</span> <span class="p">}</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">DccVertexPtr_t</span><span class="o">&gt;</span> <span class="n">getConnections</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">connections</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">setDv</span><span class="p">(</span><span class="n">DccDoubleVertexPtr_t</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span> <span class="n">dv</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="p">}</span>
+  <span class="n">DccDoubleVertexPtr_t</span> <span class="n">getDv</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">dv</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="k">static</span> <span class="kt">int</span> <span class="n">cantorEncode</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">);</span>
+  <span class="k">static</span> <span class="kt">void</span> <span class="n">cantorDecode</span><span class="p">(</span><span class="kt">int</span> <span class="n">c</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">b</span><span class="p">);</span>
+
+  <span class="c1">// Function Methods</span>
+  <span class="k">auto</span> <span class="nf">getTrackElementType</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">;</span>
+  <span class="kt">void</span> <span class="nf">printVertex</span><span class="p">();</span>
+  <span class="kt">void</span> <span class="nf">printConnections</span><span class="p">();</span>
+
+  <span class="c1">// Constructor/Destructor</span>
+  <span class="n">DccVertex</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+  <span class="n">DccVertex</span><span class="p">(</span><span class="kt">int64_t</span> <span class="n">gid</span><span class="p">,</span> <span class="kt">int16_t</span> <span class="k">module</span><span class="p">,</span> <span class="kt">int32_t</span> <span class="n">dccid</span><span class="p">,</span> <span class="n">Node_t</span> <span class="n">nodeid</span><span class="p">,</span>
+            <span class="n">TrackElement_t</span> <span class="n">te</span><span class="p">);</span>
+  <span class="o">~</span><span class="n">DccVertex</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">DccDoubleVertex</span> <span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">DccVertexPtr_t</span><span class="o">&gt;</span> <span class="n">siblings</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">DccDoubleVertexPtr_t</span><span class="o">&gt;</span>
+      <span class="n">connections</span><span class="p">;</span> <span class="c1">// all double vertices to which the vertex v1 and v2 are</span>
+                   <span class="c1">// connected</span>
+
+<span class="k">public</span><span class="o">:</span>
+  <span class="n">GraphMarker</span> <span class="n">mark</span><span class="p">;</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">DccVertexPtr_t</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">getSiblings</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="o">&amp;</span><span class="n">siblings</span><span class="p">;</span> <span class="p">};</span>
+  <span class="n">DccVertexPtr_t</span> <span class="nf">findSibling</span><span class="p">(</span><span class="n">DccVertexPtr_t</span> <span class="n">v</span><span class="p">);</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">DccDoubleVertexPtr_t</span><span class="o">&gt;</span> <span class="n">getConnections</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">connections</span><span class="p">;</span> <span class="p">}</span>
+
+  <span class="kt">void</span> <span class="n">printDoubleVertex</span><span class="p">();</span>
+
+  <span class="n">DccDoubleVertex</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+  <span class="o">~</span><span class="n">DccDoubleVertex</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="cp">#endif</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, grbba.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

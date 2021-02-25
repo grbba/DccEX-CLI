@@ -1,0 +1,13 @@
+.. _exhale_define__diag_8hpp_1aa173aaa724787eeb93e96de0e5556d76:
+
+Define ERR
+==========
+
+- Defined in :ref:`file_src_Diag.hpp`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: ERR

@@ -1,0 +1,160 @@
+
+.. _file_src_DccModel.hpp:
+
+File DccModel.hpp
+=================
+
+|exhale_lsh| :ref:`Parent directory <dir_src>` (``src``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/DccModel.hpp``)
+---------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_DccModel.hpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``nlohmann/json.hpp``
+
+- ``regex``
+
+- ``stdexcept``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_src_DccGraph.hpp`
+
+- :ref:`file_src_DccLayout.hpp`
+
+- :ref:`file_src_DccPath.hpp`
+
+- :ref:`file_src_DccPathFinder.hpp`
+
+- :ref:`file_src_DccVertex.hpp`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_DccModel`
+
+- :ref:`namespace_nlohmann`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structnlohmann_1_1adl__serializer_3_01std_1_1shared__ptr_3_01_t_01_4_01_4`
+
+- :ref:`exhale_class_class_dcc_model_1_1_bumper`
+
+- :ref:`exhale_class_class_dcc_model_1_1_crossing`
+
+- :ref:`exhale_class_class_dcc_model_1_1_dcc_ex_layout`
+
+- :ref:`exhale_class_class_dcc_model_1_1_dcc_object`
+
+- :ref:`exhale_class_class_dcc_model_1_1_from`
+
+- :ref:`exhale_class_class_dcc_model_1_1_junction`
+
+- :ref:`exhale_class_class_dcc_model_1_1_layout`
+
+- :ref:`exhale_class_class_dcc_model_1_1_module`
+
+- :ref:`exhale_class_class_dcc_model_1_1_rail`
+
+- :ref:`exhale_class_class_dcc_model_1_1_to`
+
+- :ref:`exhale_class_class_dcc_model_1_1_trackelement`
+
+- :ref:`exhale_class_class_dcc_model_1_1_trackplan`
+
+- :ref:`exhale_class_class_dcc_model_1_1_tracksection`
+
+- :ref:`exhale_class_class_dcc_model_1_1_turnout`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function__dcc_model_8hpp_1a566a7798b1c8d69d4ae6381f839c3e1c`
+
+- :ref:`exhale_function__dcc_model_8hpp_1a2cfd65e74dceac2f4577c6a3970f8ac4`
+
+- :ref:`exhale_function__dcc_model_8hpp_1ad8448dac2b74f24f718b839b7f07f6ba`
+
+- :ref:`exhale_function__dcc_model_8hpp_1a1037e2d791d79376b53f1f373ed4cdeb`
+
+- :ref:`exhale_function__dcc_model_8hpp_1a0f5740f49418413e4f4463cf57392b76`
+
+- :ref:`exhale_function__dcc_model_8hpp_1a89f0a0c404c1a12891155d00f6696f58`
+
+- :ref:`exhale_function__dcc_model_8hpp_1a71701e6d0f3e66b75a189a15289eff48`
+
+- :ref:`exhale_function__dcc_model_8hpp_1af7309cfe41dacd335b47c8d763353218`
+
+- :ref:`exhale_function__dcc_model_8hpp_1a86fac7dd943c51b507dba44e55dc2d29`
+
+- :ref:`exhale_function__dcc_model_8hpp_1a3129f82694a69da152ad67f421cc6756`
+
+- :ref:`exhale_function__dcc_model_8hpp_1a92fb659f38512e3f0a46ff688126a00e`
+
+- :ref:`exhale_function__dcc_model_8hpp_1a93f8e360dd0c3331fbb8a7877d023ad2`
+
+- :ref:`exhale_function__dcc_model_8hpp_1ac2f86da0cd3c994c7d7912b9c1da1902`
+
+- :ref:`exhale_function__dcc_model_8hpp_1a9e6f41e5ebfb4c590875f6faedcea9a3`
+
+- :ref:`exhale_function__dcc_model_8hpp_1aa71da80476a0094f110da3e37513eb0c`
+
+- :ref:`exhale_function__dcc_model_8hpp_1a767c18ce7066f53ee8aa3d2f34c1a8e4`
+
+- :ref:`exhale_function__dcc_model_8hpp_1ae0c82b3e6064c2b66be3a0db192fa259`
+
+- :ref:`exhale_function__dcc_model_8hpp_1aff327f1411b2796b26c1120f0782782d`
+
+- :ref:`exhale_function__dcc_model_8hpp_1a89d0f4f10db6df65ecf794aa04307de0`
+
+- :ref:`exhale_function__dcc_model_8hpp_1a3410ae93f4610a432cfeeee1bf6cc736`
+
+- :ref:`exhale_function__dcc_model_8hpp_1a1b5b16b382023ded421ac2dcdc0ca3fc`
+
+- :ref:`exhale_function__dcc_model_8hpp_1a52e69eb377be72a2af2d33cd182d71e9`
+
+- :ref:`exhale_function__dcc_model_8hpp_1aa38c6ea0c22a2dd03f0afad3f3dce40f`
+
+- :ref:`exhale_function__dcc_model_8hpp_1ac9ab642a667dbf591b579cb1455492cc`
+
+- :ref:`exhale_function__dcc_model_8hpp_1a4688540e34e0cd6680899b88ba112a56`
+
+- :ref:`exhale_function__dcc_model_8hpp_1ae2162207dca2de1e618122948c0012f7`
+
+- :ref:`exhale_function__dcc_model_8hpp_1ac32fb368cf7f7c94104167478b1c9536`
+
+- :ref:`exhale_function__dcc_model_8hpp_1a0da9a1827899392baf045086b5bf7356`
+

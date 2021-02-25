@@ -1,0 +1,13 @@
+.. _exhale_define__diag_8hpp_1afe2bf979640efe3d3cb6811cad7ea3ab:
+
+Define LOGV_ERROR_MSG
+=====================
+
+- Defined in :ref:`file_src_Diag.hpp`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: LOGV_ERROR_MSG

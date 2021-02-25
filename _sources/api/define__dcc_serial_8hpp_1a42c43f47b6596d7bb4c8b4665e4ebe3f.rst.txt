@@ -1,0 +1,13 @@
+.. _exhale_define__dcc_serial_8hpp_1a42c43f47b6596d7bb4c8b4665e4ebe3f:
+
+Define DCC_FAILURE
+==================
+
+- Defined in :ref:`file_src_DccSerial.hpp`
+
+
+Define Documentation
+--------------------
+
+
+.. doxygendefine:: DCC_FAILURE

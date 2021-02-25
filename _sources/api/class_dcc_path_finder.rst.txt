@@ -1,0 +1,16 @@
+.. _exhale_class_class_dcc_path_finder:
+
+Class DccPathFinder
+===================
+
+- Defined in :ref:`file_src_DccPathFinder.hpp`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: DccPathFinder
+   :members:
+   :protected-members:
+   :undoc-members:

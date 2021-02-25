@@ -1,0 +1,13 @@
+.. _exhale_function__dcc_model_8hpp_1a1037e2d791d79376b53f1f373ed4cdeb:
+
+Function nlohmann::from_json(const json&, DccModel ::Bumper&)
+=============================================================
+
+- Defined in :ref:`file_src_DccModel.hpp`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: nlohmann::from_json(const json&, DccModel ::Bumper&)
