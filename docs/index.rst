@@ -1,11 +1,18 @@
 Welcome to the DCC++ EX Commandline Interface
-================================================================
+=============================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
    :caption: Contents:
 
-   DccEXcli
+   running-cli/index
+   layout/index
+   cli-commands/index
+   roadmap/index
+   contributing/index
+   download/index
+   support/index
+   about/index
    api/library_root
 
 

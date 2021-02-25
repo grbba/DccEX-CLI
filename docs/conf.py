@@ -18,8 +18,8 @@
 # -- Project information -----------------------------------------------------
 
 project = 'DCC++ EX Commandline Interface'
-copyright = '2021, grbba'
-author = 'grbba'
+copyright = '2021, Gregor Baues'
+author = 'Gregor Baues'
 
 # The full version, including alpha/beta/rc tags
 release = '0.0.10'
@@ -45,6 +45,10 @@ extensions = [
     'breathe',
     'exhale'
 ]
+
+spelling_lang='en_US'
+tokenizer_lang='en_US'
+spelling_word_list_filename = ['spelling_wordlist.txt']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
