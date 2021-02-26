@@ -31,6 +31,6 @@ jobs:
         && cd json-schema-validator
         && mkdir build
         && cd build
-        && cmake ..
+        && cmake -Dnlohmann_json_DIR=/usr/local/include ..
         && make
         && make install
