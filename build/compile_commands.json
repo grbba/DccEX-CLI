@@ -1,0 +1,67 @@
+[
+{
+  "directory": "/Users/gregor/Projects/DccEX-CLI/build/src",
+  "command": "/usr/bin/clang++ -DFMT_LOCALE -DJSON_USE_IMPLICIT_CONVERSIONS=1 -isystem /usr/local/include -O3 -DNDEBUG -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk -mmacosx-version-min=10.15 -std=gnu++17 -o CMakeFiles/dcclayout.dir/main.cpp.o -c /Users/gregor/Projects/DccEX-CLI/src/main.cpp",
+  "file": "/Users/gregor/Projects/DccEX-CLI/src/main.cpp"
+},
+{
+  "directory": "/Users/gregor/Projects/DccEX-CLI/build/src",
+  "command": "/usr/bin/clang++ -DFMT_LOCALE -DJSON_USE_IMPLICIT_CONVERSIONS=1 -isystem /usr/local/include -O3 -DNDEBUG -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk -mmacosx-version-min=10.15 -std=gnu++17 -o CMakeFiles/dcclayout.dir/Diag.cpp.o -c /Users/gregor/Projects/DccEX-CLI/src/Diag.cpp",
+  "file": "/Users/gregor/Projects/DccEX-CLI/src/Diag.cpp"
+},
+{
+  "directory": "/Users/gregor/Projects/DccEX-CLI/build/src",
+  "command": "/usr/bin/clang++ -DFMT_LOCALE -DJSON_USE_IMPLICIT_CONVERSIONS=1 -isystem /usr/local/include -O3 -DNDEBUG -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk -mmacosx-version-min=10.15 -std=gnu++17 -o CMakeFiles/dcclayout.dir/DccVertex.cpp.o -c /Users/gregor/Projects/DccEX-CLI/src/DccVertex.cpp",
+  "file": "/Users/gregor/Projects/DccEX-CLI/src/DccVertex.cpp"
+},
+{
+  "directory": "/Users/gregor/Projects/DccEX-CLI/build/src",
+  "command": "/usr/bin/clang++ -DFMT_LOCALE -DJSON_USE_IMPLICIT_CONVERSIONS=1 -isystem /usr/local/include -O3 -DNDEBUG -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk -mmacosx-version-min=10.15 -std=gnu++17 -o CMakeFiles/dcclayout.dir/DccGraph.cpp.o -c /Users/gregor/Projects/DccEX-CLI/src/DccGraph.cpp",
+  "file": "/Users/gregor/Projects/DccEX-CLI/src/DccGraph.cpp"
+},
+{
+  "directory": "/Users/gregor/Projects/DccEX-CLI/build/src",
+  "command": "/usr/bin/clang++ -DFMT_LOCALE -DJSON_USE_IMPLICIT_CONVERSIONS=1 -isystem /usr/local/include -O3 -DNDEBUG -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk -mmacosx-version-min=10.15 -std=gnu++17 -o CMakeFiles/dcclayout.dir/DccPathFinder.cpp.o -c /Users/gregor/Projects/DccEX-CLI/src/DccPathFinder.cpp",
+  "file": "/Users/gregor/Projects/DccEX-CLI/src/DccPathFinder.cpp"
+},
+{
+  "directory": "/Users/gregor/Projects/DccEX-CLI/build/src",
+  "command": "/usr/bin/clang++ -DFMT_LOCALE -DJSON_USE_IMPLICIT_CONVERSIONS=1 -isystem /usr/local/include -O3 -DNDEBUG -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk -mmacosx-version-min=10.15 -std=gnu++17 -o CMakeFiles/dcclayout.dir/DccLayout.cpp.o -c /Users/gregor/Projects/DccEX-CLI/src/DccLayout.cpp",
+  "file": "/Users/gregor/Projects/DccEX-CLI/src/DccLayout.cpp"
+},
+{
+  "directory": "/Users/gregor/Projects/DccEX-CLI/build/src",
+  "command": "/usr/bin/clang++ -DFMT_LOCALE -DJSON_USE_IMPLICIT_CONVERSIONS=1 -isystem /usr/local/include -O3 -DNDEBUG -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk -mmacosx-version-min=10.15 -std=gnu++17 -o CMakeFiles/dcclayout.dir/DccConfig.cpp.o -c /Users/gregor/Projects/DccEX-CLI/src/DccConfig.cpp",
+  "file": "/Users/gregor/Projects/DccEX-CLI/src/DccConfig.cpp"
+},
+{
+  "directory": "/Users/gregor/Projects/DccEX-CLI/build/src",
+  "command": "/usr/bin/clang++ -DFMT_LOCALE -DJSON_USE_IMPLICIT_CONVERSIONS=1 -isystem /usr/local/include -O3 -DNDEBUG -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk -mmacosx-version-min=10.15 -std=gnu++17 -o CMakeFiles/dcclayout.dir/DccPath.cpp.o -c /Users/gregor/Projects/DccEX-CLI/src/DccPath.cpp",
+  "file": "/Users/gregor/Projects/DccEX-CLI/src/DccPath.cpp"
+},
+{
+  "directory": "/Users/gregor/Projects/DccEX-CLI/build/src",
+  "command": "/usr/bin/clang++ -DFMT_LOCALE -DJSON_USE_IMPLICIT_CONVERSIONS=1 -isystem /usr/local/include -O3 -DNDEBUG -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk -mmacosx-version-min=10.15 -std=gnu++17 -o CMakeFiles/dcclayout.dir/DccShell.cpp.o -c /Users/gregor/Projects/DccEX-CLI/src/DccShell.cpp",
+  "file": "/Users/gregor/Projects/DccEX-CLI/src/DccShell.cpp"
+},
+{
+  "directory": "/Users/gregor/Projects/DccEX-CLI/build/src",
+  "command": "/usr/bin/clang++ -DFMT_LOCALE -DJSON_USE_IMPLICIT_CONVERSIONS=1 -isystem /usr/local/include -O3 -DNDEBUG -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk -mmacosx-version-min=10.15 -std=gnu++17 -o CMakeFiles/dcclayout.dir/AsyncSerial.cpp.o -c /Users/gregor/Projects/DccEX-CLI/src/AsyncSerial.cpp",
+  "file": "/Users/gregor/Projects/DccEX-CLI/src/AsyncSerial.cpp"
+},
+{
+  "directory": "/Users/gregor/Projects/DccEX-CLI/build/src",
+  "command": "/usr/bin/clang++ -DFMT_LOCALE -DJSON_USE_IMPLICIT_CONVERSIONS=1 -isystem /usr/local/include -O3 -DNDEBUG -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk -mmacosx-version-min=10.15 -std=gnu++17 -o CMakeFiles/dcclayout.dir/DccSerial.cpp.o -c /Users/gregor/Projects/DccEX-CLI/src/DccSerial.cpp",
+  "file": "/Users/gregor/Projects/DccEX-CLI/src/DccSerial.cpp"
+},
+{
+  "directory": "/Users/gregor/Projects/DccEX-CLI/build/src",
+  "command": "/usr/bin/clang++ -DFMT_LOCALE -DJSON_USE_IMPLICIT_CONVERSIONS=1 -isystem /usr/local/include -O3 -DNDEBUG -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk -mmacosx-version-min=10.15 -std=gnu++17 -o CMakeFiles/dcclayout.dir/DccShellCmd.cpp.o -c /Users/gregor/Projects/DccEX-CLI/src/DccShellCmd.cpp",
+  "file": "/Users/gregor/Projects/DccEX-CLI/src/DccShellCmd.cpp"
+},
+{
+  "directory": "/Users/gregor/Projects/DccEX-CLI/build/src",
+  "command": "/usr/bin/clang++ -DFMT_LOCALE -DJSON_USE_IMPLICIT_CONVERSIONS=1 -isystem /usr/local/include -O3 -DNDEBUG -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk -mmacosx-version-min=10.15 -std=gnu++17 -o CMakeFiles/dcclayout.dir/ShellCmdExec.cpp.o -c /Users/gregor/Projects/DccEX-CLI/src/ShellCmdExec.cpp",
+  "file": "/Users/gregor/Projects/DccEX-CLI/src/ShellCmdExec.cpp"
+}
+]
