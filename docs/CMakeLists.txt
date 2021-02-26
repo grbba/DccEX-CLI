@@ -3,9 +3,9 @@ cmake_minimum_required(VERSION 3.12...3.19)
 find_package(Doxygen REQUIRED)
 find_package(Sphinx REQUIRED)
 
-#set(DOXYGEN_GENERATE_TREEVIEW YES)
+set(DOXYGEN_GENERATE_TREEVIEW YES)
 #set(DOXYGEN_EXTRACT_ALL YES)
-#set(DOXYGEN_BUILTIN_STL_SUPPORT YES)
+set(DOXYGEN_BUILTIN_STL_SUPPORT YES)
 
 # Find all the public headers
 get_target_property(DCCEX_CLI_PUBLIC_HEADER_DIR dcclayout INTERFACE_INCLUDE_DIRECTORIES)

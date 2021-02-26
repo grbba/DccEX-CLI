@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.7...3.19)
 
+set(CMAKE_VERBOSE_MAKEFILE ON)
+
 project(DccExCommandline) 
 
 #Tell Cmake where to find the sphinx module can be found ( as Sphinx  doesn't provide one )
