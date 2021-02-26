@@ -24,6 +24,7 @@ jobs:
         && cmake -DFMT_TEST=OFF -DFMT_DOC=OFF ..
         && make
         && make install
+        && cd ..
         && git clone https://github.com/pboettch/json-schema-validator.git
         && cd json-schema-validator
         && mkdir build
