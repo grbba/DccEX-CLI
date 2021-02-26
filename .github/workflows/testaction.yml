@@ -1,5 +1,5 @@
 
-name: Docs
+name: testaction
 
 on: 
   push:
@@ -22,5 +22,12 @@ jobs:
         && mkdir build
         && cd build
         && cmake -DFMT_TEST=OFF -DFMT_DOC=OFF ..
+        && make
+        && make install
+        && git clone https://github.com/pboettch/json-schema-validator.git
+        && cd json-schema-validator
+        && mkdir build
+        cd build
+        && cmake ..
         && make
         && make install
