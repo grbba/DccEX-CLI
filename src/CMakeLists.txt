@@ -19,6 +19,7 @@ add_executable( dcclayout
 target_compile_features(dcclayout PRIVATE cxx_std_17)
 target_link_libraries(dcclayout nlohmann_json_schema_validator fmt::fmt)
 
+install(TARGETS dcclayout)
 #find_program(CLANG_TIDY_BIN clang-tidy)
 #find_program(RUN_CLANG_TIDY_BIN /usr/local/bin/run-clang-tidy.py)
 #  list(APPEND RUN_CLANG_TIDY_BIN_ARGS -clang-tidy-binary ${CLANG_TIDY_BIN} 
