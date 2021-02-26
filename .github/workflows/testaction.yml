@@ -25,7 +25,7 @@ jobs:
         && make
         && make install
         && cd ..
-        && curl https://github.com/nlohmann/json/releases/download/v3.9.1/json.hpp
+        && curl -L -O https://github.com/nlohmann/json/releases/download/v3.9.1/json.hpp
         && mv json.hpp /usr/local/include
         && git clone https://github.com/pboettch/json-schema-validator.git
         && cd json-schema-validator
