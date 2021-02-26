@@ -28,7 +28,7 @@ jobs:
         && git clone https://github.com/pboettch/json-schema-validator.git
         && cd json-schema-validator
         && mkdir build
-        cd build
+        && cd build
         && cmake ..
         && make
         && make install
