@@ -47,4 +47,4 @@ jobs:
         && cd build
         && cmake -Dnlohmann_json_DIR=/usr/local/include ..
         && make
-        && make install
+        && sudo make install
