@@ -28,7 +28,7 @@ jobs:
             os: macos-latest,
             cc: "clang", cxx: "clang++"
           }
-          - {
+        - {
             name: "Windows Latest MSVC", artifact: "Windows-MSVC.7z",
             os: windows-latest,
             cc: "cl", cxx: "cl",
