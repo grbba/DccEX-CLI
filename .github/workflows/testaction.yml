@@ -12,9 +12,22 @@ env:
 
 jobs:
   build:
-
-    runs-on: macos-latest
-
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - {
+            name: "Ubuntu Latest GCC", artifact: "Linux.7z",
+            os: ubuntu-latest,
+            cc: "gcc", cxx: "g++"
+          }
+        - {
+            name: "macOS Latest Clang", artifact: "macOS.7z",
+            os: macos-latest,
+            cc: "clang", cxx: "clang++"
+          }
     steps:
     - name: Requirements
       run: git clone https://github.com/fmtlib/fmt.git
