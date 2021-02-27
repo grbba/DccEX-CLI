@@ -34,7 +34,7 @@ jobs:
         && cd fmt
         && mkdir build
         && cd build
-        && cmake -DFMT_TEST=OFF -DFMT_DOC=OFF ..
+        && cmake -DFMT_TEST=OFF -DFMT_DOC=OFF -DCMAKE_VERBOSE_MAKEFILE=ON ..
         && make
         && make install
         && cd ..
