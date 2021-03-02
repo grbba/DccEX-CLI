@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.7...3.19)
 
-set(CMAKE_VERBOSE_MAKEFILE ON)
+set(CMAKE_VERBOSE_MAKEFILE OFF)
 
 project(DccExCommandline) 
 
@@ -8,8 +8,26 @@ project(DccExCommandline)
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
 
-find_package(fmt)
-find_package(nlohmann_json_schema_validator)
+include(FetchContent)
+
+FetchContent_Declare(
+  fmt
+  GIT_REPOSITORY https://github.com/fmtlib/fmt.git
+  GIT_TAG        7.1.3
+)
+
+FetchContent_MakeAvailable(fmt)
+
+FetchContent_Declare(
+  nlohmann_json_schema_validator
+  GIT_REPOSITORY https://github.com/pboettch/json-schema-validator.git
+  GIT_TAG        2.1.0
+)
+
+FetchContent_MakeAvailable(nlohmann_json_schema_validator)
+
+#find_package(fmt)
+#find_package(nlohmann_json_schema_validator)
 
 # The source code is here
 add_subdirectory(src)
