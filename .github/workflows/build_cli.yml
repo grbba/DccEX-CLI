@@ -64,5 +64,4 @@ jobs:
         uses: actions/checkout@v2  
 
       - name: Build
-        run: |
-          cmake --build ${{}}/DccEX-CLI/build --config Release --target dcclayout -- -j 14
+        run: cmake --build ${{}}/DccEX-CLI/build --config Release --target dcclayout -- -j 14
