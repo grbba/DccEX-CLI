@@ -41,7 +41,8 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(asio)
 
-#find_package(fmt)
+find_package(fmt)
+find_package(nlohmann_json)
 find_package(nlohmann_json_schema_validator)
 
 # The source code is here
