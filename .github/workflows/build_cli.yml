@@ -105,4 +105,7 @@ jobs:
 
       - name: Build
         shell: bash -P {0}
-        run: cmake --version
+        run: pwd
+          && mkdir build
+          && cd build 
+          && cmake ..
