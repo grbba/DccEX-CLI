@@ -46,5 +46,5 @@ FetchContent_MakeAvailable(asio)
 # The source code is here
 add_subdirectory(src)
 # docs here as well as how to build them with sphinx, breathe and exhale ( api doc )
-add_subdirectory(docs)
+# add_subdirectory(docs)
 
