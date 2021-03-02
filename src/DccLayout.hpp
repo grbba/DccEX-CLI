@@ -30,7 +30,6 @@
 #include <nlohmann/json.hpp>
 #include <nlohmann/json-schema.hpp>
 
-
 using nlohmann::json;
 using nlohmann::json_schema::json_validator;
 
