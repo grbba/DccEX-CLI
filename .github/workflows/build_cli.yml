@@ -99,10 +99,10 @@ jobs:
               COMMAND chmod +x ${cmake_dir}/cmake
             )
           endif()
-          
+
       - name: Checkout
         uses: actions/checkout@v2  
 
       - name: Build
         shell: bash -P {0}
-        run: cmake --build ${{}}/DccEX-CLI/build --config Release --target dcclayout -- -j 14
+        run: cmake --version
