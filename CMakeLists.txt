@@ -7,6 +7,7 @@ project(DccExCommandline)
 #Tell Cmake where to find the sphinx module can be found ( as Sphinx  doesn't provide one )
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
+
 include(GNUInstallDirs)
 include(FetchContent)
 
@@ -30,7 +31,7 @@ FetchContent_Declare(
   GIT_TAG        2.1.0
 )
 
-FetchContent_MakeAvailable(nlohmann_json_schema_validator)
+#FetchContent_MakeAvailable(nlohmann_json_schema_validator)
 
 FetchContent_Declare(
   asio
@@ -41,7 +42,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(asio)
 
 #find_package(fmt)
-#find_package(nlohmann_json_schema_validator)
+find_package(nlohmann_json_schema_validator)
 
 # The source code is here
 add_subdirectory(src)

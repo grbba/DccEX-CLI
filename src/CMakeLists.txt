@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.12...3.19)
 
+include_directories( /usr/local/include )
+
 add_executable( dcclayout 
                 main.cpp 
                 Diag.cpp 
