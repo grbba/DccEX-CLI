@@ -18,11 +18,18 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(fmt)
 
-#FetchContent_Declare(
-#  nlohmann_json
-#  GIT_REPOSITORY https://github.com/ArthurSonzogni/nlohmann_json_cmake_fetchcontent.git
-#  GIT_TAG        v3.9.1
-#)
+FetchContent_Declare(
+  json
+  GIT_REPOSITORY https://github.com/ArthurSonzogni/nlohmann_json_cmake_fetchcontent.git
+  GIT_TAG        v3.9.1
+)
+
+FetchContent_GetProperties(json)
+if(NOT json_POPULATED)
+  FetchContent_Populate(json)
+  add_subdirectory(${json_SOURCE_DIR} ${json_BINARY_DIR} EXCLUDE_FROM_ALL)
+endif()
+
 #FetchContent_MakeAvailable(nlohmann_json)
 
 FetchContent_Declare(
