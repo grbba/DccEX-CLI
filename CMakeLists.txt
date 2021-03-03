@@ -53,7 +53,7 @@ CPMAddPackage(
         VERSION 1.2.1
         GITHUB_REPOSITORY daniele77/cli
         OPTIONS 
-            "CLI_UseStandaloneAsio ON"
+            "-DCLI_UseStandaloneAsio=ON"
         )
 
     
