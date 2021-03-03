@@ -20,7 +20,7 @@ add_executable( dcclayout
 
 # target_compile_features(dcclayout PRIVATE cxx_std_17)
 # target_link_libraries(dcclayout nlohmann_json_schema_validator nlohmann_json::nlohmann_json fmt::fmt)
-target_link_libraries(dcclayout asio spdlog fmt cli nlohmann_json nlohmann_json_schema_validator)
+target_link_libraries(dcclayout asio spdlog fmt nlohmann_json nlohmann_json_schema_validator)
 
 install(TARGETS dcclayout)
 #find_program(CLANG_TIDY_BIN clang-tidy)
