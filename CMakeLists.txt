@@ -48,14 +48,14 @@ CPMAddPackage(
         GITHUB_REPOSITORY CLIUtils/CLI11
       )
 
-CPMAddPackage(
-        NAME cli
-        URL https://github.com/daniele77/cli/archive/v1.2.1.zip
-        VERSION 1.2.1
+#CPMAddPackage(
+#        NAME cli
+#        URL https://github.com/daniele77/cli/archive/v1.2.1.zip
+#        VERSION 1.2.1
         # GITHUB_REPOSITORY daniele77/cli
         #OPTIONS 
         #    "-DCLI_UseStandaloneAsio=ON"
-        )
+#        )
 
     
 find_package(Threads REQUIRED)
