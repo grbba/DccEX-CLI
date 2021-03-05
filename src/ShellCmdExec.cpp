@@ -93,7 +93,7 @@ static void rootLogLevel(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::v
 static void rootConfig(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params)
 {
     Diag::push();
-    Diag::setLogLevel(DiagLevel::LOGV_INFO);
+    Diag::setLogLevel(LOGV_INFO);
     Diag::setFileInfo(false);
     Diag::setPrintLabel(false);
 
@@ -308,7 +308,7 @@ void csRead(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::st
     }
     else
     {
-        ERR("Serial port is closed, please call open first.");
+        // ERR("Serial port is closed, please call open first.");
     }
     sleep_for(2s); 
     out << '\n';

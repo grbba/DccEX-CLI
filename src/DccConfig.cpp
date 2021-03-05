@@ -25,7 +25,7 @@ std::string DccConfig::dccLayoutFile;
 std::string DccConfig::dccSchemaFile = CONFIG_DCCEX_SCHEMA;
 bool DccConfig::isInteractive = CONFIG_INTERACTIVE;
 bool DccConfig::fileInfo = CONFIG_FILEINFO;
-DiagLevel DccConfig::level = DiagLevel::LOGV_WARN; // by default show everything up to Warning level
+DiagLevel DccConfig::level = LOGV_WARN; // by default show everything up to Warning level
 
 auto DccConfig::setup(int argc, char **argv) -> int {
 
@@ -55,9 +55,10 @@ auto DccConfig::setup(int argc, char **argv) -> int {
       "Commandstation Version 3.0.1 is required. If -i has been specified as well, after sending, \n"
       "the interactive commandline interface will be available.");
 
-//   app.add_option("-v,--verbose", level, "Verbose settings")
-//       ->transform(
-//           CLI::CheckedTransformer(Diag::getDiagMap(), CLI::ignore_case));
+  std::string vl;
+  app.add_option("-v,--verbose", vl, 
+      "Verbose settings. Can be one of [off|info|warning|debug|trace]\n"
+      "Default is set to 'info', 'trace' will provide the most verbose output.");
 
   app.add_flag("-i,--interactive", DccConfig::isInteractive,
                "Interactive mode; Opens a shell from which commands can be "
@@ -71,10 +72,10 @@ auto DccConfig::setup(int argc, char **argv) -> int {
         return DCC_FAILURE;
   }
 
-  Diag::setLogLevel(
-      level); // if not set via the commandline by default set to WARN
-  Diag::setFileInfo(
-      fileInfo); // if not set via commandline by default set to false
+  DiagLevel dl = Diag::getDiagLevel(vl);
+  Diag::setLogLevel(dl);
+ 
+  Diag::setFileInfo(fileInfo); // if not set via commandline by default set to false
 
   return DCC_SUCCESS;
 }

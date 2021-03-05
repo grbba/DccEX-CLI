@@ -59,24 +59,27 @@ void DccPath::printPathsByNode(Node_t nodeid) {
   auto p = getPathsByNode(nodeid);
   
   // report all paths found
-  INFO("[{}] direct paths are available from module [{}] node [{}]", p->size(),
+  CLI_INFO;
+  fmt::print("[{}] direct paths are available from module [{}] node [{}]\n", p->size(),
        m, n);
 
   Diag::setPrintln(false);
   for (auto pa : *p) {
     int _pn, _pm;
-    INFO("[");
+    CLI_INFO;
+    fmt::print("[");
     for (auto n : pa) {
       DccVertex::cantorDecode(n, &_pm, &_pn);
-      INFO(" {}.{} ", _pm, _pn);
+      fmt::print(" {}.{} ", _pm, _pn);
     }
-    INFO("]\n");
+    fmt::print("]\n");
   }
   Diag::setPrintln(true);
 }
 
 void DccPath::printAllPaths() {
-  INFO("Printing ALL paths available for this Layout");
+  CLI_INFO;
+  fmt::print("Printing ALL paths available for this Layout\n");
   for (auto ap : allPaths) {
     printPathsByNode(ap.first);
   }

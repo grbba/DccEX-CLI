@@ -147,7 +147,7 @@ void DccGraph::buildRailVertex(int mn, int ten, DccModel::Trackelement *te) {
           ? ""
           : te->get_rail().get()->get_description().get()->c_str());
   if (te->get_rail().get()->get_path().size() > 2) {
-    ERR("Segment has more than 2 nodes");
+    ERR("Segment has more than {} nodes", 2);
   } else {
     Node_t v1 = te->get_rail().get()->get_path().at(0);
     DccVertexPtr_t in = createVertex(mn, ten, v1, te->get_rail());
@@ -174,7 +174,7 @@ void DccGraph::buildCrossingVertex(int mn, int ten,
           ? ""
           : te->get_crossing().get()->get_description().get()->c_str());
   if (te->get_crossing().get()->get_path().size() != 4) {
-    ERR("Crossing hasn't the required set of nodes (4)");
+    ERR("Crossing hasn't the required set of nodes ({})", 4);
   } else {
     // create vertices for the crossing
     DBG("Create [{}] vertices for the crossing",
@@ -186,12 +186,12 @@ void DccGraph::buildCrossingVertex(int mn, int ten,
     }
     // add connections i = 0 = top left of the crossing
     // straight connections
-    DBG("Adding connections between the vertices of the crossing");
+    ERR("Adding connections between the vertices of the crossing");
     for (int i = 0; i < 2; i++) {
       in = crNodes.at(i);
       out = crNodes.at(i + 2);
       DBG("Adding out [{}] to in [{}] connection", out.get()->getNodeid(),
-          in.get()->getNodeid());
+         in.get()->getNodeid());
       in.get()->addConnection(out);
       DBG("Adding in [{}] to out [{}] connection", in.get()->getNodeid(),
           out.get()->getNodeid());
@@ -228,10 +228,10 @@ void DccGraph::buildCrossingVertex(int mn, int ten,
         out = crNodes.at(j);
 
         DBG("Adding out [{}] to in [{}] connection", out.get()->getNodeid(),
-            in.get()->getNodeid());
+           in.get()->getNodeid());
         in.get()->addConnection(out);
         DBG("Adding in [{}] to out [{}] connection", in.get()->getNodeid(),
-            out.get()->getNodeid());
+           out.get()->getNodeid());
         out.get()->addConnection(in);
       }
     }

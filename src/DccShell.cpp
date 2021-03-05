@@ -41,7 +41,6 @@ namespace cli
 
 #define HEADING(x) fmt::format(fg(fmt::color::medium_turquoise) | fmt::emphasis::bold, x);
 #define WARNING(x) fmt::format(fg(fmt::color::orange) | fmt::emphasis::bold, x);
-#define ERROR(x...) fmt::format(fg(fmt::color::red) | fmt::emphasis::bold, x);
 
 using namespace std::this_thread;     // sleep_for, sleep_until
 using namespace std::chrono_literals; // ns, us, ms, s, h, etc.
@@ -153,11 +152,11 @@ void DccShell::buildMenus()
 auto DccShell::runShell() -> int
 {
 
-  DBG("Run Shell");
+  // DBG("Run Shell");
 
   buildMenus();
 
-  DBG("Shell done");
+  // DBG("Shell done");
   return DCC_SUCCESS;
 }
 

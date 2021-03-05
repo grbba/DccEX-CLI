@@ -150,7 +150,8 @@ void DccLayout::listPaths() {
   Diag::push();
   Diag::setPrintLabel(false);
 
-  INFO("Printing ALL {} paths available for this Layout", path.getNumberOfPaths());
+  CLI_INFO;
+  fmt::print("Printing ALL {} paths available for this Layout\n", path.getNumberOfPaths());
 
   const auto start = path.getAllPaths()->begin();    
   const auto end = path.getAllPaths()->end();
