@@ -12,16 +12,8 @@
 #include <memory>
 #include <functional>
 
-#ifdef DCC_BOOST
-#include <boost/asio.hpp>
-#include <boost/utility.hpp>
-#else
 #include <asio.hpp>
-#endif
 
-#ifdef WIN32
-    typedef size_t ssize_t;
-#endif
 
 /**
  * Used internally (pimpl)
@@ -98,7 +90,7 @@ public:
      * \param data array of char to be sent through the serial device
      * \param size array size
      */
-    void write(const char *data, ssize_t size);
+    void write(const char *data, size_t size);
 
      /**
      * Write data asynchronously. Returns immediately.

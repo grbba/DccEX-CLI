@@ -30,12 +30,6 @@
 #include "AsyncSerial.h"
 
 #include <algorithm>
-#ifdef DCC_BOOST
-#include <boost/bind/bind.hpp>
-#include <boost/shared_array.hpp>
-#else
-// #include <asio/bind_executor.hpp>
-#endif
 
 #include <iostream>
 #include <mutex>
@@ -51,13 +45,13 @@ using namespace std;
 
 #ifndef __APPLE__
 
-class AsyncSerialImpl : private boost::noncopyable {
+class AsyncSerialImpl : private asio::noncopyable {
 public:
   AsyncSerialImpl()
       : io(), port(io), backgroundThread(), open(false), error(false) {}
 
-  boost::asio::io_service io;    ///< Io service object
-  boost::asio::serial_port port; ///< Serial port object
+  asio::io_context io;            ///< Io service object
+  asio::serial_port port;         ///< Serial port object
   std::thread backgroundThread;  ///< Thread that runs read/write operations
   bool open;                     ///< True if port open
   bool error;                    ///< Error flag
@@ -65,7 +59,7 @@ public:
 
   /// Data are queued here before they go in writeBuffer
   std::vector<char> writeQueue;
-  boost::shared_array<char> writeBuffer; ///< Data being written
+  std::shared_ptr<char> writeBuffer; ///< Data being written
   size_t writeBufferSize;                ///< Size of writeBuffer
   std::mutex writeQueueMutex;            ///< Mutex for access to writeQueue
   char readBuffer[AsyncSerial::readBufferSize]; ///< data being read
@@ -101,10 +95,14 @@ void AsyncSerial::open(const std::string &devname, unsigned int baud_rate,
   pimpl->port.set_option(opt_flow);
   pimpl->port.set_option(opt_stop);
 
-  // This gives some work to the io_service before it is started
-  pimpl->io.post(boost::bind(&AsyncSerial::doRead, this));
 
-  thread t(boost::bind(&asio::io_service::run, &pimpl->io));
+
+  // This gives some work to the io_service before it is started
+  asio::post(pimpl->io.get_executor(), std::bind(&AsyncSerial::doRead, this));
+
+  // pimpl->io.get_executor().post(std::bind(&AsyncSerial::doRead, this), &a);
+
+  thread t(std::bind(&asio::io_context::run, &pimpl->io));
   pimpl->backgroundThread.swap(t);
   setErrorStatus(false); // If we get here, no error
   pimpl->open = true;    // Port is now open
@@ -122,9 +120,10 @@ void AsyncSerial::close() {
     return;
 
   pimpl->open = false;
-  pimpl->io.post(boost::bind(&AsyncSerial::doClose, this));
+  asio::post(pimpl->io.get_executor(), std::bind(&AsyncSerial::doClose, this));
+  // pimpl->io.get_executor().post(std::bind(&AsyncSerial::doClose, this));
   pimpl->backgroundThread.join();
-  pimpl->io.reset();
+  pimpl->io.restart();
   if (errorStatus()) {
     throw(std::system_error(std::error_code(),
                                       "Error while closing the device"));
@@ -136,7 +135,8 @@ void AsyncSerial::write(const char *data, size_t size) {
     lock_guard<mutex> l(pimpl->writeQueueMutex);
     pimpl->writeQueue.insert(pimpl->writeQueue.end(), data, data + size);
   }
-  pimpl->io.post(boost::bind(&AsyncSerial::doWrite, this));
+  asio::post(pimpl->io.get_executor(), std::bind(&AsyncSerial::doWrite, this));
+  // pimpl->io.get_executor().post(std::bind(&AsyncSerial::doWrite, this));
 }
 
 void AsyncSerial::write(const std::vector<char> &data) {
@@ -144,7 +144,8 @@ void AsyncSerial::write(const std::vector<char> &data) {
     lock_guard<mutex> l(pimpl->writeQueueMutex);
     pimpl->writeQueue.insert(pimpl->writeQueue.end(), data.begin(), data.end());
   }
-  pimpl->io.post(boost::bind(&AsyncSerial::doWrite, this));
+  asio::post(pimpl->io.get_executor(), std::bind(&AsyncSerial::doWrite, this));
+  // pimpl->io.get_executor().post(std::bind(&AsyncSerial::doWrite, this));
 }
 
 void AsyncSerial::writeString(const std::string &s) {
@@ -152,7 +153,8 @@ void AsyncSerial::writeString(const std::string &s) {
     lock_guard<mutex> l(pimpl->writeQueueMutex);
     pimpl->writeQueue.insert(pimpl->writeQueue.end(), s.begin(), s.end());
   }
-  pimpl->io.post(boost::bind(&AsyncSerial::doWrite, this));
+  asio::post(pimpl->io.get_executor(), std::bind(&AsyncSerial::doWrite, this));
+  // pimpl->io.get_executor().post(stderr::bind(&AsyncSerial::doWrite, this));
 }
 
 AsyncSerial::~AsyncSerial() {
@@ -168,8 +170,8 @@ AsyncSerial::~AsyncSerial() {
 void AsyncSerial::doRead() {
   pimpl->port.async_read_some(
       asio::buffer(pimpl->readBuffer, readBufferSize),
-      boost::bind(&AsyncSerial::readEnd, this, asio::placeholders::error,
-                  asio::placeholders::bytes_transferred));
+      std::bind(&AsyncSerial::readEnd, this, std::placeholders::_1,
+                  std::placeholders::_2));
 }
 
 void AsyncSerial::readEnd(const std::error_code &error,
@@ -208,7 +210,7 @@ void AsyncSerial::doWrite() {
     async_write(
         pimpl->port,
         asio::buffer(pimpl->writeBuffer.get(), pimpl->writeBufferSize),
-        boost::bind(&AsyncSerial::writeEnd, this, asio::placeholders::error));
+        std::bind(&AsyncSerial::writeEnd, this, std::placeholders::_1));
   }
 }
 
@@ -229,7 +231,7 @@ void AsyncSerial::writeEnd(const std::error_code &error) {
     async_write(
         pimpl->port,
         asio::buffer(pimpl->writeBuffer.get(), pimpl->writeBufferSize),
-        boost::bind(&AsyncSerial::writeEnd, this, asio::placeholders::error));
+        std::bind(&AsyncSerial::writeEnd, this, std::placeholders::_1));
   } else {
     setErrorStatus(true);
     doClose();
@@ -467,18 +469,18 @@ void AsyncSerial::close() {
   }
 }
 
-void AsyncSerial::write(const char *data, ssize_t size) {
+void AsyncSerial::write(const char *data, size_t size) {
   if (::write(pimpl->fd, data, size) != size)
     setErrorStatus(true);
 }
 
 void AsyncSerial::write(const std::vector<char> &data) {
-  if (::write(pimpl->fd, &data[0], data.size()) != (ssize_t)data.size())
+  if (::write(pimpl->fd, &data[0], data.size()) != (size_t)data.size())
     setErrorStatus(true);
 }
 
 void AsyncSerial::writeString(const std::string &s) {
-  if (::write(pimpl->fd, &s[0], s.size()) != (ssize_t)s.size())
+  if (::write(pimpl->fd, &s[0], s.size()) != (size_t)s.size())
     setErrorStatus(true);
 }
 
