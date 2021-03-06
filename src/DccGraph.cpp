@@ -186,22 +186,22 @@ void DccGraph::buildCrossingVertex(int mn, int ten,
     }
     // add connections i = 0 = top left of the crossing
     // straight connections
-    ERR("Adding connections between the vertices of the crossing");
+    spdlog::debug("Adding connections between the vertices of the crossing");
     for (int i = 0; i < 2; i++) {
       in = crNodes.at(i);
       out = crNodes.at(i + 2);
-      DBG("Adding out [{}] to in [{}] connection", out.get()->getNodeid(),
-         in.get()->getNodeid());
+      // DBG("Adding out [{}] to in [{}] connection", out.get()->getNodeid(),
+       //   in.get()->getNodeid());
       in.get()->addConnection(out);
-      DBG("Adding in [{}] to out [{}] connection", in.get()->getNodeid(),
-          out.get()->getNodeid());
+      // DBG("Adding in [{}] to out [{}] connection", in.get()->getNodeid(),
+      //     out.get()->getNodeid());
       out.get()->addConnection(in);
     }
     // add slips if any; none -> just a crossing
     if (te->get_crossing().get()->get_slip().size() > 0) {
-      DBG("Adding [{}] slips to the connections between the vertices of the "
-          "crossing",
-          te->get_crossing().get()->get_slip().size());
+      // DBG("Adding [{}] slips to the connections between the vertices of the "
+      //     "crossing",
+      //     te->get_crossing().get()->get_slip().size());
       // loop over all slips
       for (unsigned long i = 0; i < te->get_crossing().get()->get_slip().size();
            i++) {
@@ -216,7 +216,7 @@ void DccGraph::buildCrossingVertex(int mn, int ten,
           }
         }
 
-        DBG("Found first j [{}] i [{}]", j, i);
+        // DBG("Found first j [{}] i [{}]", j, i);
         // find the opposite for the slip point; As the user can define any node
         // as the start/end of the slip look for the direction
         if (j == 0 || j == 2) {
@@ -224,14 +224,14 @@ void DccGraph::buildCrossingVertex(int mn, int ten,
         } else {
           j--;
         }
-        DBG("Found second j [{}] i [{}]", j, i);
+        // DBG("Found second j [{}] i [{}]", j, i);
         out = crNodes.at(j);
 
-        DBG("Adding out [{}] to in [{}] connection", out.get()->getNodeid(),
-           in.get()->getNodeid());
+        // DBG("Adding out [{}] to in [{}] connection", out.get()->getNodeid(),
+         //   in.get()->getNodeid());
         in.get()->addConnection(out);
-        DBG("Adding in [{}] to out [{}] connection", in.get()->getNodeid(),
-           out.get()->getNodeid());
+        // DBG("Adding in [{}] to out [{}] connection", in.get()->getNodeid(),
+         //   out.get()->getNodeid());
         out.get()->addConnection(in);
       }
     }
