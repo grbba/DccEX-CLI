@@ -18,9 +18,19 @@ endif()
 include(${CPM_DOWNLOAD_LOCATION})
 
 CPMAddPackage(
+        NAME fmt
+        GIT_TAG 7.1.3
+        GITHUB_REPOSITORY fmtlib/fmt
+      )
+
+CPMAddPackage(
     NAME spdlog
     GITHUB_REPOSITORY gabime/spdlog
-    VERSION 1.7.0)
+    VERSION 1.7.0
+    OPTIONS 
+        "CMAKE_BUILD_TYPE Release"
+        "SPDLOG_FMT_EXTERNAL"
+    )
 
 CPMAddPackage(
     NAME nlohmann_json
@@ -36,17 +46,13 @@ CPMAddPackage(
         "BUILD_EXAMPLES OFF"
     ) 
 
-CPMAddPackage(
-        NAME fmt
-        GIT_TAG 7.1.3
-        GITHUB_REPOSITORY fmtlib/fmt
-      )
 
-CPMAddPackage(
-        NAME cli11
-        VERSION 1.9.1
-        GITHUB_REPOSITORY CLIUtils/CLI11
-      )
+
+#CPMAddPackage(
+#        NAME cli11
+#        VERSION 1.9.1
+#        GITHUB_REPOSITORY CLIUtils/CLI11
+#      )
 
 #CPMAddPackage(
 #        NAME cli

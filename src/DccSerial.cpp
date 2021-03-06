@@ -30,7 +30,6 @@
 
 #define HEADING(x)  fmt::format(fg(fmt::color::medium_turquoise) | fmt::emphasis::bold, x);
 #define WARNING(x)  fmt::format(fg(fmt::color::orange) | fmt::emphasis::bold, x);
-#define ERROR(x)  fmt::format(fg(fmt::color::red) | fmt::emphasis::bold, x);
 
 // std::ostream &DccSerial::out;
 /**
@@ -67,7 +66,7 @@ bool DccSerial::openPort(std::ostream &out,std::string d, int b) {
   if (port.isOpen()) {
       open = true;
   } else {
-      out << ERROR("Could not open serial port. Maybe in use by another program ?\n");
+      ERR("Could not open serial port. Maybe in use by another program ?\n");
       return DCC_FAILURE;
   }
   return DCC_SUCCESS;
@@ -90,7 +89,7 @@ bool DccSerial::openPort(std::ostream &out, std::string type, std::string d, int
     cType = DCC_SERIAL;
   } else {
     if (type.compare("ethernet") == 0) {
-      out << ERROR("Ethernet is not yet supported.\n");
+      ERR("Ethernet is not yet supported.\n");
       cType = DCC_ETHERNET;
       return DCC_FAILURE;
     } else {
@@ -108,7 +107,7 @@ bool DccSerial::openPort(std::ostream &out, std::string type, std::string d, int
     if (port.isOpen()) {
       open = true;
     } else {
-           out << ERROR("Could not open serial port. Maybe in use by another program ?\n");
+          ERR("Could not open serial port. Maybe in use by another program ?\n");
     }
     break;
   }

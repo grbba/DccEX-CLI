@@ -53,6 +53,7 @@ void readJsonFile(const std::string &schema_filename, std::string *schema) {
 #define HEADING(x)  fmt::print(fg(fmt::color::medium_turquoise) | fmt::emphasis::bold, x);
 #define SUBHEADING(x)  fmt::print(fg(fmt::color::medium_turquoise), x);
 
+
 auto main(int argc, char **argv) -> int {
   // clear screen
   std::cout << "\e[2J\e[1;1H";
@@ -76,7 +77,7 @@ auto main(int argc, char **argv) -> int {
   };
 
   DccShell s;
-  Diag::setLogLevel(DiagLevel::LOGV_INFO);
+  Diag::setLogLevel(LOGV_INFO);
   
   if (DccConfig::isInteractive) {
     s.runShell();

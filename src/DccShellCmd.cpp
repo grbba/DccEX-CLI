@@ -73,7 +73,7 @@ void DccShellCmd::buildMenuCommands(const std::string commands) {
       _ci->maxParameters = c.at("params").size();
       
       // loop over all the params
-      int i = 0;
+      int8_t i = 0;
       for ( auto p: c.at("params")) {
           _ci->paramDesc.push_back(p["desc"]);
           if(p["mandatory"] == 1) {

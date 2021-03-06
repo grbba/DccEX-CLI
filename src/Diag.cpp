@@ -4,8 +4,7 @@
 // inital Logging Level
 
 
-DiagLevel Diag::_nLogLevel = DiagLevel::LOGV_INFO;    // default loglevel
-int Diag::_nInfoLevel = 0;
+spdlog::level::level_enum Diag::_nLogLevel = LOGV_ERROR;    // default loglevel
 bool Diag::fileInfo = true;
 bool Diag::println = true;
 bool Diag::printLabel = true;
@@ -13,25 +12,39 @@ std::stack<DiagConfig *> Diag::config;
 
 const std::map<std::string, DiagLevel> Diag::diagMapStr
 {
-    {"always", DiagLevel::LOGV_ALWAYS}, 
-    {"silent", DiagLevel::LOGV_SILENT}, 
-    {"info", DiagLevel::LOGV_INFO},
-    {"warnings", DiagLevel::LOGV_WARN},      
-    {"error", DiagLevel::LOGV_ERROR},
-    {"trace", DiagLevel::LOGV_TRACE},        
-    {"debug", DiagLevel::LOGV_DEBUG}
+    {"silent", LOGV_SILENT}, 
+    {"info", LOGV_INFO},
+    {"warnings", LOGV_WARN},      
+    {"error", LOGV_ERROR},
+    {"trace", LOGV_TRACE},        
+    {"debug", LOGV_DEBUG}
 };
 
 const std::map<DiagLevel, std::string> Diag::diagMap
 {
-    {DiagLevel::LOGV_ALWAYS, "always"}, 
-    {DiagLevel::LOGV_SILENT, "silent"}, 
-    {DiagLevel::LOGV_WARN, "warnings"},
-    {DiagLevel::LOGV_ERROR, "error"},
-    {DiagLevel::LOGV_INFO, "info"},
-    {DiagLevel::LOGV_TRACE, "trace"}, 
-    {DiagLevel::LOGV_DEBUG, "debug"}
+    {LOGV_SILENT, "silent"}, 
+    {LOGV_WARN, "warnings"},
+    {LOGV_ERROR, "error"},
+    {LOGV_INFO, "info"},
+    {LOGV_TRACE, "trace"}, 
+    {LOGV_DEBUG, "debug"}
 };
+
+
+const std::string *Diag::getDiagLevelName(DiagLevel level) {
+    if (diagMap.find(level) == diagMap.end() ) {
+        ERR("No such diagnostic level value {}", level);
+    }
+    return &diagMap.find(level)->second;
+}
+
+const DiagLevel Diag::getDiagLevel(std::string level) {
+    if (diagMapStr.find(level) == diagMapStr.end() ) {
+        WARN("No such diagnostic level name {}", level);
+        WARN("Returning default value: info");
+    }
+    return diagMapStr.find(level)->second;
+}
 
 void Diag::push() {
 
@@ -39,7 +52,6 @@ void Diag::push() {
 
     dc->println = println;
     dc->_nLogLevel = _nLogLevel;
-    dc->_nInfoLevel = _nInfoLevel;
     dc->fileInfo = fileInfo;
     dc->printLabel = printLabel;
 
@@ -52,8 +64,8 @@ void Diag::pop() {
     DiagConfig *dc = config.top();
     
     println = dc->println;
-    _nLogLevel = dc->_nLogLevel;
-    _nInfoLevel = dc->_nInfoLevel;
+    // _nLogLevel = dc->_nLogLevel;
+    Diag::setLogLevel(dc->_nLogLevel);
     fileInfo = dc->fileInfo;
     printLabel = dc->printLabel;
     config.pop();
