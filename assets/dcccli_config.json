@@ -1,0 +1,15 @@
+{
+    // cli configuration
+    "dcccli": {
+
+    },
+    // commandstation configuration
+    "commandstation": {
+            "ethernet": true,
+            "wifi" : true,
+            // can be either Client or AP 
+            "wifimode" : "Client",
+            "wifissid" : "MyNetwork"
+    }
+
+}

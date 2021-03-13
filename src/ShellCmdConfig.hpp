@@ -64,6 +64,29 @@ const std::string csMenuItems = R"(
     "menuID" : 2,
     "Commands": [
       {
+        "name": "upload",
+        "params": 
+        [
+          { "type": "string", "desc": "mega|uno|nano", "mandatory": 1 },
+          { "type": "string", "desc": "serial port", "mandatory": 1 },
+          { "type": "string", "desc": "file", "mandatory": 0 }
+        ],
+        "help": [ 
+            "upload the binary command station sketch for the arduino type specified",
+            "\tprovided by <file> connected to the serial port.",
+            "\tIf file is not provided the system will try to fetch the latest bianry release",
+            "\tavailable for the given arduino type."
+        ]
+      },
+      {
+        "name": "ports",
+        "params": 
+        [],
+        "help": [ 
+            "lists available serial ports"
+        ]
+      },
+      {
         "name": "open",
         "params": 
         [

@@ -18,9 +18,18 @@
  * <https://www.gnu.org/licenses/>
  */
 
+
+#include <fmt/core.h>
+#include <fmt/color.h>
+#include <fstream>
+#include <iostream>
+#include <libproc.h>
+#include <unistd.h>
+
 #include "DccConfig.hpp"
 #include "../include/CLI11.hpp"
 
+std::string DccConfig::path;
 std::string DccConfig::dccLayoutFile;
 std::string DccConfig::dccSchemaFile = CONFIG_DCCEX_SCHEMA;
 bool DccConfig::isInteractive = CONFIG_INTERACTIVE;
@@ -76,6 +85,21 @@ auto DccConfig::setup(int argc, char **argv) -> int {
   Diag::setLogLevel(dl);
  
   Diag::setFileInfo(fileInfo); // if not set via commandline by default set to false
+
+  int ret;
+  pid_t pid; 
+  char pathbuf[PROC_PIDPATHINFO_MAXSIZE];
+
+  pid = getpid();
+  ret = proc_pidpath(pid, pathbuf, sizeof(pathbuf));
+  
+  if ( ret <= 0 ) {
+      ERR("PID {}: proc_pidpath ();\n", pid);
+      ERR("     {}\n", strerror(errno));
+  } else {
+      DccConfig::path = std::string(pathbuf);
+      // printf("proc %d: %s\n", pid, pathbuf);
+  }
 
   return DCC_SUCCESS;
 }
