@@ -62,10 +62,10 @@ typedef spdlog::level::level_enum DiagLevel;
 struct DiagConfig
 {
   DiagLevel _nLogLevel;
-  int _nInfoLevel; // for future use
-  bool fileInfo;
-  bool println;
-  bool printLabel;
+  int       _nInfoLevel; // for future use
+  bool      fileInfo;
+  bool      println;
+  bool      printLabel;
 
   DiagConfig() = default;
   ~DiagConfig() = default;

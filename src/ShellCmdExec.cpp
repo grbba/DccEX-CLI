@@ -23,9 +23,11 @@
 *
 */
 #include <iostream>
+#include <fstream>
 #include <chrono>
 #include <map>
 #include <set>
+#include <vector>
 
 #include <fmt/core.h>
 #include <fmt/color.h>
@@ -46,9 +48,29 @@ using std::chrono::system_clock;
 
 std::map<std::pair<int, std::string>, _fpShellCmd> ShellCmdExec::_fMap;
 DccSerial serial;
+
+struct arduinoBoard {
+    std::string architecture;
+    std::string programmer;
+    std::string part;               // identifier of the processor for avrdude
+};
+
+// supported boards
+arduinoBoard avrmega = {"Mega", "stk500v2","m2560"};
+arduinoBoard avruno = {"Uno", "arduino","atmega328p"};
+arduinoBoard avrnano = {"Nano", "arduino", "atmega328p"}; // A verifier !!
+// unowifi r2
+// nano every to be added
+
 const std::set<std::string> ctypes = {"serial","ethernet"};
 const std::set<std::string> diags = {"ack", "wifi", "ethernet", "cmd", "wit"};
 const std::map<std::string, bool> onoff = {{"on", 1}, {"off", 0}};
+const std::map<std::string, arduinoBoard> boardTypes = {
+    {"mega",avrmega },
+    {"uno", avruno },
+    {"nano", avrnano} 
+};
+
 
 // Utilities
 
@@ -57,6 +79,38 @@ std::string str_toupper(std::string s) {
                    [](unsigned char c){ return std::toupper(c); } 
                   );
     return s;
+}
+
+/**
+ * @brief Reading a file containing json;
+ * Usable for small files as it fills a potentially large string.
+ * For larger files direct streaming into the schema validator and/or json
+ * parser should be preferred
+ *
+ * @param schema_filename File from which to read
+ * @param schema Pointer to the string which holds the files json; filled with
+ * the files content
+ */
+void readJsonFile(const std::string &schema_filename, std::string *schema) {
+  std::ifstream schema_file(schema_filename);
+
+  *schema = std::string(std::istreambuf_iterator<char>(schema_file),
+                        std::istreambuf_iterator<char>());
+}
+
+// execute shell command and return the output in a string
+
+std::string exec(const char* cmd) {
+    std::array<char, 128> buffer;
+    std::string result;
+    std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
+    if (!pipe) {
+        throw std::runtime_error("popen() failed!");
+    }
+    while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
+        result += buffer.data();
+    }
+    return result;
 }
 
 // Executors
@@ -101,8 +155,9 @@ static void rootConfig(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vec
     INFO("Dcc Schema file: {}", DccConfig::dccSchemaFile);
     INFO("Dcc Layout file: {}", DccConfig::dccLayoutFile);
     INFO("Current Log level: {}", Diag::getDiagMap()[DccConfig::level]);
-    INFO(":: Errors and Warnings will always be shown independent of the logging level set");
+    INFO("> Errors and Warnings will always be shown independent of the logging level set");
     INFO("Show file information in logging messages: {}", DccConfig::fileInfo);
+    INFO("Executable: {}", DccConfig::getPath());
 
     Diag::pop();
 }
@@ -353,6 +408,95 @@ void csDiag(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::st
     // out << "\n";
 }
 
+void csPorts(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params)
+{
+    std::stringstream portList(exec("ls /dev/cu*"));
+    std::map<std::int8_t,std::string> ports;
+    
+    std::string p;
+    int8_t pn = 1;
+    fmt::print("Available ports:\n", p);
+    while(getline(portList, p, '\n'))
+    { 
+        ports.insert({pn,p});
+        fmt::print("[{}]:{}\n", pn, p);
+        pn++;
+    }
+}
+
+void csUpload(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params)
+{
+
+    /**
+     * @todo
+     * - Bail out on wrong port early ( i.e. before download)
+     * - Also if the port is not available bc used other places ...
+     * - If the CSFiles for the architecture are already there don't download again 
+     * except if the latest flag is set ( to be added in the options list ) 
+     * - Add user provided file download 
+     */
+
+    auto architecture = params[0];  // either nano mega or uno or ...
+    auto port = params[1];
+
+    arduinoBoard board;
+
+    switch(params.size())
+    {
+        case 2: {         
+            // check for architecture parameter
+            auto boardIt = boardTypes.find(architecture);
+            if( boardIt == boardTypes.end() ) {
+                    auto s = fmt::format("Unsopported board architecture [{}]", params[0]);
+                    throw ShellCmdExecException(s);
+                    return;
+            } else {
+                board = boardIt->second;
+            }
+
+            if (!std::filesystem::exists(DCC_CONFIG_ROOT)) {
+                exec("mkdir cs-config");
+            }
+            
+            // Fetch the distribution
+            auto fetchCmd = fmt::format(DCC_FETCH, DCC_BUILD_REPO, DCC_RELEASE, board.architecture, DCC_CONFIG_ZIP);
+            // INFO("Fetching: {}", fetchCmd);
+            INFO("Fetching necessary files ...", fetchCmd);
+            exec(fetchCmd.c_str());
+            
+            // unzip it and overwrite anything ( download is 'fairly small' so that is ok for the time being)
+            auto zipCmd = fmt::format("unzip -o -q -d {} {}", DCC_CONFIG_ROOT, DCC_CONFIG_ZIP); 
+            // INFO("Installing: {}", zipCmd);
+            INFO("Installing files ...");
+            exec(zipCmd.c_str());
+           
+            // path to the binary file
+            auto csBin = fmt::format("{}/Arduino{}/{}", DCC_CONFIG_ROOT, board.architecture, DCC_CSBIN);
+            
+            // add execution flag to avrdude ok for linux/macos for win to be verified
+            auto chmCmd = fmt::format("chmod 700 {}/bin/avrdude", DCC_AVRDUDE_ROOT); 
+            exec(chmCmd.c_str());
+            
+            // construct the avrdude command for upload
+            auto avrCmd = fmt::format(DCC_AVRDUDE, DCC_AVRDUDE_ROOT, board.part, DCC_AVRDUDE_ROOT, board.programmer, port, csBin );
+            INFO("Uploading commandstation ...");
+            exec(avrCmd.c_str());
+
+            break;
+        }
+        case 3: {
+            // file name is user provided for upload
+            break;
+        } 
+        default:{
+            auto s = fmt::format("Wrong number of arguments for [{}]", cmd->name);
+            throw ShellCmdExecException(s);
+            break;
+        }
+
+    }
+}
+
 void ShellCmdExec::setup()
 {
 
@@ -363,4 +507,6 @@ void ShellCmdExec::setup()
     add(2, "read", csRead);
     add(2, "diag", csDiag);
     add(2, "status", csStatus);
+    add(2, "ports", csPorts);
+    add(2, "upload", csUpload);
 }
