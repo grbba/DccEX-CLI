@@ -61,9 +61,22 @@ void DccSerial::recieve(const char *data, unsigned int len)
   std::cout.flush(); // Flush screen buffer
 }
 
-
 bool DccSerial::openPort(std::string d, int b)
 {
+    // if already open and same port --> warning that the port is already open --> did you mean to open another port?
+  if (open)
+  {
+    if (d.compare(device) == 0) 
+      {
+        WARN("port {} is already open. Did you mean to open a different port?", d);
+        return DCC_SUCCESS;
+      } else {
+        // if open and open request to different port --> warning changing port --> close old port first before moving on
+        WARN("switching port {} to {}", device, d);
+        port.close();
+      }
+  }
+
   device = d;
   baud = b;
 

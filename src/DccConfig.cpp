@@ -24,10 +24,17 @@
 #include <iostream>
 #include <libproc.h>
 #include <unistd.h>
+#include <chrono>
 
 #include "DccConfig.hpp"
 #include "DccSerial.hpp"
 #include "../include/CLI11.hpp"
+
+using namespace std::this_thread;     // sleep_for, sleep_until
+using namespace std::chrono_literals; // ns, us, ms, s, h, etc.
+using std::chrono::system_clock;
+
+
 
 std::string DccConfig::path;
 std::string DccConfig::mcu;
@@ -42,9 +49,6 @@ int DccConfig::baud = DCC_DEFAULT_BAUDRATE;
 DiagLevel DccConfig::level = LOGV_WARN; // by default show everything up to Warning level
 DccSerial DccConfig::serial;
 
-// void verboseOptionF(const std::string &s) {
-//     INFO("verbose 2loglevel flag {}", s);
-// }
 
 std::function<void(const std::string&)> verboseOptionLambda = 
     [](const std::string& s) { 
@@ -55,14 +59,12 @@ std::function<void(const std::string&)> verboseOptionLambda =
 
 std::function<void(const std::int64_t)> connectionLambda = 
     [](const std::int64_t v) { 
-        INFO("Connection {}", v);
+        INFO("Connecting ...");
         INFO("Port: {}", DccConfig::port);
         INFO("Baud: {}", DccConfig::baud);
         
         DccConfig::serial.openPort(DccConfig::port, DccConfig::baud);
-
-        // connect here as if open called from the interactive shell
-        
+        sleep_for(8s); // let the cs reply bfore showing the prompt again
     };
 
 
@@ -84,7 +86,6 @@ auto DccConfig::setup(int argc, char **argv) -> int
 
     app.add_option<std::string>("-l,--layout", DccConfig::dccLayoutFile,
                                 "path/name of the modelrailroad layout file")
-        // ->required()
         ->check(CLI::ExistingFile);
 
     auto mcuOption = app.add_option<std::string>("-m,--mcu", DccConfig::mcu,
@@ -100,7 +101,6 @@ auto DccConfig::setup(int argc, char **argv) -> int
     auto connectFlag = app.add_flag_function(
         "-c,--commandstation",
         connectionLambda,
-        // DccConfig::isConnect,
         "Connect to the commandstation either on the serial port (-p) of the DCC++ EX"
         "commandstation.( Ethernet connection is to come)\n If -i has been specified as well, after sending, \n"
         "the interactive commandline interface will be available.")
@@ -111,7 +111,6 @@ auto DccConfig::setup(int argc, char **argv) -> int
         ->group("Connect");
 
     connectFlag->needs(portOption); // or IP adress onec thats there  
-
 
     app.add_option_function("-v,--verbose", 
                     verboseOptionLambda,
@@ -125,16 +124,6 @@ auto DccConfig::setup(int argc, char **argv) -> int
     auto upLoadFlag = app.add_flag("-u,--upload", DccConfig::isUpload,
                  "upload the cs code to the mcu set in -m or --mcu connected to the port -p ")
         ->group("Upload");
-
-    // auto mcuOption = app.add_option<std::string>("-m,--mcu", DccConfig::mcu,
-    //                             "set the mcu architecture can be one of uno, mega or nano ")
-    //     ->group("Upload")
-    //     ->group("Connect");
-
-    // auto portOption = app.add_option<std::string>("-p,--port", DccConfig::port,
-    //                             "set the port to which the arduino is connected for uploading ")
-    //     ->group("Upload")
-    //     ->group("Connect");
 
      upLoadFlag->needs(mcuOption);
      upLoadFlag->needs(portOption);   
@@ -167,7 +156,6 @@ auto DccConfig::setup(int argc, char **argv) -> int
     else
     {
         DccConfig::path = std::string(pathbuf);
-        // printf("proc %d: %s\n", pid, pathbuf);
     }
 
     return DCC_SUCCESS;
