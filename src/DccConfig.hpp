@@ -29,19 +29,51 @@ T* his class reads the commandline option and flags and configures the run accor
 #ifndef DccConfig_h
 #define DccConfig_h
 
-
 #include <string>
 
-#include "config.h"
 #include "Diag.hpp"
+#include "DccSerial.hpp"
+
+
+#define CONFIG_INTERACTIVE false
+#define CONFIG_FILEINFO  false     
+
+
+#define UNOPROG arduino   // programmer for the uno
+#define MEGAPROG stk500v2 // programmer for the mega
+#define DCC_RELEASE "v0.0.1-alpha"
+#define DCC_BUILD_REPO "https://github.com/grbba/BuildDccEX"
+#define DCC_CONFIG_ZIP "DccConfig.zip"
+#define DCC_CSBIN "CommandStation-EX.ino.hex"
+
+// to be filled with DCC_BUILD_REPO, DCC_RELEASE, Architecure from the command
+#define DCC_FETCH "curl -L {}/releases/download/{}/Avr_Arduino{}.zip --output {}"
+// to be filled to run the avrdude command -p corresponding to the architecture
+// p part i.e. m2560 for a mega atmega328p for an uno
+#define DCC_AVRDUDE "{}/bin/avrdude -p {} -C {}/etc/avrdude.conf -c {} -P {} -U flash:w:{} -D &"
+
+#define DCC_CONFIG_ROOT "./cs-config"   // all config elated stuff avrdude, cs binaries etc go here
+#define DCC_ASSETS_ROOT "./cs-assets"   // schemas, layouts etc..
+
+#define CONFIG_DCCEX_SCHEMA "./cs-assets/DccEXLayout.json"
+#define DCC_DEFAULT_BAUDRATE 115200
+
+#ifdef __APPLE__
+#define DCC_AVRDUDE_ROOT "./cs-config/avrdude/macos"
+#elif
+#ifdef WIN32
+#define DCC_AVRDUDE_ROOT "./cs-config/avrdude/win"
+#else
+#define DCC_AVRDUDUE_ROOT "./cs-config/avrdude/linux"
+#endif
+#endif
 
 class DccConfig
 {
 private:
-
+    static std::string path;
 
 public:
-
     /**
      * @brief reads the commandline parameters and initalizes the environment
      * 
@@ -52,14 +84,23 @@ public:
 
     static std::string dccLayoutFile;
     static std::string dccSchemaFile;
-    static bool isInteractive;
+    static std::string mcu;
+    static std::string port;
+    static bool isInteractive;          // run as interactive shell
+    static bool isUpload;               // Upload has been requested
+    static bool isConnect;              // Connection to the cs has been requested from the commandline
     static DiagLevel level;
     static bool fileInfo;
+    static int baud;                     // baud rate for the serial connection; if not set then default is 115200
+    static DccSerial serial;             // Serial port instance
 
-    DccConfig()= default;
+    static const std::string getPath()
+    {
+        return path;
+    };
+
+    DccConfig() = default;
     ~DccConfig() = default;
 };
-
-
 
 #endif

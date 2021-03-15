@@ -64,6 +64,33 @@ const std::string csMenuItems = R"(
     "menuID" : 2,
     "Commands": [
       {
+        "name": "upload",
+        "params": 
+        [
+          { "type": "string", "desc": "mega|uno|nano", "mandatory": 1 },
+          { "type": "string", "desc": "serial port", "mandatory": 1 },
+          { "type": "string", "desc": "file", "mandatory": 0 },
+          { "type": "string", "desc": "flags", "mandatory": 0 }
+        ],
+        "help": [ 
+            "Upload the binary command station sketch for the arduino <type> specified",
+            "\tprovided by <file> connected to the <serial port>. If file is not provided",
+            "\tthe system will try to load, in order, a locally available binary release and",
+            "\tif that is not available, fetch the latest available binary release.",
+            "\tFlags: ",
+            "\t -l If a Commandstation binary is avaialble locally for the choosen MCU this file will be used",
+            "\t    unless -l is specified which will fetch the latest available Commandstation binary"
+        ]
+      },
+      {
+        "name": "ports",
+        "params": 
+        [],
+        "help": [ 
+            "lists available serial ports"
+        ]
+      },
+      {
         "name": "open",
         "params": 
         [

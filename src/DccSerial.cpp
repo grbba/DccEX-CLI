@@ -28,8 +28,8 @@
 #include "DccSerial.hpp"
 #include "Diag.hpp"
 
-#define HEADING(x)  fmt::format(fg(fmt::color::medium_turquoise) | fmt::emphasis::bold, x);
-#define WARNING(x)  fmt::format(fg(fmt::color::orange) | fmt::emphasis::bold, x);
+#define HEADING(x) fmt::format(fg(fmt::color::medium_turquoise) | fmt::emphasis::bold, x);
+#define WARNING(x) fmt::format(fg(fmt::color::orange) | fmt::emphasis::bold, x);
 
 // std::ostream &DccSerial::out;
 /**
@@ -38,17 +38,22 @@
  * @param data
  * @param len
  */
-void DccSerial::recieve(const char *data, unsigned int len) {
+void DccSerial::recieve(const char *data, unsigned int len)
+{
   std::vector<char> v(data, data + len);
   // std::cout << rang::fg::magenta;
-  for (unsigned int i = 0; i < v.size(); i++) {
-    if (v[i] == '\n') {
+  for (unsigned int i = 0; i < v.size(); i++)
+  {
+    if (v[i] == '\n')
+    {
       std::cout << '\n';
-    } else {
+    }
+    else
+    {
       if (v[i] < 32 || v[i] >= 0x7f)
         std::cout.put(' '); // Remove non-ascii char
       else
-      fmt::print(fg(fmt::color::magenta),"{}", v[i]);
+        fmt::print(fg(fmt::color::magenta), "{}", v[i]);
       // std::cout.put(v[i]);
     }
   }
@@ -56,69 +61,36 @@ void DccSerial::recieve(const char *data, unsigned int len) {
   std::cout.flush(); // Flush screen buffer
 }
 
-bool DccSerial::openPort(std::ostream &out,std::string d, int b) {
+bool DccSerial::openPort(std::string d, int b)
+{
+    // if already open and same port --> warning that the port is already open --> did you mean to open another port?
+  if (open)
+  {
+    if (d.compare(device) == 0) 
+      {
+        WARN("port {} is already open. Did you mean to open a different port?", d);
+        return DCC_SUCCESS;
+      } else {
+        // if open and open request to different port --> warning changing port --> close old port first before moving on
+        WARN("switching port {} to {}", device, d);
+        port.close();
+      }
+  }
+
   device = d;
   baud = b;
-    
+
   port.setCallback(recieve);
   port.open(device, baud);
-  
-  if (port.isOpen()) {
-      open = true;
-  } else {
-      ERR("Could not open serial port. Maybe in use by another program ?\n");
-      return DCC_FAILURE;
-  }
-  return DCC_SUCCESS;
-}
 
-/**
- * @brief
- *
- * @param out
- * @param type
- * @param device
- * @param baud
- * @return true
- * @return false
- */
-bool DccSerial::openPort(std::ostream &out, std::string type, std::string d, int b) {
-  device = d;
-  int8_t cType = -1;
-  if (type.compare("serial") == 0) {
-    cType = DCC_SERIAL;
-  } else {
-    if (type.compare("ethernet") == 0) {
-      ERR("Ethernet is not yet supported.\n");
-      cType = DCC_ETHERNET;
-      return DCC_FAILURE;
-    } else {
-      cType = DCC_CONN_UNKOWN;
-      ERR("Unknown connection type [{}] specified.", type);
-      return DCC_FAILURE;
-    }
+  if (port.isOpen())
+  {
+    open = true;
   }
-
-  switch(cType) {
-  case DCC_SERIAL: {
-    baud = b;
-    port.setCallback(recieve);
-    port.open(device, baud);
-    if (port.isOpen()) {
-      open = true;
-    } else {
-          ERR("Could not open serial port. Maybe in use by another program ?\n");
-    }
-    break;
-  }
-  case DCC_ETHERNET: {
-    // connect over Ethernet
-    break;
-  }
-  case DCC_CONN_UNKOWN: {
-    // error wrong command
-    break;
-  }
+  else
+  {
+    ERR("Could not open serial port. Maybe in use by another program ?\n");
+    return DCC_FAILURE;
   }
   return DCC_SUCCESS;
 }
@@ -127,7 +99,8 @@ bool DccSerial::openPort(std::ostream &out, std::string type, std::string d, int
  * @brief
  *
  */
-bool DccSerial::openPort() {
+bool DccSerial::openPort()
+{
   port.setCallback(recieve);
   port.open(device, baud);
   return port.isOpen();
@@ -137,7 +110,8 @@ bool DccSerial::openPort() {
  * @brief
  *
  */
-void DccSerial::closePort() {
+void DccSerial::closePort()
+{
   port.clearCallback();
   port.close();
 };
@@ -146,12 +120,14 @@ void DccSerial::closePort() {
  * @brief
  *
  */
-void DccSerial::write() {
+void DccSerial::write()
+{
   char s[3] = {0x04, '\n'};
   port.write(s, 3);
 };
 
-void DccSerial::write(const std::string *cmd) {
+void DccSerial::write(const std::string *cmd)
+{
   port.write(cmd->c_str(), cmd->size());
 };
 

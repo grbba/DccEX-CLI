@@ -24,6 +24,7 @@
 #include <iostream>
 #include <string>
 
+
 #include "DccConfig.hpp"
 #include "DccLayout.hpp"
 #include "DccShell.hpp"
@@ -33,22 +34,7 @@
 #define MINOR 0
 #define PATCH 10
 
-/**
- * @brief Reading a file containing json;
- * Usable for small files as it fills a potentially large string.
- * For larger files direct streaming into the schema validator and/or json
- * parser should be preferred
- *
- * @param schema_filename File from which to read
- * @param schema Pointer to the string which holds the files json; filled with
- * the files content
- */
-void readJsonFile(const std::string &schema_filename, std::string *schema) {
-  std::ifstream schema_file(schema_filename);
 
-  *schema = std::string(std::istreambuf_iterator<char>(schema_file),
-                        std::istreambuf_iterator<char>());
-}
 
 #define HEADING(x)  fmt::print(fg(fmt::color::medium_turquoise) | fmt::emphasis::bold, x);
 #define SUBHEADING(x)  fmt::print(fg(fmt::color::medium_turquoise), x);
@@ -69,6 +55,7 @@ auto main(int argc, char **argv) -> int {
   HEADING("Welcome to the DCC++ EX Commandline Interface\n");
   SUBHEADING(version); SUBHEADING(build);
   SUBHEADING("(c) 2020 grbba\n\n");
+
 
   // setup the configuration including default log levels
   if (!DccConfig::setup(argc, argv)) {

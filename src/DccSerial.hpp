@@ -43,31 +43,28 @@ typedef std::variant< std::ostream,
                       int> CmdParam_t;
 
 class DccSerial {
+
+
 private:
   CallbackAsyncSerial port;
   int baud = 115200;                                // default is 115200
   std::string device;
   bool open = false;
-  // std::ostream *out;
-  // CmdParam_t cmd;  
-
+ 
   static void recieve(const char *data, unsigned int len); // callback for reading
 
 
 public:
-  bool openPort();  // open the port
-  bool openPort(std::ostream &out, std::string type, std::string device, int baud );  // open the port
-  bool openPort(std::ostream &out, std::string device, int baud );  // open the port
-  void closePort(); // close the port
-  void write();     // write to the port
+  bool openPort();                                // open the port
+  bool openPort(std::string device, int baud );   // open the port
+  void closePort();                               // close the port
+  void write();                                   // write to the port
   void write(const std::string *cmd);
 
   void setDevice(std::string d) { device = d; }
   void setBaud(int b) { baud = b; }
 
   bool isOpen() { return open; };
-  // void setCmd(CmdParam_t c) { cmd = c; }            // current command to process
-  // void execute(shellCommand cmd, std::ostream &out, CmdParam_t p1,CmdParam_t p2,CmdParam_t p3);
 
   DccSerial() = default;
   ~DccSerial() = default;
