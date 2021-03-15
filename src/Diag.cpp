@@ -14,7 +14,7 @@ const std::map<std::string, DiagLevel> Diag::diagMapStr
 {
     {"silent", LOGV_SILENT}, 
     {"info", LOGV_INFO},
-    {"warnings", LOGV_WARN},      
+    {"warning", LOGV_WARN},      
     {"error", LOGV_ERROR},
     {"trace", LOGV_TRACE},        
     {"debug", LOGV_DEBUG}
@@ -23,7 +23,7 @@ const std::map<std::string, DiagLevel> Diag::diagMapStr
 const std::map<DiagLevel, std::string> Diag::diagMap
 {
     {LOGV_SILENT, "silent"}, 
-    {LOGV_WARN, "warnings"},
+    {LOGV_WARN, "warning"},
     {LOGV_ERROR, "error"},
     {LOGV_INFO, "info"},
     {LOGV_TRACE, "trace"}, 

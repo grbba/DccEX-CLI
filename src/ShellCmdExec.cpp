@@ -46,8 +46,10 @@ using namespace std::this_thread;     // sleep_for, sleep_until
 using namespace std::chrono_literals; // ns, us, ms, s, h, etc.
 using std::chrono::system_clock;
 
+
 std::map<std::pair<int, std::string>, _fpShellCmd> ShellCmdExec::_fMap;
-DccSerial serial;
+
+// DccSerial serial = DccConfig::serial; 
 
 struct arduinoBoard {
     std::string architecture;
@@ -56,9 +58,9 @@ struct arduinoBoard {
 };
 
 // supported boards
-arduinoBoard avrmega = {"Mega", "stk500v2","m2560"};
-arduinoBoard avruno = {"Uno", "arduino","atmega328p"};
-arduinoBoard avrnano = {"Nano", "arduino", "atmega328p"}; // A verifier !!
+const arduinoBoard avrmega = {"Mega", "stk500v2","m2560"};
+const arduinoBoard avruno = {"Uno", "arduino","atmega328p"};
+const arduinoBoard avrnano = {"Nano", "arduino", "atmega328p"}; // A verifier !!
 // unowifi r2
 // nano every to be added
 
@@ -166,14 +168,14 @@ void csOpenSerial(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<s
 {
 
     bool isOpen = false;
-    int baudRate = 115200;
+    int baudRate = DCC_DEFAULT_BAUDRATE;
     switch (params.size())
     {
     case 2:
     {
         try
         {
-            isOpen = serial.openPort(out, params[1], baudRate);
+            isOpen = DccConfig::serial.openPort(params[1], baudRate);
         }
         catch (std::exception &e)
         {
@@ -195,7 +197,7 @@ void csOpenSerial(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<s
         }
         try
         {
-            isOpen = serial.openPort(out, params[1], baudRate);
+            isOpen = DccConfig::serial.openPort(params[1], baudRate);
         }
         catch (std::exception &e)
         {
@@ -279,9 +281,9 @@ void csOpen(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::st
 void csStatus(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params)
 {
     std::string csCmd = "<s>";
-    if (serial.isOpen())
+    if (DccConfig::serial.isOpen())
     {
-        serial.write(&csCmd);
+        DccConfig::serial.write(&csCmd);
     }
     else
     {
@@ -357,9 +359,9 @@ void csRead(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::st
 
     std::string csCmd = fmt::format("<R {} {} {}>", cv, callback, callbacksub);
     INFO("Sending: {}", csCmd);
-    if (serial.isOpen())
+    if (DccConfig::serial.isOpen())
     {
-        serial.write(&csCmd);
+        DccConfig::serial.write(&csCmd);
     }
     else
     {
@@ -396,9 +398,9 @@ void csDiag(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::st
 
     std::string csCmd = fmt::format("<D {} {}>", str_toupper(params[0]), str_toupper(params[1]));
     INFO("Sending: {}", csCmd);
-    if (serial.isOpen())
+    if (DccConfig::serial.isOpen())
     {
-        serial.write(&csCmd);
+        DccConfig::serial.write(&csCmd);
     }
     else
     {
@@ -481,7 +483,7 @@ void csUpload(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::
             auto avrCmd = fmt::format(DCC_AVRDUDE, DCC_AVRDUDE_ROOT, board.part, DCC_AVRDUDE_ROOT, board.programmer, port, csBin );
             INFO("Uploading commandstation ...");
             exec(avrCmd.c_str());
-
+            INFO("Uploading commandstation completed.");
             break;
         }
         case 3: {

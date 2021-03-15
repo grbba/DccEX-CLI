@@ -31,8 +31,13 @@ T* his class reads the commandline option and flags and configures the run accor
 
 #include <string>
 
-#include "config.h"
 #include "Diag.hpp"
+#include "DccSerial.hpp"
+
+
+#define CONFIG_INTERACTIVE false
+#define CONFIG_FILEINFO  false     
+
 
 #define UNOPROG arduino   // programmer for the uno
 #define MEGAPROG stk500v2 // programmer for the mega
@@ -46,7 +51,12 @@ T* his class reads the commandline option and flags and configures the run accor
 // to be filled to run the avrdude command -p corresponding to the architecture
 // p part i.e. m2560 for a mega atmega328p for an uno
 #define DCC_AVRDUDE "{}/bin/avrdude -p {} -C {}/etc/avrdude.conf -c {} -P {} -U flash:w:{} -D &"
-#define DCC_CONFIG_ROOT "./cs-config"
+
+#define DCC_CONFIG_ROOT "./cs-config"   // all config elated stuff avrdude, cs binaries etc go here
+#define DCC_ASSETS_ROOT "./cs-assets"   // schemas, layouts etc..
+
+#define CONFIG_DCCEX_SCHEMA "./cs-assets/DccEXLayout.json"
+#define DCC_DEFAULT_BAUDRATE 115200
 
 #ifdef __APPLE__
 #define DCC_AVRDUDE_ROOT "./cs-config/avrdude/macos"
@@ -74,9 +84,15 @@ public:
 
     static std::string dccLayoutFile;
     static std::string dccSchemaFile;
-    static bool isInteractive;
+    static std::string mcu;
+    static std::string port;
+    static bool isInteractive;          // run as interactive shell
+    static bool isUpload;               // Upload has been requested
+    static bool isConnect;              // Connection to the cs has been requested from the commandline
     static DiagLevel level;
     static bool fileInfo;
+    static int baud;                     // baud rate for the serial connection; if not set then default is 115200
+    static DccSerial serial;             // Serial port instance
 
     static const std::string getPath()
     {
