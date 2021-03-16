@@ -22,7 +22,7 @@
 #include <fmt/color.h>
 #include <fstream>
 #include <iostream>
-#include <libproc.h>
+// #include <libproc.h>
 #include <unistd.h>
 #include <chrono>
 
@@ -40,14 +40,14 @@ std::string DccConfig::path;
 std::string DccConfig::mcu;
 std::string DccConfig::port;
 std::string DccConfig::dccLayoutFile;
-std::string DccConfig::dccSchemaFile = CONFIG_DCCEX_SCHEMA;
-bool DccConfig::isInteractive = CONFIG_INTERACTIVE;
-bool DccConfig::isUpload = false;
-bool DccConfig::isConnect = false;
-bool DccConfig::fileInfo = CONFIG_FILEINFO;
-int DccConfig::baud = DCC_DEFAULT_BAUDRATE;
-DiagLevel DccConfig::level = LOGV_WARN; // by default show everything up to Warning level
-DccSerial DccConfig::serial;
+std::string DccConfig::dccSchemaFile    = CONFIG_DCCEX_SCHEMA;
+bool        DccConfig::isInteractive    = CONFIG_INTERACTIVE;
+bool        DccConfig::isUpload         = false;
+bool        DccConfig::isConnect        = false;
+bool        DccConfig::fileInfo         = CONFIG_FILEINFO;
+int         DccConfig::baud             = DCC_DEFAULT_BAUDRATE;
+DiagLevel   DccConfig::level            = LOGV_WARN; // by default show everything up to Warning level
+DccSerial   DccConfig::serial;
 
 
 std::function<void(const std::string&)> verboseOptionLambda = 
@@ -128,7 +128,6 @@ auto DccConfig::setup(int argc, char **argv) -> int
      upLoadFlag->needs(mcuOption);
      upLoadFlag->needs(portOption);   
 
-    // CLI11_PARSE(app, argc, argv);
     try
     {
         (app).parse((argc), (argv));
@@ -141,6 +140,19 @@ auto DccConfig::setup(int argc, char **argv) -> int
 
     Diag::setFileInfo(fileInfo); // if not set via commandline by default set to false
 
+/**
+ * @todo Error checking / handling 
+ * 
+ */
+#ifdef __linux__
+    char result[ PATH_MAX ];
+    ssize_t count = readlink( "/proc/self/exe", result, PATH_MAX );
+    std::string appPath = std::string( result, (count > 0) ? count : 0 );
+    std::size_t found = appPath.find_last_of("/\\");
+    DccConfig::path = appPath.substr(0,found);
+#endif
+
+#ifdef __APPLE__
     int ret;
     pid_t pid;
     char pathbuf[PROC_PIDPATHINFO_MAXSIZE];
@@ -157,6 +169,7 @@ auto DccConfig::setup(int argc, char **argv) -> int
     {
         DccConfig::path = std::string(pathbuf);
     }
+#endif
 
     return DCC_SUCCESS;
 }

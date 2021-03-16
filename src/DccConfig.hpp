@@ -60,12 +60,12 @@ T* his class reads the commandline option and flags and configures the run accor
 
 #ifdef __APPLE__
 #define DCC_AVRDUDE_ROOT "./cs-config/avrdude/macos"
-#elif
+#endif
 #ifdef WIN32
 #define DCC_AVRDUDE_ROOT "./cs-config/avrdude/win"
-#else
-#define DCC_AVRDUDUE_ROOT "./cs-config/avrdude/linux"
 #endif
+#ifdef __linux__
+#define DCC_AVRDUDE_ROOT "./cs-config/avrdude/linux"
 #endif
 
 class DccConfig

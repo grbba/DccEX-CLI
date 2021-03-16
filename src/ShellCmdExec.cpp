@@ -28,6 +28,7 @@
 #include <map>
 #include <set>
 #include <vector>
+#include <filesystem>
 
 #include <fmt/core.h>
 #include <fmt/color.h>
@@ -412,18 +413,47 @@ void csDiag(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::st
 
 void csPorts(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params)
 {
-    std::stringstream portList(exec("ls /dev/cu*"));
     std::map<std::int8_t,std::string> ports;
-    
-    std::string p;
     int8_t pn = 1;
-    fmt::print("Available ports:\n", p);
+    fmt::print("Available ports:\n");
+#ifdef __APPLE__
+    std::stringstream portList(exec("ls /dev/cu*"));
+    std::string p;
     while(getline(portList, p, '\n'))
     { 
         ports.insert({pn,p});
         fmt::print("[{}]:{}\n", pn, p);
         pn++;
     }
+#endif
+#ifdef __linux__
+    std::filesystem::path p("/dev/serial/by-id");
+    std::error_code ec;
+
+    try {
+      if (!exists(p)) {
+        auto s = fmt::format("{} does not exist", p.generic_string());
+        throw ShellCmdExecException(s);
+      } else {
+          for( auto de : std::filesystem::directory_iterator(p)) {
+            if (is_symlink(de.symlink_status())) {
+                std::filesystem::path symlink_points_at = read_symlink(de);
+                
+                p +=  "/";
+                p +=  symlink_points_at;
+
+                std::filesystem::path absolute_path = std::filesystem::canonical(p);
+                fmt::print("[{}]:{}\n", pn, absolute_path.generic_string());
+                ports.insert({pn,absolute_path.generic_string()}); 
+                pn++;               
+            }
+          }
+      }
+    } catch (const std::filesystem::filesystem_error &ex) {
+      ERR("{}", ex.what());
+      throw ex;
+    }
+#endif
 }
 
 void csUpload(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params)
