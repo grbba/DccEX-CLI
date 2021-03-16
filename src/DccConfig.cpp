@@ -22,7 +22,9 @@
 #include <fmt/color.h>
 #include <fstream>
 #include <iostream>
-// #include <libproc.h>
+#ifdef __APPLE__
+    #include <libproc.h>
+#endif
 #include <unistd.h>
 #include <chrono>
 
