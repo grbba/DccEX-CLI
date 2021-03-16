@@ -34,6 +34,16 @@ T* his class reads the commandline option and flags and configures the run accor
 #include "Diag.hpp"
 #include "DccSerial.hpp"
 
+#if defined(__unix__) || defined(__unix) || defined(__linux__)
+#define OS_LINUX
+#elif defined(WIN32) || defined(_WIN32) || defined(_WIN64)
+#define OS_WIN
+#elif defined(__APPLE__) || defined(__MACH__)
+#define OS_MAC
+#else
+#error Unknown Platform
+#endif
+
 
 #define CONFIG_INTERACTIVE false
 #define CONFIG_FILEINFO  false     
@@ -58,13 +68,13 @@ T* his class reads the commandline option and flags and configures the run accor
 #define CONFIG_DCCEX_SCHEMA "./cs-assets/DccEXLayout.json"
 #define DCC_DEFAULT_BAUDRATE 115200
 
-#ifdef __APPLE__
+#ifdef OS_MAC
 #define DCC_AVRDUDE_ROOT "./cs-config/avrdude/macos"
 #endif
-#ifdef WIN32
+#ifdef OS_WIN
 #define DCC_AVRDUDE_ROOT "./cs-config/avrdude/win"
 #endif
-#ifdef __linux__
+#ifdef OS_LINUX
 #define DCC_AVRDUDE_ROOT "./cs-config/avrdude/linux"
 #endif
 

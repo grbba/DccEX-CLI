@@ -22,18 +22,19 @@
 #include <fmt/color.h>
 #include <fstream>
 #include <iostream>
-#ifdef __APPLE__
+
+#include "DccConfig.hpp"
+#ifdef OS_MAC
     #include <libproc.h>
     #include <unistd.h>
 #endif
-#ifdef __linux__
+#ifdef OS_LINUX
     #include <unistd.h>
 #endif
-#ifdef WIN32
+#ifdef OS_WIN
     #include <Windows.h>
 #endif
 #include <chrono>
-#include "DccConfig.hpp"
 #include "DccSerial.hpp"
 #include "../include/CLI11.hpp"
 

@@ -424,7 +424,8 @@ void csPorts(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::s
     std::map<std::int8_t,std::string> ports;
     int8_t pn = 1;
     fmt::print("Available ports:\n");
-#ifdef __APPLE__
+    
+#ifdef OS_MAC
     std::stringstream portList(exec("ls /dev/cu*"));
     std::string p;
     while(getline(portList, p, '\n'))
@@ -434,7 +435,7 @@ void csPorts(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::s
         pn++;
     }
 #endif
-#ifdef __linux__
+#ifdef OS_LINUX
     std::filesystem::path p("/dev/serial/by-id");
     std::error_code ec;
 
