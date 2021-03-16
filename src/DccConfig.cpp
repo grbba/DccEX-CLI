@@ -24,10 +24,15 @@
 #include <iostream>
 #ifdef __APPLE__
     #include <libproc.h>
+    #include <unistd.h>
 #endif
-#include <unistd.h>
+#ifdef __linux__
+    #include <unistd.h>
+#endif
+#ifdef WIN32
+    #include <Windows.h>
+#endif
 #include <chrono>
-
 #include "DccConfig.hpp"
 #include "DccSerial.hpp"
 #include "../include/CLI11.hpp"
@@ -146,6 +151,22 @@ auto DccConfig::setup(int argc, char **argv) -> int
  * @todo Error checking / handling 
  * 
  */
+#ifdef WIN32
+    char ownPth[MAX_PATH]; 
+
+     // When NULL is passed to GetModuleHandle, the handle of the exe itself is returned
+     HMODULE hModule = GetModuleHandle(NULL);
+     if (hModule != NULL)
+     {
+         // Use GetModuleFileName() with module handle to get the path
+         GetModuleFileName(hModule, ownPth, (sizeof(ownPth))); 
+         DccConfig::path = std::string(ownPth);
+     }
+     else
+     {
+         ERR("Module handle is NULL");
+     }
+#endif
 #ifdef __linux__
     char result[ PATH_MAX ];
     ssize_t count = readlink( "/proc/self/exe", result, PATH_MAX );

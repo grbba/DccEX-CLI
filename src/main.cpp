@@ -35,15 +35,19 @@
 #define PATCH 10
 
 
-
+#ifdef WIN32
+#define HEADING(x)  fmt::print(x);
+#define SUBHEADING(x)  fmt::print(x);
+#else
 #define HEADING(x)  fmt::print(fg(fmt::color::medium_turquoise) | fmt::emphasis::bold, x);
 #define SUBHEADING(x)  fmt::print(fg(fmt::color::medium_turquoise), x);
-
+#endif
 
 auto main(int argc, char **argv) -> int {
   // clear screen
-  std::cout << "\e[2J\e[1;1H";
-
+  #ifndef WIN32
+    std::cout << "\e[2J\e[1;1H";
+  #endif
   char month[4];
   int day, year, hour, min, sec;
   sscanf(__DATE__, "%s %i %i", &month[0], &day, &year);
@@ -52,10 +56,18 @@ auto main(int argc, char **argv) -> int {
   std::string version = fmt::format("Version {}.{}.{}", MAJOR, MINOR, PATCH);
   std::string build = fmt::format("-{}{}{}\n", day, hour, min);
 
+#ifdef WIN32
+  rang::setWinTermMode(rang::winTerm::Auto);
+  std::cout << rang::fg::cyan << rang::style::bold;
+#endif
+  
   HEADING("Welcome to the DCC++ EX Commandline Interface\n");
   SUBHEADING(version); SUBHEADING(build);
   SUBHEADING("(c) 2020 grbba\n\n");
 
+#ifdef WIN32
+  std::cout << rang::style::reset;
+#endif
 
   // setup the configuration including default log levels
   if (!DccConfig::setup(argc, argv)) {

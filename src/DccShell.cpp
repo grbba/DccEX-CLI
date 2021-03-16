@@ -39,9 +39,6 @@ namespace cli
 #include "DccSerial.hpp"
 #include "Diag.hpp"
 
-#define HEADING(x) fmt::format(fg(fmt::color::medium_turquoise) | fmt::emphasis::bold, x);
-#define WARNING(x) fmt::format(fg(fmt::color::orange) | fmt::emphasis::bold, x);
-
 using namespace std::this_thread;     // sleep_for, sleep_until
 using namespace std::chrono_literals; // ns, us, ms, s, h, etc.
 using std::chrono::system_clock;

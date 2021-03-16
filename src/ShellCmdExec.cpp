@@ -103,10 +103,18 @@ void readJsonFile(const std::string &schema_filename, std::string *schema) {
 
 // execute shell command and return the output in a string
 
+#ifdef WIN32
+#define dccPopen _popen
+#define dccPclose _pclose
+#else
+#define dccPopen popen
+#define dccPclose pclose
+#endif
+
 std::string exec(const char* cmd) {
     std::array<char, 128> buffer;
     std::string result;
-    std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
+    std::unique_ptr<FILE, decltype(&dccPclose)> pipe(dccPopen(cmd, "r"), dccPclose);
     if (!pipe) {
         throw std::runtime_error("popen() failed!");
     }
@@ -276,7 +284,7 @@ void csOpen(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::st
         throw ShellCmdExecException(s);
         break;
     }
-    }
+    }   
 }
 
 void csStatus(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params)
@@ -497,7 +505,11 @@ void csUpload(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::
             exec(fetchCmd.c_str());
             
             // unzip it and overwrite anything ( download is 'fairly small' so that is ok for the time being)
+            #ifdef WIN32
+            auto zipCmd = fmt::format("tar -xf -q -d {} {}", DCC_CONFIG_ROOT, DCC_CONFIG_ZIP); 
+            #else
             auto zipCmd = fmt::format("unzip -o -q -d {} {}", DCC_CONFIG_ROOT, DCC_CONFIG_ZIP); 
+            #endif
             // INFO("Installing: {}", zipCmd);
             INFO("Installing files ...");
             exec(zipCmd.c_str());
