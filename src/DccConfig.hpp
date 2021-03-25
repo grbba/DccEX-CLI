@@ -33,6 +33,7 @@ T* his class reads the commandline option and flags and configures the run accor
 
 #include "Diag.hpp"
 #include "DccSerial.hpp"
+#include "DccTCP.hpp"
 
 #if defined(__unix__) || defined(__unix) || defined(__linux__)
 #define OS_LINUX
@@ -67,6 +68,14 @@ T* his class reads the commandline option and flags and configures the run accor
 
 #define CONFIG_DCCEX_SCHEMA "./cs-assets/DccEXLayout.json"
 #define DCC_DEFAULT_BAUDRATE 115200
+#define DCC_DEFAULT_PORT     2560
+
+#define DCC_FAILURE 0
+#define DCC_SUCCESS 1
+
+// #define DCC_SERIAL 0
+// #define DCC_ETHERNET 1
+// #define DCC_CONN_UNKOWN 2
 
 #ifdef OS_MAC
 #define DCC_AVRDUDE_ROOT "./cs-config/avrdude/macos"
@@ -77,6 +86,15 @@ T* his class reads the commandline option and flags and configures the run accor
 #ifdef OS_LINUX
 #define DCC_AVRDUDE_ROOT "./cs-config/avrdude/linux"
 #endif
+
+enum CsConnection_t {
+    DCC_SERIAL,
+    DCC_ETHERNET,
+    DCC_CONN_UNKOWN
+};
+
+// typedef std::variant< DccSerial,
+//                       DccTCP > CsConnection_t;
 
 class DccConfig
 {
@@ -103,6 +121,8 @@ public:
     static bool fileInfo;
     static int baud;                     // baud rate for the serial connection; if not set then default is 115200
     static DccSerial serial;             // Serial port instance
+    static DccTCP ethernet;              // Ethernet connection ( we only allow one ...)
+    static CsConnection_t active;        // Active connection type ( maps either to serial or ethernet) 
 
     static const std::string getPath()
     {

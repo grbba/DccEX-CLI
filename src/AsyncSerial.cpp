@@ -334,11 +334,8 @@ void AsyncSerial::open(const std::string &devname, unsigned int baud_rate,
     throw(std::system_error(std::error_code(), "Device is not a tty"));
   }
   new_attributes.c_iflag = IGNBRK;
-
   new_attributes.c_oflag = 0;
-
   new_attributes.c_lflag = 0;
-
   new_attributes.c_cflag = (CS8 | CREAD | CLOCAL); //8 data bit,Enable
   // receiver,Ignore modem
 

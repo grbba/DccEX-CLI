@@ -25,12 +25,6 @@
 #include "AsyncSerial.h"
 #include <variant>
 
-#define DCC_FAILURE 0
-#define DCC_SUCCESS 1
-
-#define DCC_SERIAL 0
-#define DCC_ETHERNET 1
-#define DCC_CONN_UNKOWN 2
 
 // goes into DccShell.hpp
 enum class shellCommand {
@@ -63,6 +57,9 @@ public:
 
   void setDevice(std::string d) { device = d; }
   void setBaud(int b) { baud = b; }
+
+  std::string getDevice() { return device; }
+  int getBaud() { return baud; }
 
   bool isOpen() { return open; };
 

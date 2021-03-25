@@ -1,0 +1,58 @@
+
+/*
+ * © 2021 Gregor Baues. All rights reserved.
+ *
+ * This is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the
+ * Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+ * DEALINGS IN THE SOFTWARE.
+ *
+ * See the GNU General Public License for more details
+ * <https://www.gnu.org/licenses/>
+ */
+
+#ifndef DccTCP_h
+#define DccTCP_h
+
+#include "AsyncTCP.hpp"
+
+class DccTCP {
+
+private:
+  CallbackAsyncTCP  server;           
+  std::string       ipAddress;            // IP Address 1.2.3.4
+  std::string       port;                 // port number; default is 2560 for the command station
+  bool              open = false;
+ 
+  static void recieve(const char *data, unsigned int len); // callback for reading 
+  bool openConnection();                                   // open the connection / setting the callback for reception
+
+public:
+  bool openConnection(std::string ip, std::string port);   // open the connection  
+  void closeConnection();                                  // close the connection                                    
+  void write(const std::string *cmd); 
+
+  void setIpAddress(std::string a) { ipAddress = a; }
+  void setPort(std::string p) { port = p; }
+  
+  std::string getIpAddress() { return ipAddress; }
+  std::string getPort() { return port; }
+
+  bool isOpen() { return open; };
+
+  DccTCP() = default;
+  ~DccTCP() = default;
+  DccTCP(std::string a, std::string p) : ipAddress(a), port(p) {};
+};
+
+#endif
+
+

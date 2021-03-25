@@ -24,6 +24,7 @@
 #include <iostream>
 
 #include "DccConfig.hpp"
+
 #ifdef OS_MAC
     #include <libproc.h>
     #include <unistd.h>
@@ -43,7 +44,6 @@ using namespace std::chrono_literals; // ns, us, ms, s, h, etc.
 using std::chrono::system_clock;
 
 
-
 std::string DccConfig::path;
 std::string DccConfig::mcu;
 std::string DccConfig::port;
@@ -56,6 +56,8 @@ bool        DccConfig::fileInfo         = CONFIG_FILEINFO;
 int         DccConfig::baud             = DCC_DEFAULT_BAUDRATE;
 DiagLevel   DccConfig::level            = LOGV_WARN; // by default show everything up to Warning level
 DccSerial   DccConfig::serial;
+DccTCP      DccConfig::ethernet;
+CsConnection_t DccConfig::active        = DCC_CONN_UNKOWN; 
 
 
 std::function<void(const std::string&)> verboseOptionLambda = 

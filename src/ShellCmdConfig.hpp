@@ -39,6 +39,16 @@ const std::string rootMenuItems = R"(
         "help": [ "Shows the configuration items for the current session" ]
       },
       {
+        "name": "use",
+        "params": 
+        [
+          { "type": "string", "desc": "serial|ethernet", "mandatory": 1 }
+        ],
+        "help": [ "Allows to set the active connection in case serial and a etehrnet connection have been opened.",
+                  "\tThe last opened connection will be the active one"
+                ]
+      },
+      {
         "name": "loglevel",
         "params": 
         [
@@ -122,14 +132,14 @@ const std::string csMenuItems = R"(
       {
         "name":"diag",
         "params": [
-          { "type": "string", "desc": "[ack|wifi|ethernet|cmd|wit]", "mandatory": 1 },
+          { "type": "string", "desc": "[ack|wifi|net|cmd|wit]", "mandatory": 1 },
           { "type": "string", "desc": "[on|off]", "mandatory": 1 }
         ],
         "help" : [ 
           "Enable/Disbale diganostics for the commandstation for the follwing",
           "\t- ack: capture information for decoder communication",
           "\t- wifi: capture information for WiFi connection issues",
-          "\t- ethernet: capture information for ethernet connection issues",
+          "\t- net: capture information for ethernet connection issues",
           "\t- cmd: capture JMRI / DCC command information",
           "\t- wit: capture WiThrottle debug information",
           "\tFor commandstation diagnostics use diag in the cs menu" 

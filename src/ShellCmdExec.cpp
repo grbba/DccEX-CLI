@@ -33,6 +33,7 @@
 #include <fmt/core.h>
 #include <fmt/color.h>
 #include <fmt/ostream.h>
+#include <asio.hpp>
 
 #include "../include/lexical_cast.hpp"
 
@@ -42,45 +43,42 @@
 #include "DccConfig.hpp"
 #include "ShellCmdExec.hpp"
 
-
 using namespace std::this_thread;     // sleep_for, sleep_until
 using namespace std::chrono_literals; // ns, us, ms, s, h, etc.
 using std::chrono::system_clock;
 
-
 std::map<std::pair<int, std::string>, _fpShellCmd> ShellCmdExec::_fMap;
 
-// DccSerial serial = DccConfig::serial; 
+// DccSerial serial = DccConfig::serial;
 
-struct arduinoBoard {
+struct arduinoBoard
+{
     std::string architecture;
     std::string programmer;
-    std::string part;               // identifier of the processor for avrdude
+    std::string part; // identifier of the processor for avrdude
 };
 
 // supported boards
-const arduinoBoard avrmega = {"Mega", "stk500v2","m2560"};
-const arduinoBoard avruno = {"Uno", "arduino","atmega328p"};
+const arduinoBoard avrmega = {"Mega", "stk500v2", "m2560"};
+const arduinoBoard avruno = {"Uno", "arduino", "atmega328p"};
 const arduinoBoard avrnano = {"Nano", "arduino", "atmega328p"}; // A verifier !!
 // unowifi r2
 // nano every to be added
 
-const std::set<std::string> ctypes = {"serial","ethernet"};
-const std::set<std::string> diags = {"ack", "wifi", "ethernet", "cmd", "wit"};
+const std::set<std::string> ctypes = {"serial", "ethernet"};
+const std::set<std::string> diags = {"ack", "wifi", "net", "cmd", "wit"};
 const std::map<std::string, bool> onoff = {{"on", 1}, {"off", 0}};
 const std::map<std::string, arduinoBoard> boardTypes = {
-    {"mega",avrmega },
-    {"uno", avruno },
-    {"nano", avrnano} 
-};
-
+    {"mega", avrmega},
+    {"uno", avruno},
+    {"nano", avrnano}};
 
 // Utilities
 
-std::string str_toupper(std::string s) {
-    std::transform(s.begin(), s.end(), s.begin(), 
-                   [](unsigned char c){ return std::toupper(c); } 
-                  );
+std::string str_toupper(std::string s)
+{
+    std::transform(s.begin(), s.end(), s.begin(),
+                   [](unsigned char c) { return std::toupper(c); });
     return s;
 }
 
@@ -94,11 +92,12 @@ std::string str_toupper(std::string s) {
  * @param schema Pointer to the string which holds the files json; filled with
  * the files content
  */
-void readJsonFile(const std::string &schema_filename, std::string *schema) {
-  std::ifstream schema_file(schema_filename);
+void readJsonFile(const std::string &schema_filename, std::string *schema)
+{
+    std::ifstream schema_file(schema_filename);
 
-  *schema = std::string(std::istreambuf_iterator<char>(schema_file),
-                        std::istreambuf_iterator<char>());
+    *schema = std::string(std::istreambuf_iterator<char>(schema_file),
+                          std::istreambuf_iterator<char>());
 }
 
 // execute shell command and return the output in a string
@@ -111,17 +110,74 @@ void readJsonFile(const std::string &schema_filename, std::string *schema) {
 #define dccPclose pclose
 #endif
 
-std::string exec(const char* cmd) {
+/**
+ * @brief Executes a command at os level
+ * 
+ * @param cmd 
+ * @return std::string 
+ */
+std::string exec(const char *cmd)
+{
     std::array<char, 128> buffer;
     std::string result;
     std::unique_ptr<FILE, decltype(&dccPclose)> pipe(dccPopen(cmd, "r"), dccPclose);
-    if (!pipe) {
+    if (!pipe)
+    {
         throw std::runtime_error("popen() failed!");
     }
-    while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
+    while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr)
+    {
         result += buffer.data();
     }
     return result;
+}
+
+/**
+ * @brief send a the command to the commandstation over the active connection (serial or ethernet)
+ * ! There is only one connection per type now i.e. serial / ethernet 
+ * ! as there can be multiple interfaces on the this should be chnaged to support multiple onnections esp for ethernet
+ * 
+ * @param cmd The command in DCC++ EX format to be send to the commandstation
+ */
+void sendCmd(const std::string csCmd)
+{
+    DBG("Sending: {}", csCmd);
+    // check for the active Connection
+    switch (DccConfig::active)
+    {
+    case DCC_SERIAL:
+    {
+        if (DccConfig::serial.isOpen())
+        {
+            DccConfig::serial.write(&csCmd);
+        }
+        else
+        {
+            auto s = fmt::format("Serial port is closed, please call open first.");
+            throw ShellCmdExecException(s);
+        }
+        break;
+    }
+    case DCC_ETHERNET:
+    {
+        if (DccConfig::ethernet.isOpen())
+        {
+            DccConfig::ethernet.write(&csCmd);
+        }
+        else
+        {
+            auto s = fmt::format("Network connection is closed, please call open first.");
+            throw ShellCmdExecException(s);
+        }
+        break;
+    }
+    case DCC_CONN_UNKOWN:
+    {
+        auto s = fmt::format("No active connection to the commandstation. Open serial or network connection first.");
+        throw ShellCmdExecException(s);
+        break;
+    }
+    }
 }
 
 // Executors
@@ -155,6 +211,48 @@ static void rootLogLevel(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::v
     }
 }
 
+static void rootUseConnection(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params)
+{
+    DBG("{} Setting active connection to {}", params.size(), params[0]);
+
+    switch (params.size())
+    {
+    case 1:
+    {
+        // params shall be serial or ethernet otherwise error
+        if(params[0].compare("serial") == 0) {
+            if(DccConfig::serial.isOpen()) {
+                DccConfig::active = DCC_SERIAL;
+                INFO("Connection set to serial: [{} at {} baud]", DccConfig::serial.getDevice(), DccConfig::serial.getBaud());
+            } else {
+                ERR("No open serial connection available.");
+            }
+            break;
+        }
+        if(params[0].compare("ethernet") == 0) {
+            if(DccConfig::ethernet.isOpen()) {
+            DccConfig::active = DCC_ETHERNET;
+            INFO("Connection set to network: [{}:{}]", DccConfig::ethernet.getIpAddress(), DccConfig::ethernet.getPort());
+            } else {
+                ERR("No open network connection available.");
+            }
+            break;
+        }
+        // Here we don't know 
+        auto s = fmt::format("Unknown connection type [{}]", params[0]);
+        throw ShellCmdExecException(s);
+        break;
+    }
+    default:
+    {
+        auto s = fmt::format("Wrong number of arguments for [{}]", cmd->name);
+        throw ShellCmdExecException(s);
+        break;
+    }
+    }
+
+}
+
 static void rootConfig(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params)
 {
     Diag::push();
@@ -171,6 +269,46 @@ static void rootConfig(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vec
     INFO("Executable: {}", DccConfig::getPath());
 
     Diag::pop();
+}
+
+void csOpenTCP(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params)
+{
+    std::string arduinoIP;
+    std::string arduinoPort;
+
+    switch (params.size())
+    {
+    case 2:
+    {
+        arduinoIP = params[1];
+        arduinoPort = fmt::format("{}", DCC_DEFAULT_PORT);
+        break;
+    }
+    case 3:
+    {
+        arduinoIP = params[1];
+        arduinoPort = params[2];
+        break;
+    }
+    default:
+    {
+        auto s = fmt::format("Wrong number of arguments for [{}]", cmd->name);
+        throw ShellCmdExecException(s);
+        break;
+    }
+    }
+
+    if (DccConfig::ethernet.openConnection(arduinoIP, arduinoPort))
+    {
+        DccConfig::active = DCC_ETHERNET; // set the active connection to ethernet; the last one wins ...
+
+        fmt::print(fg(fmt::color::green), "Network connected to {}:{}\n", arduinoIP, arduinoPort);
+        // sleep_for(8s); // let the cs reply bfore shoing the prompt again
+    }
+    else
+    {
+        ERR("Failed to open connection to {}:{} baud\n", arduinoIP, arduinoPort);
+    }
 }
 
 void csOpenSerial(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params)
@@ -224,7 +362,7 @@ void csOpenSerial(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<s
     }
     if (isOpen)
     {
-
+        DccConfig::active = DCC_SERIAL; // set the active connection to serial
         fmt::print(fg(fmt::color::green), "Serial port {} opened at {} baud\n", params[1], baudRate);
         if (params.size() == 2)
         {
@@ -274,8 +412,15 @@ void csOpen(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::st
     }
     case DCC_ETHERNET:
     {
-        auto s = fmt::format("Ethernet is not yet supported");
-        throw ShellCmdExecException(s);
+        try
+        {
+            csOpenTCP(out, cmd, params);
+        }
+        catch (ShellCmdExecException &ex)
+        {
+            ERR("Failed to connect: possible reasons: wrong address, non standard port on the command station");
+            throw(ex);
+        }
         break;
     }
     default:
@@ -284,22 +429,14 @@ void csOpen(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::st
         throw ShellCmdExecException(s);
         break;
     }
-    }   
+    }
 }
 
 void csStatus(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params)
 {
-    std::string csCmd = "<s>";
-    if (DccConfig::serial.isOpen())
-    {
-        DccConfig::serial.write(&csCmd);
-    }
-    else
-    {
-        auto s = fmt::format("Serial port is closed, please call open first.");
-        throw ShellCmdExecException(s);
-    }
-    sleep_for(10ms); // leave some time for the cs to reply before showing the prompt again
+    out.flush();
+    sendCmd("<s>");
+    sleep_for(40ms); // leave some time for the cs to reply before showing the prompt again
     out << "\n";
 }
 
@@ -367,70 +504,57 @@ void csRead(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::st
     }
 
     std::string csCmd = fmt::format("<R {} {} {}>", cv, callback, callbacksub);
-    INFO("Sending: {}", csCmd);
-    if (DccConfig::serial.isOpen())
-    {
-        DccConfig::serial.write(&csCmd);
-    }
-    else
-    {
-        // ERR("Serial port is closed, please call open first.");
-    }
-    sleep_for(2s); 
+    sendCmd(csCmd);
+
+    sleep_for(2s);
     out << '\n';
     // leave some time for the cs to reply before showing the prompt again check if diag ack is on to allow for more time
 }
 
 void csDiag(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params)
 {
-    int i = 1;
-    INFO("Executing [{}]", cmd->name);
+    // int i = 1;
+    // INFO("Executing [{}]", cmd->name);
 
-    for (auto p : params)
+    // for (auto p : params)
+    // {
+    //     INFO("Parameter[{}]: {}", i, p);
+    //     i++;
+    // }
+
+    if (params.size() != 2)
     {
-        INFO("Parameter[{}]: {}", i, p);
-        i++;
-    }
-
-    if (params.size() != 2) {
         auto s = fmt::format("Wrong number of arguments for [{}]", cmd->name);
         throw ShellCmdExecException(s);
     }
-    if (diags.find(params[0]) == diags.end()) {
+    if (diags.find(params[0]) == diags.end())
+    {
         auto s = fmt::format("No such diagnostic option [{}]", params[0]);
         throw ShellCmdExecException(s);
     }
-    if (onoff.find(params[1]) == onoff.end()) {
+    if (onoff.find(params[1]) == onoff.end())
+    {
         auto s = fmt::format("Invalid boolean option [{}]", params[1]);
         throw ShellCmdExecException(s);
     }
 
     std::string csCmd = fmt::format("<D {} {}>", str_toupper(params[0]), str_toupper(params[1]));
-    INFO("Sending: {}", csCmd);
-    if (DccConfig::serial.isOpen())
-    {
-        DccConfig::serial.write(&csCmd);
-    }
-    else
-    {
-        auto s = fmt::format("Serial port is closed, please call open first.");
-        throw ShellCmdExecException(s);
-    }
-    // out << "\n";
+    sendCmd(csCmd);
+
 }
 
 void csPorts(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params)
 {
-    std::map<std::int8_t,std::string> ports;
+    std::map<std::int8_t, std::string> ports;
     int8_t pn = 1;
     fmt::print("Available ports:\n");
 
 #ifdef OS_MAC
     std::stringstream portList(exec("ls /dev/cu*"));
     std::string p;
-    while(getline(portList, p, '\n'))
-    { 
-        ports.insert({pn,p});
+    while (getline(portList, p, '\n'))
+    {
+        ports.insert({pn, p});
         fmt::print("[{}]:{}\n", pn, p);
         pn++;
     }
@@ -439,33 +563,41 @@ void csPorts(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::s
     std::filesystem::path p("/dev/serial/by-id");
     std::error_code ec;
 
-    try {
-      if (!exists(p)) {
-        auto s = fmt::format("{} does not exist", p.generic_string());
-        throw ShellCmdExecException(s);
-      } else {
-          for( auto de : std::filesystem::directory_iterator(p)) {
-            if (is_symlink(de.symlink_status())) {
-                std::filesystem::path symlink_points_at = read_symlink(de);
-                
-                p +=  "/";
-                p +=  symlink_points_at;
+    try
+    {
+        if (!exists(p))
+        {
+            auto s = fmt::format("{} does not exist", p.generic_string());
+            throw ShellCmdExecException(s);
+        }
+        else
+        {
+            for (auto de : std::filesystem::directory_iterator(p))
+            {
+                if (is_symlink(de.symlink_status()))
+                {
+                    std::filesystem::path symlink_points_at = read_symlink(de);
 
-                std::filesystem::path absolute_path = std::filesystem::canonical(p);
-                fmt::print("[{}]:{}\n", pn, absolute_path.generic_string());
-                ports.insert({pn,absolute_path.generic_string()}); 
-                pn++;               
+                    p += "/";
+                    p += symlink_points_at;
+
+                    std::filesystem::path absolute_path = std::filesystem::canonical(p);
+                    fmt::print("[{}]:{}\n", pn, absolute_path.generic_string());
+                    ports.insert({pn, absolute_path.generic_string()});
+                    pn++;
+                }
             }
-          }
-      }
-    } catch (const std::filesystem::filesystem_error &ex) {
-      ERR("{}", ex.what());
-      throw ex;
+        }
+    }
+    catch (const std::filesystem::filesystem_error &ex)
+    {
+        ERR("{}", ex.what());
+        throw ex;
     }
 #endif
 #ifdef OS_WIN
     char lpTargetPath[5000]; // buffer to store the path of the COMPORTS
-    bool gotPort = false; // in case the port is not found
+    bool gotPort = false;    // in case the port is not found
 
     for (int i = 0; i < 255; i++) // checking ports from COM0 to COM255
     {
@@ -498,68 +630,74 @@ void csUpload(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::
      * - Add user provided file download 
      */
 
-    auto architecture = params[0];  // either nano mega or uno or ...
+    auto architecture = params[0]; // either nano mega or uno or ...
     auto port = params[1];
 
     arduinoBoard board;
 
-    switch(params.size())
+    switch (params.size())
     {
-        case 2: {         
-            // check for architecture parameter
-            auto boardIt = boardTypes.find(architecture);
-            if( boardIt == boardTypes.end() ) {
-                    auto s = fmt::format("Unsopported board architecture [{}]", params[0]);
-                    throw ShellCmdExecException(s);
-                    return;
-            } else {
-                board = boardIt->second;
-            }
-
-            if (!std::filesystem::exists(DCC_CONFIG_ROOT)) {
-                exec("mkdir cs-config");
-            }
-            
-            // Fetch the distribution
-            auto fetchCmd = fmt::format(DCC_FETCH, DCC_BUILD_REPO, DCC_RELEASE, board.architecture, DCC_CONFIG_ZIP);
-            // INFO("Fetching: {}", fetchCmd);
-            INFO("Fetching necessary files ...", fetchCmd);
-            exec(fetchCmd.c_str());
-            
-            // unzip it and overwrite anything ( download is 'fairly small' so that is ok for the time being)
-            #ifdef WIN32
-            auto zipCmd = fmt::format("tar -xf -q -d {} {}", DCC_CONFIG_ROOT, DCC_CONFIG_ZIP); 
-            #else
-            auto zipCmd = fmt::format("unzip -o -q -d {} {}", DCC_CONFIG_ROOT, DCC_CONFIG_ZIP); 
-            #endif
-            // INFO("Installing: {}", zipCmd);
-            INFO("Installing files ...");
-            exec(zipCmd.c_str());
-           
-            // path to the binary file
-            auto csBin = fmt::format("{}/Arduino{}/{}", DCC_CONFIG_ROOT, board.architecture, DCC_CSBIN);
-            
-            // add execution flag to avrdude ok for linux/macos for win to be verified
-            auto chmCmd = fmt::format("chmod 700 {}/bin/avrdude", DCC_AVRDUDE_ROOT); 
-            exec(chmCmd.c_str());
-            
-            // construct the avrdude command for upload
-            auto avrCmd = fmt::format(DCC_AVRDUDE, DCC_AVRDUDE_ROOT, board.part, DCC_AVRDUDE_ROOT, board.programmer, port, csBin );
-            INFO("Uploading commandstation ...");
-            exec(avrCmd.c_str());
-            INFO("Uploading commandstation completed.");
-            break;
-        }
-        case 3: {
-            // file name is user provided for upload
-            break;
-        } 
-        default:{
-            auto s = fmt::format("Wrong number of arguments for [{}]", cmd->name);
+    case 2:
+    {
+        // check for architecture parameter
+        auto boardIt = boardTypes.find(architecture);
+        if (boardIt == boardTypes.end())
+        {
+            auto s = fmt::format("Unsopported board architecture [{}]", params[0]);
             throw ShellCmdExecException(s);
-            break;
+            return;
+        }
+        else
+        {
+            board = boardIt->second;
         }
 
+        if (!std::filesystem::exists(DCC_CONFIG_ROOT))
+        {
+            exec("mkdir cs-config");
+        }
+
+        // Fetch the distribution
+        auto fetchCmd = fmt::format(DCC_FETCH, DCC_BUILD_REPO, DCC_RELEASE, board.architecture, DCC_CONFIG_ZIP);
+        // INFO("Fetching: {}", fetchCmd);
+        INFO("Fetching necessary files ...", fetchCmd);
+        exec(fetchCmd.c_str());
+
+// unzip it and overwrite anything ( download is 'fairly small' so that is ok for the time being)
+#ifdef WIN32
+        auto zipCmd = fmt::format("tar -xf -q -d {} {}", DCC_CONFIG_ROOT, DCC_CONFIG_ZIP);
+#else
+        auto zipCmd = fmt::format("unzip -o -q -d {} {}", DCC_CONFIG_ROOT, DCC_CONFIG_ZIP);
+#endif
+        // INFO("Installing: {}", zipCmd);
+        INFO("Installing files ...");
+        exec(zipCmd.c_str());
+
+        // path to the binary file
+        auto csBin = fmt::format("{}/Arduino{}/{}", DCC_CONFIG_ROOT, board.architecture, DCC_CSBIN);
+
+        // add execution flag to avrdude ok for linux/macos for win to be verified
+        auto chmCmd = fmt::format("chmod 700 {}/bin/avrdude", DCC_AVRDUDE_ROOT);
+        exec(chmCmd.c_str());
+
+        // construct the avrdude command for upload
+        auto avrCmd = fmt::format(DCC_AVRDUDE, DCC_AVRDUDE_ROOT, board.part, DCC_AVRDUDE_ROOT, board.programmer, port, csBin);
+        INFO("Uploading commandstation ...");
+        exec(avrCmd.c_str());
+        INFO("Uploading commandstation completed.");
+        break;
+    }
+    case 3:
+    {
+        // file name is user provided for upload
+        break;
+    }
+    default:
+    {
+        auto s = fmt::format("Wrong number of arguments for [{}]", cmd->name);
+        throw ShellCmdExecException(s);
+        break;
+    }
     }
 }
 
@@ -568,6 +706,7 @@ void ShellCmdExec::setup()
 
     DBG("Setup command executors");
     add(1, "config", rootConfig);
+    add(1, "use", rootUseConnection);
     add(1, "loglevel", rootLogLevel);
     add(2, "open", csOpen);
     add(2, "read", csRead);
