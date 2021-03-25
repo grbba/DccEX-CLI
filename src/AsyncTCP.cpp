@@ -1,9 +1,26 @@
-
+/*
+ * © 2021 Gregor Baues. All rights reserved.
+ *
+ * This is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the
+ * Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+ * DEALINGS IN THE SOFTWARE.
+ *
+ * See the GNU General Public License for more details
+ * <https://www.gnu.org/licenses/>
+ */
 
 #include "AsyncTCP.hpp"
 
 #include <algorithm>
-
 #include <iostream>
 #include <mutex>
 #include <string>
@@ -38,6 +55,7 @@ public:
   std::shared_ptr<char> writeBuffer;          ///< Data being written
   size_t writeBufferSize;                     ///< Size of writeBuffer
   std::mutex writeQueueMutex;                 ///< Mutex for access to writeQueue
+  // asio::streambuf readBuffer;
   char readBuffer[AsyncTCP::readBufferSize];  ///< data being read
 
   /// Read complete callback
@@ -138,12 +156,35 @@ AsyncTCP::~AsyncTCP() {
 }
 
 void AsyncTCP::doRead() {
+
+  // asio::streambuf d;
+  // std::stringstream data;
+
+
+  // asio::async_read_until(pimpl->csSocket, 
+  //                  pimpl->readBuffer,
+  //                  // d, // asio::buffer(pimpl->readBuffer, readBufferSize), 
+  //                  '\n',
+  //                  std::bind(&AsyncTCP::readEnd, 
+  //                             this, 
+  //                             std::placeholders::_1,    // error
+  //                             std::placeholders::_2));  // bytes_transfered )  
+  
+  asio::async_read(pimpl->csSocket, 
+                   asio::buffer(pimpl->readBuffer, readBufferSize), 
+                   std::bind(&AsyncTCP::readEnd, 
+                              this, 
+                              std::placeholders::_1,    // error
+                              std::placeholders::_2));  // bytes_transfered )  
+
+/*
   pimpl->csSocket.async_read_some(
       asio::buffer(pimpl->readBuffer, readBufferSize),
       std::bind(&AsyncTCP::readEnd, 
                 this, 
                 std::placeholders::_1,    // error
                 std::placeholders::_2));  // bytes_transfered
+*/
 }
 
 void AsyncTCP::readEnd(const std::error_code &error, size_t bytes_transferred) {
