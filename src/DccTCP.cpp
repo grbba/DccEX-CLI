@@ -36,7 +36,10 @@
  */
 void DccTCP::recieve(const char *data, unsigned int len)
 {
+
+  INFO("Recieved {} bytes", len);
   std::vector<char> v(data, data + len);
+
   for (unsigned int i = 0; i < v.size(); i++)
   {
     if (v[i] == '\n')
