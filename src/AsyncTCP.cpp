@@ -157,9 +157,7 @@ AsyncTCP::~AsyncTCP() {
 
 void AsyncTCP::doRead() {
 
-  // asio::streambuf d;
-  // std::stringstream data;
-
+  // INFO("doRead ...");
 
   // asio::async_read_until(pimpl->csSocket, 
   //                  pimpl->readBuffer,
@@ -170,21 +168,19 @@ void AsyncTCP::doRead() {
   //                             std::placeholders::_1,    // error
   //                             std::placeholders::_2));  // bytes_transfered )  
   
-  asio::async_read(pimpl->csSocket, 
-                   asio::buffer(pimpl->readBuffer, readBufferSize), 
-                   std::bind(&AsyncTCP::readEnd, 
-                              this, 
-                              std::placeholders::_1,    // error
-                              std::placeholders::_2));  // bytes_transfered )  
+  // asio::async_read(pimpl->csSocket, 
+  //                  asio::buffer(pimpl->readBuffer, readBufferSize), 
+  //                  std::bind(&AsyncTCP::readEnd, 
+  //                             this, 
+  //                             std::placeholders::_1,    // error
+  //                             std::placeholders::_2));  // bytes_transfered )  
 
-/*
   pimpl->csSocket.async_read_some(
       asio::buffer(pimpl->readBuffer, readBufferSize),
       std::bind(&AsyncTCP::readEnd, 
                 this, 
                 std::placeholders::_1,    // error
                 std::placeholders::_2));  // bytes_transfered
-*/
 }
 
 void AsyncTCP::readEnd(const std::error_code &error, size_t bytes_transferred) {

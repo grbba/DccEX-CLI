@@ -66,7 +66,7 @@ const arduinoBoard avrnano = {"Nano", "arduino", "atmega328p"}; // A verifier !!
 // nano every to be added
 
 const std::set<std::string> ctypes = {"serial", "ethernet"};
-const std::set<std::string> diags = {"ack", "wifi", "net", "cmd", "wit"};
+const std::set<std::string> diags = {"latch", "ack", "wifi", "ethernet", "cmd", "wit"};
 const std::map<std::string, bool> onoff = {{"on", 1}, {"off", 0}};
 const std::map<std::string, arduinoBoard> boardTypes = {
     {"mega", avrmega},
@@ -147,6 +147,7 @@ void sendCmd(const std::string csCmd)
     {
     case DCC_SERIAL:
     {
+        DBG("Sending over serial");
         if (DccConfig::serial.isOpen())
         {
             DccConfig::serial.write(&csCmd);
@@ -160,6 +161,7 @@ void sendCmd(const std::string csCmd)
     }
     case DCC_ETHERNET:
     {
+        DBG("Sending over ethernet");
         if (DccConfig::ethernet.isOpen())
         {
             DccConfig::ethernet.write(&csCmd);
@@ -211,6 +213,15 @@ static void rootLogLevel(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::v
     }
 }
 
+/**
+ * @brief switching the active connection
+ * ! ERROR when switching between connections esp when returning to the ethernet connection the read loop doesn't come back live
+ * ! that works for the serial with no pb ...
+ * 
+ * @param out 
+ * @param cmd 
+ * @param params 
+ */
 static void rootUseConnection(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params)
 {
     DBG("{} Setting active connection to {}", params.size(), params[0]);
@@ -230,8 +241,13 @@ static void rootUseConnection(std::ostream &out, std::shared_ptr<cmdItem> cmd, s
             break;
         }
         if(params[0].compare("ethernet") == 0) {
+
+            // close the connection and reopen it ....
+            // DccConfig::ethernet.closeConnection();
+            // DccConfig::ethernet.openConnection(DccConfig::ethernet.getIpAddress(), DccConfig::ethernet.getPort());
+
             if(DccConfig::ethernet.isOpen()) {
-            DccConfig::active = DCC_ETHERNET;
+                DccConfig::active = DCC_ETHERNET;
             INFO("Connection set to network: [{}:{}]", DccConfig::ethernet.getIpAddress(), DccConfig::ethernet.getPort());
             } else {
                 ERR("No open network connection available.");
@@ -442,13 +458,13 @@ void csStatus(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::
 
 void csRead(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params)
 {
-    int i = 1;
-    INFO("Executing [{}]", cmd->name);
-    for (auto p : params)
-    {
-        INFO("Parameter[{}]: {}", i, p);
-        i++;
-    }
+    // int i = 1;
+    // INFO("Executing [{}]", cmd->name);
+    // for (auto p : params)
+    // {
+    //     INFO("Parameter[{}]: {}", i, p);
+    //     i++;
+    // }
 
     int cv;
     int callback = 0;

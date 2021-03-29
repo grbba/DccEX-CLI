@@ -69,8 +69,9 @@ public:
 
     virtual ~AsyncTCP()=0;
 
-    static const int readBufferSize=10; // was 512
+    static const int readBufferSize = 128; // was 512
 
+    void read() { doRead(); };
 
 private:
 

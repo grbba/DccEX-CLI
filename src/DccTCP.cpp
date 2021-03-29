@@ -27,7 +27,70 @@
 #include "DccTCP.hpp"
 #include "Diag.hpp"
 
-// std::ostream &DccSerial::out;
+std::stringstream  DccTCP::csMesg;       // commandstation message e.g. reslut of status, reda etc i;e. <> -> magenta
+std::stringstream  DccTCP:: dMesg; 
+
+recvState state = _Text;
+
+recvState DccTCP::nState(recvState s, char c)
+{
+  switch (c)
+  {
+    case '\n': {
+      // ignore \n
+      return s;
+    }
+    case '<':
+    {
+      if( s == _OpenDiag ) { // the <> is part of a diag
+        DccTCP::dMesg << c;
+        return s;
+      }
+      DccTCP::csMesg << c;              // store the char in the csmesg
+      return _OpenDcc;
+    }
+    case '*':
+    {
+      if (s == _OpenDcc) {
+        csMesg.str(""); // clear the stream
+        // DccTCP::dMesg << c;
+        return _OpenDiag;
+      }
+      if (s == _OpenDiag) {
+        // DccTCP::dMesg << c;
+        return _PreCloseDiag;
+      }
+    }
+    case '>':
+    {
+      if (s == _OpenDcc) {
+          DccTCP::csMesg << c;
+          fmt::print(fg(fmt::color::magenta), "{}\n", csMesg.str());
+          // fmt::print("print dcc message {}\n", csMesg.str());
+          csMesg.str(""); // clear the stream
+          // csMesg.clear();
+          return _CloseDcc; // print the dcc message 
+      }
+      if (s == _PreCloseDiag) {
+          // DccTCP::dMesg << c;
+          INFO("{}", dMesg.str());
+          dMesg.str(""); // clear the stream
+          // fmt::print("print diag message\n"); 
+          return _CloseDiag; // print the diag message 
+      } 
+    }
+    default:
+    {
+      if (s == _OpenDcc) { DccTCP::csMesg << c; return _OpenDcc; };
+      if (s == _OpenDiag) { DccTCP::dMesg << c; return _OpenDiag; };
+      fmt::print(fg(fmt::color::magenta), "{}", c); // print the char
+      return _Text;
+    }
+  }
+  ERR("Can't understand incomming message");
+  return _Text;
+}
+
 /**
  * @brief  Reciever callback
  *
@@ -36,82 +99,138 @@
  */
 void DccTCP::recieve(const char *data, unsigned int len)
 {
-
-  INFO("Recieved {} bytes", len);
   std::vector<char> v(data, data + len);
 
   for (unsigned int i = 0; i < v.size(); i++)
   {
-    if (v[i] == '\n')
-    {
-      std::cout << '\n';
-    }
-    else
-    {
-      if (v[i] < 32 || v[i] >= 0x7f)
-        std::cout.put(' '); // Remove non-ascii char
-      else
-        fmt::print(fg(fmt::color::magenta), "{}", v[i]);
-    }
-  }
-  std::cout.flush(); // Flush screen buffer
-}
+      auto s = nState(state, v[i]);
+      //  fmt::print("{} {} {} {}\n", state, v[i], s, "action" );
+      state = s;
+      std::cout.flush(); // Flush screen buffer
 
-/**
+      // switch(state) {
+      //   case _Text:
+      //       state = nState(state, v[i]);
+      //   case _OpenDcc:                  // i saw a <
+      //       state = nState(state, v[i]);
+      //   case _OpenDiag:                 // i saw a <* 
+      // }
+  }
+
+    // switch (state)
+    // {
+    // case _Text:
+    // {
+    //   state = nState(state, v[i]);
+    //   break;
+    // }
+    // case _OpenDcc:
+    // {
+    //   state = nState(state, v[i]);
+    //   break;
+    // }
+    // case _CloseDcc:
+    // {
+    //   state = nState(state, v[i]);
+    //   break;
+    // }
+    // case _OpenDiag:
+    // {
+    //   state = nState(state, v[i]);
+    //   break;
+    // }
+    // case _PreCloseDiag:
+    // {
+    //   state = nState(state, v[i]);
+    //   break;
+    // }
+    // case _CloseDiag:
+    // {
+    //   // print the dMesg buffer
+    //   state = _Text;
+    //   break;
+    // }
+    // }
+
+    // INFO("Recieved {} bytes", len);
+    // std::vector<char> v(data, data + len);
+    // INFO("Recieved {} bytes; v.size {}", len, v.size());
+    // for (unsigned int i = 0; i < v.size(); i++)
+    // {
+    //   if (v[i] == '\n')
+    //   {
+    //     std::cout << '\n';
+    //   }
+    //   else
+    //   {
+    //     if (v[i] < 32 || v[i] >= 0x7f)
+    //       // std::cout.put(' '); // Remove non-ascii char
+    //       std::cout << (int)v[i];
+    //     else
+    //       fmt::print(fg(fmt::color::magenta), "{}", v[i]);
+    //   }
+    // }
+    // std::cout.flush(); // Flush screen buffer
+  //}
+
+}
+  /**
  * @brief
  *
  */
-bool DccTCP::openConnection()
-{
-  // That means that ipAddress and port are properly initalized!!
-  INFO("openConnection ...");
-  server.setCallback(recieve);
-  server.open(ipAddress, port);
-  return server.isOpen();
-};
-
-bool DccTCP::openConnection(std::string ip, std::string p)
-{
-    // if already open and same ip --> warning that the ip is already connected --> did you mean to open another ip?
-  if (open)
+  bool DccTCP::openConnection()
   {
-    if (ip.compare(ipAddress) == 0) 
+    // That means that ipAddress and port are properly initalized!!
+    // INFO("openConnection ...");
+    server.setCallback(recieve);
+    server.open(ipAddress, port);
+    return server.isOpen();
+  };
+
+  bool DccTCP::openConnection(std::string ip, std::string p)
+  {
+    // if already open and same ip --> warning that the ip is already connected --> did you mean to open another ip?
+    if (open)
+    {
+      if (ip.compare(ipAddress) == 0)
       {
         WARN("Already connected to {}. Did you mean to open a different address?", ipAddress);
         return DCC_SUCCESS;
-      } else {
+      }
+      else
+      {
         // if open and open request to different ip --> warning changing ip --> close old ip first before moving on
         WARN("switching connection {} to {}", ipAddress, ip);
         server.close();
       }
+    }
+
+    ipAddress = ip;
+    port = p;
+
+    if (openConnection())
+    {
+      open = true;
+    }
+    else
+    {
+      ERR("Could not open ethernet connection.\n");
+      return DCC_FAILURE;
+    }
+    return DCC_SUCCESS;
   }
 
-  ipAddress = ip;
-  port = p;
-
-  if (openConnection()) {
-    open = true;
-  }
-  else
-  {
-    ERR("Could not open ethernet connection.\n");
-    return DCC_FAILURE;
-  }
-  return DCC_SUCCESS;
-}
-
-/**
+  /**
  * @brief
  *
  */
-void DccTCP::closeConnection()
-{
-  server.clearCallback();
-  server.close();
-};
+  void DccTCP::closeConnection()
+  {
+    server.clearCallback();
+    server.close();
+  };
 
-
-void DccTCP::write(const std::string *cmd)
-{
-  server.write(cmd->c_str(), cmd->size());
-};
+  void DccTCP::write(const std::string *cmd)
+  {
+    server.write(cmd->c_str(), cmd->size());
+  };

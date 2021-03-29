@@ -132,11 +132,13 @@ const std::string csMenuItems = R"(
       {
         "name":"diag",
         "params": [
-          { "type": "string", "desc": "[ack|wifi|net|cmd|wit]", "mandatory": 1 },
+          { "type": "string", "desc": "[latch|ack|wifi|ethernet|cmd|wit]", "mandatory": 1 },
           { "type": "string", "desc": "[on|off]", "mandatory": 1 }
         ],
         "help" : [ 
           "Enable/Disbale diganostics for the commandstation for the follwing",
+          "\t- latch: capture the diagnostic output to this session instead",
+          "\t         of the default serial session; off will reset to serial",
           "\t- ack: capture information for decoder communication",
           "\t- wifi: capture information for WiFi connection issues",
           "\t- net: capture information for ethernet connection issues",
