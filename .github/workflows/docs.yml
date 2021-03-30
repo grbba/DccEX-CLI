@@ -1,11 +1,11 @@
 
 name: Docs
 
-on: 
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+on: [push]
+ # push:
+ #   branches: [ master ]
+ # pull_request:
+ #  branches: [ master ]
   
 env:
   CMAKE_VERSION: 3.19.5
@@ -29,11 +29,9 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@1.0.0
     - name: Build docs
-      run: cd /
-        && cmake --build /build --config Release --target Sphinx -- -j 14
-        # && make html
-        # && cd _build/html
-        && cd build/docs/sphinx 
+      run: cd docs
+        && make html
+        && cd _build/html
         && touch .nojekyll
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
@@ -41,4 +39,4 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages # The branch the action should deploy to.
         # FOLDER: docs/_build/html # The folder the action should deploy.
-        FOLDER: build/docs/sphinx # The folder the action should deploy.
+        FOLDER: docs/_build/html # The folder the action should deploy.

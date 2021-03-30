@@ -141,7 +141,7 @@ const std::string csMenuItems = R"(
           "\t         of the default serial session; off will reset to serial",
           "\t- ack: capture information for decoder communication",
           "\t- wifi: capture information for WiFi connection issues",
-          "\t- net: capture information for ethernet connection issues",
+          "\t- ethernet: capture information for ethernet connection issues",
           "\t- cmd: capture JMRI / DCC command information",
           "\t- wit: capture WiThrottle debug information",
           "\tFor commandstation diagnostics use diag in the cs menu" 
