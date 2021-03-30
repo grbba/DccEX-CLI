@@ -29,8 +29,8 @@
 
 std::stringstream  DccTCP::csMesg;       // commandstation message e.g. reslut of status, reda etc i;e. <> -> magenta
 std::stringstream  DccTCP:: dMesg; 
+recvState DccTCP::state = _Text;
 
-recvState state = _Text;
 
 recvState DccTCP::nState(recvState s, char c)
 {

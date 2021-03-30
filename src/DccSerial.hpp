@@ -22,8 +22,10 @@
 #ifndef DccSerial_h
 #define DccSerial_h
 
+#include "CliReciever.hpp"
 #include "AsyncSerial.h"
 #include <variant>
+
 
 
 // goes into DccShell.hpp
@@ -45,8 +47,12 @@ private:
   std::string device;
   bool open = false;
  
-  static void recieve(const char *data, unsigned int len); // callback for reading
 
+  static std::stringstream  csMesg;       // commandstation message e.g. reslut of status, reda etc i;e. <> -> magenta
+  static std::stringstream  dMesg;        // comandstation diag message i.e. <* *> tagged -> yellowish 
+  static recvState state; 
+  static void recieve(const char *data, unsigned int len); // callback for reading 
+  static recvState nState(recvState s, char c);            // state machine for reading incomming message flow 
 
 public:
   bool openPort();                                // open the port

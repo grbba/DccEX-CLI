@@ -28,12 +28,66 @@
 #include "DccSerial.hpp"
 #include "Diag.hpp"
 
-#define HEADING(x) fmt::format(fg(fmt::color::medium_turquoise) | fmt::emphasis::bold, x);
-#define WARNING(x) fmt::format(fg(fmt::color::orange) | fmt::emphasis::bold, x);
+std::stringstream  DccSerial::csMesg;       // commandstation message e.g. reslut of status, reda etc i;e. <> -> magenta
+std::stringstream  DccSerial:: dMesg; 
+recvState DccSerial::state = _Text;
 
-// std::ostream &DccSerial::out;
+
+recvState DccSerial::nState(recvState s, char c)
+{
+  switch (c)
+  {
+    case '\n': {
+      // ignore \n
+      return s;
+    }
+    case '<':
+    {
+      if( s == _OpenDiag ) { // the <> is part of a diag
+        dMesg << c;
+        return s;
+      }
+      csMesg << c;              // store the char in the csmesg
+      return _OpenDcc;
+    }
+    case '*':
+    {
+      if (s == _OpenDcc) {
+        csMesg.str(""); // clear the stream
+        return _OpenDiag;
+      }
+      if (s == _OpenDiag) {
+        return _PreCloseDiag;
+      }
+    }
+    case '>':
+    {
+      if (s == _OpenDcc) {
+          csMesg << c;
+          fmt::print(fg(fmt::color::magenta), "{}\n", csMesg.str());
+          csMesg.str(""); // clear the stream
+          return _CloseDcc; // print the dcc message 
+      }
+      if (s == _PreCloseDiag) {
+          INFO("{}", dMesg.str());
+          dMesg.str(""); // clear the stream
+          return _CloseDiag; // print the diag message 
+      } 
+    }
+    default:
+    {
+      if (s == _OpenDcc) { DccSerial::csMesg << c; return _OpenDcc; };
+      if (s == _OpenDiag) { DccSerial::dMesg << c; return _OpenDiag; };
+      fmt::print(fg(fmt::color::magenta), "{}", c); // print the char
+      return _Text;
+    }
+  }
+  ERR("Can't understand incomming message");
+  return _Text;
+}
+
 /**
- * @brief
+ * @brief  Reciever callback
  *
  * @param data
  * @param len
@@ -41,7 +95,25 @@
 void DccSerial::recieve(const char *data, unsigned int len)
 {
   std::vector<char> v(data, data + len);
-  // std::cout << rang::fg::magenta;
+
+  for (unsigned int i = 0; i < v.size(); i++)
+  {
+      state = nState(state, v[i]);
+      std::cout.flush(); // Flush screen buffer
+  }
+}
+/////////////////////
+/**
+ * @brief
+ *
+ * @param data
+ * @param len
+ */
+/*
+void DccSerial::recieve(const char *data, unsigned int len)
+{
+  std::vector<char> v(data, data + len);
+
   for (unsigned int i = 0; i < v.size(); i++)
   {
     if (v[i] == '\n')
@@ -57,9 +129,11 @@ void DccSerial::recieve(const char *data, unsigned int len)
       // std::cout.put(v[i]);
     }
   }
-  //std::cout << rang::fg::reset;
   std::cout.flush(); // Flush screen buffer
 }
+
+*/
+
 
 bool DccSerial::openPort(std::string d, int b)
 {
