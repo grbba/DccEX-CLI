@@ -16,6 +16,7 @@ add_executable( dcclayout
                 DccSerial.cpp
                 AsyncTCP.cpp 
                 DccTCP.cpp 
+                CliReciever.cpp
                 DccShellCmd.cpp
                 ShellCmdExec.cpp
               )

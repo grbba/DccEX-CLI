@@ -23,6 +23,7 @@
 #define DccTCP_h
 
 #include "AsyncTCP.hpp"
+#include "CliReciever.hpp"
 
 enum recvState
 {
@@ -42,11 +43,15 @@ private:
   std::string       port;                 // port number; default is 2560 for the command station
   bool              open = false;
 
+
+  CliReciever recv;                       // reciever for the TCP Connection
+
   static std::stringstream  csMesg;       // commandstation message e.g. reslut of status, reda etc i;e. <> -> magenta
   static std::stringstream  dMesg;        // comandstation diag message i.e. <* *> tagged -> yellowish 
  
   static void recieve(const char *data, unsigned int len); // callback for reading 
   static recvState nState(recvState s, char c);            // state machine for reading incomming message flow 
+  
   bool openConnection();                                   // open the connection / setting the callback for reception
 
 public:
