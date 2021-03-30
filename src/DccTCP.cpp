@@ -117,8 +117,7 @@ void DccTCP::recieve(const char *data, unsigned int len)
   {
     // That means that ipAddress and port are properly initalized!!
     // INFO("openConnection ...");
-    // server.setCallback(recieve);
-    server.setCallback(recv.recieve);
+    server.setCallback(recieve);
     server.open(ipAddress, port);
     return server.isOpen();
   };

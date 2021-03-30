@@ -23,7 +23,6 @@
 #define DccTCP_h
 
 #include "AsyncTCP.hpp"
-#include "CliReciever.hpp"
 
 enum recvState
 {
@@ -42,9 +41,6 @@ private:
   std::string       ipAddress;            // IP Address 1.2.3.4
   std::string       port;                 // port number; default is 2560 for the command station
   bool              open = false;
-
-
-  CliReciever recv;                       // reciever for the TCP Connection
 
   static std::stringstream  csMesg;       // commandstation message e.g. reslut of status, reda etc i;e. <> -> magenta
   static std::stringstream  dMesg;        // comandstation diag message i.e. <* *> tagged -> yellowish 
