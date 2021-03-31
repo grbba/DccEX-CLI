@@ -26,6 +26,7 @@ jobs:
         && pip3 install sphinx-sitemap
         && pip3 install recommonmark
         && pip3 install sphinxcontrib-spelling
+        && pip3 install sphinxcontrib-googleanalytics
     - name: Checkout repo
       uses: actions/checkout@1.0.0
     - name: Build docs
