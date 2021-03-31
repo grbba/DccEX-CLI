@@ -1,6 +1,8 @@
 name: CMake Build Matrix
 
 on: [push, pull_request]
+  branches-ignore:
+    - documentation
 
 env:
   CMAKE_VERSION: 3.19.4
