@@ -39,11 +39,14 @@ vision and the premises of something much bigger to come. I am not considering h
 some around with good UX but getting things setup and organized in a simple way.
 
 .. sidebar:: Get the Commandline Interface
-        :subtitle: Download from Github
 
    Dcccli is available on Windows, Linux and MacOS. 
    Click here to get dccli for your platform
    or go here to download directly from Github
+   |GitHub release|
+
+.. |GitHub release| image:: https://github.com/grbba/DccEX-CLI/actions/workflows/build_cmake.yml/badge.svg
+   :target: https://GitHub.com/grbba/DccEX-CLI/releases/
 
 One goal is also to take out all the technology speak of the user expirience and make all that more palpable for everyone more interested in 
 trains rather than digital electronics. Then go buy one of those commercial systems you may say, and yes why not, if you got all the money at 

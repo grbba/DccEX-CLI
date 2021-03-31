@@ -5,6 +5,10 @@ Running the Commandline Interface
 
     $ ./dcccli [OPTIONS]
 
+
+Configuration
+-------------
+
 .. option:: -h, --help
 
    Prints help information on options and exits.
