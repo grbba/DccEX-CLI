@@ -25,10 +25,8 @@ etc. etc. to get things running.
 
 For most of the time you will need at least the Arduino IDE or the VSC/PIO combo for getting:
 
-1. The commandstation code compiled and loaded onto the Arduino. 
+1. The commandstation code compiled and loaded onto the Arduino (downloaded from the Dcc-EX website).
 2. The serial monitor to interact with the commandstation for either programming or operations.
-
-The Comandstation code you most likely downloaded from the Dcc-Ex website.
 
 
 That all looks very initimidating and even for the seasoned developper it can sometimes become a hassle as well to get 
