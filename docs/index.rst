@@ -13,38 +13,45 @@ Summary
 
 As its name implies DccExCli is a terminal application running on a Linux or MacOs terminal or Windows CMD or PowerShell. 
 In a nutshell it allows you to interact with your Arduino based Dcc-EX CommandStation. Uploading, managing or operations: All is
-possible by different means of connectivity.
+possible by different means of connectivity. Besides that we provide a means to describe your layout for automation purposes
+allowing to upload e.g. Turnouts to the commandstation and calculating routes across your layout.
 
-What you need to do? Follow some simple instructions and you should be up and running in no time. Simple instructions as the Dcc-EX 
-team already managed to minimize setting up the hardware. Know how to put LEGO together ? Well then you can build the CommandStation )
+What you need to do? Follow some simple instructions and you should be up and running in no time. The Dcc-EX 
+team already managed to minimize setting up the hardware, no more wiring (excpet to get the power to your tracks of course). 
+Know how to put LEGO together ? Well then you can build the commandstation.
 
 Why are you asking yet another program I have JMRI, Arduino IDE, VisualStudio Code with the PlatformIO extension 
-etc. etc. to get things running. For most of the time you will need the Arduino IDE or the VSC/PIO combo
-for getting:
+etc. etc. to get things running. 
+
+For most of the time you will need at least the Arduino IDE or the VSC/PIO combo for getting:
 
 1. The commandstation code compiled and loaded onto the Arduino. 
 2. The serial monitor to interact with the commandstation for either programming or operations.
 
-That all looks very initimidating and even for the seasoned developper it can be a hassle sometimes to get everything setup and configured. So there should be a silution providing enough
-freedom for the tinkerers and engineers around but most of all some simple tool to get running quickly for conductors - Don't know what
-they look like, well head over to the DCC-EX website.
+The Comandstation code you most likely downloaded from the Dcc-Ex website.
+
+
+That all looks very initimidating and even for the seasoned developper it can sometimes become a hassle as well to get 
+everything setup and configured. So there should be a solution providing enough freedom for the tinkerers and engineers around 
+but most of all some simple tool to get running quickly for conductors - Don't know what those name mean, well head over to the DCC-EX website.
 
 The DCC++ EX Commandline Interface allows to install/manage/configure your DCC++EX commandstation as well as your layout in an oldfashioned 
-typewriter way of working. It come handy but doesn't replace a full UI APP etc of today. It's the premises of something much bigger to come. 
+typewriter way of working. It comes handy but doesn't replace a full UI as a Mobile or Web App you may expect today but its a start towards that
+vision and the premises of something much bigger to come. I am not considering here the Throttles used for running your Locos there are quite 
+some around with good UX but getting things setup and organized in a simple way.
 
-But in reality the idea of building the commandline Interface came form a different angle. Rediscovering modelrail roading after +20y gone by i found myself in a 
-whole new world. At the same time everything now despite being digital seems a magnitude of order more complicated. The Market is completley fragmented, Providers
-have hard time to agree on any standard not even speaking of implementing on what they agreed upon. Digital Command and Control was invented by engineers for engineers.
-UX and Design Thinking have been words probably never been heard of when this all was invented so now we have to cope with CVs as modelrailsroaders where we actually 
-only should talk the registration of a Locomotive and all the other ancronyms comming with it. I have got the impression sometimes that
-you have to have a Computer Science Degree if not PhD to be able to run a model rail road which shouldn't be the case. - The rant stops here -
+One goal is also to take out all the technology speak of the user expirience and make all that more palpable for everyone more interested in 
+trains rather than digital electronics. Then go buy one of those commercial systems you may say, and yes why not, if you got all the money at 
+hand and still want to fight all the tech talk on top of most and be locked into a single vendor to keep things 'simple'.
 
-So I want to take out all the technology speak of the user expirience and make all that more palpable for everyone more intersted in trains rather 
-than digital electronics. Ahh then go buy one of those commercial systems you may say and yes why not if you got all the money at hand and still
-want to fight all the tech talk on top of most likely to keep things easy be locked into a single vendor. There is no reason and its just an
-excuse imho not being able to step back and propose something usable by the vast majority of people and only catering to the 1% who want to push everything to
-the limit and aren't satisified who things are done now. That way of thinking is absolutley necessary to thrive inovation etc but should inhibte
-the fact to deliver something easy and straight forward to use. 
+Due to the fragemented technology environment and providers taking a large degree of freedom implementing exsiting standards the temptation is
+to cover functional and technology wise everything. The ongoing engineering in the domain is brilliant everywhere and targeted clearly 
+towards supporting everything and everyones ideas. 
+
+The observation, imho, is that currently the community caters mostly to those who want to push everything to the limit and aren't satisified how 
+things are done now, want to do it their way etc. basically the engineers and some tinkerers. That way of thinking is absolutley necessary to drive 
+inovation etc. but should not inhibit delivery of something easy and straight forward to use even if that implies possibly loosing capabilities not 
+used in any case by the vast majority.
 
 Having read this you may be disappointed of what follows indeed the vision is still a long way to go and maybe I am completley wrong 
 and everyone in the model rail road community is just happy as things are today. 
