@@ -41,7 +41,8 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx_sitemap',
     'sphinx.ext.inheritance_diagram',
-    'sphinxcontrib.spelling'
+    'sphinxcontrib.spelling',
+    'recommonmark'
   #  'breathe',
   #  'exhale'
 ]
