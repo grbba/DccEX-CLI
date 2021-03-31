@@ -170,7 +170,82 @@
             
   <div class="section" id="running-the-commandline-interface">
 <h1>Running the Commandline Interface<a class="headerlink" href="#running-the-commandline-interface" title="Permalink to this headline">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">dcccli</span></code>’s usage looks like:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">$</span> <span class="p">.</span><span class="o">/</span><span class="n">dcccli</span> <span class="p">[</span><span class="n">OPTIONS</span><span class="p">]</span>
+</pre></div>
+</div>
+<dl class="std option">
+<dt id="cmdoption-h">
+<span id="cmdoption-help"></span><code class="sig-name descname"><span class="pre">-h</span></code><code class="sig-prename descclassname"></code><code class="sig-prename descclassname"><span class="pre">,</span> </code><code class="sig-name descname"><span class="pre">--help</span></code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-h" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints help information on options and exits.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-s-schema">
+<code class="sig-name descname"><span class="pre">-s,--schema</span></code><code class="sig-prename descclassname"> <span class="pre">text:file</span></code><a class="headerlink" href="#cmdoption-s-schema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Path/name of the DCC++ EX Layout Schema file. If this file is omitted we will look for the the schema file in the current
+directory. If not found the system will continue but no validation of the layout will be done and this may yield
+unpredictable results.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-l-layout">
+<code class="sig-name descname"><span class="pre">-l,--layout</span></code><code class="sig-prename descclassname"> <span class="pre">text:file</span></code><a class="headerlink" href="#cmdoption-l-layout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Path/name of the modelrailroad layout file.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-v-verbose">
+<code class="sig-name descname"><span class="pre">-v,--verbose</span></code><code class="sig-prename descclassname"> <span class="pre">text</span></code><a class="headerlink" href="#cmdoption-v-verbose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verbose settings. Can be one of <code class="docutils literal notranslate"><span class="pre">[silent|info|warning|debug|trace]</span></code>. Default is set to <code class="docutils literal notranslate"><span class="pre">info</span></code>, <code class="docutils literal notranslate"><span class="pre">trace</span></code> will provide the most verbose output.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-i-interactive">
+<code class="sig-name descname"><span class="pre">-i,--interactive</span></code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-i-interactive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interactive mode; Opens a shell from which commands can be issued. Once the cli has started type <code class="docutils literal notranslate"><span class="pre">help</span></code> at the prompt for more information</p>
+</dd></dl>
+
+<div class="section" id="upload">
+<h2>Upload<a class="headerlink" href="#upload" title="Permalink to this headline">¶</a></h2>
+<p>In order to use the dcccli to upload the standard commandtation binary to your supported arduino platform the follwoing can be used</p>
+<dl class="std option">
+<dt id="cmdoption-m-mcu">
+<code class="sig-name descname"><span class="pre">-m,--mcu</span></code><code class="sig-prename descclassname"> <span class="pre">text</span></code><a class="headerlink" href="#cmdoption-m-mcu" title="Permalink to this definition">¶</a></dt>
+<dd><p>set the mcu architecture can be one of uno, mega or nano</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-u-upload">
+<code class="sig-name descname"><span class="pre">-u,--upload</span></code><code class="sig-prename descclassname"> <span class="pre">Needs:</span> <span class="pre">--mcu</span> <span class="pre">--port</span></code><a class="headerlink" href="#cmdoption-u-upload" title="Permalink to this definition">¶</a></dt>
+<dd><p>upload the cs code to the mcu set in -m or –mcu connected to the port -p</p>
+</dd></dl>
+
+</div>
+<div class="section" id="connecting">
+<h2>Connecting<a class="headerlink" href="#connecting" title="Permalink to this headline">¶</a></h2>
+<p>To connect to your commandstation when starting dcccli use the following options. This can not be used at thesame time as the -u option</p>
+<dl class="std option">
+<dt id="cmdoption-p-port">
+<code class="sig-name descname"><span class="pre">-p,--port</span></code><code class="sig-prename descclassname"> <span class="pre">text</span></code><a class="headerlink" href="#cmdoption-p-port" title="Permalink to this definition">¶</a></dt>
+<dd><p>set the port to which the arduino is connected for uploading</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-c-commandstation">
+<code class="sig-name descname"><span class="pre">-c,--commandstation</span></code><code class="sig-prename descclassname"> <span class="pre">Needs:</span> <span class="pre">--port</span></code><a class="headerlink" href="#cmdoption-c-commandstation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect to the commandstation either on the serial port (-p) of the DCC++ EX commandstation. If -i has been specified as well, after sending,
+the interactive commandline interface will be available.</p>
+</dd></dl>
+
+<dl class="std option">
+<dt id="cmdoption-b-baud">
+<code class="sig-name descname"><span class="pre">-b,--baud</span></code><code class="sig-prename descclassname"> <span class="pre">INT</span></code><a class="headerlink" href="#cmdoption-b-baud" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the baud rate for serial connection. If omitted the default of 115200 is used</p>
+</dd></dl>
+
 <div class="toctree-wrapper compound">
+</div>
 </div>
 </div>
 

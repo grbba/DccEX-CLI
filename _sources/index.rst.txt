@@ -38,6 +38,13 @@ typewriter way of working. It comes handy but doesn't replace a full UI as a Mob
 vision and the premises of something much bigger to come. I am not considering here the Throttles used for running your Locos there are quite 
 some around with good UX but getting things setup and organized in a simple way.
 
+.. sidebar:: Get the Commandline Interface
+        :subtitle: Download from Github
+
+   Dcccli is available on Windows, Linux and MacOS. 
+   Click here to get dccli for your platform
+   or go here to download directly from Github
+
 One goal is also to take out all the technology speak of the user expirience and make all that more palpable for everyone more interested in 
 trains rather than digital electronics. Then go buy one of those commercial systems you may say, and yes why not, if you got all the money at 
 hand and still want to fight all the tech talk on top of most and be locked into a single vendor to keep things 'simple'.
@@ -56,7 +63,8 @@ and everyone in the model rail road community is just happy as things are today.
 
 Let's try to make things simpler. One step after the other.
 
-More information about CommandStation-EX can be found on `GitHub <https://github.com/DCC-EX/CommandStation-EX>`_ or on the `DCC-EX <https:////dcc-ex.com>`_  website
+.. note:: More information about CommandStation-EX can be found on `GitHub <https://github.com/DCC-EX/CommandStation-EX>`_ or on the `DCC-EX <https:////dcc-ex.com>`_  website
+
 
 
 .. toctree::
