@@ -1,11 +1,11 @@
 
 name: Docs
 
-on: [push]
- # push:
- #   branches: [ master ]
- # pull_request:
- #  branches: [ master ]
+on: 
+  push:
+    branches: [ documentation ]
+  pull_request:
+    branches: [ documentation ]
   
 env:
   CMAKE_VERSION: 3.19.5
