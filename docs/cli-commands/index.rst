@@ -1,5 +1,5 @@
-Commandline Interface Menus and Commands
-========================================
+Commandline Interface Menus and Command Reference
+=================================================
 
 
 .. toctree::
