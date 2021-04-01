@@ -1,0 +1,43 @@
+
+name: Docs
+
+on:
+  push:
+    branches: [ documentation ]
+  pull_request:
+    branches: [ documentation ]
+  
+env:
+  CMAKE_VERSION: 3.19.5
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Requirements
+      run: sudo apt-get install doxygen
+        && sudo apt-get install sphinx-doc
+        && sudo apt-get install enchant
+        && pip3 install sphinx-rtd-theme
+        && pip3 install breathe
+        && pip3 install exhale
+        && pip3 install sphinx-sitemap
+        && pip3 install recommonmark
+        && pip3 install sphinxcontrib-spelling
+        && pip3 install sphinxcontrib-googleanalytics
+    - name: Checkout repo
+      uses: actions/checkout@1.0.0
+    - name: Build docs
+      run: cd docs
+        && make html
+        && cd _build/html
+        && touch .nojekyll
+   # - name: Deploy
+   #   uses: JamesIves/github-pages-deploy-action@releases/v3
+   #   with:
+   #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+   #     BRANCH: gh-pages # The branch the action should deploy to.
+        # FOLDER: docs/_build/html # The folder the action should deploy.
+    #    FOLDER: docs/_build/html # The folder the action should deploy.
