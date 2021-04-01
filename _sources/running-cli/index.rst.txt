@@ -1,5 +1,5 @@
-Running the Commandline Interface
-=================================
+Command Reference
+=================
 
 ``dcccli``'s usage looks like::
 
