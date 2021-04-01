@@ -43,10 +43,21 @@ some around with good UX but getting things setup and organized in a simple way.
    Dcccli is available on Windows, Linux and MacOS. 
    Click here to get dccli for your platform
    or go here to download directly from Github
-   |GitHub release|
+   |GitHub build| |GitHub release|
+   
 
-.. |GitHub release| image:: https://github.com/grbba/DccEX-CLI/actions/workflows/build_cmake.yml/badge.svg
-   :target: https://GitHub.com/grbba/DccEX-CLI/releases/
+.. |GitHub build| image:: https://img.shields.io/github/workflow/status/grbba/DccEX-CLI/CMake%20Build%20Matrix?label=Build   
+      :alt: GitHub Workflow Status
+      :height: 20px
+      :width: 80px
+
+.. |GitHub release| image:: https://img.shields.io/github/v/release/grbba/DccEX-CLI?include_prereleases    
+      :alt: GitHub release  
+      :height: 20px
+      :width: 120px
+      :target: https://GitHub.com/grbba/DccEX-CLI/releases/
+  
+  
 
 One goal is also to take out all the technology speak of the user expirience and make all that more palpable for everyone more interested in 
 trains rather than digital electronics. Then go buy one of those commercial systems you may say, and yes why not, if you got all the money at 
