@@ -1,0 +1,79 @@
+.wy-nav-content {
+    max-width: 1200px
+}
+
+.dcclink {
+    background-color: lightseagreen;
+    box-shadow: 0 2px 0 darkslategray;
+    color: white;
+    padding: 0.5em 0.5em;
+    position: relative;
+    text-decoration: none;
+    text-transform: none;
+    border-radius: 5px;
+}
+
+.wy-nav-content {
+    max-width: 1200px
+}
+
+.wy-side-nav-search>a img.logo {
+    width: 60%;
+}
+
+.rst-content img {
+    width: 70%;
+    height: auto;
+    margin: 5% 15%;
+}
+
+.rst-content table.docutils {
+    width: 50%;
+    margin: 0 25%;
+}
+
+@media screen and (max-width:1400px) {
+    .rst-content table.docutils {
+        width: 100%;
+        margin: 0;
+    }
+}
+
+.dcclink {
+    background-color: lightseagreen;
+    box-shadow: 0 2px 0 darkslategray;
+    color: white;
+    padding: 0.5em 0.5em;
+    position: relative;
+    text-decoration: none;
+    text-transform: none;
+    border-radius: 5px;
+}
+
+.dcclink:visited {
+    color: whitesmoke
+}
+
+.dcclink:hover {
+    background-color: darkslategrey;
+    cursor: pointer;
+}
+
+.dcclink:active {
+    box-shadow: none;
+    top: 5px;
+}
+
+.dcclink:visited {
+    color: whitesmoke
+}
+
+.dcclink:hover {
+    background-color: darkslategrey;
+    cursor: pointer;
+}
+
+.dcclink:active {
+    box-shadow: none;
+    top: 5px;
+}
