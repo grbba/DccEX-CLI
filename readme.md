@@ -1,6 +1,8 @@
 DCC++ EX Commandline Interface 
 ==============================
 
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/grbba/DccEX-CLI/CMake%20Build%20Matrix?label=Build%20Stable&style=plastic)
+
 Main functionality:
 
 - Modelrailroad layout builder to be used in conjunction with the DCC++ EX Commandstation:
