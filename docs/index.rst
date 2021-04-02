@@ -16,6 +16,28 @@ In a nutshell it allows you to interact with your Arduino based Dcc-EX CommandSt
 possible by different means of connectivity. Besides that we provide a means to describe your layout for automation purposes
 allowing to upload e.g. Turnouts to the commandstation and calculating routes across your layout.
 
+.. table::
+   :align: left
+
+   ===============  ===============  ===============
+   |Install|_       |Get Started|_   |Reference|_
+   ---------------  ---------------  ---------------
+   `Install`_       `Get Started`_   `Reference`_
+   ===============  ===============  ===============
+
+.. |Install| image:: ./_static/images/gettingstarted3.png
+             :scale: 50%
+.. _install: install/index.html
+
+.. |Get Started| image:: ./_static/images/gettingstarted3.png
+                 :scale: 50%
+.. _Get Started: get-started/index.html
+
+.. |reference| image:: ./_static/images/gettingstarted3.png
+               :scale: 50%
+.. _reference: running-cli/index.html
+
+
 What you need to do? Follow some simple instructions and you should be up and running in no time. The Dcc-EX 
 team already managed to minimize setting up the hardware, no more wiring (excpet to get the power to your tracks of course). 
 Know how to put LEGO together ? Well then you can build the commandstation.
@@ -41,17 +63,23 @@ some around with good UX but getting things setup and organized in a simple way.
 .. sidebar:: Get the Commandline Interface
 
    Dcccli is available on Windows, Linux and MacOS. 
-   Click here to get dccli for your platform
-   or go here to download directly from Github
-   |GitHub build| |GitHub release|
-   
+   Click below on the release icon to get dccli for your platform
+   directly from Github. Select 'Assets' and choose the appropriate
+   file for your environment. The Build icon shows the status of the 
+   stable branch build. Should you like to build from source the latest version
+   click this icon. 
 
-.. |GitHub build| image:: https://img.shields.io/github/workflow/status/grbba/DccEX-CLI/CMake%20Build%20Matrix?label=Build   
-      :alt: GitHub Workflow Status
-      :height: 20px
-      :width: 80px
+   +-----------------+-------------------+
+   | |GitHub build|  | |GitHub release|  |
+   +-----------------+-------------------+
 
-.. |GitHub release| image:: https://img.shields.io/github/v/release/grbba/DccEX-CLI?include_prereleases    
+.. |gitHub build| image:: https://img.shields.io/github/workflow/status/grbba/DccEX-CLI/CMake%20Build%20Matrix?label=Build   
+   :alt: GitHub Workflow Status
+   :height: 20px
+   :width: 80px
+   :target: https://github.com/grbba/DccEX-CLI
+
+.. |gitHub release| image:: https://img.shields.io/github/v/release/grbba/DccEX-CLI?include_prereleases    
       :alt: GitHub release  
       :height: 20px
       :width: 120px
@@ -79,10 +107,9 @@ Let's try to make things simpler. One step after the other.
 
 .. note:: More information about CommandStation-EX can be found on `GitHub <https://github.com/DCC-EX/CommandStation-EX>`_ or on the `DCC-EX <https:////dcc-ex.com>`_  website
 
-
-
 .. toctree::
    :maxdepth: 4
+   :hidden:
    :caption: Contents:
 
    running-cli/index
@@ -97,10 +124,10 @@ Let's try to make things simpler. One step after the other.
 ..
    api/library_root
 
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+..
+   Indices and tables
+   ==================
+..
+   * :ref:`genindex`
+   * :ref:`modindex`
+   * :ref:`search`
