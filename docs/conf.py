@@ -65,7 +65,9 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
+# html_theme = 'furo'
 html_theme = 'sphinx_rtd_theme'
+# html_theme = 'sphinx_material'
 
 def setup(app):
     app.add_css_file('css/dccex_theme.css')
@@ -82,7 +84,7 @@ html_theme_options = {
     'logo_only': True,
     # Toc options
     'includehidden': True,
-    'titles_only': True
+    'titles_only': False
 }
 
 # -- Breathe configuration -------------------------------------------------
