@@ -23,13 +23,21 @@ Configuration
 
    Path/name of the modelrailroad layout file.
 
-.. option::   -v,--verbose text 
+.. option::   -v,--verbose [setting] 
 
-   Verbose settings. Can be one of ``[silent|info|warning|debug|trace]``. Default is set to ``info``, ``trace`` will provide the most verbose output.
+   Verbose settings. Setting can be one of ``[silent|info|warning|debug|trace]``. Default is set to ``info``, ``trace`` will provide the most verbose output.
 
 .. option:: -i,--interactive 
 
-   Interactive mode; Opens a shell from which commands can be issued. Once the cli has started type ``help`` at the prompt for more information
+   Interactive mode; Opens a shell from which commands can be issued. Once the cli has started type ``help`` at the prompt for more information::
+
+.. code-block::
+
+    $ ./dcccli -i
+    Welcome to the DCC++ EX Commandline Interface
+    Version 1.0.0-alpha
+    Build 100123
+    DccEX>
 
 
 Upload

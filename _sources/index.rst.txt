@@ -25,15 +25,15 @@ allowing to upload e.g. Turnouts to the commandstation and calculating routes ac
    `Install`_       `Get Started`_   `Reference`_
    ===============  ===============  ===============
 
-.. |Install| image:: ./_static/images/gettingstarted3.png
+.. |Install| image:: ./_static/images/download.png
              :scale: 50%
 .. _install: install/index.html
 
-.. |Get Started| image:: ./_static/images/gettingstarted3.png
+.. |Get Started| image:: ./_static/images/start.png
                  :scale: 50%
 .. _Get Started: get-started/index.html
 
-.. |reference| image:: ./_static/images/gettingstarted3.png
+.. |reference| image:: ./_static/images/reference.png
                :scale: 50%
 .. _reference: running-cli/index.html
 
@@ -112,12 +112,13 @@ Let's try to make things simpler. One step after the other.
    :hidden:
    :caption: Contents:
 
+   get-started/index
    running-cli/index
    layout/index
+   changes/index
    cli-commands/index
    roadmap/index
    contributing/index
-   download/index
    support/index
    about/index
 

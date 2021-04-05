@@ -41,7 +41,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Describing your layout and what you can do with this" href="../layout/index.html" />
-    <link rel="prev" title="Welcome to the DCC++ EX Commandline Interface" href="../index.html" /> 
+    <link rel="prev" title="Getting Started" href="../get-started/index.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -91,14 +91,20 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Command Reference</a><ul class="simple">
+<li class="toctree-l1"><a class="reference internal" href="../get-started/index.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Command Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#upload">Upload</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#connecting">Connecting</a><ul class="simple">
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../layout/index.html">Describing your layout and what you can do with this</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changes/index.html">Changes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../cli-commands/index.html">Commandline Interface Menus and Command Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../roadmap/index.html">Roadmap</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../contributing/index.html">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../download/index.html">Download / Build</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../support/index.html">Need help ?</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../about/index.html">About</a></li>
 </ul>
@@ -198,16 +204,23 @@ unpredictable results.</p>
 
 <dl class="std option">
 <dt id="cmdoption-v-verbose">
-<code class="sig-name descname"><span class="pre">-v,--verbose</span></code><code class="sig-prename descclassname"> <span class="pre">text</span></code><a class="headerlink" href="#cmdoption-v-verbose" title="Permalink to this definition">¶</a></dt>
-<dd><p>Verbose settings. Can be one of <code class="docutils literal notranslate"><span class="pre">[silent|info|warning|debug|trace]</span></code>. Default is set to <code class="docutils literal notranslate"><span class="pre">info</span></code>, <code class="docutils literal notranslate"><span class="pre">trace</span></code> will provide the most verbose output.</p>
+<code class="sig-name descname"><span class="pre">-v,--verbose</span></code><code class="sig-prename descclassname"> <span class="pre">[setting]</span></code><a class="headerlink" href="#cmdoption-v-verbose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verbose settings. Setting can be one of <code class="docutils literal notranslate"><span class="pre">[silent|info|warning|debug|trace]</span></code>. Default is set to <code class="docutils literal notranslate"><span class="pre">info</span></code>, <code class="docutils literal notranslate"><span class="pre">trace</span></code> will provide the most verbose output.</p>
 </dd></dl>
 
 <dl class="std option">
 <dt id="cmdoption-i-interactive">
 <code class="sig-name descname"><span class="pre">-i,--interactive</span></code><code class="sig-prename descclassname"></code><a class="headerlink" href="#cmdoption-i-interactive" title="Permalink to this definition">¶</a></dt>
-<dd><p>Interactive mode; Opens a shell from which commands can be issued. Once the cli has started type <code class="docutils literal notranslate"><span class="pre">help</span></code> at the prompt for more information</p>
+<dd><p>Interactive mode; Opens a shell from which commands can be issued. Once the cli has started type <code class="docutils literal notranslate"><span class="pre">help</span></code> at the prompt for more information:</p>
 </dd></dl>
 
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span>$ ./dcccli -i
+Welcome to the DCC++ EX Commandline Interface
+Version 1.0.0-alpha
+Build 100123
+DccEX&gt;
+</pre></div>
+</div>
 </div>
 <div class="section" id="upload">
 <h2>Upload<a class="headerlink" href="#upload" title="Permalink to this headline">¶</a></h2>
@@ -259,7 +272,7 @@ the interactive commandline interface will be available.</p>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
         <a href="../layout/index.html" class="btn btn-neutral float-right" title="Describing your layout and what you can do with this" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="../index.html" class="btn btn-neutral float-left" title="Welcome to the DCC++ EX Commandline Interface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../get-started/index.html" class="btn btn-neutral float-left" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
