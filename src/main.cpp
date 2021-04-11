@@ -63,7 +63,7 @@ auto main(int argc, char **argv) -> int {
   
   HEADING("Welcome to the DCC++ EX Commandline Interface\n");
   SUBHEADING(version); SUBHEADING(build);
-  SUBHEADING("(c) 2020 grbba\n\n");
+  SUBHEADING("(c) 2021 grbba\n\n");
 
 #ifdef WIN32
   std::cout << rang::style::reset;

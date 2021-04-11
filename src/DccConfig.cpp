@@ -57,7 +57,9 @@ int         DccConfig::baud             = DCC_DEFAULT_BAUDRATE;
 DiagLevel   DccConfig::level            = LOGV_WARN; // by default show everything up to Warning level
 DccSerial   DccConfig::serial;
 DccTCP      DccConfig::ethernet;
-CsConnection_t DccConfig::active        = DCC_CONN_UNKOWN; 
+CsConnection_t DccConfig::active        = DCC_CONN_UNKOWN;
+CsMotorShield  DccConfig::mshield       = NOT_CONFIGURED;
+bool         DccConfig::setMshield      = false;
 
 
 std::function<void(const std::string&)> verboseOptionLambda = 
@@ -74,6 +76,10 @@ std::function<void(const std::int64_t)> connectionLambda =
         INFO("Baud: {}", DccConfig::baud);
         
         DccConfig::serial.openPort(DccConfig::port, DccConfig::baud);
+        if(DccConfig::serial.isOpen()) {
+            DccConfig::active = DCC_SERIAL; // set the active connection to serial
+            fmt::print(fg(fmt::color::green), "Serial port {} opened at {} baud\n", DccConfig::port, DccConfig::baud);
+        }
         sleep_for(8s); // let the cs reply bfore showing the prompt again
     };
 
@@ -103,7 +109,7 @@ auto DccConfig::setup(int argc, char **argv) -> int
         ->group("Upload");
 
     auto portOption = app.add_option<std::string>("-p,--port", DccConfig::port,
-                                "set the port to which the arduino is connected for uploading ")
+                                "set the port to which the arduino is connected for connecting to it or uploading ")
         ->group("Upload")
         ->group("Connect");
 

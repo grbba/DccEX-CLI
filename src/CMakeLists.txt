@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.12...3.19)
 
 include_directories( /usr/local/include )
 
-add_executable( dcclayout 
+add_executable( dcccli
                 main.cpp 
                 Diag.cpp 
                 DccVertex.cpp
@@ -22,9 +22,9 @@ add_executable( dcclayout
 
 # target_compile_features(dcclayout PRIVATE cxx_std_17)
 # target_link_libraries(dcclayout nlohmann_json_schema_validator nlohmann_json::nlohmann_json fmt::fmt)
-target_link_libraries(dcclayout asio spdlog fmt nlohmann_json nlohmann_json_schema_validator)
+target_link_libraries(dcccli asio spdlog fmt nlohmann_json nlohmann_json_schema_validator)
 
-install(TARGETS dcclayout)
+install(TARGETS dcccli)
 #find_program(CLANG_TIDY_BIN clang-tidy)
 #find_program(RUN_CLANG_TIDY_BIN /usr/local/bin/run-clang-tidy.py)
 #  list(APPEND RUN_CLANG_TIDY_BIN_ARGS -clang-tidy-binary ${CLANG_TIDY_BIN} 

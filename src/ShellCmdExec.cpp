@@ -142,6 +142,11 @@ std::string exec(const char *cmd)
 void sendCmd(const std::string csCmd)
 {
     DBG("Sending: {}", csCmd);
+    if( DccConfig::mshield == NOT_CONFIGURED && DccConfig::setMshield == false) {
+        auto s = fmt::format("No Motorshield has been configured. Call mshield -s <sid> first.");
+        throw ShellCmdExecException(s);
+        return;
+    }
     // check for the active Connection
     switch (DccConfig::active)
     {
@@ -717,6 +722,128 @@ void csUpload(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::
     }
 }
 
+
+void csWifi(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params) {
+
+    // send <+ > command to the CS as string build from the params we get 
+    INFO("Wifi command parameters");
+    for (auto &&i : params)
+    {
+        INFO("{}", i);
+    }
+    
+}
+
+void csNetwork(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params) {
+
+    INFO("Network command parameters");
+    for (auto &&i : params)
+    {
+        INFO("{}", i);
+    }
+
+}
+
+void csMshield(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params) {
+
+    // INFO("Motor Shield command parameters");
+    
+    u_char cstate = 0; 
+
+    int option = -1;
+    int value = -1;
+    
+    if( params.size() == 0) {
+        ERR("No parameters provided; please type help for more information");
+        return;
+    }
+
+    for (size_t i = 0; i < params.size(); i++)
+    {
+        auto p = params[i]; 
+
+        switch(p[0]) {
+            case '-':{
+                // got a flag or an option
+                // get the option or flag
+                switch(p[1]) {
+                    case 's': {
+                        option = i;
+                        cstate = 's';
+                        if( params.size() - i <= 1) {
+                            ERR("Missing parameter for option {}", p);
+                            return;
+                        };
+                        break;
+                    }
+                    case 'l':{
+                        cstate = 'l';
+                        fmt::print("Available predefined motorshields [<sid>]:name\n");
+                        fmt::print("Use the sid in conjunction with the -s option to load\n");
+                        fmt::print("and start the corresponding motorshield on the commandstation\n");
+                        for (auto &&ms : MotorShields)
+                        {
+                            fmt::print("[{}]:{}\n", ms.first, ms.second.name);
+                        }
+                        return; // we are done here even if the -s follows we just list and ignore 
+                    }
+                    default:{
+                        ERR("No such flag or option: {}", p);
+                        return;
+                    }
+                }
+                break;
+            }
+            default: {
+                switch(cstate) {
+                    case 0: {
+                        ERR("No/wrong option or flag: {}", p);
+                        return; // bail out in all cases
+                    }
+                    case 's': {
+                        // INFO("Verifying power status ... power is OFF");
+                        // parameter should be an sid i.e. a number = to one of the motorshields
+                        int sid = d77::from_string<int>(p);
+                        auto s = MotorShields.find((CsMotorShield)sid);
+                        if ( s == MotorShields.end()) {
+                            ERR("No Motorshield defined for sid: {}", sid);
+                            return;
+                        }
+
+                        auto x = s->second;
+                        auto y = x.toString();
+                        // INFO("MotorShield: {}", y);
+
+                        // std::string payload = fmt::format(":s:{}:x:12:", sid);
+                        // std::string csCmd = fmt::format("<+cli[{}]{}>", payload.length(), payload); 
+                        std::string csCmd = fmt::format("<cli {} {}>", cstate, sid); 
+                        // INFO("Sending {}", csCmd);
+                        DccConfig::setMshield = true;
+                        sendCmd(csCmd);
+                        sleep_for(1s); // let the cs reply before showing the prompt again
+                        DccConfig::setMshield = false;
+                        INFO("Motorshield [{}] is configured and operational", s->second.name );
+
+                        DccConfig::mshield = (CsMotorShield) sid;
+                        //p needs checking for being valid sid!! if not --> bail out
+                        return; // we are done even if -l follows just ignore it
+                    }
+                    default: {
+                        ERR("Unknown error at: {}", p);
+                    }
+                }
+                // if cstate == flag|init --> error (flags have no following value and we can only start with a - i.e. flag or option)
+                // if cstate == s then we should get now some text for the sid i.e. not starting with - and we should find the sd in the list of allowed values
+                // && send the command to the cs <+cli:s:sid> e.g. <+cli:s:0> 0 being the enum value of the Standard_motor_shield (ref to the shield section on the web site)
+                // value = i; 
+                // in this case no need to look any further 
+                // back to cstate = init;
+                // if option state read the following parameter
+            }
+        }
+    }
+}
+
 void ShellCmdExec::setup()
 {
 
@@ -730,4 +857,7 @@ void ShellCmdExec::setup()
     add(2, "status", csStatus);
     add(2, "ports", csPorts);
     add(2, "upload", csUpload);
+    add(2, "wifi", csWifi);
+    add(2, "network", csNetwork);
+    add(2, "mshield", csMshield);
 }

@@ -102,38 +102,6 @@ void DccSerial::recieve(const char *data, unsigned int len)
       std::cout.flush(); // Flush screen buffer
   }
 }
-/////////////////////
-/**
- * @brief
- *
- * @param data
- * @param len
- */
-/*
-void DccSerial::recieve(const char *data, unsigned int len)
-{
-  std::vector<char> v(data, data + len);
-
-  for (unsigned int i = 0; i < v.size(); i++)
-  {
-    if (v[i] == '\n')
-    {
-      std::cout << '\n';
-    }
-    else
-    {
-      if (v[i] < 32 || v[i] >= 0x7f)
-        std::cout.put(' '); // Remove non-ascii char
-      else
-        fmt::print(fg(fmt::color::magenta), "{}", v[i]);
-      // std::cout.put(v[i]);
-    }
-  }
-  std::cout.flush(); // Flush screen buffer
-}
-
-*/
-
 
 bool DccSerial::openPort(std::string d, int b)
 {
