@@ -31,8 +31,8 @@
 
 // Version information
 #define MAJOR 0
-#define MINOR 0
-#define PATCH 10
+#define MINOR 1
+#define PATCH 12
 
 
 #ifdef WIN32

@@ -153,7 +153,7 @@ struct MotorDriver
     CsPin current_pin;
     float senseFactor;
     unsigned int tripMilliamps;
-    u_int8_t faultPin;
+    uint8_t faultPin;
     
     std::string toString() {
         auto s = fmt::format("[{}:{}]{}|{}|{}|{}|{}|{}|{}|{}|", id, track, power_pin, signal_pin, signal_pin2, brake_pin, current_pin, senseFactor, tripMilliamps, faultPin );
