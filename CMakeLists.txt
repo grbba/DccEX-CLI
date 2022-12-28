@@ -1,13 +1,14 @@
-cmake_minimum_required(VERSION 3.7...3.19)
+cmake_minimum_required(VERSION 3.7...3.25)
+
+set(DEV_HOME "/Users/gregor/Development") #home directory for all development stuff
 
 set(CMAKE_VERBOSE_MAKEFILE OFF)
 
 project(DccExCommandline) 
 
-#Tell Cmake where to find the sphinx module can be found ( as Sphinx  doesn't provide one )
 set(CMAKE_CXX_STANDARD 17)
 
-set(CPM_DOWNLOAD_VERSION 0.31.1) 
+set(CPM_DOWNLOAD_VERSION 0.36.0) 
 set(CPM_DOWNLOAD_LOCATION "${CMAKE_BINARY_DIR}/cmake/CPM_${CPM_DOWNLOAD_VERSION}.cmake")
 
 if(NOT (EXISTS ${CPM_DOWNLOAD_LOCATION}))
@@ -17,69 +18,21 @@ endif()
 
 include(${CPM_DOWNLOAD_LOCATION})
 
-CPMAddPackage(
-        NAME fmt
-        GIT_TAG 7.1.3
-        GITHUB_REPOSITORY fmtlib/fmt
-      )
+CPMAddPackage("gh:CLIUtils/CLI11#v2.3.1@2.3.1")             # tools for reading the command line not to be mixed with 
+                                                            # cli which manages cli menus
 
-CPMAddPackage(
-    NAME spdlog
-    GITHUB_REPOSITORY gabime/spdlog
-    VERSION 1.7.0
-    OPTIONS 
-        "CMAKE_BUILD_TYPE Release"
-        "SPDLOG_FMT_EXTERNAL"
-    )
+if(CLI11_ADDED)
+    target_include_directories(CLI11 SYSTEM INTERFACE ${CLI11_SOURCE_DIR}/include/CLI)
+endif()
 
-CPMAddPackage(
-    NAME nlohmann_json
-    GITHUB_REPOSITORY ArthurSonzogni/nlohmann_json_cmake_fetchcontent
-    VERSION 3.9.1)
+CPMAddPackage("gh:sphinx-doc/sphinx#v6.0.0b2")                # Document/Web generator
+CPMAddPackage("gh:daniele77/cli#v2.0.2@2.0.2")                # Commandline interface library
+CPMAddPackage("gh:chriskohlhoff/asio#asio-1-24-0@1.24.0")     # async communication library independnet from boost
 
-CPMAddPackage(
-    NAME nlohmann_json_validator
-    GITHUB_REPOSITORY pboettch/json-schema-validator
-    GIT_TAG 2.1.0
-    OPTIONS
-        "BUILD_TESTS OFF"
-        "BUILD_EXAMPLES OFF"
-    ) 
-
-
-
-#CPMAddPackage(
-#        NAME cli11
-#        VERSION 1.9.1
-#        GITHUB_REPOSITORY CLIUtils/CLI11
-#      )
-
-#CPMAddPackage(
-#        NAME cli
-#        URL https://github.com/daniele77/cli/archive/v1.2.1.zip
-#        VERSION 1.2.1
-        # GITHUB_REPOSITORY daniele77/cli
-        #OPTIONS 
-        #    "-DCLI_UseStandaloneAsio=ON"
-#        )
-
-    
-find_package(Threads REQUIRED)
-
-CPMAddPackage("gh:chriskohlhoff/asio#asio-1-18-1@1.18.1")
-
-# ASIO doesn't use CMake, we have to configure it manually. Extra notes for using on Windows:
-#
-# 1) If _WIN32_WINNT is not set, ASIO assumes _WIN32_WINNT=0x0501, i.e. Windows XP target, which is
-# definitely not the platform which most users target.
-#
-# 2) WIN32_LEAN_AND_MEAN is defined to make Winsock2 work.
 if(asio_ADDED)
     add_library(asio INTERFACE)
     target_include_directories(asio SYSTEM INTERFACE ${asio_SOURCE_DIR}/asio/include)
-
     target_compile_definitions(asio INTERFACE ASIO_STANDALONE ASIO_NO_DEPRECATED)
-
     target_link_libraries(asio INTERFACE Threads::Threads)
 
     if(WIN32)
@@ -113,8 +66,22 @@ if(asio_ADDED)
     endif()
 endif()
 
+
+find_package(fmt)
+find_package(spdlog)
+find_package(nlohmann_json_schema_validator)
+find_package(nlohmann_json)
+find_package(Threads REQUIRED)
+
+link_directories(${DEV_HOME}/DCCEX/LayoutGraph/build/src/lib)
+
+INCLUDE_DIRECTORIES("/usr/local/include"
+                    "build/_deps/cli11-src/include"
+                    "${DEV_HOME}/DCCEX/LayoutGraph/src/lib"  #includes for the LayoutGraph Library
+                    ) #needed as the CPMaddpackage doesn't seem to add the includ directory properly
+
 # The source code is here
 add_subdirectory(src)
 # docs here as well as how to build them with sphinx, breathe and exhale ( api doc )
-# add_subdirectory(docs)
+add_subdirectory(docs)
 

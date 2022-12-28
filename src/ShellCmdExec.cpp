@@ -844,9 +844,24 @@ void csMshield(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std:
     }
 }
 
+void loLoadLayout(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params) {
+    INFO("Loading layout: {}", params[0]);
+}
+
+void loLoadSchema(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params) {
+    INFO("Loading schema: {}", params[0]);
+}
+
+void loUpload(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params) {
+    INFO("uploading definitions: {}", params[0]);
+}
+
+void loBuild(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params) {
+    INFO("Building ...");
+}
+
 void ShellCmdExec::setup()
 {
-
     DBG("Setup command executors");
     add(1, "config", rootConfig);
     add(1, "use", rootUseConnection);
@@ -860,4 +875,8 @@ void ShellCmdExec::setup()
     add(2, "wifi", csWifi);
     add(2, "network", csNetwork);
     add(2, "mshield", csMshield);
+    add(3, "layout", loLoadLayout);
+    add(3, "schema", loLoadSchema);
+    add(3, "upload", loUpload);
+    add(3, "build", loBuild);
 }

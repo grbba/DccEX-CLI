@@ -220,7 +220,7 @@ const std::string loMenuItems = R"(
     "menuID" : 3,
     "Commands": [ 
       {
-        "name": "layout-tbd",
+        "name": "layout",
         "params":[
             { "type": "string", "desc": "layout file", "mandatory": 1 }
         ],
@@ -229,7 +229,7 @@ const std::string loMenuItems = R"(
         ]
       },
       {
-        "name": "schema-tbd",
+        "name": "schema",
         "params": [
           { "type": "string", "desc": "schema file", "mandatory": 1 }
         ],
@@ -242,7 +242,7 @@ const std::string loMenuItems = R"(
         ]
       },
       {
-        "name": "build-tbd",
+        "name": "build",
         "params": [],
         "help": [ 
             "Builds the full directed graph and possible paths for the layout and generates all turnout commands",
@@ -250,7 +250,7 @@ const std::string loMenuItems = R"(
         ]
       },
       {
-        "name": "upload-tbd",
+        "name": "upload",
         "params": 
         [
           { "type": "string", "desc": "all|turnouts|accesories|paths", "mandatory": 1 }

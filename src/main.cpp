@@ -23,8 +23,9 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <spdlog/spdlog.h>
 
-
+#include "Diag.hpp"
 #include "DccConfig.hpp"
 #include "DccLayout.hpp"
 #include "DccShell.hpp"
@@ -79,7 +80,7 @@ auto main(int argc, char **argv) -> int {
   Diag::setLogLevel(LOGV_INFO);
   
   if (DccConfig::isInteractive) {
-    s.runShell();
+    s.runShell();  // run in interactive mode
   } else {
     // read layout and schema
     DccLayout myLayout;
@@ -87,12 +88,11 @@ auto main(int argc, char **argv) -> int {
     // schema; creates the graph and calculates all paths through the layout
     // (direct and indirect)
     
-    // Diag::setFileInfo(true);
-    if(!myLayout.build()) {
+    Diag::setFileInfo(true);
+    if(!myLayout.build(DccConfig::dccLayoutFile,DccConfig::dccSchemaFile)) {
       return DCC_FAILURE;
     }
 
-    
     // get some info
     myLayout.info();
     // print out all paths

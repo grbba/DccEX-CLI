@@ -37,7 +37,9 @@
 #endif
 #include <chrono>
 #include "DccSerial.hpp"
-#include "../include/CLI11.hpp"
+#include <CLI/CLI.hpp>
+
+// #include "../include/CLI11.hpp"
 
 using namespace std::this_thread;     // sleep_for, sleep_until
 using namespace std::chrono_literals; // ns, us, ms, s, h, etc.

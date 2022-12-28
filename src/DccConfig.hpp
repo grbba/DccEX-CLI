@@ -20,7 +20,7 @@
 
 /**
  * @class DccConfig
-T* his class reads the commandline option and flags and configures the run accordingly. 
+ * This class reads the commandline option and flags and configures the run accordingly. 
  * If the -i flag is set a interactive shell will be spun up reading commands from the prompt.
  * @note n/a
  * @author grbba
