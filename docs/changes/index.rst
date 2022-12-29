@@ -13,7 +13,6 @@ Known issues
 ------------
 * Issue 1
 
-Ongoing changes
+Ongoing changes :
 ===============
-
 * 28/12/2022 - Changed the build and separated the graph relatede elements into a separate library to be linked
