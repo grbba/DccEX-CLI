@@ -45,24 +45,26 @@ using namespace std::this_thread;     // sleep_for, sleep_until
 using namespace std::chrono_literals; // ns, us, ms, s, h, etc.
 using std::chrono::system_clock;
 
+std::string     DccConfig::path;
+std::string     DccConfig::mcu;
+std::string     DccConfig::port;
+std::string     DccConfig::dccLayoutFile;
+std::string     DccConfig::dccSchemaFile    = CONFIG_DCCEX_SCHEMA;
+bool            DccConfig::isInteractive    = CONFIG_INTERACTIVE;
+bool            DccConfig::isUpload         = false;
+bool            DccConfig::isConnect        = false;
+bool            DccConfig::fileInfo         = CONFIG_FILEINFO;
+int             DccConfig::baud             = DCC_DEFAULT_BAUDRATE;
+DiagLevel       DccConfig::level            = LOGV_WARN; // by default show everything up to Warning level
+DccSerial       DccConfig::serial;
+DccTCP          DccConfig::ethernet;   
+CsConnection_t  DccConfig::active           = DCC_CONN_UNKOWN;
+CsMotorShield   DccConfig::mshield          = NOT_CONFIGURED;
+DccMQTT         DccConfig::broker;  
+bool            DccConfig::setMshield       = false;
 
-std::string DccConfig::path;
-std::string DccConfig::mcu;
-std::string DccConfig::port;
-std::string DccConfig::dccLayoutFile;
-std::string DccConfig::dccSchemaFile    = CONFIG_DCCEX_SCHEMA;
-bool        DccConfig::isInteractive    = CONFIG_INTERACTIVE;
-bool        DccConfig::isUpload         = false;
-bool        DccConfig::isConnect        = false;
-bool        DccConfig::fileInfo         = CONFIG_FILEINFO;
-int         DccConfig::baud             = DCC_DEFAULT_BAUDRATE;
-DiagLevel   DccConfig::level            = LOGV_WARN; // by default show everything up to Warning level
-DccSerial   DccConfig::serial;
-DccTCP      DccConfig::ethernet;
-CsConnection_t DccConfig::active        = DCC_CONN_UNKOWN;
-CsMotorShield  DccConfig::mshield       = NOT_CONFIGURED;
-bool         DccConfig::setMshield      = false;
-
+// contains the layout parsed from the layoutfile; DccConfig only contains the reference to the object
+std::shared_ptr<DccLayout> DccConfig::_playout(new DccLayout);
 
 std::function<void(const std::string&)> verboseOptionLambda = 
     [](const std::string& s) { 
@@ -85,10 +87,8 @@ std::function<void(const std::int64_t)> connectionLambda =
         sleep_for(8s); // let the cs reply bfore showing the prompt again
     };
 
-
 auto DccConfig::setup(int argc, char **argv) -> int
 {
-
     CLI::App app{"DCC++ EX Commandline Interface Help"};
 
     app.get_formatter()->label("REQUIRED", "(mandatory)");

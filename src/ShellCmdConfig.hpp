@@ -62,6 +62,27 @@ const std::string rootMenuItems = R"(
           "\t- debug: full debugging information. This can be extremly verbose use with care",
           "\tFor commandstation diagnostics use diag in the cs menu\n"
           ]
+      },
+      {
+        "name": "mqtt",
+        "params": 
+        [
+          { "type": "string", "desc": "broker|subscribe", "mandatory": 1 },
+          { "type": "string", "desc": "domain|topic", "mandatory": 0 },
+          { "type": "string", "desc": "port", "mandatory": 0 }
+        ],
+        "help": [ 
+            "open a mqtt connection to the broker e.g. test.mosqitto.org or localhost",
+            "\tif the mqtt broker is on the same machine as the cli is executed or the",
+            "\tIP address of the broker;",
+            "\tPort of the mqtt broker to connect to. The default port is 1883. For example:",
+            "\t- 'mqtt broker test.mosquitto.org 1883' will connect you to the the test",
+            "\tbroker of the mosquitto project. TLS/SSL is not yet supported.",
+            "\t- 'mqtt subscribe test' will subscribe the cli to the topic 'test' on the broker.",
+            "\tIn order to communicate with the command station you need to subscribe to the clientId shown",
+            "\twhen connecting over the serial line to the command station.",
+            "\n"
+        ]
       }
     ]
   }
@@ -225,7 +246,8 @@ const std::string loMenuItems = R"(
             { "type": "string", "desc": "layout file", "mandatory": 1 }
         ],
         "help": [ 
-            "Load the layout description file\n"
+            "Load the layout description file and builds the full directed graph and possible operational paths",
+            "\tfor the layout.\n"
         ]
       },
       {
@@ -245,8 +267,8 @@ const std::string loMenuItems = R"(
         "name": "build",
         "params": [],
         "help": [ 
-            "Builds the full directed graph and possible paths for the layout and generates all turnout commands",
-            "\tto be send to the command station\n"
+            "Builds the full directed graph and possible paths for the layout. Assumes that the layout and/or",
+            "\tschema description have been provided at the start of the session as parameters.\n"
         ]
       },
       {

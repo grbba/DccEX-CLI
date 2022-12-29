@@ -20,10 +20,19 @@ include(${CPM_DOWNLOAD_LOCATION})
 
 CPMAddPackage("gh:CLIUtils/CLI11#v2.3.1@2.3.1")             # tools for reading the command line not to be mixed with 
                                                             # cli which manages cli menus
-
 if(CLI11_ADDED)
     target_include_directories(CLI11 SYSTEM INTERFACE ${CLI11_SOURCE_DIR}/include/CLI)
 endif()
+
+CPMAddPackage(
+    NAME paho_mqtt_c 
+    GITHUB_REPOSITORY eclipse/paho.mqtt.c
+    GIT_TAG v1.3.12
+    OPTIONS 
+        "PAHO_ENABLE_TESTING OFF"
+        "PAHO_BUILD_STATIC ON"
+        "PAHO_HIGH_PERFORMANCE ON"
+    )
 
 CPMAddPackage("gh:sphinx-doc/sphinx#v6.0.0b2")                # Document/Web generator
 CPMAddPackage("gh:daniele77/cli#v2.0.2@2.0.2")                # Commandline interface library
@@ -79,6 +88,12 @@ INCLUDE_DIRECTORIES("/usr/local/include"
                     "build/_deps/cli11-src/include"
                     "${DEV_HOME}/DCCEX/LayoutGraph/src/lib"  #includes for the LayoutGraph Library
                     ) #needed as the CPMaddpackage doesn't seem to add the includ directory properly
+
+#add the MQTT requirements
+# find_package(OpenSSL REQUIRED)
+find_library(paho-mqttpp3 NAMES libpaho-mqttpp3.a REQUIRED)
+add_library(pahottpp STATIC IMPORTED)
+set_target_properties(pahottpp PROPERTIES IMPORTED_LOCATION ${paho-mqttpp3})
 
 # The source code is here
 add_subdirectory(src)

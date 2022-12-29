@@ -178,6 +178,12 @@ void sendCmd(const std::string csCmd)
         }
         break;
     }
+    case DCC_MQTT:
+    {
+        DBG("Sending over mqtt");
+        INFO("Sending over MQTT is not yet implemented");
+        break;
+    }
     case DCC_CONN_UNKOWN:
     {
         auto s = fmt::format("No active connection to the commandstation. Open serial or network connection first.");
@@ -218,6 +224,37 @@ static void rootLogLevel(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::v
     }
 }
 
+// For testing only
+// const std::string SERVER_ADDRESS("test.mosquitto.org:1883");
+// const std::string CLIENT_ID("dcccli");
+// const std::string TOPIC("hello");
+
+// Executors
+static void rootMqtt(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params)
+{
+    // switch on the first letter of the keyword
+    switch (params[0][0])
+    {
+    case 'b':
+    {
+        INFO("MQTT connecting to broker ...");
+        DccConfig::broker.connect();
+        break;
+    }
+    case 's':
+    {
+        // subscribe to a topic
+        INFO("MQTT topic subcriptions are not yet implemented");
+        break;
+    }
+    default:
+    {
+        auto s = fmt::format("unknown mqtt command");
+        throw ShellCmdExecException(s);
+        break;
+    }
+    }
+}
 /**
  * @brief switching the active connection
  * ! ERROR when switching between connections esp when returning to the ethernet connection the read loop doesn't come back live
@@ -722,7 +759,6 @@ void csUpload(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::
     }
 }
 
-
 void csWifi(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params) {
 
     // send <+ > command to the CS as string build from the params we get 
@@ -846,6 +882,8 @@ void csMshield(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std:
 
 void loLoadLayout(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params) {
     INFO("Loading layout: {}", params[0]);
+    DccConfig::dccLayoutFile = params[0];
+    DccConfig::_playout->build(params[0], DccConfig::dccSchemaFile);
 }
 
 void loLoadSchema(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params) {
@@ -866,6 +904,7 @@ void ShellCmdExec::setup()
     add(1, "config", rootConfig);
     add(1, "use", rootUseConnection);
     add(1, "loglevel", rootLogLevel);
+    add(1, "mqtt", rootMqtt);
     add(2, "open", csOpen);
     add(2, "read", csRead);
     add(2, "diag", csDiag);

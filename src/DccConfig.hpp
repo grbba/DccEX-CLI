@@ -35,6 +35,8 @@
 #include "Diag.hpp"
 #include "DccSerial.hpp"
 #include "DccTCP.hpp"
+#include "DccMQTT.hpp"
+#include "DccLayout.hpp"
 
 #if defined(__unix__) || defined(__unix) || defined(__linux__)
 #define OS_LINUX
@@ -62,7 +64,7 @@
 // p part i.e. m2560 for a mega atmega328p for an uno
 #define DCC_AVRDUDE "{}/bin/avrdude -p {} -C {}/etc/avrdude.conf -c {} -P {} -U flash:w:{} -D &"
 
-#define DCC_CONFIG_ROOT "./cs-config" // all config elated stuff avrdude, cs binaries etc go here
+#define DCC_CONFIG_ROOT "./cs-config" // all config related stuff avrdude, cs binaries etc go here
 #define DCC_ASSETS_ROOT "./cs-assets" // schemas, layouts etc..
 
 #define CONFIG_DCCEX_SCHEMA "./cs-assets/DccEXLayout.json"
@@ -90,6 +92,7 @@ enum CsConnection_t
 {
     DCC_SERIAL,
     DCC_ETHERNET,
+    DCC_MQTT,
     DCC_CONN_UNKOWN
 };
 
@@ -238,6 +241,7 @@ public:
 
     static std::string  dccLayoutFile;
     static std::string  dccSchemaFile;
+    static std::shared_ptr<DccLayout> _playout;             // layout instatiated from dccLayoutFile
     static std::string  mcu;
     static std::string  port;
     static bool         isInteractive;      // run as interactive shell
@@ -248,6 +252,7 @@ public:
     static int          baud;               // baud rate for the serial connection; if not set then default is 115200
     static DccSerial    serial;             // Serial port instance
     static DccTCP       ethernet;           // Ethernet connection ( we only allow one ...)
+    static DccMQTT      broker;
     static CsConnection_t active;           // Active connection type ( maps either to serial or ethernet)
     static CsMotorShield  mshield;          // Mototshield configure init with NOT_CONFIGURED
     static bool          setMshield;        // set by the mshield command to get through the smencmd mototshield available check

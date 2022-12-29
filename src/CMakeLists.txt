@@ -11,7 +11,8 @@ add_executable( dcccli
                 AsyncSerial.cpp
                 DccSerial.cpp
                 AsyncTCP.cpp 
-                DccTCP.cpp 
+                DccTCP.cpp
+                DccMQTT.cpp 
                 DccShellCmd.cpp
                 ShellCmdExec.cpp
               )
@@ -26,7 +27,10 @@ target_link_libraries(dcccli
                       spdlog::spdlog 
                       nlohmann_json 
                       nlohmann_json_schema_validator 
-                      cli::cli)
+                      cli::cli
+                      paho-mqtt3c 
+                      paho-mqtt3a 
+                      pahottpp)
 
 target_compile_options(dcccli PRIVATE -Wno-deprecated-declarations)
 
