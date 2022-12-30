@@ -9,5 +9,6 @@ Main functionality:
 
 - Modelrailroad layout builder to be used in conjunction with the DCC++ EX Commandstation 
 - Commandstations management & configuration
-- Commandstation operations 
+- Commandstation operations
+- Supports MQTT, Ethernet, WiFi & Serial communications
 
