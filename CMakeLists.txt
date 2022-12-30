@@ -1,4 +1,6 @@
-cmake_minimum_required(VERSION 3.7...3.25)
+cmake_minimum_required(VERSION 3.12 )
+set(CMAKE_MACOSX_RPATH 1)
+
 
 set(DEV_HOME "/Users/gregor/Development") #home directory for all development stuff
 
@@ -7,7 +9,6 @@ set(CMAKE_VERBOSE_MAKEFILE OFF)
 project(DccExCommandline) 
 
 set(CMAKE_CXX_STANDARD 17)
-
 set(CPM_DOWNLOAD_VERSION 0.36.0) 
 set(CPM_DOWNLOAD_LOCATION "${CMAKE_BINARY_DIR}/cmake/CPM_${CPM_DOWNLOAD_VERSION}.cmake")
 
@@ -18,14 +19,41 @@ endif()
 
 include(${CPM_DOWNLOAD_LOCATION})
 
-CPMAddPackage("gh:CLIUtils/CLI11#v2.3.1@2.3.1")             # tools for reading the command line not to be mixed with 
+CPMAddPackage(NAME CLI11 
+    "gh:CLIUtils/CLI11#v2.3.1@2.3.1")             # tools for reading the command line not to be mixed with 
                                                             # cli which manages cli menus
 if(CLI11_ADDED)
     target_include_directories(CLI11 SYSTEM INTERFACE ${CLI11_SOURCE_DIR}/include/CLI)
 endif()
 
-CPMAddPackage(
-    NAME paho_mqtt_c 
+CPMAddPackage( NAME fmt
+        GIT_TAG 9.1.0
+        GITHUB_REPOSITORY fmtlib/fmt
+      )
+      
+CPMAddPackage( NAME spdlog
+        "gh:gabime/spdlog@1.11.0"
+        OPTIONS 
+            # "CMAKE_BUILD_TYPE Release"
+            "SPDLOG_FMT_EXTERNAL"
+    )
+
+CPMAddPackage( NAME nlohmann_json
+        VERSION 3.11.2
+        GITHUB_REPOSITORY nlohmann/json
+        OPTIONS
+          "JSON_BuildTests OFF"
+    )
+
+CPMAddPackage( NAME nlohmann_json_validator
+    GITHUB_REPOSITORY pboettch/json-schema-validator
+    GIT_TAG 2.2.0
+    OPTIONS
+        "BUILD_TESTS OFF"
+        "BUILD_EXAMPLES OFF"
+    ) 
+
+CPMAddPackage( NAME paho_mqtt_c 
     GITHUB_REPOSITORY eclipse/paho.mqtt.c
     GIT_TAG v1.3.12
     OPTIONS 
@@ -34,9 +62,12 @@ CPMAddPackage(
         "PAHO_HIGH_PERFORMANCE ON"
     )
 
-CPMAddPackage("gh:sphinx-doc/sphinx#v6.0.0b2")                # Document/Web generator
-CPMAddPackage("gh:daniele77/cli#v2.0.2@2.0.2")                # Commandline interface library
-CPMAddPackage("gh:chriskohlhoff/asio#asio-1-24-0@1.24.0")     # async communication library independnet from boost
+CPMAddPackage( NAME sphinx
+    "gh:sphinx-doc/sphinx#v6.0.0b2")                # Document/Web generator
+CPMAddPackage( NAME cli 
+    "gh:daniele77/cli#v2.0.2@2.0.2")                # Commandline interface library
+CPMAddPackage( NAME asio 
+    "gh:chriskohlhoff/asio#asio-1-24-0@1.24.0")     # async communication library independnet from boost
 
 if(asio_ADDED)
     add_library(asio INTERFACE)
@@ -75,11 +106,11 @@ if(asio_ADDED)
     endif()
 endif()
 
+#find_package(fmt)
+#find_package(spdlog)
+#find_package(nlohmann_json_schema_validator)
+#find_package(nlohmann_json)
 
-find_package(fmt)
-find_package(spdlog)
-find_package(nlohmann_json_schema_validator)
-find_package(nlohmann_json)
 find_package(Threads REQUIRED)
 
 link_directories(${DEV_HOME}/DCCEX/LayoutGraph/build/src/lib)
