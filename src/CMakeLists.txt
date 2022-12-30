@@ -25,7 +25,7 @@ target_link_libraries(dcccli
                       asio 
                       fmt::fmt 
                       spdlog::spdlog 
-                      nlohmann_json 
+                      nlohmann_json::nlohmann_json 
                       nlohmann_json_schema_validator 
                       cli::cli
                       paho-mqtt3c 
