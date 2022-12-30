@@ -19,8 +19,7 @@ endif()
 
 include(${CPM_DOWNLOAD_LOCATION})
 
-CPMAddPackage(NAME CLI11 
-    "gh:CLIUtils/CLI11#v2.3.1@2.3.1")             # tools for reading the command line not to be mixed with 
+CPMAddPackage("gh:CLIUtils/CLI11#v2.3.1@2.3.1")             # tools for reading the command line not to be mixed with 
                                                             # cli which manages cli menus
 if(CLI11_ADDED)
     target_include_directories(CLI11 SYSTEM INTERFACE ${CLI11_SOURCE_DIR}/include/CLI)
