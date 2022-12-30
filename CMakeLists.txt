@@ -30,8 +30,9 @@ CPMAddPackage( NAME fmt
         GITHUB_REPOSITORY fmtlib/fmt
       )
       
-CPMAddPackage( NAME spdlog
-        "gh:gabime/spdlog@1.11.0"
+CPMAddPackage( NAME spdlog 
+        GITHUB_REPOSITORY gabime/spdlog
+        GIT_TAG v1.11.0
         OPTIONS 
             "CMAKE_BUILD_TYPE Release"
             "SPDLOG_FMT_EXTERNAL"
