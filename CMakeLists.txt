@@ -44,13 +44,13 @@ CPMAddPackage( NAME nlohmann_json
           "JSON_BuildTests OFF"
     )
 
-CPMAddPackage( NAME nlohmann_json_validator
-    GITHUB_REPOSITORY pboettch/json-schema-validator
-    GIT_TAG 2.2.0
-    OPTIONS
-        "BUILD_TESTS OFF"
-        "BUILD_EXAMPLES OFF"
-    ) 
+# CPMAddPackage( NAME nlohmann_json_validator
+#     GITHUB_REPOSITORY pboettch/json-schema-validator
+#     GIT_TAG 2.2.0
+#     OPTIONS
+#         "BUILD_TESTS OFF"
+#         "BUILD_EXAMPLES OFF"
+#     ) 
 
 CPMAddPackage( NAME paho_mqtt_c 
     GITHUB_REPOSITORY eclipse/paho.mqtt.c
@@ -107,7 +107,7 @@ endif()
 
 #find_package(fmt)
 #find_package(spdlog)
-#find_package(nlohmann_json_schema_validator)
+find_package(nlohmann_json_schema_validator)
 #find_package(nlohmann_json)
 
 find_package(Threads REQUIRED)
