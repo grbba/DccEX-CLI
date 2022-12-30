@@ -19,9 +19,9 @@
  */
 
 /*
-*   @brief executes the shell commands
-*
-*/
+ *   @brief executes the shell commands
+ *
+ */
 #include <iostream>
 #include <fstream>
 #include <chrono>
@@ -78,7 +78,8 @@ const std::map<std::string, arduinoBoard> boardTypes = {
 std::string str_toupper(std::string s)
 {
     std::transform(s.begin(), s.end(), s.begin(),
-                   [](unsigned char c) { return std::toupper(c); });
+                   [](unsigned char c)
+                   { return std::toupper(c); });
     return s;
 }
 
@@ -112,9 +113,9 @@ void readJsonFile(const std::string &schema_filename, std::string *schema)
 
 /**
  * @brief Executes a command at os level
- * 
- * @param cmd 
- * @return std::string 
+ *
+ * @param cmd
+ * @return std::string
  */
 std::string exec(const char *cmd)
 {
@@ -134,15 +135,16 @@ std::string exec(const char *cmd)
 
 /**
  * @brief send a the command to the commandstation over the active connection (serial or ethernet)
- * ! There is only one connection per type now i.e. serial / ethernet 
+ * ! There is only one connection per type now i.e. serial / ethernet
  * ! as there can be multiple interfaces on the this should be chnaged to support multiple onnections esp for ethernet
- * 
+ *
  * @param cmd The command in DCC++ EX format to be send to the commandstation
  */
 void sendCmd(const std::string csCmd)
 {
     DBG("Sending: {}", csCmd);
-    if( DccConfig::mshield == NOT_CONFIGURED && DccConfig::setMshield == false) {
+    if (DccConfig::mshield == NOT_CONFIGURED && DccConfig::setMshield == false)
+    {
         auto s = fmt::format("No Motorshield has been configured. Call mshield -s <sid> first.");
         throw ShellCmdExecException(s);
         return;
@@ -259,10 +261,10 @@ static void rootMqtt(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vecto
  * @brief switching the active connection
  * ! ERROR when switching between connections esp when returning to the ethernet connection the read loop doesn't come back live
  * ! that works for the serial with no pb ...
- * 
- * @param out 
- * @param cmd 
- * @param params 
+ *
+ * @param out
+ * @param cmd
+ * @param params
  */
 static void rootUseConnection(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params)
 {
@@ -273,30 +275,38 @@ static void rootUseConnection(std::ostream &out, std::shared_ptr<cmdItem> cmd, s
     case 1:
     {
         // params shall be serial or ethernet otherwise error
-        if(params[0].compare("serial") == 0) {
-            if(DccConfig::serial.isOpen()) {
+        if (params[0].compare("serial") == 0)
+        {
+            if (DccConfig::serial.isOpen())
+            {
                 DccConfig::active = DCC_SERIAL;
                 INFO("Connection set to serial: [{} at {} baud]", DccConfig::serial.getDevice(), DccConfig::serial.getBaud());
-            } else {
+            }
+            else
+            {
                 ERR("No open serial connection available.");
             }
             break;
         }
-        if(params[0].compare("ethernet") == 0) {
+        if (params[0].compare("ethernet") == 0)
+        {
 
             // close the connection and reopen it ....
             // DccConfig::ethernet.closeConnection();
             // DccConfig::ethernet.openConnection(DccConfig::ethernet.getIpAddress(), DccConfig::ethernet.getPort());
 
-            if(DccConfig::ethernet.isOpen()) {
+            if (DccConfig::ethernet.isOpen())
+            {
                 DccConfig::active = DCC_ETHERNET;
-            INFO("Connection set to network: [{}:{}]", DccConfig::ethernet.getIpAddress(), DccConfig::ethernet.getPort());
-            } else {
+                INFO("Connection set to network: [{}:{}]", DccConfig::ethernet.getIpAddress(), DccConfig::ethernet.getPort());
+            }
+            else
+            {
                 ERR("No open network connection available.");
             }
             break;
         }
-        // Here we don't know 
+        // Here we don't know
         auto s = fmt::format("Unknown connection type [{}]", params[0]);
         throw ShellCmdExecException(s);
         break;
@@ -308,7 +318,6 @@ static void rootUseConnection(std::ostream &out, std::shared_ptr<cmdItem> cmd, s
         break;
     }
     }
-
 }
 
 static void rootConfig(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params)
@@ -434,6 +443,16 @@ void csOpenSerial(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<s
     }
 }
 
+/**
+ * @brief opens a connection to the CommandStation either over serial or ethernet
+ * depending on the capabilities of the CommandStation ( as installed / compiled by the user )
+ * Serial should always be possible ( Ethernet / WiFi / MQTT your mileage may vary. Direct
+ * MQ support may not be available bc of rss constraints on the MCU with respsect
+ *
+ * @param out
+ * @param cmd
+ * @param params parameters provided with the open command
+ */
 void csOpen(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params)
 {
     int cType;
@@ -511,6 +530,12 @@ void csRead(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::st
     int cv;
     int callback = 0;
     int callbacksub = 0;
+
+    if (!DccConfig::isConnect)
+    {
+        ERR("No CommandStation connected");
+        return;
+    }
 
     switch (params.size())
     {
@@ -598,7 +623,6 @@ void csDiag(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::st
 
     std::string csCmd = fmt::format("<D {} {}>", str_toupper(params[0]), str_toupper(params[1]));
     sendCmd(csCmd);
-
 }
 
 void csPorts(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params)
@@ -663,7 +687,7 @@ void csPorts(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::s
         DWORD test = QueryDosDevice(str.c_str(), lpTargetPath, 5000);
 
         // Test the return value and error if any
-        if (test != 0) //QueryDosDevice returns zero if it didn't find an object
+        if (test != 0) // QueryDosDevice returns zero if it didn't find an object
         {
             std::cout << str << ": " << lpTargetPath << std::endl;
             gotPort = true;
@@ -683,9 +707,9 @@ void csUpload(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::
      * @todo
      * - Bail out on wrong port early ( i.e. before download)
      * - Also if the port is not available bc used other places ...
-     * - If the CSFiles for the architecture are already there don't download again 
-     * except if the latest flag is set ( to be added in the options list ) 
-     * - Add user provided file download 
+     * - If the CSFiles for the architecture are already there don't download again
+     * except if the latest flag is set ( to be added in the options list )
+     * - Add user provided file download
      */
 
     auto architecture = params[0]; // either nano mega or uno or ...
@@ -759,142 +783,161 @@ void csUpload(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::
     }
 }
 
-void csWifi(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params) {
+void csWifi(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params)
+{
 
-    // send <+ > command to the CS as string build from the params we get 
+    // send <+ > command to the CS as string build from the params we get
     INFO("Wifi command parameters");
     for (auto &&i : params)
     {
         INFO("{}", i);
     }
-    
 }
 
-void csNetwork(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params) {
+void csNetwork(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params)
+{
 
     INFO("Network command parameters");
     for (auto &&i : params)
     {
         INFO("{}", i);
     }
-
 }
 
-void csMshield(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params) {
+void csMshield(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params)
+{
 
     // INFO("Motor Shield command parameters");
-    
-    u_char cstate = 0; 
+
+    u_char cstate = 0;
 
     int option = -1;
     int value = -1;
-    
-    if( params.size() == 0) {
+
+    if (params.size() == 0)
+    {
         ERR("No parameters provided; please type help for more information");
         return;
     }
 
     for (size_t i = 0; i < params.size(); i++)
     {
-        auto p = params[i]; 
+        auto p = params[i];
 
-        switch(p[0]) {
-            case '-':{
-                // got a flag or an option
-                // get the option or flag
-                switch(p[1]) {
-                    case 's': {
-                        option = i;
-                        cstate = 's';
-                        if( params.size() - i <= 1) {
-                            ERR("Missing parameter for option {}", p);
-                            return;
-                        };
-                        break;
-                    }
-                    case 'l':{
-                        cstate = 'l';
-                        fmt::print("Available predefined motorshields [<sid>]:name\n");
-                        fmt::print("Use the sid in conjunction with the -s option to load\n");
-                        fmt::print("and start the corresponding motorshield on the commandstation\n");
-                        for (auto &&ms : MotorShields)
-                        {
-                            fmt::print("[{}]:{}\n", ms.first, ms.second.name);
-                        }
-                        return; // we are done here even if the -s follows we just list and ignore 
-                    }
-                    default:{
-                        ERR("No such flag or option: {}", p);
-                        return;
-                    }
-                }
+        switch (p[0])
+        {
+        case '-':
+        {
+            // got a flag or an option
+            // get the option or flag
+            switch (p[1])
+            {
+            case 's':
+            {
+                option = i;
+                cstate = 's';
+                if (params.size() - i <= 1)
+                {
+                    ERR("Missing parameter for option {}", p);
+                    return;
+                };
                 break;
             }
-            default: {
-                switch(cstate) {
-                    case 0: {
-                        ERR("No/wrong option or flag: {}", p);
-                        return; // bail out in all cases
-                    }
-                    case 's': {
-                        // INFO("Verifying power status ... power is OFF");
-                        // parameter should be an sid i.e. a number = to one of the motorshields
-                        int sid = d77::from_string<int>(p);
-                        auto s = MotorShields.find((CsMotorShield)sid);
-                        if ( s == MotorShields.end()) {
-                            ERR("No Motorshield defined for sid: {}", sid);
-                            return;
-                        }
-
-                        auto x = s->second;
-                        auto y = x.toString();
-                        // INFO("MotorShield: {}", y);
-
-                        // std::string payload = fmt::format(":s:{}:x:12:", sid);
-                        // std::string csCmd = fmt::format("<+cli[{}]{}>", payload.length(), payload); 
-                        std::string csCmd = fmt::format("<cli {} {}>", cstate, sid); 
-                        // INFO("Sending {}", csCmd);
-                        DccConfig::setMshield = true;
-                        sendCmd(csCmd);
-                        sleep_for(1s); // let the cs reply before showing the prompt again
-                        DccConfig::setMshield = false;
-                        INFO("Motorshield [{}] is configured and operational", s->second.name );
-
-                        DccConfig::mshield = (CsMotorShield) sid;
-                        //p needs checking for being valid sid!! if not --> bail out
-                        return; // we are done even if -l follows just ignore it
-                    }
-                    default: {
-                        ERR("Unknown error at: {}", p);
-                    }
+            case 'l':
+            {
+                cstate = 'l';
+                fmt::print("Available predefined motorshields [<sid>]:name\n");
+                fmt::print("Use the sid in conjunction with the -s option to load\n");
+                fmt::print("and start the corresponding motorshield on the commandstation\n");
+                for (auto &&ms : MotorShields)
+                {
+                    fmt::print("[{}]:{}\n", ms.first, ms.second.name);
                 }
-                // if cstate == flag|init --> error (flags have no following value and we can only start with a - i.e. flag or option)
-                // if cstate == s then we should get now some text for the sid i.e. not starting with - and we should find the sd in the list of allowed values
-                // && send the command to the cs <+cli:s:sid> e.g. <+cli:s:0> 0 being the enum value of the Standard_motor_shield (ref to the shield section on the web site)
-                // value = i; 
-                // in this case no need to look any further 
-                // back to cstate = init;
-                // if option state read the following parameter
+                return; // we are done here even if the -s follows we just list and ignore
             }
+            default:
+            {
+                ERR("No such flag or option: {}", p);
+                return;
+            }
+            }
+            break;
+        }
+        default:
+        {
+            switch (cstate)
+            {
+            case 0:
+            {
+                ERR("No/wrong option or flag: {}", p);
+                return; // bail out in all cases
+            }
+            case 's':
+            {
+                // INFO("Verifying power status ... power is OFF");
+                // parameter should be an sid i.e. a number = to one of the motorshields
+                int sid = d77::from_string<int>(p);
+                auto s = MotorShields.find((CsMotorShield)sid);
+                if (s == MotorShields.end())
+                {
+                    ERR("No Motorshield defined for sid: {}", sid);
+                    return;
+                }
+
+                auto x = s->second;
+                auto y = x.toString();
+                // INFO("MotorShield: {}", y);
+
+                // std::string payload = fmt::format(":s:{}:x:12:", sid);
+                // std::string csCmd = fmt::format("<+cli[{}]{}>", payload.length(), payload);
+                std::string csCmd = fmt::format("<cli {} {}>", cstate, sid);
+                // INFO("Sending {}", csCmd);
+                DccConfig::setMshield = true;
+                sendCmd(csCmd);
+                sleep_for(1s); // let the cs reply before showing the prompt again
+                DccConfig::setMshield = false;
+                INFO("Motorshield [{}] is configured and operational", s->second.name);
+
+                DccConfig::mshield = (CsMotorShield)sid;
+                // p needs checking for being valid sid!! if not --> bail out
+                return; // we are done even if -l follows just ignore it
+            }
+            default:
+            {
+                ERR("Unknown error at: {}", p);
+            }
+            }
+            // if cstate == flag|init --> error (flags have no following value and we can only start with a - i.e. flag or option)
+            // if cstate == s then we should get now some text for the sid i.e. not starting with - and we should find the sd in the list of allowed values
+            // && send the command to the cs <+cli:s:sid> e.g. <+cli:s:0> 0 being the enum value of the Standard_motor_shield (ref to the shield section on the web site)
+            // value = i;
+            // in this case no need to look any further
+            // back to cstate = init;
+            // if option state read the following parameter
+        }
         }
     }
 }
 
-void loLoadLayout(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params) {
+void loLoadLayout(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params)
+{
     INFO("Loading layout: {}", params[0]);
     DccConfig::dccLayoutFile = params[0];
     DccConfig::_playout->build(params[0], DccConfig::dccSchemaFile);
 }
 
-void loLoadSchema(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params) {
+void loLoadSchema(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params)
+{
     INFO("Loading schema: {}", params[0]);
 }
 
-void loUpload(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params) {
+void loUpload(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params)
+{
     INFO("uploading definitions: {}", params[0]);
 }
 
-void loBuild(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params) {
+void loBuild(std::ostream &out, std::shared_ptr<cmdItem> cmd, std::vector<std::string> params)
+{
     INFO("Building ...");
 }
 
