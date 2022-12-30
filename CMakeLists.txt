@@ -33,7 +33,7 @@ CPMAddPackage( NAME fmt
 CPMAddPackage( NAME spdlog
         "gh:gabime/spdlog@1.11.0"
         OPTIONS 
-            # "CMAKE_BUILD_TYPE Release"
+            "CMAKE_BUILD_TYPE Release"
             "SPDLOG_FMT_EXTERNAL"
     )
 
