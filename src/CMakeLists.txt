@@ -30,7 +30,8 @@ target_link_libraries(dcccli
                       cli::cli
                       paho-mqtt3c 
                       paho-mqtt3a 
-                      pahottpp)
+                      # pahottpp
+                      paho-mqttpp3)
 
 target_compile_options(dcccli PRIVATE -Wno-deprecated-declarations)
 

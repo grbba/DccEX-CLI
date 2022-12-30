@@ -128,9 +128,10 @@ INCLUDE_DIRECTORIES("/usr/local/include"
 # find_package(OpenSSL REQUIRED)
 # find_library(paho-mqttpp3 NAMES libpaho-mqttpp3.a REQUIRED)
 find_library(paho-mqttpp3 REQUIRED)
-add_library(pahottpp STATIC IMPORTED)
-set_target_properties(pahottpp PROPERTIES IMPORTED_LOCATION ${paho-mqttpp3})
-
+add_library(paho-mqttpp3 STATIC IMPORTED)
+# add_library(pahottpp STATIC IMPORTED)
+# set_target_properties(pahottpp PROPERTIES IMPORTED_LOCATION ${paho-mqttpp3})
+set_target_properties(paho-mqttpp3 PROPERTIES IMPORTED_LOCATION ${paho-mqttpp3})
 # The source code is here
 add_subdirectory(src)
 # docs here as well as how to build them with sphinx, breathe and exhale ( api doc )
