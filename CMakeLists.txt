@@ -64,11 +64,14 @@ CPMAddPackage( NAME paho_mqtt_c
     )
 
 CPMAddPackage( NAME sphinx
-    "gh:sphinx-doc/sphinx#v6.0.0b2")                # Document/Web generator
-CPMAddPackage( NAME cli 
-    "gh:daniele77/cli#v2.0.2@2.0.2")                # Commandline interface library
-CPMAddPackage( NAME asio 
-    "gh:chriskohlhoff/asio#asio-1-24-0@1.24.0")     # async communication library independnet from boost
+    GITHUB_REPOSITORY sphinx-doc/sphinx
+    GIT_TAG v6.0.0b2 )              # Document/Web generator
+CPMAddPackage( NAME cli
+    GITHUB_REPOSITORY daniele77/cli
+    GIT_TAG v2.0.2 )               # Commandline interface library
+CPMAddPackage( NAME asio
+    GITHUB_REPOSITORY chriskohlhoff/asio
+    GIT_TAG asio-1-24-0 )    # async communication library independnet from boost
 
 if(asio_ADDED)
     add_library(asio INTERFACE)
