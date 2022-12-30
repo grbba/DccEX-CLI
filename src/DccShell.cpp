@@ -30,6 +30,7 @@ namespace cli
 {
   using MainScheduler = StandaloneAsioScheduler;
 } // namespace cli
+
 #include "../include/cli/clilocalsession.h"
 
 #include "DccShell.hpp"

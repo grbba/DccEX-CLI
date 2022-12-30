@@ -26,10 +26,9 @@
 
 #include "DccShellCmd.hpp"
 
-#define HEADING(x)                                                             \
-  fmt::format(fg(fmt::color::medium_turquoise) | fmt::emphasis::bold, x);
-#define WARNING(x) fmt::format(fg(fmt::color::orange) | fmt::emphasis::bold, x);
-#define ERROR(x) fmt::format(fg(fmt::color::red) | fmt::emphasis::bold, x);
+#define HEADING(x)  fmt::format(fg(fmt::color::medium_turquoise) | fmt::emphasis::bold, x);
+#define WARNING(x)  fmt::format(fg(fmt::color::orange) | fmt::emphasis::bold, x);
+#define ERROR(x)    fmt::format(fg(fmt::color::red) | fmt::emphasis::bold, x);
 
 using namespace nlohmann;
 
@@ -46,7 +45,7 @@ void join(const std::vector<std::string>& v, char c, std::string& s) {
 }
 
 /**
- * @brief Read the commnds json / handle error and insert into the map the
+ * @brief Read the commands json / handle error and insert into the map the
  * CmdItem
  *
  * @param commands
