@@ -61,6 +61,7 @@ CPMAddPackage( NAME paho_mqtt_c
         "PAHO_ENABLE_TESTING OFF"
         "PAHO_BUILD_STATIC TRUE"
         "PAHO_HIGH_PERFORMANCE ON"
+        "PAHO_INSTALL TRUE"
     )
 CPMAddPackage( NAME sphinx
     GITHUB_REPOSITORY sphinx-doc/sphinx
@@ -126,6 +127,7 @@ INCLUDE_DIRECTORIES("/usr/local/include"
 #add the MQTT requirements
 # find_package(OpenSSL REQUIRED)
 find_library(paho-mqttpp3 NAMES libpaho-mqttpp3.a REQUIRED)
+# find_library(paho-mqttpp3 REQUIRED)
 # find_library(paho-mqtt3a NAMES libpaho-mqtt3a.so REQUIRED)
 
 add_library(pahottpp STATIC IMPORTED)
