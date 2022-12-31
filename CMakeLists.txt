@@ -59,10 +59,9 @@ CPMAddPackage( NAME paho_mqtt_c
     GIT_TAG v1.3.12
     OPTIONS 
         "PAHO_ENABLE_TESTING OFF"
-        "PAHO_BUILD_STATIC ON"
+        "PAHO_BUILD_STATIC TRUE"
         "PAHO_HIGH_PERFORMANCE ON"
     )
-
 CPMAddPackage( NAME sphinx
     GITHUB_REPOSITORY sphinx-doc/sphinx
     GIT_TAG v6.0.0b2 )              # Document/Web generator
@@ -112,7 +111,7 @@ endif()
 
 #find_package(fmt)
 #find_package(spdlog)
-# find_package(nlohmann_json_schema_validator)
+#find_package(nlohmann_json_schema_validator)
 #find_package(nlohmann_json)
 
 find_package(Threads REQUIRED)

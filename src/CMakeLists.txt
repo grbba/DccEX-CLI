@@ -28,8 +28,8 @@ target_link_libraries(dcccli
                       nlohmann_json::nlohmann_json 
                       nlohmann_json_schema_validator 
                       cli::cli
-                      paho-mqtt3c 
-                      paho-mqtt3a 
+                      paho-mqtt3c-static
+                      paho-mqtt3a-static
                       pahottpp)
 
 target_compile_options(dcccli PRIVATE -Wno-deprecated-declarations)
