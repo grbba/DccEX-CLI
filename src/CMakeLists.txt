@@ -3,6 +3,11 @@ cmake_minimum_required(VERSION 3.12...3.25)
 set(DEV_HOME "/Users/gregor/Development") #home directory for all development stuff
 include_directories( /usr/local/include )
 
+find_library(paho-mqttpp3 NAMES libpaho-mqttpp3.a REQUIRED)
+add_library(pahottpp STATIC IMPORTED)
+set_target_properties(pahottpp PROPERTIES IMPORTED_LOCATION ${paho-mqttpp3})
+
+
 add_executable( dcccli
                 main.cpp 
                 Diag.cpp 
