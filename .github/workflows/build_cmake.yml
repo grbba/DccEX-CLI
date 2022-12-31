@@ -94,6 +94,12 @@ jobs:
         key: ${{ matrix.config.name }}-ccache-${{ steps.ccache_cache_timestamp.outputs.timestamp }}
         restore-keys: |
           ${{ matrix.config.name }}-ccache-
+    - name: make Paho MQTT lib
+      run: git clone https://github.com/eclipse/paho.mqtt.c.git
+        && cd paho.mqtt.c
+        && make
+        && sudo make install
+        && cd ..
     - name: Configure
       shell: cmake -P {0}
       run: |
